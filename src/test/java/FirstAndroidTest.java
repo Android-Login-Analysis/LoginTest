@@ -48,6 +48,7 @@ public class FirstAndroidTest {
     @Test
 
     public void runTest() throws InterruptedException {
+        // close alert
         if (driver.findElement(By.id("org.mian.gitnex:id/alertTitle")).isDisplayed()){
             System.out.println("Attempting to close alert window.");
             driver.findElement(By.id("android:id/button3")).click();
