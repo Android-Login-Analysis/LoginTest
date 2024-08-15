@@ -63,6 +63,7 @@ public class FirstAndroidTest {
         startMonkey();
         while (true) {
             if (System.currentTimeMillis() - startTime > duration) {
+                System.out.println("Time Run Out, Stop");
                 break;
             }
             TimeUnit.SECONDS.sleep(3);
@@ -167,6 +168,7 @@ public class FirstAndroidTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("Monkey Is Done!");
     }
 
     private void stopMonkey() {
