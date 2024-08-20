@@ -84,7 +84,10 @@ public class FirstAndroidTest {
         }
     }
 
+
     private void performLogin() {
+        logina // TODO image
+                loginb
         try {
             System.out.println("Attempting to click on login method selection.");
             driver.findElement(By.id("org.mian.gitnex:id/loginUsernamePassword")).click();
