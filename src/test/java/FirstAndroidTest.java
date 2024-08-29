@@ -87,11 +87,6 @@ public class FirstAndroidTest {
             e.printStackTrace();
         }
     }
-
-
-// add more general design
-    // add more general design
-
     @Test
     public void runTest() throws InterruptedException, MalformedURLException {
         // close alert
