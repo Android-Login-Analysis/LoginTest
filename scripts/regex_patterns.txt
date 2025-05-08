@@ -1,0 +1,5 @@
+^(?:(?:check[_]?(?:Credentials|creds|Password|pwd))|(?:(?:validate|verify)[_]?(?:Credentials|creds|Password|pwd))|(?:(?:credentials|password)(?:Validation|_verify))|(?:auth(?:Validation|_verify)))$
+^(?:(?:encode|encrypt|hash)[_]?(?:Credentials|creds|Password|pwd|Token|AuthInfo)|(?:Credentials|Password|Token)[_]?(?:Encoding|Encryption|Hashing)|(?:auth)?[_]?(?:encrypt|encode|hash))$
+^(?:(?:submit|send|post)[_]?(?:Credentials|creds|Password|pwd|Token)|(?:Credentials|Password|Token)[_]?(?:Submit|Send|Post)|(?:auth)?[_]?(?:submit|post|send))$
+^(?:(?:request|get|fetch)[_]?(?:MFA|otp|twofa|two[_]?factor|authcode)|(?:MFA|otp|twofa)[_]?(?:Request|Fetch|Code)|(?:auth)?[_]?(?:request|fetch)[_]?(?:code))$
+^(?:(?:submit|send|post)[_]?(?:MFA|otp|twofa|two[_]?factor|authcode)[_]?(?:code)?|(?:MFA|otp|twofa)[_]?(?:Submit|Send|Post)[_]?(?:code)?|(?:auth)?[_]?(?:submit|send)[_]?(?:code))$
