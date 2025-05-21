@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -23,6 +24,8 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Map;
+import java.util.HashMap;
 
 public class LoginDetectTest {
 
@@ -48,29 +51,54 @@ public class LoginDetectTest {
     private ConfigLoader config;
 
     private FridaManager fridaManager;
+    private ApiLogAnalyzer apiLogAnalyzer;
+    // Default paths, can be made configurable
+    private String fridaAgentJsPath = "login_agent.js"; // Relative path to the agent script in project root or a
+                                                        // specific dir
+    private String fridaLogFilePath = "frida_api_log.txt"; // Log file in project root
+    private String regexPatternsFilePathConfig = "regex_patterns.txt"; // Regex patterns file
+
+    private Map<String, List<String>> validStateTransitions;
+    private boolean currentRoundUsedSpecialChars = false; // For Credential Rejection Oracle
 
     @BeforeTest
-    public void setUp() throws MalformedURLException {
+    public void setUp() throws MalformedURLException, IOException {
         stopMonkey();
         String projectRoot = System.getProperty("user.dir");
+        // Construct absolute paths if needed, or ensure files are in expected locations
+        String actualRegexPath = projectRoot + File.separator + regexPatternsFilePathConfig;
+        String actualAgentPath = projectRoot + File.separator + fridaAgentJsPath;
+        String actualLogPath = projectRoot + File.separator + fridaLogFilePath;
+
         accountPool = readLinesFromFile(projectRoot + "/pools/accounts.txt");
         passwordPool = readLinesFromFile(projectRoot + "/pools/passwords.txt");
         instancePool = readLinesFromFile(projectRoot + "/pools/instances.txt");
-        // Load third-party login credentials
-        // Load third-party login emails and passwords
         googleEmailPool = readLinesFromFile(projectRoot + "/pools/google_accounts.txt");
         googlePasswordPool = readLinesFromFile(projectRoot + "/pools/google_passwords.txt");
         facebookEmailPool = readLinesFromFile(projectRoot + "/pools/facebook_accounts.txt");
         facebookPasswordPool = readLinesFromFile(projectRoot + "/pools/facebook_passwords.txt");
 
         this.config = new ConfigLoader();
-        String regexFilePath = "regex_patterns.txt";  // Path to the regex pattern file
-        fridaManager = new FridaManager(regexFilePath);
-        // Print all regex patterns loaded
-        fridaManager.getRegexPatterns().forEach(System.out::println);
-        // Start Frida
-        fridaManager.startFrida(app);
+        // Initialize FridaManager with paths
+        fridaManager = new FridaManager(actualRegexPath, actualAgentPath, actualLogPath);
+        // ApiLogAnalyzer uses the same regex file but processes it differently
+        apiLogAnalyzer = new ApiLogAnalyzer(actualRegexPath);
+
+        System.out.println("ApiLogAnalyzer loaded regex patterns from: " + actualRegexPath);
+        // System.out.println("FridaManager will use agent: " + actualAgentPath + " and
+        // log to: " + actualLogPath);
+        // System.out.println("Frida agent will be initialized with JSON: " +
+        // fridaManager.getApiRegexPatternsJsonString());
+
         startAppiumSession();
+
+        if (targetAppPackage != null && !targetAppPackage.isEmpty()) {
+            // FridaManager now internally uses the JSON string it prepared.
+            fridaManager.startFrida(targetAppPackage);
+        } else {
+            System.err.println("Target app package is null, Frida not started.");
+        }
+        initializeValidStateTransitions();
     }
 
     private void startAppiumSession() throws MalformedURLException {
@@ -86,24 +114,20 @@ public class LoginDetectTest {
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/"), caps);
 
-        // Store the target app's package and activity for later use
         targetAppPackage = (String) driver.getCapabilities().getCapability("appPackage");
         targetAppActivity = (String) driver.getCapabilities().getCapability("appActivity");
-
     }
 
-    // Method to check if the current app is the target app
     private boolean isTargetAppInForeground() {
         String currentPackage = driver.getCurrentPackage();
         return currentPackage != null && currentPackage.equals(targetAppPackage);
     }
 
-    // Bring app to the foreground if it is not the current app
     public void bringAppToForeground() {
         if (!isTargetAppInForeground()) {
             System.out.println("App is not in foreground, bringing it to the foreground...");
             Activity activity = new Activity(targetAppPackage, targetAppActivity);
-            activity.setStopApp(true);  // Stop the app and restart it
+            activity.setStopApp(true);
             driver.executeScript("mobile: startActivity", activity);
         } else {
             System.out.println("App is already in foreground.");
@@ -112,7 +136,7 @@ public class LoginDetectTest {
 
     private void restartAppiumSession() throws MalformedURLException {
         System.out.println("Restarting Appium session...");
-        driver.quit(); // Quit the existing session
+        driver.quit();
         startAppiumSession();
     }
 
@@ -120,161 +144,400 @@ public class LoginDetectTest {
         try {
             System.out.println("Restoring snapshot...");
             Runtime.getRuntime().exec("adb emu avd snapshot load snap_gitnex_login");
-            TimeUnit.SECONDS.sleep(30); //
+            TimeUnit.SECONDS.sleep(30);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    private void initializeValidStateTransitions() {
+        validStateTransitions = new HashMap<>();
+
+        // Pre-Login Phase
+        validStateTransitions.put("InitialState", List.of("CheckingToken", "CredentialInput")); // App start might go to
+                                                                                                // check token or
+                                                                                                // directly to input if
+                                                                                                // no token exists
+        validStateTransitions.put("CheckingToken", List.of("LoggedIn_Via_Token", "CredentialInput")); // Result of token
+                                                                                                      // check
+        // "LoggedIn_Via_Token" would be a specific success state if token is valid
+
+        validStateTransitions.put("CredentialInput", List.of("EncodingCredentials", "CredentialFormatError"));
+        validStateTransitions.put("EncodingCredentials", List.of("Authenticating")); // Assuming encoding always leads
+                                                                                     // to auth attempt if successful
+        validStateTransitions.put("CredentialFormatError", List.of("CredentialInput"));
+
+        // Login Phase
+        validStateTransitions.put("Authenticating", List.of("CheckingCredentials")); // Initial step of authentication
+        validStateTransitions.put("CheckingCredentials",
+                List.of("ServiceUnavailable_Auth", "InvalidCredentials", "CheckingMFASettings")); // Outcomes of
+                                                                                                  // credential check
+
+        validStateTransitions.put("ServiceUnavailable_Auth", List.of("CredentialInput", "InitialState")); // Or retry
+                                                                                                          // Authenticating
+        validStateTransitions.put("InvalidCredentials", List.of("CredentialInput"));
+
+        validStateTransitions.put("CheckingMFASettings", List.of("MFACodePending", "LoggedIn_NoMFA")); // MFA check
+                                                                                                       // result
+        // "LoggedIn_NoMFA" is success if MFA is not needed
+
+        validStateTransitions.put("MFACodePending", List.of("SendingMFACode"));
+        validStateTransitions.put("SendingMFACode", List.of("MFAVerification", "ServiceUnavailable_MFA_Send"));
+        validStateTransitions.put("ServiceUnavailable_MFA_Send", List.of("MFACodePending")); // Retry sending or inform
+                                                                                             // user
+
+        validStateTransitions.put("MFAVerification", List.of("VerifyingMFA"));
+        validStateTransitions.put("VerifyingMFA",
+                List.of("ServiceUnavailable_MFA_Verify", "MFAError", "LoggedIn_WithMFA"));
+        validStateTransitions.put("ServiceUnavailable_MFA_Verify", List.of("MFAVerification")); // Retry verification or
+                                                                                                // inform user
+        validStateTransitions.put("MFAError", List.of("MFACodePending"));
+
+        // Post-Login Phase
+        // These are various ways login can be considered successful from different
+        // paths.
+        // You might consolidate them into a single "LoggedIn" state if the subsequent
+        // APIs are identical.
+        validStateTransitions.put("LoggedIn_Via_Token", List.of("AppMainScreen")); // Successful login via token
+        validStateTransitions.put("LoggedIn_NoMFA", List.of("AppMainScreen")); // Successful login without MFA
+        validStateTransitions.put("LoggedIn_WithMFA", List.of("AppMainScreen")); // Successful login with MFA
+
+        // "AppMainScreen" could be a generic state representing the app's main
+        // interface post-login.
+        // From AppMainScreen, a logout could lead back to "InitialState" or
+        // "CredentialInput".
+        validStateTransitions.put("AppMainScreen", List.of("UserLogout", "InitialState"));
+        validStateTransitions.put("UserLogout", List.of("InitialState", "CredentialInput"));
+
+        System.out.println("Initialized valid state transitions based on the diagram.");
+        System.out.println("Total states with defined outgoing transitions: " + validStateTransitions.size());
+        if (validStateTransitions.isEmpty()) {
+            System.err.println("Warning: Valid state transitions map is empty after initialization!");
+        }
+    }
+
+    private boolean containsSpecialCharacters(String s) {
+        if (s == null || s.trim().isEmpty()) {
+            return false;
+        }
+        // Define what you consider special characters, e.g., not alphanumeric
+        // This pattern matches if there is any character that is NOT a letter or digit.
+        Pattern specialCharsPattern = Pattern.compile("[^a-zA-Z0-9]");
+        return specialCharsPattern.matcher(s).find();
+    }
+
+    private void analyzeRoundLogs() {
+        System.out.println("--- Analyzing Logs for Current Round ---");
+        try {
+            apiLogAnalyzer.parseLogFile(fridaLogFilePath);
+            List<ApiLogAnalyzer.ApiCallEntry> calls = apiLogAnalyzer.getApiCallLog();
+            if (calls.isEmpty()) {
+                System.out.println("No API calls captured by Frida for this round or log file is empty.");
+                return;
+            }
+
+            System.out.println("Mapped API calls for the round:");
+            calls.forEach(System.out::println);
+
+            List<String> observedStates = apiLogAnalyzer.getObservedStateSequence();
+            System.out.println("Observed state sequence: " + observedStates);
+
+            if (validStateTransitions.isEmpty()) {
+                System.err.println("Valid State Transitions not defined! Cannot check for incorrect navigation flow.");
+            } else {
+                List<String> navigationErrors = apiLogAnalyzer.findIncorrectTransitions(observedStates,
+                        validStateTransitions);
+                if (!navigationErrors.isEmpty()) {
+                    System.err.println("LOGIN BUG DETECTED (API Analysis): Incorrect Navigation Flow(s):");
+                    navigationErrors.forEach(System.err::println);
+                    failedLogins++;
+                } else {
+                    System.out.println("No incorrect navigation flows detected in this round based on API logs.");
+                }
+            }
+
+            boolean loginFailedByApiState = false;
+            if (!observedStates.isEmpty()) {
+                String lastState = observedStates.get(observedStates.size() - 1);
+                if (lastState.equals("LoginFailure")) {
+                    loginFailedByApiState = true;
+                }
+                for (int i = 0; i < observedStates.size() - 1; i++) {
+                    if (observedStates.get(i).equals("Authenticating") &&
+                            observedStates.get(i + 1).equals("CredentialInput")) {
+                        boolean successObservedPostAuth = false;
+                        for (int j = i; j < observedStates.size(); j++) {
+                            if (observedStates.get(j).equals("LoginSuccess")) {
+                                successObservedPostAuth = true;
+                                break;
+                            }
+                            if (j > i && (observedStates.get(j).equals("CredentialInput")
+                                    || observedStates.get(j).equals("Authenticating"))) {
+                                break;
+                            }
+                        }
+                        if (!successObservedPostAuth) {
+                            loginFailedByApiState = true;
+                            break;
+                        }
+                    }
+                }
+            } else if (currentRoundUsedSpecialChars) {
+                System.out.println("Warning: Special characters used, but no API states logged for this round.");
+            }
+
+            if (currentRoundUsedSpecialChars && loginFailedByApiState) {
+                System.err.println(
+                        "LOGIN BUG DETECTED (API Analysis + Credential Type): Potential Credential Rejection (special characters used and API logs indicate failure).");
+                failedLogins++;
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error analyzing Frida log file: " + fridaLogFilePath);
+            e.printStackTrace();
+        }
+        currentRoundUsedSpecialChars = false;
+    }
+
+    private void checkCrashAndAnrLogs() {
+        System.out.println("Checking logcat for crashes and ANRs...");
+        try {
+            Process process = Runtime.getRuntime().exec("adb logcat -d -e \"FATAL EXCEPTION\" -e \"ANR in\"");
+            BufferedReader reader = new BufferedReader(new java.io.InputStreamReader(process.getInputStream()));
+            String line;
+            boolean crashDetected = false;
+            boolean anrDetected = false;
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("FATAL EXCEPTION")) {
+                    System.err.println("LOGIN BUG DETECTED: Crash detected in logcat: " + line);
+                    crashDetected = true;
+                }
+                if (line.contains("ANR in") && line.contains(targetAppPackage)) {
+                    System.err.println("LOGIN BUG DETECTED: ANR detected in logcat: " + line);
+                    anrDetected = true;
+                }
+            }
+            reader.close();
+            process.waitFor();
+            if (!crashDetected)
+                System.out.println("No new FATAL EXCEPTIONs in logcat dump.");
+            if (!anrDetected)
+                System.out.println("No new ANRs for " + targetAppPackage + " in logcat dump.");
+
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Error reading or processing logcat output: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     @Test
-    public void runTest() throws MalformedURLException {
-        long startTime = System.currentTimeMillis();
-        long duration = 3600000;  // Run for 1 hour
+    public void runTest() throws MalformedURLException, IOException, InterruptedException {
+        long testStartTime = System.currentTimeMillis();
+        long testDuration = 3600000;
         boolean googleLoginInitiated = false;
         boolean facebookLoginInitiated = false;
 
+        try {
+            Runtime.getRuntime().exec("adb logcat -c");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        while (System.currentTimeMillis() - startTime < duration) {
+        while (System.currentTimeMillis() - testStartTime < testDuration) {
+            long roundStartTime = System.currentTimeMillis();
+            System.out.println("--- Starting new test round --- " + retryCount);
+            totalAttempts++;
+            currentRoundUsedSpecialChars = false;
+
             if (!isTargetAppInForeground()) {
                 System.out.println("App is not in the foreground, bringing it back...");
                 bringAppToForeground();
+                TimeUnit.SECONDS.sleep(2);
             }
             stopMonkey();
-            // First try to collect available login methods
+            new File(fridaLogFilePath).delete();
+            fridaManager.restartFrida(targetAppPackage);
+
             List<Runnable> loginMethods = new ArrayList<>();
             FindLoginMethod(loginMethods);
-            // If no login methods are available, start monkey try to found login page
+
             if (loginMethods.isEmpty()) {
-                System.out.println("No login methods detected, starting monkey to explore the app...");
-                // Check every five seconds
-                while (loginMethods.isEmpty() && (System.currentTimeMillis() - startTime < duration)) {
+                System.out.println("No login methods detected directly, starting monkey to explore the app...");
+                long monkeyStartTime = System.currentTimeMillis();
+                while (loginMethods.isEmpty() && (System.currentTimeMillis() - monkeyStartTime < 30000)
+                        && (System.currentTimeMillis() - testStartTime < testDuration)) {
                     startMonkey();
                     try {
                         TimeUnit.SECONDS.sleep(5);
                         FindLoginMethod(loginMethods);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                stopMonkey();  // If loginMethods is not empty or time run out, then stop Monkey
-            }
-
-            // If time run out still not found login methods, exit the program
-            if (loginMethods.isEmpty()) {
-                System.out.println("Test failed: No login methods found within the allocated time.");
-                tearDown();  // clear
-                throw new RuntimeException("Failed to find login methods in the given time frame.");
-            } else {
-                // Log found login methods
-                System.out.println("Detected login methods: ");
-                loginMethods.forEach(method -> System.out.println(method.getClass().getSimpleName()));
-            }
-
-            // If already found the login methods,start monkey to trigger login method
-            while (System.currentTimeMillis() - startTime < duration) {
-                startMonkey();
-                try {
-                    TimeUnit.SECONDS.sleep(5);
-                    FindLoginMethod(loginMethods);
-                    // Check if currently on the login page
-                    if (!isLoginElementPresent()) {
-                        System.out.println("Not on login page, restarting app...");
-                        restoreSnapshot();
-                        restartAppiumSession();
-                        // Optionally, restart Frida as needed
-                        fridaManager.restartFrida(app);
-                        // TODO restart frida
+                        Thread.currentThread().interrupt();
                         break;
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                WebElement clickedElement = getFocusedElement();
-                if (clickedElement != null) {
-                    // Check if the clicked element is the Google or Facebook login button
-                    if (isGoogleLoginButton(clickedElement)) {
-                        googleLoginInitiated = true;
-                        System.out.println("Google login button clicked. Google login method initiated.");
-                        continue;  // Wait for username or password field interaction
-                    } else if (isFacebookLoginButton(clickedElement)) {
-                        facebookLoginInitiated = true;
-                        System.out.println("Facebook login button clicked. Facebook login method initiated.");
-                        continue;  // Wait for username or password field interaction
-                    }
-                    int isUserOrPass = isUsernameOrPassword(clickedElement);
-                    if (isUserOrPass != 0) {
-                        stopMonkey();
-                    }
-                    // Process credentials filling if the flags are set
-                    if (googleLoginInitiated && isUserOrPass != 0) {
-                        String[] credentials = getRandomGoogleCredentials();
-                        String key = "";
-                        if (isUserOrPass == 1) {
-                            key = credentials[0];
-                        } else {
-                            key = credentials[1];
-                        }
-                        fillLoginDetails(clickedElement, key);
-                        System.out.println("Filled Google login credentials.");
-                    } else if (facebookLoginInitiated && isUserOrPass != 0) {
-                        String[] credentials = getRandomFacebookCredentials();
-                        String key = "";
-                        if (isUserOrPass == 1) {
-                            key = credentials[0];
-                        } else {
-                            key = credentials[1];
-                        }
-                        fillLoginDetails(clickedElement, key);
-                        System.out.println("Filled Facebook login credentials.");
-                        startMonkey();
-                    } else if (isUserOrPass != 0) { // native username password login
-                        String key = "";
-                        if (isUserOrPass == 1) {
-                            key = getRandomAccount();
-                        } else {
-                            key = getRandomPassword();
-                        }
-                        fillLoginDetails(clickedElement, key);
-                        System.out.println("Filled Native login credentials.");
-                    }
-                    if (isLoginButton(clickedElement)) {
-                        System.out.println("Login button clicked, reset.");
-                        googleLoginInitiated = false;
-                        facebookLoginInitiated = false;
                     }
                 }
                 stopMonkey();
             }
+
+            if (loginMethods.isEmpty()) {
+                System.out.println("Test round failed: No login methods found for app: " + targetAppPackage);
+                restoreSnapshot();
+                restartAppiumSession();
+                fridaManager.restartFrida(targetAppPackage);
+                retryCount++;
+                if (retryCount > maxRetries) {
+                    System.err.println("Max retries reached for finding login methods. Ending test.");
+                    break;
+                }
+                continue;
+            }
+
+            System.out.println("Detected login methods: ");
+            loginMethods.forEach(method -> System.out.println(method.getClass().getSimpleName()));
+
+            boolean onLoginPage = isLoginElementPresent();
+
+            long interactionStartTime = System.currentTimeMillis();
+            while (System.currentTimeMillis() - interactionStartTime < 60000
+                    && (System.currentTimeMillis() - testStartTime < testDuration)) {
+                if (!isTargetAppInForeground()) {
+                    bringAppToForeground();
+                    TimeUnit.SECONDS.sleep(2);
+                }
+                startMonkey();
+                try {
+                    TimeUnit.SECONDS.sleep(5);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+                stopMonkey();
+
+                if (!isLoginElementPresent()) {
+                    System.out.println(
+                            "Not on a recognized login page (UI check). Might have logged in or navigated away.");
+                    break;
+                }
+
+                WebElement focusedElement = getFocusedElement();
+                WebElement clickedElement = focusedElement;
+
+                if (clickedElement != null) {
+                    System.out.println("Monkey possibly interacted with: " + clickedElement.getTagName() + " Text:"
+                            + clickedElement.getText());
+                    if (isGoogleLoginButton(clickedElement) && !googleLoginInitiated) {
+                        googleLoginInitiated = true;
+                        System.out.println("Google login button targeted. Attempting Google login flow.");
+                    } else if (isFacebookLoginButton(clickedElement) && !facebookLoginInitiated) {
+                        facebookLoginInitiated = true;
+                        System.out.println("Facebook login button targeted. Attempting Facebook login flow.");
+                    }
+
+                    int credentialFieldType = isUsernameOrPassword(clickedElement);
+                    if (credentialFieldType != 0) {
+                        String keyValue;
+                        if (googleLoginInitiated) {
+                            String[] creds = getRandomGoogleCredentials();
+                            keyValue = (credentialFieldType == 1) ? creds[0] : creds[1];
+                            System.out.println("Filling Google credential (type " + credentialFieldType + ")");
+                        } else if (facebookLoginInitiated) {
+                            String[] creds = getRandomFacebookCredentials();
+                            keyValue = (credentialFieldType == 1) ? creds[0] : creds[1];
+                            System.out.println("Filling Facebook credential (type " + credentialFieldType + ")");
+                        } else {
+                            if (credentialFieldType == 1) {
+                                keyValue = getRandomAccount();
+                            } else {
+                                keyValue = getRandomPassword();
+                                if (containsSpecialCharacters(keyValue)) {
+                                    System.out.println("Password with special characters selected for this attempt.");
+                                    currentRoundUsedSpecialChars = true;
+                                }
+                            }
+                            System.out.println(
+                                    "Filling Native credential (type " + credentialFieldType + "): " + keyValue);
+                        }
+                        fillLoginDetails(clickedElement, keyValue);
+                    }
+
+                    if (isLoginButton(clickedElement)) {
+                        System.out.println("Login button targeted/clicked by Monkey. Login attempt initiated.");
+                        long clickTime = System.currentTimeMillis();
+                        clickedElement.click();
+
+                        int loginTimeoutSeconds = 10; // Defaulting to 10 seconds
+                        TimeUnit.SECONDS.sleep(loginTimeoutSeconds / 2);
+
+                        long disappearTime = -1;
+                        try {
+                            if (clickedElement.isDisplayed()) {
+                                System.out.println("Login button still visible after click and wait.");
+                            } else {
+                                disappearTime = System.currentTimeMillis();
+                                System.out.println("Login button disappeared. Potential login success/navigation.");
+                            }
+                        } catch (StaleElementReferenceException | NoSuchElementException e) {
+                            disappearTime = System.currentTimeMillis();
+                            System.out.println(
+                                    "Login button became stale/disappeared. Potential login success/navigation.");
+                        }
+
+                        long loginDurationMs = (disappearTime != -1) ? (disappearTime - clickTime)
+                                : (System.currentTimeMillis() - clickTime);
+
+                        if (loginDurationMs > loginTimeoutSeconds * 1000) {
+                            System.err.println("LOGIN BUG DETECTED: Potential Login Delay/Timeout (UI). Duration: "
+                                    + loginDurationMs + "ms");
+                            failedLogins++;
+                        }
+
+                        googleLoginInitiated = false;
+                        facebookLoginInitiated = false;
+                        break;
+                    }
+                }
+            }
+
+            stopMonkey();
+            System.out.println("--- End of Interaction for Round ---");
+
+            analyzeRoundLogs();
+
+            checkCrashAndAnrLogs();
+
+            if (!isLoginElementPresent() && isTargetAppInForeground()) {
+                System.out.println("UI indicates potential login success (login elements gone).");
+                successfulLogins++;
+            } else if (isLoginElementPresent()) {
+                System.out.println("UI indicates still on login page or returned to it.");
+            }
+
+            System.out.println("Preparing for next round...");
+            restoreSnapshot();
+            restartAppiumSession();
+
+            retryCount = 0;
+            System.out.println("Round completed. Total attempts: " + totalAttempts + ", Success (UI hint): "
+                    + successfulLogins + ", Failed (UI hint): " + failedLogins);
+            System.out.println("---------------------------------------");
+            TimeUnit.SECONDS.sleep(5);
         }
-        System.out.println("Test completed.");
+        System.out.println("Test duration reached. Test completed.");
     }
 
     private boolean isLoginButton(WebElement element) {
-        // Get element's attributes for comparison
-        String elementResourceId = element.getAttribute("resource-id");
-        String elementName = element.getAttribute("name");
-        String elementContentDesc = element.getAttribute("content-desc");
-        WebElement LoginField = getCommonLoginField(config.getLoginButtonPattern(), "Login Button field found.", "Login Button not found.");
-        return matchesAny(LoginField, elementResourceId, elementName, elementContentDesc);
+        if (element == null)
+            return false;
+        return matchesPattern(element, config.getLoginButtonPattern());
     }
 
     private int isUsernameOrPassword(WebElement element) {
-        // Fetch the username and password field based on defined patterns
-        WebElement usernameField = getCommonLoginField(config.getUsernamePattern(), "Username field found.", "Username field not found.");
-        WebElement passwordField = getCommonLoginField(config.getPasswordPattern(), "Password field found.", "Password field not found.");
-
-        // Get element's attributes for comparison
-        String elementResourceId = element.getAttribute("resource-id");
-        String elementName = element.getAttribute("name");
-        String elementContentDesc = element.getAttribute("content-desc");
-
-        // Compare these attributes with username and password fields
-        if (matchesAny(usernameField, elementResourceId, elementName, elementContentDesc)) {
-            return 1;  // Username field
-        } else if (matchesAny(passwordField, elementResourceId, elementName, elementContentDesc)) {
-            return 2;  // Password field
-        }
-        return 0;  // No match
+        if (element == null)
+            return 0;
+        if (matchesPattern(element, config.getUsernamePattern()))
+            return 1;
+        if (matchesPattern(element, config.getPasswordPattern()))
+            return 2;
+        return 0;
     }
 
     private boolean matchesAny(WebElement field, String resourceId, String name, String contentDesc) {
@@ -289,74 +552,71 @@ public class LoginDetectTest {
         return false;
     }
 
-
     private boolean isGoogleLoginButton(WebElement element) {
-        // Implement the logic to determine if the element is the Google login button
-        return element.getAttribute("content-desc").contains("Google") || element.getText().contains("Google");
+        if (element == null)
+            return false;
+        String text = element.getText();
+        String contentDesc = element.getAttribute("content-desc");
+        return (text != null && text.toLowerCase().contains("google")) ||
+                (contentDesc != null && contentDesc.toLowerCase().contains("google"));
     }
 
     private boolean isFacebookLoginButton(WebElement element) {
-        // Implement the logic to determine if the element is the Facebook login button
-        return element.getAttribute("content-desc").contains("Facebook") || element.getText().contains("Facebook");
+        if (element == null)
+            return false;
+        String text = element.getText();
+        String contentDesc = element.getAttribute("content-desc");
+        return (text != null && text.toLowerCase().contains("facebook")) ||
+                (contentDesc != null && contentDesc.toLowerCase().contains("facebook"));
     }
-
 
     private void FindLoginMethod(List<Runnable> loginMethods) {
         if (isGoogleLoginAvailable()) {
             System.out.println("Google login button detected.");
-            loginMethods.add(this::handleGoogleLogin);  // Add Google login to available methods
+            loginMethods.add(this::handleGoogleLogin);
         }
         if (isFacebookLoginAvailable()) {
             System.out.println("Facebook login button detected.");
-            loginMethods.add(this::handleFacebookLogin);  // Add Facebook login to available methods
+            loginMethods.add(this::handleFacebookLogin);
         }
         if (isNativeLoginAvailable()) {
             System.out.println("Native login elements detected.");
-            loginMethods.add(this::handleNativeLogin);  // Add Native login to available methods
+            loginMethods.add(this::handleNativeLogin);
         }
     }
 
-
     private boolean isLoginElementPresent() {
-        // Try to find the username field and log the result
-        WebElement usernameField = getCommonLoginField(config.getUsernamePattern(), "Username field found.", "Username field not found.");
+        WebElement usernameField = getCommonLoginField(config.getUsernamePattern(), "Username field found.",
+                "Username field not found.");
+        WebElement passwordField = getCommonLoginField(config.getPasswordPattern(), "Password field found.",
+                "Password field not found.");
+        WebElement loginButton = getCommonLoginField(config.getLoginButtonPattern(), "Login button found.",
+                "Login button not found.");
 
-        // Try to find the password field and log the result
-        WebElement passwordField = getCommonLoginField(config.getPasswordPattern(), "Password field found.", "Password field not found.");
-
-        // Try to find the login button and log the result
-        WebElement loginButton = getCommonLoginField(config.getLoginButtonPattern(), "Login button found.", "Login button not found.");
-
-        // Check if all necessary elements are present on the same page
         if (usernameField != null && passwordField != null && loginButton != null) {
             return true;
         } else if (usernameField != null && passwordField == null) {
-            // If only the username field is present, handle the possibility of a multi-page login process
             return handleMultiPageLogin(usernameField);
         }
 
         return false;
     }
 
-
-    // New method to handle multi-page login scenarios
     private boolean handleMultiPageLogin(WebElement usernameField) {
         try {
-            // Enter the username and submit
             usernameField.click();
             usernameField.clear();
             usernameField.sendKeys(getRandomAccount());
             driver.executeScript("mobile: hideKeyboard");
 
-            // Click on next/submit if there is a "next" button or auto submission
             WebElement nextButton = safelyFindElement(config.getNextButtonPattern());
             if (nextButton != null) {
                 nextButton.click();
             }
 
-            // Wait for the page to load and check if the password field appears
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));  // Adjust wait time as needed
-            WebElement passwordField = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(config.getPasswordPattern().toString())));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement passwordField = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath(config.getPasswordPattern().toString())));
 
             return passwordField != null;
         } catch (Exception e) {
@@ -389,7 +649,8 @@ public class LoginDetectTest {
         final int MAX_TRIES = 3;
         for (int attempt = 0; attempt < MAX_TRIES; attempt++) {
             try {
-                List<WebElement> elements = driver.findElements(By.xpath("//android.widget.EditText | //android.widget.Button | //android.widget.TextView"));
+                List<WebElement> elements = driver.findElements(
+                        By.xpath("//android.widget.EditText | //android.widget.Button | //android.widget.TextView"));
                 for (WebElement element : elements) {
                     if (matchesPattern(element, pattern)) {
                         return element;
@@ -402,7 +663,7 @@ public class LoginDetectTest {
                 System.out.println("Element not found for pattern: " + pattern);
             }
         }
-        return null; // Return null if no element is found after retries
+        return null;
     }
 
     private boolean matchesPattern(WebElement element, Pattern pattern) {
@@ -410,13 +671,15 @@ public class LoginDetectTest {
         String name = element.getAttribute("name");
         String contentDesc = element.getAttribute("content-desc");
         String text = element.getText();
-        System.out.println("Checking element with Resource-ID: '" + resourceId + "', Name: '" + name + "', Content-Desc: '" + contentDesc + "', Text: '" + text + "'");
+        System.out.println("Checking element with Resource-ID: '" + resourceId + "', Name: '" + name
+                + "', Content-Desc: '" + contentDesc + "', Text: '" + text + "'");
         return pattern.matcher(resourceId).matches() || pattern.matcher(name).matches() ||
                 pattern.matcher(contentDesc).matches() || pattern.matcher(text).matches();
     }
 
     public WebElement findElementByPattern(Pattern pattern) {
-        List<WebElement> elements = driver.findElements(By.xpath("//android.widget.EditText | //android.widget.Button | //android.widget.TextView"));
+        List<WebElement> elements = driver.findElements(
+                By.xpath("//android.widget.EditText | //android.widget.Button | //android.widget.TextView"));
         for (WebElement element : elements) {
             System.out.println("element" + element);
             String resourceId = element.getAttribute("resource-id");
@@ -424,8 +687,8 @@ public class LoginDetectTest {
             String contentDesc = element.getAttribute("content-desc");
             String text = element.getText();
 
-            System.out.println("Checking element with Resource-ID: '" + resourceId + " name: " + name + "', Content-Desc: '" + contentDesc + "', Text: '" + text + "'");
-
+            System.out.println("Checking element with Resource-ID: '" + resourceId + " name: " + name
+                    + "', Content-Desc: '" + contentDesc + "', Text: '" + text + "'");
 
             if (pattern.matcher(element.getAttribute("resource-id")).matches() ||
                     pattern.matcher(element.getAttribute("name")).matches() ||
@@ -437,9 +700,8 @@ public class LoginDetectTest {
         return null;
     }
 
-
     private WebElement getFocusedElement() {
-        return driver.switchTo().activeElement();  // Get currently focused element
+        return driver.switchTo().activeElement();
     }
 
     private boolean isTargetElement(WebElement element) {
@@ -452,7 +714,6 @@ public class LoginDetectTest {
         return false;
     }
 
-
     private void fillLoginDetails(WebElement element, String key) {
         element.click();
         driver.executeScript("mobile: hideKeyboard");
@@ -461,7 +722,6 @@ public class LoginDetectTest {
         element.sendKeys(key);
         driver.executeScript("mobile: hideKeyboard");
     }
-
 
     private List<String> readLinesFromFile(String filePath) {
         List<String> lines = new ArrayList<>();
@@ -516,14 +776,13 @@ public class LoginDetectTest {
     }
 
     private boolean isNativeLoginAvailable() {
-        return isLoginElementPresent();  // Use the existing method to check for native login elements
+        return isLoginElementPresent();
     }
 
     private void handleNativeLogin() {
         WebElement focusedElement = getFocusedElement();
     }
 
-    // Check if the Google login button is available on the screen
     private boolean isGoogleLoginAvailable() {
         try {
             WebElement googleLoginButton = driver.findElement(By.xpath("//*[contains(@text, 'Google') " +
@@ -536,7 +795,6 @@ public class LoginDetectTest {
         }
     }
 
-    // Check if the Facebook login button is available on the screen
     private boolean isFacebookLoginAvailable() {
         try {
             WebElement facebookLoginButton = driver.findElement(By.xpath("//*[contains(@text, 'Facebook')" +
@@ -547,74 +805,62 @@ public class LoginDetectTest {
         }
     }
 
-    // Method to randomly select Google credentials from the pool
     private String[] getRandomGoogleCredentials() {
         Random rand = new Random();
         String email = googleEmailPool.get(rand.nextInt(googleEmailPool.size()));
         String password = googlePasswordPool.get(rand.nextInt(googlePasswordPool.size()));
-        return new String[]{email, password};  // Return both email and password
+        return new String[] { email, password };
     }
 
-    // Method to randomly select Facebook email and password independently
     private String[] getRandomFacebookCredentials() {
         Random rand = new Random();
         String email = facebookEmailPool.get(rand.nextInt(facebookEmailPool.size()));
         String password = facebookPasswordPool.get(rand.nextInt(facebookPasswordPool.size()));
-        return new String[]{email, password};  // Return both email and password
+        return new String[] { email, password };
     }
 
-    // Modify Google login handling to use credentials from the pool
     public void handleGoogleLogin() {
         try {
-            // Switch to Google login WebView
-            driver.context("WEBVIEW_com.google.android.gms");  // Switch to WebView context
+            driver.context("WEBVIEW_com.google.android.gms");
 
-            // Get random Google credentials
             String[] googleCredentials = getRandomGoogleCredentials();
             String email = googleCredentials[0];
             String password = googleCredentials[1];
 
-            // Find the email input field and enter the email
             WebElement emailField = driver.findElement(By.xpath("//input[@type='email']"));
             emailField.sendKeys(email);
             driver.findElement(By.xpath("//span[text()='Next']")).click();
 
-            // Wait for the password input field to load
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            WebElement passwordField = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@type='password']")));
+            WebElement passwordField = wait
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@type='password']")));
             passwordField.sendKeys(password);
             driver.findElement(By.xpath("//span[text()='Next']")).click();
 
-            // After completing login, return to the native app context
             driver.context("NATIVE_APP");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // Similar logic can be used for handling Facebook login
     public void handleFacebookLogin() {
         try {
-            // Switch to Facebook login WebView
-            driver.context("WEBVIEW_com.facebook");  // Switch to WebView context
+            driver.context("WEBVIEW_com.facebook");
 
-            // Get random Facebook credentials
             String[] facebookCredentials = getRandomFacebookCredentials();
             String email = facebookCredentials[0];
             String password = facebookCredentials[1];
 
-            // Find the email input field and enter the email
             WebElement emailField = driver.findElement(By.xpath("//input[@type='email']"));
             emailField.sendKeys(email);
             driver.findElement(By.xpath("//span[text()='Next']")).click();
 
-            // Wait for the password input field to load
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            WebElement passwordField = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@type='password']")));
+            WebElement passwordField = wait
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@type='password']")));
             passwordField.sendKeys(password);
             driver.findElement(By.xpath("//span[text()='Next']")).click();
 
-            // After completing login, return to the native app context
             driver.context("NATIVE_APP");
         } catch (Exception e) {
             e.printStackTrace();
@@ -623,11 +869,18 @@ public class LoginDetectTest {
 
     @AfterTest
     public void tearDown() {
-        System.out.println("Total Login Attempts: " + totalAttempts + ", Login Success: " + successfulLogins +
-                ", Login Failed: " + failedLogins);
+        System.out.println("--- Test Execution Summary ---");
+        System.out.println("Total Login Attempts (Rounds): " + totalAttempts);
+        System.out.println("Successful Logins (UI Heuristic): " + successfulLogins);
+        System.out.println("Failed Logins (UI Heuristic / Timeout): " + failedLogins);
+
         if (null != driver) {
             driver.quit();
         }
         stopMonkey();
+        if (fridaManager != null) {
+            // fridaManager.stopFrida(); //TODO: Implement stopFrida() in FridaManager class
+        }
+        System.out.println("--- Test Suite Finished ---");
     }
 }
