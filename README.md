@@ -1,132 +1,155 @@
-# Android App Automated Testing & Dynamic Analysis Project
+# Android Login Issue Detection Tool
 
-This project is designed for automated testing and dynamic analysis of Android applications (APKs), mainly relying on [Appium](https://appium.io/) and [Frida](https://frida.re/).
+A comprehensive automated testing and analysis tool for detecting login-related issues in Android applications. This tool combines UI automation with dynamic analysis to identify various types of login problems.
 
-## Directory Overview
+## Features
 
-- `apps/`: Store APK files to be tested
-- `pools/`: Store account, password, and other batch test data
-- `scripts/`: Contains automation scripts, Frida hook scripts, and data processing scripts
-- `src/`: Java main program and test code
+- **Automated Login Testing**: Tests multiple login methods (native, Google, Facebook)
+- **Dynamic Analysis**: Uses Frida for API call monitoring and state tracking
+- **Issue Detection**:
+  - Navigation flow errors
+  - Application crashes
+  - ANR (Application Not Responding) detection
+  - Login timeouts
+  - Credential rejection issues
+  - Special character handling problems
 
----
+## System Architecture
 
-## Appium Automated Testing
+### Core Components
 
-### 1. About Appium
+1. **LoginDetectTest**: Main test runner that orchestrates the testing process
+   - Manages test rounds and credentials
+   - Handles UI interactions via Appium
+   - Coordinates with Frida for API monitoring
+   - Analyzes test results
 
-Appium is an open-source automation testing framework that supports automated testing of native, hybrid, and mobile web applications, compatible with both Android and iOS.
+2. **FridaManager**: Manages Frida integration
+   - Handles Frida process lifecycle
+   - Manages API hook patterns
+   - Coordinates with login_agent.js
 
-### 2. Installing Appium
+3. **ApiLogAnalyzer**: Processes API call logs
+   - Maps API calls to application states
+   - Detects invalid state transitions
+   - Identifies potential issues
 
-#### Install Node.js (Appium depends on Node.js)
+4. **LoginReportManager**: Generates detailed test reports
+   - Tracks detected issues
+   - Generates test summaries
+   - Maintains issue statistics
 
-```bash
-# macOS
-brew install node
-# Ubuntu
-sudo apt-get install nodejs npm
-```
+### Supporting Components
 
-#### Install Appium Server
+- **login_agent.js**: Frida script for API monitoring
+- **frida_controller.py**: Python script for Frida RPC communication
+- **ConfigLoader**: Manages test configuration and patterns
 
-```bash
-npm install -g appium
-```
+## Prerequisites
 
-#### Install Appium Client (Java)
+1. **Java Development Environment**
+   - JDK 8 or higher
+   - Maven for dependency management
 
-The dependency is already added in `pom.xml`:
+2. **Android Development Tools**
+   - Android SDK
+   - ADB (Android Debug Bridge)
+   - An Android device or emulator
 
-```xml
-<dependency>
-    <groupId>io.appium</groupId>
-    <artifactId>java-client</artifactId>
-    <version>9.3.0</version>
-    <scope>test</scope>
-</dependency>
-```
+3. **Appium**
 
-#### Start Appium Server
+   ```bash
+   npm install -g appium
+   ```
 
-```bash
-appium
-```
+4. **Frida**
 
-#### Connect Android Device
+   ```bash
+   pip install frida-tools
+   pip install frida
+   ```
 
-- Enable Developer Options and USB Debugging
-- Use `adb devices` to confirm the device is connected
+5. **Python Dependencies**
 
-#### Write and Run Tests
+   ```bash
+   pip install frida
+   ```
 
-- Write Java test code in the `src/` directory, using TestNG or JUnit for testing
-- Refer to the official Appium documentation: [Appium Java Client](https://github.com/appium/java-client)
+## Setup
 
----
+1. **Device Setup**
+   - Enable USB debugging on your Android device
+   - Install and start frida-server on the device
 
-## Frida Dynamic Analysis
+   ```bash
+   adb push frida-server /data/local/tmp/
+   adb shell "chmod 755 /data/local/tmp/frida-server"
+   adb shell "/data/local/tmp/frida-server &"
+   ```
 
-### 1. About Frida
+2. **Project Setup**
+   - Clone the repository
+   - Place test APK in the `apps/` directory
+   - Configure test credentials in the `pools/` directory
+   - Update regex patterns in `regex_patterns.txt`
 
-Frida is a powerful dynamic instrumentation toolkit for developers, reverse-engineers, and security researchers. It can be used to hook, debug, and analyze applications on Android, iOS, Windows, macOS, and more.
+3. **Configuration**
+   - Update `ConfigLoader` with appropriate patterns for your target app
+   - Configure test parameters in `LoginDetectTest`
 
-### 2. Installing Frida
+## Usage
 
-#### Install Frida Command Line Tools
+1. **Start Appium Server**
 
-```bash
-pip install frida-tools
-```
+   ```bash
+   appium
+   ```
 
-#### Install Frida Python Package
+2. **Run Tests**
 
-```bash
-pip install frida
-```
+   ```bash
+   mvn test
+   ```
 
-#### Install Frida-server on Android Device
+3. **View Results**
+   - Check the `reports/` directory for detailed test reports
+   - Review console output for real-time test progress
 
-1. [Download the appropriate frida-server](https://github.com/frida/frida/releases) for your device architecture from the Frida website
-2. Push it to the device and grant execute permissions:
+## Test Data
 
-```bash
-adb push frida-server-<arch> /data/local/tmp/
-adb shell "chmod 755 /data/local/tmp/frida-server-<arch>"
-```
+The tool uses several pools of test data:
 
-3. Start frida-server on the device:
+- `pools/accounts.txt`: Username pool
+- `pools/passwords.txt`: Password pool
+- `pools/instances.txt`: Instance URLs
+- `pools/google_accounts.txt`: Google account credentials
+- `pools/facebook_accounts.txt`: Facebook account credentials
 
-```bash
-adb shell "/data/local/tmp/frida-server-<arch> &"
-```
+## Report Format
 
-#### Check Frida Connection
+Test reports include:
 
-```bash
-frida-ps -U
-```
+- Timestamp and test duration
+- Total login attempts
+- Successful/failed login counts
+- Detailed issue breakdown
+- Issue descriptions and credentials used
+- State transition analysis
 
-### 3. Using Frida for Dynamic Analysis
+## Contributing
 
-- The `scripts/run_frida.py` script is used to automate hooking of a specified Android app package
-- `scripts/frida.js` is the Frida hook script, where you can customize hook logic
-- You can use regular expressions to batch analyze sensitive information
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
----
+## License
 
-## Typical Workflow
+[Add your license information here]
 
-1. Place the APK to be tested in the `apps/` directory
-2. Use Appium to write automation scripts for batch operations on the app
-3. Use Frida for dynamic hooking and behavioral analysis
-4. Use Python scripts to process and analyze the data
+## Acknowledgments
 
----
-
-## References
-
-- [Appium Official Documentation](https://appium.io/docs/en/about-appium/intro/)
-- [Frida Official Documentation](https://frida.re/docs/home/)
-
-For further assistance, please refer to the official documentation of each tool or contact the project maintainer.
+- Appium for UI automation
+- Frida for dynamic analysis capabilities
+- TestNG for test framework

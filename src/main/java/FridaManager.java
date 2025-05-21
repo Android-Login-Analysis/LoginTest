@@ -117,67 +117,73 @@ public class FridaManager {
         System.out.println("FridaManager: Using agent: " + fridaAgentJsPath);
         System.out.println("FridaManager: Logging API calls to: " + fridaLogFilePath);
 
-        // TODO: IMPLEMENT ACTUAL FRIDA PROCESS START AND RPC CALL
-        // This is a highly simplified placeholder.
-        // You need to:
-        // 1. Construct the correct Frida CLI command (e.g., frida -U -f <pkg> -l
-        // <agent.js> --no-pause)
-        // 2. Launch the process.
-        // 3. After a short delay for the script to load, ESTABLISH AN RPC CONNECTION to
-        // the agent.
-        // 4. Call `script.exports.init(appPackageName,
-        // this.apiRegexPatternsJsonString);` via RPC.
-        // (How to make RPC calls depends on how you launch/interface with Frida CLI)
-        // 5. Ensure fridaProcess.getOutputStream() (or errorStream) is captured if you
-        // need to read script's internal logs,
-        // but the API call logs from `console.log` in the agent should be redirected
-        // via command line to fridaLogFilePath.
-
         try {
-            // Example: "frida -U -f com.example.app -l login_agent.js --no-pause"
-            // The output redirection to fridaLogFilePath should ideally be part of the
-            // Frida command or ProcessBuilder setup.
-            String fridaCommand = String.format("frida -U -f %s -l %s --no-pause",
-                    appPackageName,
-                    fridaAgentJsPath);
+            // Step 1: Launch Frida and attach to the application
+            // Ensure the frida_log_file is empty or ready for appending
+            new File(fridaLogFilePath).delete();
 
-            System.out.println("FridaManager: Executing command: " + fridaCommand);
-            System.out.println(
-                    "FridaManager: IMPORTANT - RPC call to agent's init() function with JSON regex is NOT implemented in this stub.");
-            System.out.println("FridaManager: JSON to be sent: " + this.apiRegexPatternsJsonString);
+            // Create the basic Frida command
+            List<String> command = new ArrayList<>();
+            command.add("frida");
+            command.add("-U"); // USB device
+            command.add("-f"); // Force spawn
+            command.add(appPackageName);
+            command.add("-l");
+            command.add(fridaAgentJsPath);
+            command.add("--no-pause");
+            command.add("--runtime=v8");
 
-            ProcessBuilder processBuilder = new ProcessBuilder(fridaCommand.split(" "));
-            // Redirects Frida's stdout (which includes agent's console.log for API calls)
-            // to fridaLogFilePath.
-            processBuilder.redirectOutput(ProcessBuilder.Redirect.to(new File(fridaLogFilePath)));
-            processBuilder.redirectErrorStream(true); // Merge stderr to stdout, then to file
+            ProcessBuilder processBuilder = new ProcessBuilder(command);
+            // Redirect output to our log file
+            processBuilder.redirectOutput(new File(fridaLogFilePath));
+            processBuilder.redirectErrorStream(true);
 
             fridaProcess = processBuilder.start();
 
-            System.out.println("FridaManager: Frida process potentially started. PID: " + fridaProcess.pid()
-                    + ". Waiting for agent to initialize...");
-            // Wait a bit for Frida to attach and the agent to load before the test
-            // proceeds.
-            // The RPC call to init() should happen here.
-            boolean agentInitialized = false;
-            // TODO: Implement a robust way to check if agent is ready or if RPC call
-            // succeeded.
-            // For now, just a delay.
-            TimeUnit.SECONDS.sleep(10); // Increase if Frida/agent needs more time to start on your system.
-            System.out.println("FridaManager: Assumed agent initialized (RPC call needs actual implementation).");
-            agentInitialized = true; // Placeholder
+            // Step 2: Wait for Frida to attach (this is crucial)
+            System.out.println("FridaManager: Waiting for Frida to attach to: " + appPackageName);
+            TimeUnit.SECONDS.sleep(3); // Adjust as necessary
 
-            if (!agentInitialized) {
-                System.err.println(
-                        "FridaManager: Frida agent did not initialize properly (RPC call failed or timed out).");
-                stopFrida(); // Clean up
+            // Step 3: Send API regex patterns to the agent via RPC
+            // Note: The actual RPC mechanism requires pyfrida or similar tools
+            // For this implementation, we'll use a separate python script to establish RPC
+
+            String escapedJson = this.apiRegexPatternsJsonString.replace("\"", "\\\"");
+            List<String> rpcCommand = new ArrayList<>();
+            rpcCommand.add("python3");
+            rpcCommand.add("scripts/frida_controller.py");
+            rpcCommand.add(appPackageName);
+            rpcCommand.add(escapedJson);
+
+            System.out.println("FridaManager: Executing RPC call to send API regex patterns");
+            Process rpcProcess = new ProcessBuilder(rpcCommand).start();
+
+            // Read output from RPC command
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(rpcProcess.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println("RPC: " + line);
+                }
             }
+
+            int exitCode = rpcProcess.waitFor();
+            if (exitCode == 0) {
+                System.out
+                        .println("FridaManager: RPC call successful. Agent should be initialized with regex patterns.");
+            } else {
+                System.err.println("FridaManager: RPC call failed with exit code: " + exitCode);
+            }
+
+            // Give Frida agent time to set up all hooks
+            TimeUnit.SECONDS.sleep(2);
+            System.out.println("FridaManager: Frida agent should now be monitoring API calls");
 
         } catch (IOException | InterruptedException e) {
             System.err.println("FridaManager: Error starting Frida process: " + e.getMessage());
             e.printStackTrace();
             if (fridaProcess != null) {
                 fridaProcess.destroyForcibly();
+                fridaProcess = null;
             }
         }
     }
@@ -203,9 +209,12 @@ public class FridaManager {
             }
         }
         // Additional cleanup: Try to kill any leftover frida-server on device if issues
-        // persist (less ideal)
-        // try { Runtime.getRuntime().exec("adb shell pkill frida-server"); } catch
-        // (IOException e) { e.printStackTrace(); }
+        // persist
+        try {
+            Runtime.getRuntime().exec("adb shell pkill -f \"frida-server\"");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("FridaManager: stopFrida() completed.");
     }
 
