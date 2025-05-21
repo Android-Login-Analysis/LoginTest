@@ -52,6 +52,9 @@ public class LoginDetectTest {
 
     private FridaManager fridaManager;
     private ApiLogAnalyzer apiLogAnalyzer;
+    private LoginReportManager reportManager;
+    private String currentRoundCredentials = "Not Available"; // For tracking credentials used in current round
+
     // Default paths, can be made configurable
     private String fridaAgentJsPath = "login_agent.js"; // Relative path to the agent script in project root or a
                                                         // specific dir
@@ -83,6 +86,10 @@ public class LoginDetectTest {
         fridaManager = new FridaManager(actualRegexPath, actualAgentPath, actualLogPath);
         // ApiLogAnalyzer uses the same regex file but processes it differently
         apiLogAnalyzer = new ApiLogAnalyzer(actualRegexPath);
+
+        // Initialize report manager
+        reportManager = new LoginReportManager();
+        System.out.println("Report will be generated at: " + reportManager.getReportFilePath());
 
         System.out.println("ApiLogAnalyzer loaded regex patterns from: " + actualRegexPath);
         // System.out.println("FridaManager will use agent: " + actualAgentPath + " and
@@ -247,56 +254,61 @@ public class LoginDetectTest {
             } else {
                 List<String> navigationErrors = apiLogAnalyzer.findIncorrectTransitions(observedStates,
                         validStateTransitions);
+
+                // Report navigation flow errors
                 if (!navigationErrors.isEmpty()) {
-                    System.err.println("LOGIN BUG DETECTED (API Analysis): Incorrect Navigation Flow(s):");
-                    navigationErrors.forEach(System.err::println);
-                    failedLogins++;
+                    System.err.println("LOGIN BUG DETECTED: Incorrect Navigation Flow detected:");
+                    for (String error : navigationErrors) {
+                        System.err.println(error);
+                        reportManager.reportNavigationFlowError(
+                                error,
+                                String.join(" -> ", observedStates),
+                                currentRoundCredentials);
+                    }
                 } else {
-                    System.out.println("No incorrect navigation flows detected in this round based on API logs.");
+                    System.out.println("Navigation flow appears normal.");
                 }
             }
 
-            boolean loginFailedByApiState = false;
-            if (!observedStates.isEmpty()) {
-                String lastState = observedStates.get(observedStates.size() - 1);
-                if (lastState.equals("LoginFailure")) {
-                    loginFailedByApiState = true;
+            // Check for credential rejection patterns in state sequence
+            if (currentRoundUsedSpecialChars && observedStates.contains("CredentialFormatError")) {
+                System.out.println("Special character rejection pattern detected in API sequence.");
+                reportManager.reportCredentialRejection(
+                        currentRoundCredentials,
+                        true);
+            }
+
+            // Check for API-based timeout indicators
+            if (observedStates.contains("Authenticating") && !observedStates.contains("LoginSuccess")) {
+                // Check time difference between first Authenticating state and last state
+                long authStartTime = -1;
+                long authEndTime = -1;
+
+                for (int i = 0; i < calls.size(); i++) {
+                    ApiLogAnalyzer.ApiCallEntry entry = calls.get(i);
+                    if (entry.mappedState.equals("Authenticating") && authStartTime == -1) {
+                        authStartTime = entry.timestamp;
+                    }
+                    // Keep updating the end time
+                    authEndTime = entry.timestamp;
                 }
-                for (int i = 0; i < observedStates.size() - 1; i++) {
-                    if (observedStates.get(i).equals("Authenticating") &&
-                            observedStates.get(i + 1).equals("CredentialInput")) {
-                        boolean successObservedPostAuth = false;
-                        for (int j = i; j < observedStates.size(); j++) {
-                            if (observedStates.get(j).equals("LoginSuccess")) {
-                                successObservedPostAuth = true;
-                                break;
-                            }
-                            if (j > i && (observedStates.get(j).equals("CredentialInput")
-                                    || observedStates.get(j).equals("Authenticating"))) {
-                                break;
-                            }
-                        }
-                        if (!successObservedPostAuth) {
-                            loginFailedByApiState = true;
-                            break;
-                        }
+
+                if (authStartTime != -1 && authEndTime != -1) {
+                    long authDuration = authEndTime - authStartTime;
+                    int timeoutThresholdMs = 10000; // 10 seconds
+
+                    if (authDuration > timeoutThresholdMs) {
+                        System.err.println("LOGIN BUG DETECTED: Authentication process appears to have taken too long: "
+                                + authDuration + "ms");
+                        reportManager.reportLoginTimeout(authDuration, currentRoundCredentials);
                     }
                 }
-            } else if (currentRoundUsedSpecialChars) {
-                System.out.println("Warning: Special characters used, but no API states logged for this round.");
-            }
-
-            if (currentRoundUsedSpecialChars && loginFailedByApiState) {
-                System.err.println(
-                        "LOGIN BUG DETECTED (API Analysis + Credential Type): Potential Credential Rejection (special characters used and API logs indicate failure).");
-                failedLogins++;
             }
 
         } catch (IOException e) {
-            System.err.println("Error analyzing Frida log file: " + fridaLogFilePath);
+            System.err.println("Error analyzing round logs: " + e.getMessage());
             e.printStackTrace();
         }
-        currentRoundUsedSpecialChars = false;
     }
 
     private void checkCrashAndAnrLogs() {
@@ -307,22 +319,36 @@ public class LoginDetectTest {
             String line;
             boolean crashDetected = false;
             boolean anrDetected = false;
+            StringBuilder crashInfo = new StringBuilder();
+            StringBuilder anrInfo = new StringBuilder();
+
             while ((line = reader.readLine()) != null) {
                 if (line.contains("FATAL EXCEPTION")) {
                     System.err.println("LOGIN BUG DETECTED: Crash detected in logcat: " + line);
+                    crashInfo.append(line).append("\n");
                     crashDetected = true;
                 }
                 if (line.contains("ANR in") && line.contains(targetAppPackage)) {
                     System.err.println("LOGIN BUG DETECTED: ANR detected in logcat: " + line);
+                    anrInfo.append(line).append("\n");
                     anrDetected = true;
                 }
             }
             reader.close();
             process.waitFor();
-            if (!crashDetected)
+
+            // Report detected issues
+            if (crashDetected) {
+                reportManager.reportCrash(crashInfo.toString(), currentRoundCredentials);
+            } else {
                 System.out.println("No new FATAL EXCEPTIONs in logcat dump.");
-            if (!anrDetected)
+            }
+
+            if (anrDetected) {
+                reportManager.reportANR(anrInfo.toString(), currentRoundCredentials);
+            } else {
                 System.out.println("No new ANRs for " + targetAppPackage + " in logcat dump.");
+            }
 
         } catch (IOException | InterruptedException e) {
             System.err.println("Error reading or processing logcat output: " + e.getMessage());
@@ -348,6 +374,7 @@ public class LoginDetectTest {
             System.out.println("--- Starting new test round --- " + retryCount);
             totalAttempts++;
             currentRoundUsedSpecialChars = false;
+            currentRoundCredentials = "Not Available";
 
             if (!isTargetAppInForeground()) {
                 System.out.println("App is not in the foreground, bringing it back...");
@@ -438,21 +465,28 @@ public class LoginDetectTest {
                         if (googleLoginInitiated) {
                             String[] creds = getRandomGoogleCredentials();
                             keyValue = (credentialFieldType == 1) ? creds[0] : creds[1];
+                            currentRoundCredentials = "Google: " + creds[0] + " / " + creds[1];
                             System.out.println("Filling Google credential (type " + credentialFieldType + ")");
                         } else if (facebookLoginInitiated) {
                             String[] creds = getRandomFacebookCredentials();
                             keyValue = (credentialFieldType == 1) ? creds[0] : creds[1];
+                            currentRoundCredentials = "Facebook: " + creds[0] + " / " + creds[1];
                             System.out.println("Filling Facebook credential (type " + credentialFieldType + ")");
                         } else {
+                            String username = "";
+                            String password = "";
                             if (credentialFieldType == 1) {
                                 keyValue = getRandomAccount();
+                                username = keyValue;
                             } else {
                                 keyValue = getRandomPassword();
+                                password = keyValue;
                                 if (containsSpecialCharacters(keyValue)) {
                                     System.out.println("Password with special characters selected for this attempt.");
                                     currentRoundUsedSpecialChars = true;
                                 }
                             }
+                            currentRoundCredentials = "Standard: " + username + " / " + password;
                             System.out.println(
                                     "Filling Native credential (type " + credentialFieldType + "): " + keyValue);
                         }
@@ -487,6 +521,7 @@ public class LoginDetectTest {
                         if (loginDurationMs > loginTimeoutSeconds * 1000) {
                             System.err.println("LOGIN BUG DETECTED: Potential Login Delay/Timeout (UI). Duration: "
                                     + loginDurationMs + "ms");
+                            reportManager.reportLoginTimeout(loginDurationMs, currentRoundCredentials);
                             failedLogins++;
                         }
 
@@ -500,9 +535,11 @@ public class LoginDetectTest {
             stopMonkey();
             System.out.println("--- End of Interaction for Round ---");
 
-            analyzeRoundLogs();
-
+            // Check crash and ANR logs after each round
             checkCrashAndAnrLogs();
+
+            // Analyze API logs captured by Frida for this round
+            analyzeRoundLogs();
 
             if (!isLoginElementPresent() && isTargetAppInForeground()) {
                 System.out.println("UI indicates potential login success (login elements gone).");
@@ -514,14 +551,18 @@ public class LoginDetectTest {
             System.out.println("Preparing for next round...");
             restoreSnapshot();
             restartAppiumSession();
+            fridaManager.restartFrida(targetAppPackage);
 
             retryCount = 0;
             System.out.println("Round completed. Total attempts: " + totalAttempts + ", Success (UI hint): "
                     + successfulLogins + ", Failed (UI hint): " + failedLogins);
             System.out.println("---------------------------------------");
+            System.out.println("Test round completed in " + (System.currentTimeMillis() - roundStartTime) + "ms");
             TimeUnit.SECONDS.sleep(5);
         }
-        System.out.println("Test duration reached. Test completed.");
+
+        // At the end of all test rounds, write the summary report
+        reportManager.writeTestSummary(totalAttempts, successfulLogins, failedLogins);
     }
 
     private boolean isLoginButton(WebElement element) {
@@ -879,7 +920,7 @@ public class LoginDetectTest {
         }
         stopMonkey();
         if (fridaManager != null) {
-            // fridaManager.stopFrida(); //TODO: Implement stopFrida() in FridaManager class
+            fridaManager.stopFrida();
         }
         System.out.println("--- Test Suite Finished ---");
     }
