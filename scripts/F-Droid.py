@@ -1,3 +1,5 @@
+import urllib
+
 import AdvancedHTMLParser as AdvancedHTMLParser
 from urllib.request import urlopen
 

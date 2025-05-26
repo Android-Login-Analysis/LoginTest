@@ -1,5 +1,5 @@
 import frida
-
+# frida script을 주입하고 log를 수집하는 역할을 함
 
 def read_regex_patterns(file_path):
     with open(file_path, 'r') as file:
@@ -12,7 +12,8 @@ def on_message(message, data):
 
 def main(target_package):
 
-    device = frida.get_remote_device()
+    #device = frida.get_remote_device()
+    device = frida.get_local_device()
     pid = device.spawn([target_package])
     session = device.attach(pid)
 

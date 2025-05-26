@@ -83,7 +83,7 @@ public class LoginDetectTest {
 
         this.config = new ConfigLoader();
         // Initialize FridaManager with paths
-        fridaManager = new FridaManager(actualRegexPath, actualAgentPath, actualLogPath);
+        fridaManager = new FridaManager(actualRegexPath, actualAgentPath, actualLogPath, app);
         // ApiLogAnalyzer uses the same regex file but processes it differently
         apiLogAnalyzer = new ApiLogAnalyzer(actualRegexPath);
 
