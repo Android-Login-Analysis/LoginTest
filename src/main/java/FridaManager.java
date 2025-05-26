@@ -25,7 +25,7 @@ public class FridaManager {
     // The Frida agent itself only needs the regex strings to hook methods.
     private Map<String, Pattern> stateToApiRegexPatterns;
 
-    public FridaManager(String stateAndApiRegexFilePath, String agentJsPath, String logPath) {
+    public FridaManager(String stateAndApiRegexFilePath, String agentJsPath, String logPath, String unused) {
         this.fridaAgentJsPath = agentJsPath;
         this.fridaLogFilePath = logPath;
         this.apiRegexOnlyPatternsForAgent = new ArrayList<>();
