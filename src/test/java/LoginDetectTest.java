@@ -56,10 +56,10 @@ public class LoginDetectTest {
     private String currentRoundCredentials = "Not Available"; // For tracking credentials used in current round
 
     // Default paths, can be made configurable
-    private String fridaAgentJsPath = "login_agent.js"; // Relative path to the agent script in project root or a
-                                                        // specific dir
-    private String fridaLogFilePath = "frida_api_log.txt"; // Log file in project root
-    private String regexPatternsFilePathConfig = "regex_patterns.txt"; // Regex patterns file
+    private String fridaAgentJsPath = "src/main/resources/login_agent.js"; // Path in resources directory
+    private String fridaLogFilePath = "src/main/resources/frida_api_log.txt"; // Log file in resources directory
+    private String regexPatternsFilePathConfig = "src/main/resources/regex_patterns.txt"; // Regex patterns file in
+                                                                                          // resources directory
 
     private Map<String, List<String>> validStateTransitions;
     private boolean currentRoundUsedSpecialChars = false; // For Credential Rejection Oracle
