@@ -3,7 +3,6 @@
 <suite name="Login Test Suite">
     <test name="Login Tests">
         <classes>
-            <class name="FirstAndroidTest"/>
             <class name="LoginDetectTest"/>
         </classes>
     </test>

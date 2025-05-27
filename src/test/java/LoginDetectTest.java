@@ -112,14 +112,27 @@ public class LoginDetectTest {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platformName", "Android");
         caps.setCapability("appium:automationName", "UiAutomator2");
-        caps.setCapability("appium:platformVersion", "15.0");
+        caps.setCapability("appium:platformVersion", "14.0");
         caps.setCapability("appium:deviceName", "Android Emulator");
-        caps.setCapability("appium:app", System.getProperty("user.dir") +
-                "/apps/org.mian.gitnex_550.apk");
+        caps.setCapability("appium:app", System.getProperty("user.dir") + "/apps/org.mian.gitnex_550.apk");
         caps.setCapability("appium:appPackage", app);
         caps.setCapability("appium:appActivity", activity);
 
-        driver = new AndroidDriver(new URL("http://127.0.0.1:4723/"), caps);
+        // 基本配置
+        caps.setCapability("appium:noReset", true);
+        caps.setCapability("appium:newCommandTimeout", 300);
+
+        // 设置 Appium 服务器地址
+        URL appiumServer = new URL("http://127.0.0.1:4723/");
+
+        try {
+            driver = new AndroidDriver(appiumServer, caps);
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        } catch (Exception e) {
+            System.err.println("Failed to start Appium session: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
 
         targetAppPackage = (String) driver.getCapabilities().getCapability("appPackage");
         targetAppActivity = (String) driver.getCapabilities().getCapability("appActivity");
