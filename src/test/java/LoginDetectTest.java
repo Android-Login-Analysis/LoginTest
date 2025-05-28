@@ -68,6 +68,7 @@ public class LoginDetectTest {
     public void setUp() throws MalformedURLException, IOException {
         stopMonkey();
         String projectRoot = System.getProperty("user.dir");
+        String fridaControllerPath = projectRoot + "/scripts/run_frida.py";
         // Construct absolute paths if needed, or ensure files are in expected locations
         String actualRegexPath = projectRoot + File.separator + regexPatternsFilePathConfig;
         String actualAgentPath = projectRoot + File.separator + fridaAgentJsPath;
@@ -112,7 +113,7 @@ public class LoginDetectTest {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platformName", "Android");
         caps.setCapability("appium:automationName", "UiAutomator2");
-        caps.setCapability("appium:platformVersion", "14.0");
+        caps.setCapability("appium:platformVersion", "15.0");
         caps.setCapability("appium:deviceName", "Android Emulator");
         caps.setCapability("appium:app", System.getProperty("user.dir") + "/apps/org.mian.gitnex_550.apk");
         caps.setCapability("appium:appPackage", app);
@@ -148,7 +149,8 @@ public class LoginDetectTest {
             System.out.println("App is not in foreground, bringing it to the foreground...");
             Activity activity = new Activity(targetAppPackage, targetAppActivity);
             activity.setStopApp(true);
-            driver.executeScript("mobile: startActivity", activity);
+            //driver.executeScript("mobile: startActivity", activity);
+            driver.startActivity(activity);
         } else {
             System.out.println("App is already in foreground.");
         }
@@ -372,7 +374,7 @@ public class LoginDetectTest {
     @Test
     public void runTest() throws MalformedURLException, IOException, InterruptedException {
         long testStartTime = System.currentTimeMillis();
-        long testDuration = 3600000;
+        long testDuration = 60000;
         boolean googleLoginInitiated = false;
         boolean facebookLoginInitiated = false;
 
