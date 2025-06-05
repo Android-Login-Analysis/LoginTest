@@ -146,9 +146,10 @@ public class LoginDetectTest {
     public void bringAppToForeground() {
         if (!isTargetAppInForeground()) {
             System.out.println("App is not in foreground, bringing it to the foreground...");
-            Activity activity = new Activity(targetAppPackage, targetAppActivity);
-            activity.setStopApp(true);
-            driver.executeScript("mobile: startActivity", activity);
+            Map<String, Object> args = new HashMap<>();
+            args.put("intent", String.format("%s/%s", targetAppPackage, targetAppActivity));
+            args.put("stopApp", true);
+            driver.executeScript("mobile: startActivity", args);
         } else {
             System.out.println("App is already in foreground.");
         }

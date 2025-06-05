@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  test-runner:
+    build: .
+    platform: linux/arm64
+    network_mode: host
+    privileged: true
+    volumes:
+      - .:/app
+      - /dev/bus/usb:/dev/bus/usb
+      - /var/run/usbmuxd:/var/run/usbmuxd
+      - ${HOME}/.android:/root/.android
+    ports:
+      - "4723:4723"  # Appium server
+      - "5555:5555"  # ADB
+    environment:
+      - ANDROID_HOME=/opt/android-sdk
+      - ANDROID_SDK_ROOT=/opt/android-sdk
+      - PATH=/opt/android-sdk/platform-tools:/opt/android-sdk/cmdline-tools/latest/bin:${PATH}
+      - ANDROID_AVD_HOME=${HOME}/.android/avd
+      - ANDROID_EMULATOR_HOME=${HOME}/.android
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+      - /dev/kvm:/dev/kvm  # Required for Android emulator
+    tmpfs:
+      - /tmp:exec,mode=1777
+      - /var/tmp:exec,mode=1777
+      - /var/lib/docker:exec,mode=1777
