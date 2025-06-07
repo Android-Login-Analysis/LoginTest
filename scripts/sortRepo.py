@@ -3,12 +3,14 @@ import time
 import logging
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Replace with your GitHub access token
 access_token = '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'
 
 headers = {'Authorization': f'token {access_token}'}
+
 
 def get_repo_info(repo_url):
     # Normalize the repository URL by removing the .git suffix if present
@@ -25,6 +27,7 @@ def get_repo_info(repo_url):
         logging.error(f"Error fetching {api_url}: {response.status_code}")
         return None
 
+
 def process_repos(file_path):
     results = []
     # Read repository URLs from the specified file
@@ -40,10 +43,12 @@ def process_repos(file_path):
             # Check if the last push is after January 1, 2023
             if last_push >= '2023-01-01':
                 results.append((info['full_name'], info['stargazers_count']))
-                logging.info(f"Added {info['full_name']} with {info['stargazers_count']} stars")
+                logging.info(
+                    f"Added {info['full_name']} with {info['stargazers_count']} stars")
         # Sleep for 2 seconds to avoid hitting GitHub API rate limits
         time.sleep(2)
     return results
+
 
 def write_results(results, filename):
     # Sort results by the number of stars in descending order
@@ -54,10 +59,12 @@ def write_results(results, filename):
             f.write(f"{repo[0]}: {repo[1]} stars\n")
             logging.info(f"Wrote {repo[0]}: {repo[1]} stars to file")
 
+
 # Path to the file containing repository URLs
 file_path = '/Users/zixuzhou/Programs/Java/test/scripts/githubResultsofFdroid.txt'
 
 # Process the repositories and write the results to an output file
 repo_stars = process_repos(file_path)
-write_results(repo_stars, '/Users/zixuzhou/Programs/Java/test/scripts/final_output_sorted.txt')
+write_results(
+    repo_stars, '/Users/zixuzhou/Programs/Java/test/scripts/final_output_sorted.txt')
 logging.info("Finished processing all repositories.")
