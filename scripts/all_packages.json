@@ -87,7 +87,7 @@
     "id": "info.metadude.android.congress.schedule",
     "name": "38C3 Schedule",
     "source_url": "https://github.com/EventFahrplan/EventFahrplan",
-    "stars": 252
+    "stars": 248
   },
   {
     "id": "org.andresoviedo.dddmodel2",
@@ -141,7 +141,7 @@
     "id": "io.github.divverent.aaaaxy",
     "name": "AAAAXY",
     "source_url": "https://github.com/divVerent/aaaaxy",
-    "stars": 248
+    "stars": 247
   },
   {
     "id": "de.HS_Aalen.don",
@@ -165,7 +165,7 @@
     "id": "com.greenaddress.abcore",
     "name": "ABCore",
     "source_url": "https://github.com/greenaddress/abcore",
-    "stars": 167
+    "stars": 168
   },
   {
     "id": "net.georgewhiteside.android.abstractart",
@@ -201,7 +201,7 @@
     "id": "com.foxdebug.acode",
     "name": "Acode editor - Android code editor",
     "source_url": "https://github.com/deadlyjack/Acode",
-    "stars": 3484
+    "stars": 3488
   },
   {
     "id": "anupam.acrylic",
@@ -219,7 +219,7 @@
     "id": "de.szalkowski.activitylauncher",
     "name": "Activity Launcher",
     "source_url": "https://github.com/butzist/ActivityLauncher",
-    "stars": 1111
+    "stars": 1117
   },
   {
     "id": "com.activitymanager",
@@ -237,7 +237,7 @@
     "id": "net.activitywatch.android",
     "name": "ActivityWatch",
     "source_url": "https://github.com/ActivityWatch/aw-android",
-    "stars": 201
+    "stars": 202
   },
   {
     "id": "pc.javier.actualizadoropendns",
@@ -267,7 +267,7 @@
     "id": "org.adaway",
     "name": "AdAway",
     "source_url": "https://github.com/AdAway/AdAway",
-    "stars": 7992
+    "stars": 8001
   },
   {
     "id": "io.github.yoshi1123.adbio",
@@ -279,7 +279,7 @@
     "id": "com.android.adbkeyboard",
     "name": "ADBKeyBoard",
     "source_url": "https://github.com/senzhk/ADBKeyBoard",
-    "stars": 1326
+    "stars": 1329
   },
   {
     "id": "org.adblockplus.android",
@@ -321,7 +321,7 @@
     "id": "com.adguard.android.contentblocker",
     "name": "AdGuard Content Blocker",
     "source_url": "https://github.com/AdguardTeam/ContentBlocker",
-    "stars": 611
+    "stars": 612
   },
   {
     "id": "com.davidshewitt.admincontrol",
@@ -351,7 +351,7 @@
     "id": "mattecarra.accapp",
     "name": "Advanced Charging Controller (ACCA) ",
     "source_url": "https://github.com/MatteCarra/AccA",
-    "stars": 1250
+    "stars": 1251
   },
   {
     "id": "com.codedead.advancedpassgen",
@@ -369,7 +369,7 @@
     "id": "com.beemdevelopment.aegis",
     "name": "Aegis Authenticator",
     "source_url": "https://github.com/beemdevelopment/Aegis",
-    "stars": 10432
+    "stars": 10442
   },
   {
     "id": "co.epitre.aelf_lectures",
@@ -393,7 +393,7 @@
     "id": "alt.nainapps.aer",
     "name": "Aer - Fork of Anemo",
     "source_url": "https://github.com/nain-F49FF806/anemo-aer",
-    "stars": 231
+    "stars": 230
   },
   {
     "id": "net.gitsaibot.af",
@@ -411,7 +411,7 @@
     "id": "com.freerdp.afreerdp",
     "name": "aFreeRDP",
     "source_url": "https://github.com/FreeRDP/FreeRDP",
-    "stars": 11811
+    "stars": 11815
   },
   {
     "id": "ru.ifproject.android.afr",
@@ -429,7 +429,7 @@
     "id": "dev.ukanth.ufirewall",
     "name": "AFWall+",
     "source_url": "https://github.com/ukanth/afwall",
-    "stars": 3029
+    "stars": 3031
   },
   {
     "id": "org.strawberryforum.argentum",
@@ -471,7 +471,7 @@
     "id": "de.seemoo.at_tracking_detection",
     "name": "AirGuard - AirTag protection",
     "source_url": "https://github.com/seemoo-lab/AirGuard",
-    "stars": 2090
+    "stars": 2091
   },
   {
     "id": "me.tagavari.airmessage",
@@ -513,7 +513,7 @@
     "id": "com.hassaneltantawy.alazkar",
     "name": "Al-Azkar",
     "source_url": "https://github.com/muslimpack/Al-Azkar",
-    "stars": 29
+    "stars": 32
   },
   {
     "id": "za.co.neilson.alarm",
@@ -561,7 +561,7 @@
     "id": "app.myzel394.alibi",
     "name": "Alibi",
     "source_url": "https://github.com/Myzel394/Alibi",
-    "stars": 1193
+    "stars": 1196
   },
   {
     "id": "x653.all_in_gold",
@@ -633,13 +633,13 @@
     "id": "deltazero.amarok.foss",
     "name": "Amarok",
     "source_url": "https://github.com/deltazefiro/Amarok-Hider",
-    "stars": 2159
+    "stars": 2160
   },
   {
     "id": "com.amaze.filemanager",
     "name": "Amaze",
     "source_url": "https://github.com/TeamAmaze/AmazeFileManager",
-    "stars": 5619
+    "stars": 5622
   },
   {
     "id": "com.amaze.fileutilities",
@@ -753,7 +753,7 @@
     "id": "com.fr3ts0n.ecu.gui.androbd",
     "name": "AndrOBD",
     "source_url": "https://github.com/fr3ts0n/AndrOBD",
-    "stars": 1633
+    "stars": 1634
   },
   {
     "id": "com.fr3ts0n.androbd.plugin.gpsprovider",
@@ -849,7 +849,7 @@
     "id": "org.nqmgaming.aneko",
     "name": "ANeko Reborn",
     "source_url": "https://github.com/pass-with-high-score/ANeko",
-    "stars": 203
+    "stars": 232
   },
   {
     "id": "exe.bbllw8.anemo",
@@ -879,7 +879,7 @@
     "id": "com.ichi2.anki",
     "name": "AnkiDroid: Flashcards",
     "source_url": "https://github.com/ankidroid/Anki-Android",
-    "stars": 9616
+    "stars": 9623
   },
   {
     "id": "com.jkcarino.ankieditor",
@@ -891,7 +891,7 @@
     "id": "exa.lnx.a",
     "name": "AnLinux",
     "source_url": "https://github.com/EXALAB/AnLinux-Adfree",
-    "stars": 460
+    "stars": 461
   },
   {
     "id": "de.ktran.anno1404warenrechner",
@@ -915,7 +915,7 @@
     "id": "com.maltaisn.notes.sync",
     "name": "Another notes app",
     "source_url": "https://github.com/maltaisn/another-notes-app/",
-    "stars": 385
+    "stars": 386
   },
   {
     "id": "im.narayana.another",
@@ -951,7 +951,7 @@
     "id": "de.danoeh.antennapod",
     "name": "AntennaPod",
     "source_url": "https://github.com/AntennaPod/AntennaPod",
-    "stars": 6979
+    "stars": 6985
   },
   {
     "id": "de.antonwolf.agendawidget",
@@ -1029,13 +1029,13 @@
     "id": "me.bmax.apatch",
     "name": "APatch",
     "source_url": "https://github.com/bmax121/APatch",
-    "stars": 5755
+    "stars": 5770
   },
   {
     "id": "com.apk.editor",
     "name": "APK Explorer & Editor",
     "source_url": "https://github.com/apk-editor/APK-Explorer-Editor",
-    "stars": 894
+    "stars": 896
   },
   {
     "id": "axp.tool.apkextractor",
@@ -1047,7 +1047,7 @@
     "id": "com.noxplay.noxplayer",
     "name": "APM",
     "source_url": "https://github.com/lovegaoshi/azusa-player-mobile",
-    "stars": 979
+    "stars": 982
   },
   {
     "id": "com.jvillalba.apod.classic",
@@ -1083,7 +1083,7 @@
     "id": "io.github.muntashirakon.AppManager",
     "name": "App Manager",
     "source_url": "https://github.com/MuntashirAkon/AppManager",
-    "stars": 5957
+    "stars": 5970
   },
   {
     "id": "com.gitlab.ardash.appleflinger.android",
@@ -1131,7 +1131,7 @@
     "id": "chat.delta.lite",
     "name": "ArcaneChat",
     "source_url": "https://github.com/ArcaneChat/android",
-    "stars": 194
+    "stars": 195
   },
   {
     "id": "de.neuwirthinformatik.alexander.archerystats",
@@ -1167,25 +1167,25 @@
     "id": "com.donnnno.arcticons",
     "name": "Arcticons",
     "source_url": "https://github.com/Donnnno/Arcticons",
-    "stars": 1159
+    "stars": 1161
   },
   {
     "id": "com.donnnno.arcticons.light",
     "name": "Arcticons Black",
     "source_url": "https://github.com/Donnnno/Arcticons",
-    "stars": 1159
+    "stars": 1161
   },
   {
     "id": "com.donnnno.arcticons.daynight",
     "name": "Arcticons Day & Night",
     "source_url": "https://github.com/Donnnno/Arcticons",
-    "stars": 1159
+    "stars": 1161
   },
   {
     "id": "com.donnnno.arcticons.you",
     "name": "Arcticons Material You",
     "source_url": "https://github.com/Donnnno/Arcticons",
-    "stars": 1159
+    "stars": 1161
   },
   {
     "id": "com.poppingmoon.aria",
@@ -1203,13 +1203,13 @@
     "id": "com.gianlu.aria2app",
     "name": "Aria2App",
     "source_url": "https://github.com/devgianlu/Aria2App",
-    "stars": 1268
+    "stars": 1269
   },
   {
     "id": "org.woheller69.arity",
     "name": "ArityCalc",
     "source_url": "https://github.com/woheller69/Arity",
-    "stars": 147
+    "stars": 148
   },
   {
     "id": "com.julij.arsovreme",
@@ -1317,7 +1317,7 @@
     "id": "com.mrsep.musicrecognizer",
     "name": "Audile",
     "source_url": "https://github.com/aleksey-saenko/MusicRecognizer",
-    "stars": 640
+    "stars": 643
   },
   {
     "id": "com.certified.audionote",
@@ -1341,7 +1341,7 @@
     "id": "io.github.mkckr0.audio_share_app",
     "name": "Audio Share",
     "source_url": "https://github.com/mkckr0/audio-share",
-    "stars": 1534
+    "stars": 1535
   },
   {
     "id": "fr.dzx.audiosource",
@@ -1389,7 +1389,7 @@
     "id": "com.governikus.ausweisapp2",
     "name": "AusweisApp",
     "source_url": "https://github.com/Governikus/AusweisApp2",
-    "stars": 594
+    "stars": 596
   },
   {
     "id": "uk.co.bitethebullet.android.token",
@@ -1407,7 +1407,7 @@
     "id": "design.codeux.authpass.fdroid",
     "name": "AuthPass - KeePass compatible Password Manager",
     "source_url": "https://github.com/authpass/authpass",
-    "stars": 2427
+    "stars": 2430
   },
   {
     "id": "com.jarsilio.android.autoautorotate",
@@ -1461,13 +1461,13 @@
     "id": "com.elsdoerfer.android.autostarts",
     "name": "Autostarts - Block apps from starting automaticall",
     "source_url": "https://github.com/miracle2k/android-autostarts",
-    "stars": 212
+    "stars": 213
   },
   {
     "id": "org.oxycblt.auxio",
     "name": "Auxio",
     "source_url": "https://github.com/OxygenCobalt/Auxio",
-    "stars": 2684
+    "stars": 2692
   },
   {
     "id": "com.ds.avare",
@@ -1485,7 +1485,7 @@
     "id": "deckers.thibault.aves.libre",
     "name": "Aves Libre",
     "source_url": "https://github.com/deckerst/aves",
-    "stars": 3493
+    "stars": 3498
   },
   {
     "id": "com.zoffcc.applications.avifview",
@@ -1623,7 +1623,7 @@
     "id": "com.czy0729.bangumi",
     "name": "Bangumi",
     "source_url": "https://github.com/czy0729/Bangumi",
-    "stars": 4408
+    "stars": 4418
   },
   {
     "id": "uk.ac.cam.cl.dtg.android.barcodebox",
@@ -1647,7 +1647,7 @@
     "id": "com.google.zxing.client.android",
     "name": "Barcode Scanner",
     "source_url": "https://github.com/zxing/zxing",
-    "stars": 33343
+    "stars": 33349
   },
   {
     "id": "de.cryptobitch.muelli.barcodegen",
@@ -1659,13 +1659,13 @@
     "id": "com.tutpro.baresip",
     "name": "baresip",
     "source_url": "https://github.com/juha-h/baresip-studio",
-    "stars": 310
+    "stars": 311
   },
   {
     "id": "com.tutpro.baresip.plus",
     "name": "baresip+",
     "source_url": "https://github.com/juha-h/baresip-studio",
-    "stars": 310
+    "stars": 311
   },
   {
     "id": "com.easwareapps.baria",
@@ -1677,7 +1677,7 @@
     "id": "np.com.binabh.basedcooking",
     "name": "Based Cooking",
     "source_url": "https://github.com/Binabh/based-cooking-app",
-    "stars": 20
+    "stars": 21
   },
   {
     "id": "org.eagsoftware.basiccashflow",
@@ -1731,7 +1731,7 @@
     "id": "com.darshancomputing.BatteryIndicatorPro",
     "name": "BatteryBot Pro",
     "source_url": "https://github.com/darshan-/Battery-Indicator-Pro",
-    "stars": 118
+    "stars": 117
   },
   {
     "id": "com.tobykurien.batteryfu",
@@ -1953,7 +1953,7 @@
     "id": "com.imcys.bilibilias",
     "name": "BILIBILIAS",
     "source_url": "https://github.com/1250422131/bilibilias",
-    "stars": 1242
+    "stars": 1246
   },
   {
     "id": "cn.a10miaomiao.bilidown",
@@ -1965,7 +1965,7 @@
     "id": "com.a10miaomiao.bilimiao",
     "name": "bilimiao",
     "source_url": "https://github.com/10miaomiao/bilimiao2",
-    "stars": 2163
+    "stars": 2165
   },
   {
     "id": "bim.app",
@@ -1983,7 +1983,7 @@
     "id": "de.markusfisch.android.binaryeye",
     "name": "Binary Eye",
     "source_url": "https://github.com/markusfisch/BinaryEye",
-    "stars": 1763
+    "stars": 1764
   },
   {
     "id": "de.binary_kitchen.doorlock_app",
@@ -2013,7 +2013,7 @@
     "id": "com.minar.birday",
     "name": "Birday - Birthday Manager",
     "source_url": "https://github.com/m-i-n-a-r/birday",
-    "stars": 987
+    "stars": 988
   },
   {
     "id": "org.birthdayadapter",
@@ -2055,19 +2055,19 @@
     "id": "app.michaelwuensch.bitbanana",
     "name": "BitBanana",
     "source_url": "https://github.com/michaelWuensch/BitBanana",
-    "stars": 119
+    "stars": 120
   },
   {
     "id": "de.schildbach.wallet",
     "name": "Bitcoin Wallet",
     "source_url": "https://github.com/bitcoin-wallet/bitcoin-wallet",
-    "stars": 3904
+    "stars": 3909
   },
   {
     "id": "de.schildbach.wallet_test",
     "name": "Bitcoin Wallet [testnet3]",
     "source_url": "https://github.com/bitcoin-wallet/bitcoin-wallet",
-    "stars": 3904
+    "stars": 3909
   },
   {
     "id": "com.veken0m.bitcoinium",
@@ -2091,7 +2091,7 @@
     "id": "info.metadude.android.bitsundbaeume.schedule",
     "name": "Bits & B\u00e4ume 2022 Schedule",
     "source_url": "https://github.com/johnjohndoe/CampFahrplan/tree/bitsundbaeume-2022",
-    "stars": 33
+    "stars": 34
   },
   {
     "id": "org.blackcandy.android",
@@ -2121,13 +2121,13 @@
     "id": "f.cking.software",
     "name": "BLE Radar",
     "source_url": "https://github.com/Semper-Viventem/MetaRadar",
-    "stars": 777
+    "stars": 778
   },
   {
     "id": "com.vovagorodok.ble_ota_app",
     "name": "BleOta",
     "source_url": "https://github.com/vovagorodok/ble_ota_app",
-    "stars": 56
+    "stars": 57
   },
   {
     "id": "org.ligi.blexplorer",
@@ -2193,7 +2193,7 @@
     "id": "com.merxury.blocker",
     "name": "Blocker",
     "source_url": "https://github.com/lihenggui/blocker",
-    "stars": 1718
+    "stars": 1721
   },
   {
     "id": "org.scoutant.blokish",
@@ -2247,7 +2247,7 @@
     "id": "de.simon.dankelmann.bluetoothlespam",
     "name": "Bluetooth LE Spam",
     "source_url": "https://github.com/simondankelmann/Bluetooth-LE-Spam",
-    "stars": 4378
+    "stars": 4379
   },
   {
     "id": "com.atharok.btremote",
@@ -2343,7 +2343,7 @@
     "id": "edu.berkeley.boinc",
     "name": "BOINC",
     "source_url": "https://github.com/BOINC/boinc",
-    "stars": 2152
+    "stars": 2155
   },
   {
     "id": "com.boldwallet",
@@ -2385,7 +2385,7 @@
     "id": "ua.acclorite.book_story",
     "name": "Book's Story",
     "source_url": "https://github.com/Acclorite/book-story",
-    "stars": 833
+    "stars": 834
   },
   {
     "id": "com.bugsdev2.bookaccio",
@@ -2403,13 +2403,13 @@
     "id": "nl.privacydragon.bookwyrm",
     "name": "BookWyrm",
     "source_url": "https://github.com/PrivacyDragon/Bookwyrm_Android",
-    "stars": 35
+    "stars": 36
   },
   {
     "id": "com.mardous.booming",
     "name": "Booming Music",
     "source_url": "https://github.com/mardous/BoomingMusic",
-    "stars": 119
+    "stars": 123
   },
   {
     "id": "com.elektropepi.bootboi",
@@ -2487,7 +2487,7 @@
     "id": "de.jepfa.bdt",
     "name": "Break.Down.Timer",
     "source_url": "https://github.com/jenspfahl/BDT",
-    "stars": 106
+    "stars": 108
   },
   {
     "id": "me.lecaro.breakout",
@@ -2499,13 +2499,13 @@
     "id": "com.mmazzarolo.breathly",
     "name": "Breathly",
     "source_url": "https://github.com/mmazzarolo/breathly-app",
-    "stars": 554
+    "stars": 557
   },
   {
     "id": "org.breezyweather",
     "name": "Breezy Weather",
     "source_url": "https://github.com/breezy-weather/breezy-weather",
-    "stars": 7140
+    "stars": 7158
   },
   {
     "id": "com.jithware.brethap",
@@ -2541,19 +2541,19 @@
     "id": "btools.routingapp",
     "name": "BRouter",
     "source_url": "https://github.com/abrensch/brouter",
-    "stars": 555
+    "stars": 557
   },
   {
     "id": "eth.brume.wallet",
     "name": "Brume Wallet",
     "source_url": "https://github.com/brumeproject/wallet",
-    "stars": 104
+    "stars": 103
   },
   {
     "id": "org.btcmap",
     "name": "BTC Map",
     "source_url": "https://github.com/teambtcmap/btcmap-android",
-    "stars": 71
+    "stars": 70
   },
   {
     "id": "org.woheller69.level",
@@ -2643,7 +2643,7 @@
     "id": "dev.linwood.butterfly",
     "name": "Butterfly",
     "source_url": "https://github.com/LinwoodDev/Butterfly",
-    "stars": 1362
+    "stars": 1361
   },
   {
     "id": "cc.kafuu.bilidownload",
@@ -2721,7 +2721,7 @@
     "id": "com.marktka.calculatorYou",
     "name": "Calculator You: Math & Units",
     "source_url": "https://github.com/forzzzzz/Calculator-You",
-    "stars": 228
+    "stars": 231
   },
   {
     "id": "org.solovyev.android.calculator",
@@ -2775,7 +2775,7 @@
     "id": "de.doen1el.calibreWebCompanion",
     "name": "Calibre-Web-Companion",
     "source_url": "https://github.com/doen1el/calibre-web-companion",
-    "stars": 128
+    "stars": 129
   },
   {
     "id": "com.github.webierta.call_counter",
@@ -2853,7 +2853,7 @@
     "id": "info.metadude.android.cccamp.schedule",
     "name": "Camp 2023",
     "source_url": "https://github.com/EventFahrplan/EventFahrplan",
-    "stars": 252
+    "stars": 248
   },
   {
     "id": "godau.fynn.bandcampdirect",
@@ -2865,7 +2865,7 @@
     "id": "com.vladpen.cams",
     "name": "Cams",
     "source_url": "https://github.com/vladpen/cams",
-    "stars": 157
+    "stars": 158
   },
   {
     "id": "com.dozingcatsoftware.cameratimer",
@@ -2901,7 +2901,7 @@
     "id": "org.samo_lego.canta",
     "name": "Canta",
     "source_url": "https://github.com/samolego/Canta",
-    "stars": 2356
+    "stars": 2364
   },
   {
     "id": "lu.fisch.canze",
@@ -2913,7 +2913,7 @@
     "id": "eu.darken.capod",
     "name": "CAPod - Companion for AirPods",
     "source_url": "https://github.com/d4rken-org/capod",
-    "stars": 644
+    "stars": 648
   },
   {
     "id": "io.github.muntashirakon.captiveportalcontroller",
@@ -2931,13 +2931,13 @@
     "id": "com.keshav.capturesposed",
     "name": "CaptureSposed",
     "source_url": "https://github.com/99keshav99/CaptureSposed",
-    "stars": 163
+    "stars": 164
   },
   {
     "id": "com.capyreader.app",
     "name": "Capy Reader",
     "source_url": "https://github.com/jocmp/capyreader",
-    "stars": 552
+    "stars": 554
   },
   {
     "id": "com.theksmith.android.car_bus_interface",
@@ -2961,7 +2961,7 @@
     "id": "com.georgeyt9769.cardabase",
     "name": "Cardabase",
     "source_url": "https://github.com/GeorgeYT9769/cardabase-app",
-    "stars": 16
+    "stars": 17
   },
   {
     "id": "com.example.forgottenumbrella.cardboardmuseum",
@@ -3045,13 +3045,13 @@
     "id": "me.hackerchick.catima",
     "name": "Catima \u2014 Loyalty Card Wallet",
     "source_url": "https://github.com/CatimaLoyalty/Android",
-    "stars": 1156
+    "stars": 1160
   },
   {
     "id": "moe.reimu.catshare",
     "name": "CatShare",
     "source_url": "https://github.com/kmod-midori/CatShare",
-    "stars": 453
+    "stars": 454
   },
   {
     "id": "uk.co.busydoingnothing.catverbs",
@@ -3087,7 +3087,7 @@
     "id": "de.fff.ccgt",
     "name": "ccgt",
     "source_url": "https://github.com/pterodactylus42/ccgt",
-    "stars": 22
+    "stars": 23
   },
   {
     "id": "app.cclauncher",
@@ -3201,7 +3201,7 @@
     "id": "jwtc.android.chess",
     "name": "Chess",
     "source_url": "https://github.com/jcarolus/android-chess",
-    "stars": 419
+    "stars": 420
   },
   {
     "id": "com.chess.clock",
@@ -3255,7 +3255,7 @@
     "id": "com.benjaminwan.chinesettstflite",
     "name": "ChineseTtsTflite",
     "source_url": "https://github.com/benjaminwan/ChineseTtsTflite",
-    "stars": 346
+    "stars": 347
   },
   {
     "id": "io.github.dlbeswick.kreuungching",
@@ -3309,7 +3309,7 @@
     "id": "com.vicolo.chrono",
     "name": "Chrono",
     "source_url": "https://github.com/vicolo-dev/chrono",
-    "stars": 919
+    "stars": 929
   },
   {
     "id": "com.nathanosman.chronosnap",
@@ -3381,7 +3381,7 @@
     "id": "org.woheller69.omweather",
     "name": "Cirrus",
     "source_url": "https://github.com/woheller69/omweather",
-    "stars": 494
+    "stars": 495
   },
   {
     "id": "com.greenart7c3.citrine",
@@ -3399,7 +3399,7 @@
     "id": "org.eu.mumulhl.ciyue",
     "name": "Ciyue",
     "source_url": "https://github.com/mumu-lhl/Ciyue",
-    "stars": 420
+    "stars": 423
   },
   {
     "id": "net.bitconomy.ckpoolwatcher",
@@ -3411,7 +3411,7 @@
     "id": "com.github.metacubex.clash.meta",
     "name": "Clash Meta For Android",
     "source_url": "https://github.com/MetaCubeX/ClashMetaForAndroid",
-    "stars": 23240
+    "stars": 23322
   },
   {
     "id": "de.kromke.andreas.mediascanner",
@@ -3429,7 +3429,7 @@
     "id": "com.adeeteya.classipod",
     "name": "ClassiPod",
     "source_url": "https://github.com/adeeteya/Classipod",
-    "stars": 86
+    "stars": 87
   },
   {
     "id": "com.oF2pks.classyshark3xodus",
@@ -3519,7 +3519,7 @@
     "id": "com.github.lamarios.clipious",
     "name": "Clipious",
     "source_url": "https://github.com/lamarios/clipious",
-    "stars": 1147
+    "stars": 1150
   },
   {
     "id": "com.github.shadowsocks.plugin.ck_client",
@@ -3531,7 +3531,7 @@
     "id": "com.best.deskclock",
     "name": "Clock",
     "source_url": "https://github.com/BlackyHawky/Clock",
-    "stars": 479
+    "stars": 480
   },
   {
     "id": "com.ssaurel.clocklw",
@@ -3549,7 +3549,7 @@
     "id": "com.bnyro.clock",
     "name": "Clock You",
     "source_url": "https://github.com/you-apps/ClockYou",
-    "stars": 557
+    "stars": 558
   },
   {
     "id": "com.dosse.clock31",
@@ -3567,7 +3567,7 @@
     "id": "info.metadude.android.clt.schedule",
     "name": "CLT 2025 Schedule",
     "source_url": "https://github.com/johnjohndoe/CampFahrplan",
-    "stars": 33
+    "stars": 34
   },
   {
     "id": "de.fmaul.android.cmis",
@@ -3609,7 +3609,7 @@
     "id": "com.omelan.cofi",
     "name": "Cofi - Brew Timer",
     "source_url": "https://github.com/rozPierog/Cofi",
-    "stars": 400
+    "stars": 401
   },
   {
     "id": "com.spencerpages",
@@ -3621,19 +3621,19 @@
     "id": "com.cointrend",
     "name": "CoinTrend: Private Crypto Tracker",
     "source_url": "https://github.com/CoinTrend/CoinTrend",
-    "stars": 228
+    "stars": 227
   },
   {
     "id": "com.rabbittownsoftware.coinvert",
     "name": "CoinVert",
     "source_url": "https://github.com/Rabbit-Town-Software/coinvert",
-    "stars": 0
+    "stars": 1
   },
   {
     "id": "io.github.colemakmods.mod_dh",
     "name": "Colemak Mod-DH Keyboard",
     "source_url": "https://github.com/ColemakMods/mod-dh",
-    "stars": 741
+    "stars": 742
   },
   {
     "id": "com.color.colornamer",
@@ -3645,7 +3645,7 @@
     "id": "com.drdisagree.colorblendr",
     "name": "ColorBlendr",
     "source_url": "https://github.com/Mahmud0808/ColorBlendr",
-    "stars": 1384
+    "stars": 1388
   },
   {
     "id": "pl.suve.colorful.android",
@@ -3735,7 +3735,7 @@
     "id": "com.justdeax.composeStopwatch",
     "name": "Compose Stopwatch",
     "source_url": "https://github.com/JustDeax/ComposeStopwatch",
-    "stars": 13
+    "stars": 14
   },
   {
     "id": "com.quaap.computationaldemonology",
@@ -3765,13 +3765,13 @@
     "id": "com.bnyro.contacts",
     "name": "Connect You",
     "source_url": "https://github.com/you-apps/ConnectYou",
-    "stars": 587
+    "stars": 588
   },
   {
     "id": "org.connectbot",
     "name": "ConnectBot",
     "source_url": "https://github.com/connectbot/connectbot",
-    "stars": 2704
+    "stars": 2707
   },
   {
     "id": "com.mendhak.conscryptprovider",
@@ -3831,7 +3831,7 @@
     "id": "com.ferrarid.converterpro",
     "name": "Converter NOW: Unit Converter",
     "source_url": "https://github.com/ferraridamiano/ConverterNOW",
-    "stars": 470
+    "stars": 471
   },
   {
     "id": "com.rabbittownsoftware.convertly",
@@ -3861,7 +3861,7 @@
     "id": "io.github.jd1378.otphelper",
     "name": "Copy SMS Code - OTP Helper",
     "source_url": "https://github.com/jd1378/otphelper",
-    "stars": 553
+    "stars": 555
   },
   {
     "id": "se.johanhil.clipboard",
@@ -3879,7 +3879,7 @@
     "id": "org.cosmicide",
     "name": "Cosmic IDE",
     "source_url": "https://github.com/Cosmic-Ide/Cosmic-IDE",
-    "stars": 573
+    "stars": 574
   },
   {
     "id": "com.willianveiga.countdowntimer",
@@ -3891,7 +3891,7 @@
     "id": "me.tsukanov.counter",
     "name": "Counter",
     "source_url": "https://github.com/gentlecat/counter/",
-    "stars": 114
+    "stars": 115
   },
   {
     "id": "com.kanedias.vanilla.coverfetch",
@@ -4053,7 +4053,7 @@
     "id": "org.billthefarmer.currency",
     "name": "Currency",
     "source_url": "https://github.com/billthefarmer/currency",
-    "stars": 88
+    "stars": 89
   },
   {
     "id": "com.froxot.cuscon.foss",
@@ -4077,7 +4077,7 @@
     "id": "com.sosauce.cutemusic",
     "name": "CuteMusic",
     "source_url": "https://github.com/sosauce/CuteMusic",
-    "stars": 486
+    "stars": 490
   },
   {
     "id": "net.cyclestreets",
@@ -4137,7 +4137,7 @@
     "id": "com.voklen.daily_diary",
     "name": "Daily Diary",
     "source_url": "https://github.com/Voklen/Daily-Diary",
-    "stars": 72
+    "stars": 74
   },
   {
     "id": "org.nutritionfacts.dailydozen",
@@ -4161,7 +4161,7 @@
     "id": "io.github.jica98",
     "name": "DailyAL",
     "source_url": "https://github.com/JICA98/DailyAL",
-    "stars": 178
+    "stars": 179
   },
   {
     "id": "com.app.dailylog",
@@ -4179,13 +4179,13 @@
     "id": "com.github.dfa.diaspora_android",
     "name": "dandelion*",
     "source_url": "https://github.com/gsantner/dandelion",
-    "stars": 113
+    "stars": 114
   },
   {
     "id": "net.gsantner.dandelior",
     "name": "dandelior*",
     "source_url": "https://github.com/gsantner/dandelion",
-    "stars": 113
+    "stars": 114
   },
   {
     "id": "com.anysoftkeyboard.languagepack.danish",
@@ -4203,7 +4203,7 @@
     "id": "io.github.danxi_dev.dan_xi",
     "name": "DanXi",
     "source_url": "https://github.com/DanXi-Dev/DanXi/tree/foss-build",
-    "stars": 285
+    "stars": 286
   },
   {
     "id": "de.hampager.dapnetmobile",
@@ -4269,7 +4269,7 @@
     "id": "com.xayah.databackup.foss",
     "name": "DataBackup",
     "source_url": "https://github.com/XayahSuSuSu/Android-DataBackup",
-    "stars": 5032
+    "stars": 5047
   },
   {
     "id": "com.databag",
@@ -4293,13 +4293,13 @@
     "id": "info.metadude.android.datenspuren.schedule",
     "name": "Datenspuren 2024",
     "source_url": "https://github.com/johnjohndoe/CampFahrplan",
-    "stars": 33
+    "stars": 34
   },
   {
     "id": "at.bitfire.davdroid",
     "name": "DAVx\u2075",
     "source_url": "https://github.com/bitfireAT/davx5-ose/",
-    "stars": 1903
+    "stars": 1911
   },
   {
     "id": "godau.fynn.moodledirect",
@@ -4329,7 +4329,7 @@
     "id": "com.sunilpaulmathew.debloater",
     "name": "De-Bloater",
     "source_url": "https://github.com/sunilpaulmathew/De-Bloater",
-    "stars": 549
+    "stars": 550
   },
   {
     "id": "com.codedead.deadhash",
@@ -4431,7 +4431,7 @@
     "id": "com.example.deeplviewer",
     "name": "DeepL",
     "source_url": "https://github.com/sakusaku3939/DeepLAndroid",
-    "stars": 430
+    "stars": 431
   },
   {
     "id": "ir.hsn6.defendo",
@@ -4455,7 +4455,7 @@
     "id": "com.afkanerd.deku",
     "name": "Deku SMS",
     "source_url": "https://github.com/deku-messaging/DekuSMS-Android",
-    "stars": 455
+    "stars": 456
   },
   {
     "id": "ca.ramzan.delist",
@@ -4467,13 +4467,13 @@
     "id": "com.b44t.messenger",
     "name": "Delta Chat",
     "source_url": "https://github.com/deltachat/deltachat-android",
-    "stars": 1246
+    "stars": 1245
   },
   {
     "id": "website.leifs.delta.foss",
     "name": "Delta Icon Pack",
     "source_url": "https://github.com/Delta-Icons/android/",
-    "stars": 685
+    "stars": 686
   },
   {
     "id": "de.uwepost.android.deltacam",
@@ -4581,7 +4581,7 @@
     "id": "com.rosan.dhizuku",
     "name": "Dhizuku",
     "source_url": "https://github.com/iamr0s/Dhizuku",
-    "stars": 1984
+    "stars": 1993
   },
   {
     "id": "it.diab",
@@ -4689,7 +4689,7 @@
     "id": "org.stypox.dicio",
     "name": "Dicio assistant",
     "source_url": "https://github.com/Stypox/dicio-android",
-    "stars": 976
+    "stars": 979
   },
   {
     "id": "com.confinement.diconfinement",
@@ -4713,7 +4713,7 @@
     "id": "nethical.digipaws",
     "name": "DigiPaws - Digital Wellbeing and App Blocker",
     "source_url": "https://github.com/nethical6/digipaws",
-    "stars": 322
+    "stars": 325
   },
   {
     "id": "com.adeeteya.digital_calculator",
@@ -4797,7 +4797,7 @@
     "id": "com.vincent_falzon.discreetlauncher",
     "name": "Discreet Launcher",
     "source_url": "https://github.com/falzonv/discreet-launcher",
-    "stars": 248
+    "stars": 249
   },
   {
     "id": "com.kidozh.discuzhub.fdroid",
@@ -4815,7 +4815,7 @@
     "id": "de.felixnuesse.disky",
     "name": "disky - Find your biggest diskspace thieves!",
     "source_url": "https://github.com/newhinton/disky",
-    "stars": 729
+    "stars": 730
   },
   {
     "id": "org.disroot.disrootapp",
@@ -4833,7 +4833,7 @@
     "id": "info.metadude.android.divoc.schedule",
     "name": "DiVOC Schedule",
     "source_url": "https://github.com/johnjohndoe/CampFahrplan",
-    "stars": 33
+    "stars": 34
   },
   {
     "id": "com.edertech.dj_edertech",
@@ -4869,7 +4869,7 @@
     "id": "dev.clombardo.dnsnet",
     "name": "DNSNet",
     "source_url": "https://github.com/t895/DNSNet",
-    "stars": 376
+    "stars": 377
   },
   {
     "id": "be.brunoparmentier.dnssetter",
@@ -4953,7 +4953,7 @@
     "id": "org.dolphinemu.dolphinemu",
     "name": "Dolphin Emulator",
     "source_url": "https://github.com/dolphin-emu/dolphin",
-    "stars": 13790
+    "stars": 13793
   },
   {
     "id": "fr.mobdev.blooddonation",
@@ -4977,7 +4977,7 @@
     "id": "com.urbandroid.dontkillmyapp",
     "name": "DontKillMyApp \u270c\ufe0f Make apps work",
     "source_url": "https://github.com/urbandroid-team/dontkillmy-app",
-    "stars": 480
+    "stars": 481
   },
   {
     "id": "ardash.doodledudette",
@@ -5055,7 +5055,7 @@
     "id": "com.dosse.dozeoff",
     "name": "DozeOff",
     "source_url": "https://github.com/adolfintel/DozeOff",
-    "stars": 42
+    "stars": 43
   },
   {
     "id": "cz.slaby.dpc",
@@ -5091,7 +5091,7 @@
     "id": "net.drawpile",
     "name": "Drawpile",
     "source_url": "https://github.com/drawpile/Drawpile",
-    "stars": 1151
+    "stars": 1152
   },
   {
     "id": "org.echoline.drawterm",
@@ -5127,13 +5127,13 @@
     "id": "com.github.umer0586.droidpad",
     "name": "Droid Pad",
     "source_url": "https://github.com/umer0586/DroidPad",
-    "stars": 170
+    "stars": 169
   },
   {
     "id": "com.looker.droidify",
     "name": "Droid-ify",
     "source_url": "https://github.com/Droid-ify/client",
-    "stars": 5049
+    "stars": 5060
   },
   {
     "id": "edu.rit.poe.atomix",
@@ -5157,7 +5157,7 @@
     "id": "org.petero.droidfish",
     "name": "DroidFish",
     "source_url": "https://github.com/peterosterlund2/droidfish",
-    "stars": 355
+    "stars": 356
   },
   {
     "id": "sushi.hardcore.droidfs",
@@ -5199,7 +5199,7 @@
     "id": "net.christianbeier.droidvnc_ng",
     "name": "droidVNC-NG",
     "source_url": "https://github.com/bk138/droidVNC-NG",
-    "stars": 1655
+    "stars": 1662
   },
   {
     "id": "com.shurik.droidzebra",
@@ -5235,7 +5235,7 @@
     "id": "vegabobo.dsusideloader",
     "name": "DSU Sideloader",
     "source_url": "https://github.com/VegaBobo/DSU-Sideloader",
-    "stars": 1695
+    "stars": 1700
   },
   {
     "id": "github.daneren2005.dsub",
@@ -5247,7 +5247,7 @@
     "id": "github.paroj.dsub2000",
     "name": "DSub2000",
     "source_url": "https://github.com/paroj/DSub2000",
-    "stars": 46
+    "stars": 47
   },
   {
     "id": "com.duckduckgo.mobile.android",
@@ -5283,7 +5283,7 @@
     "id": "org.develz.crawl",
     "name": "Dungeon Crawl Stone Soup",
     "source_url": "https://github.com/crawl/crawl",
-    "stars": 2569
+    "stars": 2570
   },
   {
     "id": "com.crawlmb",
@@ -5343,7 +5343,7 @@
     "id": "net.e1547",
     "name": "e1547 - e621 browser",
     "source_url": "https://github.com/clragon/e1547",
-    "stars": 265
+    "stars": 266
   },
   {
     "id": "com.jstappdev.e6bflightcomputer",
@@ -5421,7 +5421,7 @@
     "id": "com.kin.easynotes",
     "name": "Easy Notes",
     "source_url": "https://github.com/Kin69/EasyNotes",
-    "stars": 712
+    "stars": 715
   },
   {
     "id": "de.audioattack.openlink",
@@ -5439,7 +5439,7 @@
     "id": "me.rosuh.easywatermark",
     "name": "Easy Watermark",
     "source_url": "https://github.com/rosuH/EasyWatermark",
-    "stars": 1696
+    "stars": 1699
   },
   {
     "id": "de.tap.easy_xkcd",
@@ -5457,7 +5457,7 @@
     "id": "org.easyrpg.player",
     "name": "EasyRPG Player",
     "source_url": "https://github.com/EasyRPG/Player",
-    "stars": 1076
+    "stars": 1077
   },
   {
     "id": "org.freshrss.easyrss",
@@ -5493,7 +5493,7 @@
     "id": "eu.mrogalski.saidit",
     "name": "Echo",
     "source_url": "https://github.com/mafik/echo",
-    "stars": 111
+    "stars": 112
   },
   {
     "id": "com.f0x.eddymalou",
@@ -5529,13 +5529,13 @@
     "id": "com.sovworks.edslite",
     "name": "EDS Lite",
     "source_url": "https://github.com/sovworks/edslite",
-    "stars": 298
+    "stars": 299
   },
   {
     "id": "uk.ac.swansea.eduroamcat",
     "name": "eduroamCAT",
     "source_url": "https://github.com/GEANT/CAT-Android",
-    "stars": 24
+    "stars": 25
   },
   {
     "id": "nl.eduvpn.app",
@@ -5577,25 +5577,25 @@
     "id": "info.plateaukao.einkbro",
     "name": "EinkBro",
     "source_url": "https://github.com/plateaukao/einkbro",
-    "stars": 1496
+    "stars": 1500
   },
   {
     "id": "org.electrum.electrum",
     "name": "Electrum Bitcoin Wallet",
     "source_url": "https://github.com/spesmilo/electrum",
-    "stars": 7924
+    "stars": 7927
   },
   {
     "id": "im.vector.app",
     "name": "Element - Secure Messenger",
     "source_url": "https://github.com/vector-im/element-android",
-    "stars": 3496
+    "stars": 3497
   },
   {
     "id": "io.element.android.x",
     "name": "Element X - Secure Chat & Call",
     "source_url": "https://github.com/vector-im/element-x-android",
-    "stars": 1377
+    "stars": 1382
   },
   {
     "id": "io.github.vendelin8.elements",
@@ -5679,7 +5679,7 @@
     "id": "com.akylas.enforcedoze",
     "name": "EnforceDoze",
     "source_url": "https://github.com/farfromrefug/EnforceDoze",
-    "stars": 175
+    "stars": 177
   },
   {
     "id": "net.xtlive.EDL.Dashboard",
@@ -5697,13 +5697,13 @@
     "id": "io.ente.auth",
     "name": "Ente Auth",
     "source_url": "https://github.com/ente-io/ente/",
-    "stars": 19565
+    "stars": 19593
   },
   {
     "id": "io.ente.photos.fdroid",
     "name": "Ente Photos - Encrypted photo storage",
     "source_url": "https://github.com/ente-io/ente",
-    "stars": 19565
+    "stars": 19593
   },
   {
     "id": "com.sesu8642.infusion_timer",
@@ -5781,7 +5781,7 @@
     "id": "com.reecedunn.espeak",
     "name": "eSpeak",
     "source_url": "https://github.com/espeak-ng/espeak-ng",
-    "stars": 5148
+    "stars": 5152
   },
   {
     "id": "org.esupportail.esupnfctagdroid",
@@ -5793,13 +5793,13 @@
     "id": "ws.xsoh.etar",
     "name": "Etar - OpenSource Calendar",
     "source_url": "https://github.com/Etar-Group/Etar-Calendar",
-    "stars": 2229
+    "stars": 2230
   },
   {
     "id": "eu.depau.etchdroid",
     "name": "EtchDroid ISO to USB Writer",
     "source_url": "https://github.com/EtchDroid/EtchDroid",
-    "stars": 2307
+    "stars": 2314
   },
   {
     "id": "eu.toldi.infinityforlemmy",
@@ -5811,7 +5811,7 @@
     "id": "com.etesync.syncadapter",
     "name": "EteSync - Secure Data Sync",
     "source_url": "https://github.com/etesync/android",
-    "stars": 318
+    "stars": 319
   },
   {
     "id": "com.etesync.notes",
@@ -5943,7 +5943,7 @@
     "id": "com.github.dyhkwong.sagernet",
     "name": "Exclave",
     "source_url": "https://github.com/dyhkwong/Exclave",
-    "stars": 1038
+    "stars": 1040
   },
   {
     "id": "nodo.crogers.exercisereminders",
@@ -5973,7 +5973,7 @@
     "id": "org.eu.exodus_privacy.exodusprivacy",
     "name": "Exodus",
     "source_url": "https://github.com/Exodus-Privacy/exodus-android-app",
-    "stars": 820
+    "stars": 822
   },
   {
     "id": "dudeofx.eval",
@@ -6069,13 +6069,13 @@
     "id": "com.fadcam",
     "name": "FadCam",
     "source_url": "https://github.com/anonfaded/FadCam",
-    "stars": 813
+    "stars": 827
   },
   {
     "id": "com.chenyifaer.fafarunner",
     "name": "FaFa Runner",
     "source_url": "https://github.com/fafarunner/fafarunner",
-    "stars": 50
+    "stars": 51
   },
   {
     "id": "de.example.fahrraddiebstahl_berlin",
@@ -6087,7 +6087,7 @@
     "id": "eu.faircode.email",
     "name": "FairEmail",
     "source_url": "https://github.com/M66B/FairEmail",
-    "stars": 3668
+    "stars": 3672
   },
   {
     "id": "community.fairphone.checkup",
@@ -6117,13 +6117,13 @@
     "id": "android.jonas.fakestandby",
     "name": "FakeStandby",
     "source_url": "https://github.com/JonasBernard/FakeStandby",
-    "stars": 471
+    "stars": 472
   },
   {
     "id": "cl.coders.faketraveler",
     "name": "FakeTraveler",
     "source_url": "https://github.com/mcastillof/FakeTraveler",
-    "stars": 969
+    "stars": 970
   },
   {
     "id": "com.autismprime.fall",
@@ -6189,7 +6189,7 @@
     "id": "io.github.teccheck.fastlyrics",
     "name": "FastLyrics",
     "source_url": "https://github.com/TecCheck/FastLyrics",
-    "stars": 181
+    "stars": 183
   },
   {
     "id": "com.darkrockstudios.apps.fasttrack",
@@ -6207,61 +6207,61 @@
     "id": "org.fcitx.fcitx5.android",
     "name": "Fcitx5",
     "source_url": "https://github.com/fcitx5-android/fcitx5-android",
-    "stars": 3773
+    "stars": 3779
   },
   {
     "id": "org.fcitx.fcitx5.android.plugin.anthy",
     "name": "Fcitx5 (Anthy Plugin)",
     "source_url": "https://github.com/fcitx5-android/fcitx5-android",
-    "stars": 3773
+    "stars": 3779
   },
   {
     "id": "org.fcitx.fcitx5.android.plugin.chewing",
     "name": "Fcitx5 (Chewing Plugin)",
     "source_url": "https://github.com/fcitx5-android/fcitx5-android",
-    "stars": 3773
+    "stars": 3779
   },
   {
     "id": "org.fcitx.fcitx5.android.plugin.clipboard_filter",
     "name": "Fcitx5 (Clipboard Filter Plugin)",
     "source_url": "https://github.com/fcitx5-android/fcitx5-android",
-    "stars": 3773
+    "stars": 3779
   },
   {
     "id": "org.fcitx.fcitx5.android.plugin.hangul",
     "name": "Fcitx5 (Hangul Plugin)",
     "source_url": "https://github.com/fcitx5-android/fcitx5-android",
-    "stars": 3773
+    "stars": 3779
   },
   {
     "id": "org.fcitx.fcitx5.android.plugin.jyutping",
     "name": "Fcitx5 (Jyutping Plugin)",
     "source_url": "https://github.com/fcitx5-android/fcitx5-android",
-    "stars": 3773
+    "stars": 3779
   },
   {
     "id": "org.fcitx.fcitx5.android.plugin.rime",
     "name": "Fcitx5 (RIME Plugin)",
     "source_url": "https://github.com/fcitx5-android/fcitx5-android",
-    "stars": 3773
+    "stars": 3779
   },
   {
     "id": "org.fcitx.fcitx5.android.plugin.sayura",
     "name": "Fcitx5 (Sayura Plugin)",
     "source_url": "https://github.com/fcitx5-android/fcitx5-android",
-    "stars": 3773
+    "stars": 3779
   },
   {
     "id": "org.fcitx.fcitx5.android.plugin.thai",
     "name": "Fcitx5 (That Plugin)",
     "source_url": "https://github.com/fcitx5-android/fcitx5-android",
-    "stars": 3773
+    "stars": 3779
   },
   {
     "id": "org.fcitx.fcitx5.android.plugin.unikey",
     "name": "Fcitx5 (Unikey Plugin)",
     "source_url": "https://github.com/fcitx5-android/fcitx5-android",
-    "stars": 3773
+    "stars": 3779
   },
   {
     "id": "fr.gouv.etalab.mastodon",
@@ -6279,13 +6279,13 @@
     "id": "com.nononsenseapps.feeder",
     "name": "Feeder",
     "source_url": "https://github.com/spacecowboy/Feeder",
-    "stars": 2099
+    "stars": 2105
   },
   {
     "id": "com.prof18.feedflow",
     "name": "FeedFlow - RSS Reader",
     "source_url": "https://github.com/prof18/feed-flow",
-    "stars": 539
+    "stars": 542
   },
   {
     "id": "me.murks.feedwatcher",
@@ -6327,7 +6327,7 @@
     "id": "com.tharunbirla.fetchit",
     "name": "FetchIt",
     "source_url": "https://github.com/tharunbirla/FetchIt",
-    "stars": 215
+    "stars": 216
   },
   {
     "id": "de.sesu8642.feudaltactics",
@@ -6339,7 +6339,7 @@
     "id": "com.caydey.ffshare",
     "name": "FFShare",
     "source_url": "https://github.com/caydey/ffshare",
-    "stars": 823
+    "stars": 825
   },
   {
     "id": "de.marmaro.krt.ffupdater",
@@ -6393,7 +6393,7 @@
     "id": "com.unicornsonlsd.finamp",
     "name": "Finamp",
     "source_url": "https://github.com/jmshrv/finamp",
-    "stars": 2729
+    "stars": 2738
   },
   {
     "id": "org.secuso.privacyfriendlyfinancemanager",
@@ -6435,7 +6435,7 @@
     "id": "dev.jdtech.jellyfin",
     "name": "Findroid",
     "source_url": "https://github.com/jarnedemeulemeester/findroid",
-    "stars": 3161
+    "stars": 3169
   },
   {
     "id": "de.sirjofri.fingerlist",
@@ -6543,7 +6543,7 @@
     "id": "org.flare.app",
     "name": "FLARE",
     "source_url": "https://github.com/flareteam/flare-engine",
-    "stars": 1144
+    "stars": 1145
   },
   {
     "id": "fr.jnda.android.flashalert",
@@ -6573,7 +6573,7 @@
     "id": "com.cyb3rko.flashdim",
     "name": "FlashDim - Dim your flashlight",
     "source_url": "https://github.com/cyb3rko/flashdim",
-    "stars": 925
+    "stars": 930
   },
   {
     "id": "com.pdb82.flashlighttiramisu",
@@ -6609,7 +6609,7 @@
     "id": "com.presley.flexify",
     "name": "Flexify",
     "source_url": "https://github.com/brandonp2412/Flexify",
-    "stars": 240
+    "stars": 239
   },
   {
     "id": "se.nullable.flickboard",
@@ -6645,7 +6645,7 @@
     "id": "dev.robin.flip_2_dnd",
     "name": "Flip 2 DND",
     "source_url": "https://github.com/robinsrk/Flip_2_DND",
-    "stars": 31
+    "stars": 32
   },
   {
     "id": "org.ecos.logic.flip_a_coin",
@@ -6657,7 +6657,7 @@
     "id": "com.flipperdevices.app",
     "name": "Flipper Mobile App",
     "source_url": "https://github.com/flipperdevices/Flipper-Android-App",
-    "stars": 1799
+    "stars": 1798
   },
   {
     "id": "dk.nindroid.rss",
@@ -6681,7 +6681,7 @@
     "id": "org.handmadeideas.floccus",
     "name": "floccus bookmark sync",
     "source_url": "https://github.com/floccusaddon/floccus",
-    "stars": 6671
+    "stars": 6685
   },
   {
     "id": "ryey.flock",
@@ -6699,7 +6699,7 @@
     "id": "dev.patrickgold.florisboard",
     "name": "FlorisBoard",
     "source_url": "https://github.com/florisboard/florisboard",
-    "stars": 7056
+    "stars": 7061
   },
   {
     "id": "com.bytehamster.flowitgame",
@@ -6711,13 +6711,13 @@
     "id": "pro.oblivioncoding.fluffy_board",
     "name": "Fluffyboard",
     "source_url": "https://github.com/Y0ngg4n/fluffy_board",
-    "stars": 107
+    "stars": 108
   },
   {
     "id": "chat.fluffy.fluffychat",
     "name": "FluffyChat",
     "source_url": "https://github.com/krille-chan/fluffychat",
-    "stars": 1586
+    "stars": 1590
   },
   {
     "id": "de.justquitstudios.fluttermcsweepy",
@@ -6735,7 +6735,7 @@
     "id": "dev.spiegl.flyingcarpet",
     "name": "Flying Carpet",
     "source_url": "https://github.com/spieglt/FlyingCarpet/tree/HEAD/Android/FlyingCarpet",
-    "stars": 3991
+    "stars": 4011
   },
   {
     "id": "org.decsync.flym",
@@ -6765,7 +6765,7 @@
     "id": "com.eiyooooo.foldswitcher",
     "name": "Fold Switcher",
     "source_url": "https://github.com/eiyooooo/Fold_Switcher",
-    "stars": 31
+    "stars": 32
   },
   {
     "id": "me.robbyblue.mylauncher",
@@ -6813,7 +6813,7 @@
     "id": "com.maksimowiczm.foodyou",
     "name": "Food You - Calorie Tracker & Food Diary",
     "source_url": "https://github.com/maksimowiczm/FoodYou",
-    "stars": 87
+    "stars": 90
   },
   {
     "id": "org.secuso.privacyfriendlyfoodtracker",
@@ -6837,13 +6837,13 @@
     "id": "cz.martykan.forecastie",
     "name": "Forecastie",
     "source_url": "https://github.com/martykan/forecastie",
-    "stars": 876
+    "stars": 875
   },
   {
     "id": "me.bgregos.brighttask",
     "name": "Foreground",
     "source_url": "https://github.com/bgregos/foreground",
-    "stars": 258
+    "stars": 259
   },
   {
     "id": "com.odnovolov.forgetmenot",
@@ -6855,7 +6855,7 @@
     "id": "org.forkgram.messenger",
     "name": "Forkgram",
     "source_url": "https://github.com/Forkgram/TelegramAndroid",
-    "stars": 838
+    "stars": 841
   },
   {
     "id": "app.crossword.yourealwaysbe.forkyz",
@@ -6897,7 +6897,7 @@
     "id": "info.metadude.android.fosdem.schedule",
     "name": "FOSDEM 2025 Schedule",
     "source_url": "https://github.com/johnjohndoe/CampFahrplan",
-    "stars": 33
+    "stars": 34
   },
   {
     "id": "be.digitalia.fosdem",
@@ -6927,55 +6927,55 @@
     "id": "info.metadude.android.foss4g.schedule",
     "name": "FOSS4G Europe 2024",
     "source_url": "https://github.com/johnjohndoe/CampFahrplan",
-    "stars": 33
+    "stars": 34
   },
   {
     "id": "info.metadude.android.fossgis.schedule",
     "name": "FOSSGIS 2025 Schedule",
     "source_url": "https://github.com/johnjohndoe/CampFahrplan",
-    "stars": 33
+    "stars": 34
   },
   {
     "id": "org.fossify.math",
     "name": "Fossify Calculator",
     "source_url": "https://github.com/FossifyOrg/Calculator",
-    "stars": 217
+    "stars": 218
   },
   {
     "id": "org.fossify.calendar",
     "name": "Fossify Calendar",
     "source_url": "https://github.com/FossifyOrg/Calendar",
-    "stars": 1185
+    "stars": 1190
   },
   {
     "id": "org.fossify.camera",
     "name": "Fossify Camera",
     "source_url": "https://github.com/FossifyOrg/Camera",
-    "stars": 199
+    "stars": 200
   },
   {
     "id": "org.fossify.clock",
     "name": "Fossify Clock Beta",
     "source_url": "https://github.com/FossifyOrg/Clock",
-    "stars": 388
+    "stars": 390
   },
   {
     "id": "org.fossify.contacts",
     "name": "Fossify Contacts",
     "source_url": "https://github.com/FossifyOrg/Contacts",
-    "stars": 486
+    "stars": 488
   },
   {
     "id": "org.fossify.filemanager",
     "name": "Fossify File Manager",
     "source_url": "https://github.com/FossifyOrg/File-Manager",
-    "stars": 889
+    "stars": 891
   },
   {
     "id": "org.fossify.gallery",
     "name": "Fossify Gallery",
     "source_url": "https://github.com/FossifyOrg/Gallery",
-    "stars": 2222
+    "stars": 2227
   },
   {
     "id": "org.fossify.keyboard",
@@ -6987,49 +6987,49 @@
     "id": "org.fossify.home",
     "name": "Fossify Launcher Beta",
     "source_url": "https://github.com/FossifyOrg/Launcher",
-    "stars": 361
+    "stars": 364
   },
   {
     "id": "org.fossify.messages",
     "name": "Fossify Messages",
     "source_url": "https://github.com/FossifyOrg/Messages",
-    "stars": 821
+    "stars": 825
   },
   {
     "id": "org.fossify.musicplayer",
     "name": "Fossify Music Player",
     "source_url": "https://github.com/FossifyOrg/Music-Player",
-    "stars": 464
+    "stars": 466
   },
   {
     "id": "org.fossify.notes",
     "name": "Fossify Notes Beta",
     "source_url": "https://github.com/FossifyOrg/Notes",
-    "stars": 284
+    "stars": 285
   },
   {
     "id": "org.fossify.paint",
     "name": "Fossify Paint Beta",
     "source_url": "https://github.com/FossifyOrg/Paint",
-    "stars": 159
+    "stars": 160
   },
   {
     "id": "org.fossify.phone",
     "name": "Fossify Phone",
     "source_url": "https://github.com/FossifyOrg/Phone",
-    "stars": 750
+    "stars": 753
   },
   {
     "id": "org.fossify.voicerecorder",
     "name": "Fossify Voice Recorder",
     "source_url": "https://github.com/FossifyOrg/Voice-Recorder",
-    "stars": 386
+    "stars": 389
   },
   {
     "id": "nz.eloque.foss_wallet",
     "name": "FossWallet",
     "source_url": "https://github.com/SeineEloquenz/fosswallet",
-    "stars": 39
+    "stars": 44
   },
   {
     "id": "com.exner.tools.fototimer",
@@ -7053,7 +7053,7 @@
     "id": "com.zhangke.fread",
     "name": "Fread",
     "source_url": "https://github.com/0xZhangKe/Fread",
-    "stars": 213
+    "stars": 216
   },
   {
     "id": "org.woheller69.browser",
@@ -7083,7 +7083,7 @@
     "id": "troop.com.freedcam",
     "name": "FreeDcam",
     "source_url": "https://github.com/KillerInk/FreeDcam",
-    "stars": 326
+    "stars": 327
   },
   {
     "id": "io.github.yamin8000.owl",
@@ -7113,7 +7113,7 @@
     "id": "org.fedorahosted.freeotp",
     "name": "FreeOTP",
     "source_url": "https://github.com/freeotp/freeotp-android",
-    "stars": 1521
+    "stars": 1522
   },
   {
     "id": "org.liberty.android.freeotpplus",
@@ -7233,7 +7233,7 @@
     "id": "net.slions.fulguris.full.fdroid",
     "name": "Fulguris Web Browser",
     "source_url": "https://github.com/Slion/Fulguris",
-    "stars": 540
+    "stars": 541
   },
   {
     "id": "com.diblui.fullcolemak",
@@ -7317,13 +7317,13 @@
     "id": "com.dot.gallery",
     "name": "Gallery",
     "source_url": "https://github.com/IacobIonut01/Gallery",
-    "stars": 1741
+    "stars": 1742
   },
   {
     "id": "ua.com.radiokot.photoprism",
     "name": "Gallery for PhotoPrism",
     "source_url": "https://github.com/Radiokot/photoprism-android-client",
-    "stars": 509
+    "stars": 510
   },
   {
     "id": "gal.sli.digalnet",
@@ -7371,7 +7371,7 @@
     "id": "org.woheller69.spritpreise",
     "name": "Gas Prices",
     "source_url": "https://github.com/woheller69/spritpreise",
-    "stars": 109
+    "stars": 110
   },
   {
     "id": "org.piepmeyer.gauguin",
@@ -7389,7 +7389,7 @@
     "id": "de.lukaspieper.gcam.services",
     "name": "Gcam Services Provider (Basic)",
     "source_url": "https://github.com/lukaspieper/Gcam-Services-Provider",
-    "stars": 699
+    "stars": 700
   },
   {
     "id": "net.gcompris.full",
@@ -7401,7 +7401,7 @@
     "id": "geddit.buzl.uk",
     "name": "Geddit",
     "source_url": "https://github.com/kaangiray26/geddit-app",
-    "stars": 917
+    "stars": 918
   },
   {
     "id": "com.geekorum.ttrss.free",
@@ -7491,7 +7491,7 @@
     "id": "app.eduroam.geteduroam",
     "name": "geteduroam",
     "source_url": "https://github.com/geteduroam/android-app",
-    "stars": 16
+    "stars": 17
   },
   {
     "id": "org.wentura.getflow",
@@ -7503,7 +7503,7 @@
     "id": "app.govroam.getgovroam",
     "name": "getgovroam",
     "source_url": "https://github.com/geteduroam/android-app",
-    "stars": 16
+    "stars": 17
   },
   {
     "id": "eu.roggstar.getmitokens",
@@ -7515,7 +7515,7 @@
     "id": "com.android.geto",
     "name": "Geto",
     "source_url": "https://github.com/JackEblan/Geto",
-    "stars": 417
+    "stars": 420
   },
   {
     "id": "com.ghostsq.commander",
@@ -7551,7 +7551,7 @@
     "id": "net.gaast.giggity",
     "name": "Giggity",
     "source_url": "https://github.com/Wilm0r/giggity",
-    "stars": 112
+    "stars": 113
   },
   {
     "id": "info.guardianproject.gilga",
@@ -7581,7 +7581,7 @@
     "id": "io.github.wiiznokes.gitnote",
     "name": "GitNote",
     "source_url": "https://github.com/wiiznokes/gitnote",
-    "stars": 18
+    "stars": 19
   },
   {
     "id": "gizz.tapes.foss",
@@ -7611,7 +7611,7 @@
     "id": "org.zamedev.gloomydungeons2.opensource",
     "name": "Gloomy Dungeons 2",
     "source_url": "https://github.com/restorer/gloomy-dungeons-2",
-    "stars": 103
+    "stars": 105
   },
   {
     "id": "org.glpi.inventory.agent",
@@ -7641,7 +7641,7 @@
     "id": "us.spotco.maps",
     "name": "GMaps WV",
     "source_url": "https://github.com/woheller69/maps",
-    "stars": 71
+    "stars": 72
   },
   {
     "id": "org.gmote.client.android",
@@ -7683,13 +7683,13 @@
     "id": "org.godotengine.editor.v3",
     "name": "Godot Editor 3",
     "source_url": "https://github.com/godotengine/godot/",
-    "stars": 97864
+    "stars": 97948
   },
   {
     "id": "org.godotengine.editor.v4",
     "name": "Godot Engine 4",
     "source_url": "https://github.com/godotengine/godot/",
-    "stars": 97864
+    "stars": 97948
   },
   {
     "id": "com.googlecode.gogodroid",
@@ -7713,7 +7713,7 @@
     "id": "com.apps.adrcotfas.goodtime",
     "name": "Goodtime - Minimalist Pomodoro Timer",
     "source_url": "https://github.com/goodtime-productivity/Goodtime",
-    "stars": 1169
+    "stars": 1171
   },
   {
     "id": "com.shanewmiller.gorecompanion",
@@ -7731,7 +7731,7 @@
     "id": "info.metadude.android.gpn.schedule",
     "name": "GPN 2024",
     "source_url": "https://github.com/johnjohndoe/CampFahrplan",
-    "stars": 33
+    "stars": 34
   },
   {
     "id": "org.woheller69.gpscockpit",
@@ -7761,19 +7761,19 @@
     "id": "io.github.project_kaat.gpsdrelay",
     "name": "gpsdRelay",
     "source_url": "https://github.com/project-kaat/gpsdRelay",
-    "stars": 54
+    "stars": 55
   },
   {
     "id": "com.mendhak.gpslogger",
     "name": "GPSLogger",
     "source_url": "https://github.com/mendhak/gpslogger",
-    "stars": 2168
+    "stars": 2170
   },
   {
     "id": "com.android.gpstest.osmdroid",
     "name": "GPSTest",
     "source_url": "https://github.com/barbeau/gpstest",
-    "stars": 1971
+    "stars": 1974
   },
   {
     "id": "com.gpstether",
@@ -7785,7 +7785,7 @@
     "id": "org.woheller69.gptassist",
     "name": "gptAssist",
     "source_url": "https://github.com/woheller69/gptassist",
-    "stars": 337
+    "stars": 341
   },
   {
     "id": "dev.chungjungsoo.gptmobile",
@@ -7803,7 +7803,7 @@
     "id": "com.NightDreamGames.Grade.ly",
     "name": "Graded - Grade tracker",
     "source_url": "https://github.com/NightDreamGames/Graded",
-    "stars": 95
+    "stars": 96
   },
   {
     "id": "me.anuraag.grader",
@@ -7815,7 +7815,7 @@
     "id": "org.akanework.gramophone",
     "name": "Gramophone",
     "source_url": "https://github.com/FoedusProgramme/Gramophone",
-    "stars": 1505
+    "stars": 1511
   },
   {
     "id": "com.eanema.graph89",
@@ -7863,7 +7863,7 @@
     "id": "com.starry.greenstash",
     "name": "GreenStash: Track Your Savings",
     "source_url": "https://github.com/Pool-Of-Tears/GreenStash",
-    "stars": 684
+    "stars": 690
   },
   {
     "id": "org.billthefarmer.gridle",
@@ -7875,7 +7875,7 @@
     "id": "com.shub39.grit",
     "name": "Grit",
     "source_url": "https://github.com/shub39/Grit",
-    "stars": 201
+    "stars": 203
   },
   {
     "id": "com.grocerymanager",
@@ -7887,7 +7887,7 @@
     "id": "xyz.zedler.patrick.grocy",
     "name": "Grocy: Self-hosted Grocery Management",
     "source_url": "https://github.com/patzly/grocy-android",
-    "stars": 993
+    "stars": 994
   },
   {
     "id": "hashengineering.groestlcoin.wallet",
@@ -8007,7 +8007,7 @@
     "id": "com.dessalines.habitmaker",
     "name": "Habit-Maker",
     "source_url": "https://github.com/dessalines/habit-maker",
-    "stars": 105
+    "stars": 104
   },
   {
     "id": "com.willbsp.habits",
@@ -8031,13 +8031,13 @@
     "id": "org.pocketworkstation.pckeyboard",
     "name": "Hacker's Keyboard",
     "source_url": "https://github.com/klausw/hackerskeyboard",
-    "stars": 2031
+    "stars": 2032
   },
   {
     "id": "com.jiaqifeng.hacki",
     "name": "Hacki for Hacker News",
     "source_url": "https://github.com/Livinglist/Hacki",
-    "stars": 1321
+    "stars": 1322
   },
   {
     "id": "io.mainframe.hacs",
@@ -8049,7 +8049,7 @@
     "id": "com.aistra.hail",
     "name": "Hail",
     "source_url": "https://github.com/aistra0528/Hail",
-    "stars": 3758
+    "stars": 3774
   },
   {
     "id": "org.bitbucket.watashi564.combapp",
@@ -8097,7 +8097,7 @@
     "id": "com.darkrockstudios.apps.hammer.android",
     "name": "Hammer [ALPHA]",
     "source_url": "https://github.com/Wavesonics/hammer-editor",
-    "stars": 155
+    "stars": 156
   },
   {
     "id": "com.practicalapps.hamtrainer",
@@ -8145,13 +8145,13 @@
     "id": "com.anandnet.harmonymusic",
     "name": "Harmony Music",
     "source_url": "https://github.com/anandnet/Harmony-Music",
-    "stars": 2019
+    "stars": 2034
   },
   {
     "id": "com.hobbyone.HashDroid",
     "name": "Hash Droid",
     "source_url": "https://github.com/HobbyOneDroid/HashDroid",
-    "stars": 82
+    "stars": 83
   },
   {
     "id": "com.grappim.hateitorrateit.fdroid",
@@ -8205,7 +8205,7 @@
     "id": "com.hmdm.launcher",
     "name": "Headwind MDM Agent",
     "source_url": "https://github.com/h-mdm/hmdm-android",
-    "stars": 235
+    "stars": 236
   },
   {
     "id": "biz.binarysolutions.healthybatterycharging",
@@ -8229,7 +8229,7 @@
     "id": "com.jwetherell.heart_rate_monitor",
     "name": "HeartRateMonitor",
     "source_url": "https://github.com/phishman3579/android-heart-rate-monitor/",
-    "stars": 468
+    "stars": 469
   },
   {
     "id": "org.katsarov.heatcalc",
@@ -8253,13 +8253,13 @@
     "id": "helium314.keyboard",
     "name": "HeliBoard",
     "source_url": "https://github.com/Helium314/HeliBoard",
-    "stars": 3247
+    "stars": 3254
   },
   {
     "id": "fm.helio",
     "name": "Helio",
     "source_url": "https://github.com/helio-fm/helio-sequencer",
-    "stars": 3249
+    "stars": 3254
   },
   {
     "id": "com.redblaster.hsl.main",
@@ -8403,13 +8403,13 @@
     "id": "io.homeassistant.companion.android.minimal",
     "name": "Home Assistant",
     "source_url": "https://github.com/home-assistant/android",
-    "stars": 2769
+    "stars": 2771
   },
   {
     "id": "ru.application.homemedkit",
     "name": "Home Medkit",
     "source_url": "https://github.com/pewaru-333/HomeMedkit-App",
-    "stars": 84
+    "stars": 85
   },
   {
     "id": "com.abast.homebot",
@@ -8421,7 +8421,7 @@
     "id": "info.metadude.android.hope.schedule",
     "name": "HOPE 2024",
     "source_url": "https://github.com/johnjohndoe/CampFahrplan",
-    "stars": 33
+    "stars": 34
   },
   {
     "id": "com.philolog.hoplitekeyboard",
@@ -8469,7 +8469,7 @@
     "id": "ch.rmy.android.http_shortcuts",
     "name": "HTTP Request Shortcuts",
     "source_url": "https://github.com/Waboodoo/HTTP-Shortcuts",
-    "stars": 1360
+    "stars": 1366
   },
   {
     "id": "org.jtb.httpmon",
@@ -8571,7 +8571,7 @@
     "id": "org.purplei2p.i2pd",
     "name": "i2pd",
     "source_url": "https://github.com/PurpleI2P/i2pd-android",
-    "stars": 223
+    "stars": 224
   },
   {
     "id": "com.icecondor.nest",
@@ -8589,7 +8589,7 @@
     "id": "at.bitfire.icsdroid",
     "name": "ICSx\u2075",
     "source_url": "https://github.com/bitfireAT/icsx5",
-    "stars": 230
+    "stars": 231
   },
   {
     "id": "com.germainz.identiconizer",
@@ -8637,7 +8637,7 @@
     "id": "org.exarhteam.iitc_mobile",
     "name": "IITC-CE Mobile",
     "source_url": "https://github.com/IITC-CE/ingress-intel-total-conversion",
-    "stars": 309
+    "stars": 310
   },
   {
     "id": "code.alimiracle.image_meta_cleaner",
@@ -8649,7 +8649,7 @@
     "id": "ru.tech.imageresizershrinker",
     "name": "Image Toolbox",
     "source_url": "https://github.com/T8RIN/ImageResizer",
-    "stars": 7516
+    "stars": 7713
   },
   {
     "id": "de.kaffeemitkoffein.imagepipe",
@@ -8679,7 +8679,7 @@
     "id": "app.alextran.immich",
     "name": "Immich",
     "source_url": "https://github.com/immich-app/immich",
-    "stars": 67655
+    "stars": 67797
   },
   {
     "id": "com.exner.tools.immichuploader",
@@ -8715,7 +8715,7 @@
     "id": "com.indieweb.indigenous",
     "name": "IndiePass",
     "source_url": "https://github.com/IndiePass/indiepass-android",
-    "stars": 106
+    "stars": 107
   },
   {
     "id": "com.anysoftkeyboard.languagepack.indonesian",
@@ -8787,13 +8787,13 @@
     "id": "io.naox.inbe",
     "name": "Inner Breeze",
     "source_url": "https://github.com/naoxio/inbreeze",
-    "stars": 85
+    "stars": 86
   },
   {
     "id": "com.zionhuang.music",
     "name": "InnerTune",
     "source_url": "https://github.com/z-huang/InnerTune",
-    "stars": 5500
+    "stars": 5499
   },
   {
     "id": "org.mindshub.insigno",
@@ -8853,7 +8853,7 @@
     "id": "digital.ventral.ips",
     "name": "Inter Profile Sharing",
     "source_url": "https://github.com/VentralDigital/InterProfileSharing",
-    "stars": 79
+    "stars": 80
   },
   {
     "id": "dev.randombits.intervaltimer",
@@ -8871,7 +8871,7 @@
     "id": "app.intra",
     "name": "Intra",
     "source_url": "https://github.com/Jigsaw-Code/Intra",
-    "stars": 1742
+    "stars": 1745
   },
   {
     "id": "app.simple.inure",
@@ -8901,13 +8901,13 @@
     "id": "pan.alexander.tordnscrypt.stable",
     "name": "InviZible Pro: increase your security, protect you",
     "source_url": "https://github.com/Gedsh/InviZible",
-    "stars": 1787
+    "stars": 1790
   },
   {
     "id": "com.invoiceninja.app",
     "name": "Invoice Ninja",
     "source_url": "https://github.com/invoiceninja/admin-portal",
-    "stars": 1688
+    "stars": 1689
   },
   {
     "id": "one.zagura.IonLauncher",
@@ -9099,19 +9099,19 @@
     "id": "org.jellyfin.mobile",
     "name": "Jellyfin - your media in your hands!",
     "source_url": "https://github.com/jellyfin/jellyfin-android",
-    "stars": 1918
+    "stars": 1921
   },
   {
     "id": "org.jellyfin.androidtv",
     "name": "Jellyfin for Android TV",
     "source_url": "https://github.com/jellyfin/jellyfin-androidtv",
-    "stars": 3424
+    "stars": 3432
   },
   {
     "id": "com.jerboa",
     "name": "Jerboa for Lemmy",
     "source_url": "https://github.com/LemmyNet/jerboa",
-    "stars": 1210
+    "stars": 1211
   },
   {
     "id": "dev.bg.jetbird",
@@ -9123,7 +9123,7 @@
     "id": "info.metadude.android.rc3.schedule",
     "name": "JEV 2022 Schedule",
     "source_url": "https://github.com/EventFahrplan/EventFahrplan",
-    "stars": 252
+    "stars": 248
   },
   {
     "id": "io.gitlab.derjosef.jigsaw",
@@ -9153,7 +9153,7 @@
     "id": "org.jitsi.meet",
     "name": "Jitsi Meet",
     "source_url": "https://github.com/jitsi/jitsi-meet",
-    "stars": 25697
+    "stars": 25719
   },
   {
     "id": "org.voidsink.anewjkuapp",
@@ -9177,7 +9177,7 @@
     "id": "net.cozic.joplin",
     "name": "Joplin",
     "source_url": "https://github.com/laurent22/joplin",
-    "stars": 49606
+    "stars": 49635
   },
   {
     "id": "com.isaakhanimann.journal",
@@ -9237,7 +9237,7 @@
     "id": "at.techbee.jtx",
     "name": "jtx Board journals|notes|tasks",
     "source_url": "https://github.com/TechbeeAT/jtxBoard",
-    "stars": 464
+    "stars": 465
   },
   {
     "id": "com.jonglen7.jugglinglab",
@@ -9291,7 +9291,7 @@
     "id": "com.fsck.k9",
     "name": "K-9 Mail",
     "source_url": "https://github.com/thunderbird/thunderbird-android",
-    "stars": 12062
+    "stars": 12069
   },
   {
     "id": "ir.hsn6.k2",
@@ -9315,7 +9315,7 @@
     "id": "com.amanoteam.kahon",
     "name": "Kahon",
     "source_url": "https://github.com/AmanoTeam/Kahon",
-    "stars": 52
+    "stars": 53
   },
   {
     "id": "ca.fuwafuwa.kaku",
@@ -9345,7 +9345,7 @@
     "id": "ua.syt0r.kanji.fdroid",
     "name": "Kanji Dojo",
     "source_url": "https://github.com/syt0r/Kanji-Dojo",
-    "stars": 475
+    "stars": 476
   },
   {
     "id": "ch.seto.kanjirecog",
@@ -9375,7 +9375,7 @@
     "id": "io.github.ronynn.karui",
     "name": "Karui ToDo",
     "source_url": "https://github.com/ronynn/karui",
-    "stars": 65
+    "stars": 66
   },
   {
     "id": "sh.fhs.ksre",
@@ -9387,7 +9387,7 @@
     "id": "com.predidit.kazumi",
     "name": "Kazumi",
     "source_url": "https://github.com/Predidit/Kazumi",
-    "stars": 11195
+    "stars": 11263
   },
   {
     "id": "com.adgad.kboard",
@@ -9447,7 +9447,7 @@
     "id": "com.kunzisoft.keepass.libre",
     "name": "KeePassDX - FOSS Password Safe",
     "source_url": "https://github.com/Kunzisoft/KeePassDX",
-    "stars": 5353
+    "stars": 5357
   },
   {
     "id": "com.ivanovsky.passnotes",
@@ -9477,7 +9477,7 @@
     "id": "io.github.sds100.keymapper",
     "name": "Key Mapper & Floating Buttons",
     "source_url": "https://github.com/keymapperorg/KeyMapper",
-    "stars": 1662
+    "stars": 1663
   },
   {
     "id": "io.github.sds100.keymapper.inputmethod.latin",
@@ -9501,7 +9501,7 @@
     "id": "com.yogeshpaliyal.keypass",
     "name": "KeyPass",
     "source_url": "https://github.com/yogeshpaliyal/KeyPass",
-    "stars": 688
+    "stars": 690
   },
   {
     "id": "io.github.hufrea.keysh",
@@ -9567,7 +9567,7 @@
     "id": "fr.neamar.kiss",
     "name": "KISS Launcher",
     "source_url": "https://github.com/Neamar/KISS",
-    "stars": 3148
+    "stars": 3150
   },
   {
     "id": "com.leinardi.kitchentimer",
@@ -9579,19 +9579,19 @@
     "id": "com.tombursch.kitchenowl",
     "name": "KitchenOwl",
     "source_url": "https://github.com/TomBursch/kitchenowl",
-    "stars": 1823
+    "stars": 1827
   },
   {
     "id": "de.kitshn.android",
     "name": "kitshn (for Tandoor)",
     "source_url": "https://github.com/aimok04/kitshn",
-    "stars": 338
+    "stars": 339
   },
   {
     "id": "io.github.drumber.kitsune",
     "name": "Kitsune",
     "source_url": "https://github.com/Drumber/Kitsune",
-    "stars": 187
+    "stars": 188
   },
   {
     "id": "org.nerdcircus.android.klaxon",
@@ -9603,7 +9603,7 @@
     "id": "com.buzbuz.smartautoclicker",
     "name": "Klick'r - Smart AutoClicker",
     "source_url": "https://github.com/Nain57/Smart-AutoClicker",
-    "stars": 2474
+    "stars": 2477
   },
   {
     "id": "com.koshai_limited.klock",
@@ -9615,7 +9615,7 @@
     "id": "com.example.knkpanime",
     "name": "knkpanime",
     "source_url": "https://github.com/KNKPA/KNKPAnime",
-    "stars": 581
+    "stars": 582
   },
   {
     "id": "me.impa.knockonports",
@@ -9633,7 +9633,7 @@
     "id": "org.xbmc.kodi",
     "name": "Kodi",
     "source_url": "https://github.com/xbmc/xbmc",
-    "stars": 19397
+    "stars": 19401
   },
   {
     "id": "at.dasz.KolabDroid",
@@ -9651,7 +9651,7 @@
     "id": "com.chooloo.www.koler",
     "name": "Koler",
     "source_url": "https://github.com/Chooloo/koler",
-    "stars": 1004
+    "stars": 1005
   },
   {
     "id": "io.github.snd_r.komelia",
@@ -9669,7 +9669,7 @@
     "id": "net.koofr.vault",
     "name": "Koofr Vault",
     "source_url": "https://github.com/koofr/vault",
-    "stars": 126
+    "stars": 127
   },
   {
     "id": "org.xbmc.kore",
@@ -9681,13 +9681,13 @@
     "id": "org.koreader.launcher.fdroid",
     "name": "KOReader",
     "source_url": "https://github.com/koreader/koreader",
-    "stars": 21952
+    "stars": 21969
   },
   {
     "id": "org.koitharu.kotatsu",
     "name": "Kotatsu",
     "source_url": "https://github.com/KotatsuApp/Kotatsu",
-    "stars": 5731
+    "stars": 5749
   },
   {
     "id": "com.example.kotlinquiz",
@@ -9705,7 +9705,7 @@
     "id": "net.usikkert.kouchat.android",
     "name": "KouChat",
     "source_url": "https://github.com/blurpy/kouchat-android",
-    "stars": 92
+    "stars": 91
   },
   {
     "id": "com.Sommerlichter.social",
@@ -9729,7 +9729,7 @@
     "id": "me.knighthat.kreate",
     "name": "Kreate",
     "source_url": "https://github.com/knighthat/Kreate",
-    "stars": 416
+    "stars": 429
   },
   {
     "id": "org.krita",
@@ -9741,7 +9741,7 @@
     "id": "com.amnesica.kryptey",
     "name": "KryptEY",
     "source_url": "https://github.com/amnesica/KryptEY",
-    "stars": 749
+    "stars": 750
   },
   {
     "id": "org.kde.ktrip",
@@ -9777,7 +9777,7 @@
     "id": "de.mm20.launcher2.release",
     "name": "Kvaesitso",
     "source_url": "https://github.com/MM2-0/Kvaesitso",
-    "stars": 3160
+    "stars": 3169
   },
   {
     "id": "org.kwaak3",
@@ -9867,7 +9867,7 @@
     "id": "si.uni_lj.fe.lablog",
     "name": "LabLog",
     "source_url": "https://github.com/jakobkreft/LabLog",
-    "stars": 23
+    "stars": 24
   },
   {
     "id": "com.labnex.app",
@@ -9969,7 +9969,7 @@
     "id": "org.lufebe16.lbalance",
     "name": "LBalance",
     "source_url": "https://github.com/lufebe16/lbalance",
-    "stars": 7
+    "stars": 8
   },
   {
     "id": "com.example.android.maxpapers",
@@ -9999,7 +9999,7 @@
     "id": "com.swordfish.lemuroid",
     "name": "Lemuroid",
     "source_url": "https://github.com/Swordfish90/Lemuroid",
-    "stars": 3169
+    "stars": 3175
   },
   {
     "id": "dev.atajan.lingva_android",
@@ -10017,7 +10017,7 @@
     "id": "com.lesspass.android",
     "name": "LessPass",
     "source_url": "https://github.com/lesspass/lesspass",
-    "stars": 5858
+    "stars": 5857
   },
   {
     "id": "com.berdik.letmedowngrade",
@@ -10029,7 +10029,7 @@
     "id": "de.schliweb.bluesharpbendingapp",
     "name": "Let's Bend: Blues Harmonica Tuner & Trainer",
     "source_url": "https://github.com/egdels/bluesharpbendingapp",
-    "stars": 6
+    "stars": 14
   },
   {
     "id": "ch.cryptobit.letterbox",
@@ -10065,7 +10065,7 @@
     "id": "com.absinthe.libchecker",
     "name": "LibChecker",
     "source_url": "https://github.com/LibChecker/LibChecker",
-    "stars": 5449
+    "stars": 5459
   },
   {
     "id": "org.inventati.massimol.liberovocab",
@@ -10137,13 +10137,13 @@
     "id": "at.tomtasche.reader",
     "name": "LibreOffice & OpenOffice document reader | ODF",
     "source_url": "https://github.com/opendocument-app/OpenDocument.droid",
-    "stars": 306
+    "stars": 305
   },
   {
     "id": "info.metadude.android.libreoffice.schedule",
     "name": "LibreOffice 2024 Schedule",
     "source_url": "https://github.com/johnjohndoe/CampFahrplan",
-    "stars": 33
+    "stars": 34
   },
   {
     "id": "org.documentfoundation.libreoffice",
@@ -10155,7 +10155,7 @@
     "id": "com.foobnix.pro.pdf.reader",
     "name": "Librera Reader",
     "source_url": "https://github.com/foobnix/LibreraReader",
-    "stars": 3574
+    "stars": 3578
   },
   {
     "id": "com.github.librerandonaut.librerandonaut",
@@ -10179,7 +10179,7 @@
     "id": "com.kaajjo.libresudoku",
     "name": "LibreSudoku",
     "source_url": "https://github.com/kaajjo/LibreSudoku",
-    "stars": 535
+    "stars": 534
   },
   {
     "id": "libretasks.app",
@@ -10209,13 +10209,13 @@
     "id": "com.github.libretube",
     "name": "LibreTube",
     "source_url": "https://github.com/libre-tube/LibreTube",
-    "stars": 9965
+    "stars": 9975
   },
   {
     "id": "org.lichess.mobileapp.free",
     "name": "lichess",
     "source_url": "https://github.com/lichess-org/lichobile/",
-    "stars": 2107
+    "stars": 2110
   },
   {
     "id": "de.thefeiter.liedgutverzeichnis",
@@ -10263,7 +10263,7 @@
     "id": "acr.browser.lightning",
     "name": "Lightning",
     "source_url": "https://github.com/anthonycr/Lightning-Browser",
-    "stars": 2263
+    "stars": 2265
   },
   {
     "id": "ua.com.radiokot.lnaddr2invoice",
@@ -10281,7 +10281,7 @@
     "id": "com.limbo.emu.main",
     "name": "Limbo x86 PC Emulator",
     "source_url": "https://github.com/limboemu/limbo",
-    "stars": 2984
+    "stars": 2985
   },
   {
     "id": "cxa.gridwallpaper",
@@ -10317,19 +10317,19 @@
     "id": "com.sbv.linkdroid",
     "name": "LinkDroid for Linkwarden",
     "source_url": "https://github.com/Dacid99/LinkDroid-for-Linkwarden",
-    "stars": 81
+    "stars": 82
   },
   {
     "id": "com.amrdeveloper.linkhub",
     "name": "LinkHub",
     "source_url": "https://github.com/AmrDeveloper/LinkHub",
-    "stars": 216
+    "stars": 217
   },
   {
     "id": "com.sakethh.linkora",
     "name": "Linkora",
     "source_url": "https://github.com/sakethpathike/Linkora",
-    "stars": 576
+    "stars": 578
   },
   {
     "id": "org.linphone",
@@ -10341,7 +10341,7 @@
     "id": "com.inspiredandroid.linuxcommandbibliotheca",
     "name": "Linux Command Library",
     "source_url": "https://github.com/SimonSchubert/LinuxCommandLibrary",
-    "stars": 1165
+    "stars": 1169
   },
   {
     "id": "com.linuxcounter.lico_update_003",
@@ -10353,13 +10353,13 @@
     "id": "dev.linwood.butterfly.nightly",
     "name": "Linwood Butterfly Nightly",
     "source_url": "https://github.com/LinwoodDev/Butterfly",
-    "stars": 1362
+    "stars": 1361
   },
   {
     "id": "dev.linwood.flow.nightly",
     "name": "Linwood Flow Nightly",
     "source_url": "https://github.com/LinwoodDev/Flow",
-    "stars": 113
+    "stars": 114
   },
   {
     "id": "com.xenris.liquidwarsos",
@@ -10371,7 +10371,7 @@
     "id": "org.grakovne.lissen",
     "name": "Lissen: Audiobookshelf client",
     "source_url": "https://github.com/GrakovNe/lissen-android/",
-    "stars": 338
+    "stars": 340
   },
   {
     "id": "de.onyxbits.listmyapps",
@@ -10413,7 +10413,7 @@
     "id": "com.martinmimigames.simplefileexplorer",
     "name": "Little File Explorer",
     "source_url": "https://github.com/martinmimigames/little-file-explorer",
-    "stars": 478
+    "stars": 477
   },
   {
     "id": "com.martinmimigames.littlemusicplayer",
@@ -10425,7 +10425,7 @@
     "id": "com.hhst.litube",
     "name": "litube",
     "source_url": "https://github.com/HydeYYHH/litube",
-    "stars": 113
+    "stars": 112
   },
   {
     "id": "org.sasehash.burgerwp",
@@ -10479,7 +10479,7 @@
     "id": "org.localsend.localsend_app",
     "name": "LocalSend",
     "source_url": "https://github.com/localsend/localsend",
-    "stars": 62198
+    "stars": 62258
   },
   {
     "id": "org.fitchfamily.android.wifi_backend",
@@ -10527,7 +10527,7 @@
     "id": "com.dp.logcatapp",
     "name": "Logcat Reader",
     "source_url": "https://github.com/darshanparajuli/LogcatReader",
-    "stars": 667
+    "stars": 668
   },
   {
     "id": "sk.madzik.android.logcatudp",
@@ -10545,7 +10545,7 @@
     "id": "com.logger.app",
     "name": "Logger",
     "source_url": "https://github.com/Sanmeet007/logger",
-    "stars": 124
+    "stars": 126
   },
   {
     "id": "za.co.lukestonehm.logicaldefence",
@@ -10569,7 +10569,7 @@
     "id": "com.logseq.app",
     "name": "Logseq",
     "source_url": "https://github.com/logseq/logseq",
-    "stars": 36919
+    "stars": 36954
   },
   {
     "id": "io.github.lufte.lona",
@@ -10581,13 +10581,13 @@
     "id": "com.rtbishop.look4sat",
     "name": "Look4Sat: Satellite tracker",
     "source_url": "https://github.com/rt-bishop/Look4Sat",
-    "stars": 771
+    "stars": 772
   },
   {
     "id": "org.isoron.uhabits",
     "name": "Loop Habit Tracker",
     "source_url": "https://github.com/iSoron/uhabits",
-    "stars": 8698
+    "stars": 8706
   },
   {
     "id": "com.alexkang.loopboard",
@@ -10599,7 +10599,7 @@
     "id": "com.dn0ne.lotus",
     "name": "Lotus",
     "source_url": "https://github.com/dn0ne/lotus",
-    "stars": 277
+    "stars": 278
   },
   {
     "id": "aq.metallists.loudbang",
@@ -10623,7 +10623,7 @@
     "id": "net.minetest.minetest",
     "name": "Luanti",
     "source_url": "https://github.com/luanti-org/luanti",
-    "stars": 11513
+    "stars": 11520
   },
   {
     "id": "digital.selfdefense.lucia",
@@ -10659,7 +10659,7 @@
     "id": "rasel.lunar.launcher",
     "name": "Lunar Launcher",
     "source_url": "https://github.com/iamrasel/lunar-launcher",
-    "stars": 503
+    "stars": 504
   },
   {
     "id": "net.basov.lws.fdroid",
@@ -10695,7 +10695,7 @@
     "id": "com.svenjacobs.app.leon",
     "name": "L\u00e9on \u2013 The URL Cleaner",
     "source_url": "https://github.com/svenjacobs/leon",
-    "stars": 273
+    "stars": 275
   },
   {
     "id": "org.gateshipone.malp",
@@ -10707,7 +10707,7 @@
     "id": "com.m3u.androidApp",
     "name": "M3U",
     "source_url": "https://github.com/realOxy/M3UAndroid",
-    "stars": 780
+    "stars": 782
   },
   {
     "id": "gr.ratmole.android.Mach3Pendant",
@@ -10731,7 +10731,7 @@
     "id": "com.topjohnwu.magisk",
     "name": "Magisk",
     "source_url": "https://github.com/topjohnwu/Magisk",
-    "stars": 53509
+    "stars": 53559
   },
   {
     "id": "com.anoshenko.android.mahjongg",
@@ -10743,7 +10743,7 @@
     "id": "com.danemadsen.maid",
     "name": "maid",
     "source_url": "https://github.com/Mobile-Artificial-Intelligence/maid",
-    "stars": 2015
+    "stars": 2016
   },
   {
     "id": "de.monocles.mail",
@@ -10821,7 +10821,7 @@
     "id": "net.gsantner.markor",
     "name": "Markor",
     "source_url": "https://github.com/gsantner/markor",
-    "stars": 4347
+    "stars": 4355
   },
   {
     "id": "org.covolunablu.marswallpaper",
@@ -10863,7 +10863,7 @@
     "id": "org.joinmastodon.android",
     "name": "Mastodon",
     "source_url": "https://github.com/mastodon/mastodon-android",
-    "stars": 1844
+    "stars": 1847
   },
   {
     "id": "de.box2code.matoid",
@@ -10875,7 +10875,7 @@
     "id": "me.zhanghai.android.files",
     "name": "Material Files",
     "source_url": "https://github.com/zhanghai/MaterialFiles",
-    "stars": 6975
+    "stars": 6985
   },
   {
     "id": "co.garmax.materialflashlight",
@@ -10899,7 +10899,7 @@
     "id": "us.materialio.app",
     "name": "Materialious",
     "source_url": "https://github.com/Materialious/Materialious",
-    "stars": 700
+    "stars": 702
   },
   {
     "id": "org.materialos.icons",
@@ -11211,7 +11211,7 @@
     "id": "gallery.memories",
     "name": "Memories: Photo Management for Nextcloud",
     "source_url": "https://github.com/pulsejet/memories",
-    "stars": 3511
+    "stars": 3512
   },
   {
     "id": "com.sanskritbasics.memory",
@@ -11229,7 +11229,7 @@
     "id": "com.example.mempal",
     "name": "Mempal",
     "source_url": "https://github.com/aeonBTC/Mempal",
-    "stars": 38
+    "stars": 39
   },
   {
     "id": "de.yazo_games.mensaguthaben",
@@ -11265,7 +11265,7 @@
     "id": "it.belloworld.mercurygram",
     "name": "Mercurygram",
     "source_url": "https://github.com/Mercurygram/Mercurygram",
-    "stars": 317
+    "stars": 318
   },
   {
     "id": "info.spotcomms.wlanbackend",
@@ -11283,13 +11283,13 @@
     "id": "d.d.meshenger",
     "name": "Meshenger",
     "source_url": "https://github.com/meshenger-app/meshenger-android",
-    "stars": 770
+    "stars": 771
   },
   {
     "id": "com.geeksville.mesh",
     "name": "Meshtastic",
     "source_url": "https://github.com/meshtastic/Meshtastic-Android",
-    "stars": 893
+    "stars": 896
   },
   {
     "id": "rocks.poopjournal.metadataremover",
@@ -11331,7 +11331,7 @@
     "id": "io.github.muntashirakon.Music",
     "name": "Metro - A music player for Android",
     "source_url": "https://github.com/MuntashirAkon/Metro",
-    "stars": 1447
+    "stars": 1448
   },
   {
     "id": "au.id.micolous.farebot",
@@ -11367,7 +11367,7 @@
     "id": "com.manichord.mgit",
     "name": "MGit",
     "source_url": "https://github.com/maks/MGit",
-    "stars": 1356
+    "stars": 1357
   },
   {
     "id": "com.daviancorp.android.mh4udatabase",
@@ -11415,7 +11415,7 @@
     "id": "com.mkulesh.micromath.plus",
     "name": "microMathematics Plus",
     "source_url": "https://github.com/mkulesh/microMathematics",
-    "stars": 610
+    "stars": 609
   },
   {
     "id": "net.bitplane.android.microphone",
@@ -11463,13 +11463,13 @@
     "id": "de.syss.MifareClassicTool",
     "name": "MIFARE Classic Tool",
     "source_url": "https://github.com/ikarus23/MifareClassicTool",
-    "stars": 5166
+    "stars": 5163
   },
   {
     "id": "com.tuntori.mightieramp",
     "name": "Mightier Amp",
     "source_url": "https://github.com/tuntorius/mightier_amp",
-    "stars": 204
+    "stars": 205
   },
   {
     "id": "io.github.alketii.mightyknight",
@@ -11487,13 +11487,13 @@
     "id": "com.calcitem.sanmill",
     "name": "Mill",
     "source_url": "https://github.com/calcitem/Sanmill",
-    "stars": 170
+    "stars": 171
   },
   {
     "id": "cat.mvmike.minimalcalendarwidget",
     "name": "MinCal Widget",
     "source_url": "https://github.com/mvmike/min-cal-widget",
-    "stars": 109
+    "stars": 110
   },
   {
     "id": "biz.binarysolutions.mindfulscale",
@@ -11517,7 +11517,7 @@
     "id": "io.anuke.mindustry",
     "name": "Mindustry",
     "source_url": "https://github.com/Anuken/Mindustry",
-    "stars": 24066
+    "stars": 24081
   },
   {
     "id": "com.xlythe.minecraftclock",
@@ -11613,7 +11613,7 @@
     "id": "miru.miaomint",
     "name": "Miru",
     "source_url": "https://github.com/miru-project/miru-app",
-    "stars": 4834
+    "stars": 4840
   },
   {
     "id": "net.yxejamir.misbotheringsms",
@@ -11643,7 +11643,7 @@
     "id": "com.dergoogler.mmrl",
     "name": "MMRL",
     "source_url": "https://github.com/DerGoogler/MMRL",
-    "stars": 1245
+    "stars": 1259
   },
   {
     "id": "com.zarathustra.mnemosyne",
@@ -11685,7 +11685,7 @@
     "id": "me.mudkip.moememos",
     "name": "MoeMemos",
     "source_url": "https://github.com/mudkipme/MoeMemosAndroid",
-    "stars": 769
+    "stars": 770
   },
   {
     "id": "net.ktnx.mobileledger",
@@ -11823,7 +11823,7 @@
     "id": "com.limelight",
     "name": "Moonlight Game Streaming",
     "source_url": "https://github.com/moonlight-stream/moonlight-android",
-    "stars": 5189
+    "stars": 5202
   },
   {
     "id": "org.epstudios.morbidmeter",
@@ -11877,7 +11877,7 @@
     "id": "org.joinmastodon.android.moshinda",
     "name": "Moshidon",
     "source_url": "https://github.com/LucasGGamerM/moshidon",
-    "stars": 803
+    "stars": 804
   },
   {
     "id": "org.mosspaper",
@@ -11925,13 +11925,13 @@
     "id": "org.mozc.android.inputmethod.japanese",
     "name": "Mozc for Android",
     "source_url": "https://github.com/google/mozc",
-    "stars": 2611
+    "stars": 2613
   },
   {
     "id": "org.musicpd",
     "name": "MPD",
     "source_url": "https://github.com/MusicPlayerDaemon/MPD/",
-    "stars": 2367
+    "stars": 2371
   },
   {
     "id": "miccah.mpvremote",
@@ -11943,19 +11943,19 @@
     "id": "is.xyz.mpv",
     "name": "mpv-android",
     "source_url": "https://github.com/mpv-android/mpv-android",
-    "stars": 2473
+    "stars": 2476
   },
   {
     "id": "live.mehiz.mpvkt",
     "name": "mpvKt: MPV based media player",
     "source_url": "https://github.com/abdallahmehiz/mpvKt",
-    "stars": 993
+    "stars": 997
   },
   {
     "id": "info.metadude.android.mrmcd.schedule",
     "name": "MRMCD 2024 Schedule",
     "source_url": "https://github.com/johnjohndoe/CampFahrplan",
-    "stars": 33
+    "stars": 34
   },
   {
     "id": "net.adhikary.mrtbuddy",
@@ -11997,25 +11997,25 @@
     "id": "rocks.mucke",
     "name": "mucke - Music Player",
     "source_url": "https://github.com/moritz-weber/mucke",
-    "stars": 245
+    "stars": 246
   },
   {
     "id": "org.dkf.jmule",
     "name": "Mule on Android",
     "source_url": "https://github.com/a-pavlov/jed2k",
-    "stars": 148
+    "stars": 149
   },
   {
     "id": "net.mullvad.mullvadvpn",
     "name": "Mullvad VPN: privacy is a universal right",
     "source_url": "https://github.com/mullvad/mullvadvpn-app",
-    "stars": 5895
+    "stars": 5902
   },
   {
     "id": "app.mlauncher",
     "name": "Multi Launcher \u2027 Home Screen",
     "source_url": "https://github.com/DroidWorksStudio/mLauncher",
-    "stars": 109
+    "stars": 110
   },
   {
     "id": "com.hectorone.multismssender",
@@ -12027,7 +12027,7 @@
     "id": "io.nightdavisao.multilocale",
     "name": "MultiLocale",
     "source_url": "https://github.com/Nightdavisao/MultiLocale",
-    "stars": 39
+    "stars": 40
   },
   {
     "id": "org.tamanegi.wallpaper.multipicture.dnt",
@@ -12045,7 +12045,7 @@
     "id": "com.coboltforge.dontmind.multivnc",
     "name": "MultiVNC",
     "source_url": "https://github.com/bk138/multivnc",
-    "stars": 535
+    "stars": 536
   },
   {
     "id": "se.lublin.mumla",
@@ -12123,13 +12123,13 @@
     "id": "io.github.lydavid.musicsearch",
     "name": "MusicSearch",
     "source_url": "https://github.com/lydavid/MusicSearch",
-    "stars": 82
+    "stars": 83
   },
   {
     "id": "com.gokadzev.musify.fdroid",
     "name": "Musify",
     "source_url": "https://github.com/gokadzev/Musify",
-    "stars": 2627
+    "stars": 2635
   },
   {
     "id": "com.github.muellerma.mute_reminder",
@@ -12141,7 +12141,7 @@
     "id": "net.nurik.roman.muzei",
     "name": "Muzei",
     "source_url": "https://github.com/romannurik/muzei",
-    "stars": 4783
+    "stars": 4785
   },
   {
     "id": "de.devmil.muzei.bingimageofthedayartsource",
@@ -12171,7 +12171,7 @@
     "id": "com.mhss.app.mybrain",
     "name": "My Brain",
     "source_url": "https://github.com/mhss1/MyBrain",
-    "stars": 1539
+    "stars": 1541
   },
   {
     "id": "community.fairphone.mycontacts",
@@ -12183,7 +12183,7 @@
     "id": "org.totschnig.myexpenses",
     "name": "My Expenses",
     "source_url": "https://github.com/mtotschnig/MyExpenses",
-    "stars": 960
+    "stars": 961
   },
   {
     "id": "dk.kjeldsen.carwingsflutter",
@@ -12255,7 +12255,7 @@
     "id": "com.starry.myne",
     "name": "Myne: Download & Read eBooks",
     "source_url": "https://github.com/Pool-Of-Tears/Myne",
-    "stars": 1273
+    "stars": 1274
   },
   {
     "id": "org.aykit.MyOwnNotes",
@@ -12399,13 +12399,13 @@
     "id": "com.machiav3lli.backup",
     "name": "Neo Backup",
     "source_url": "https://github.com/NeoApplications/Neo-Backup",
-    "stars": 2971
+    "stars": 2973
   },
   {
     "id": "com.machiav3lli.fdroid",
     "name": "Neo Store",
     "source_url": "https://github.com/NeoApplications/Neo-Store",
-    "stars": 3609
+    "stars": 3615
   },
   {
     "id": "de.viatorus.neo2externalkeyboard",
@@ -12429,7 +12429,7 @@
     "id": "xyz.malkki.neostumbler.fdroid",
     "name": "NeoStumbler",
     "source_url": "https://github.com/mjaakko/NeoStumbler",
-    "stars": 292
+    "stars": 294
   },
   {
     "id": "net.alegen.android.netclip",
@@ -12447,7 +12447,7 @@
     "id": "eu.faircode.netguard",
     "name": "NetGuard",
     "source_url": "https://github.com/M66B/NetGuard",
-    "stars": 2795
+    "stars": 2808
   },
   {
     "id": "cz.antecky.netswitch",
@@ -12483,7 +12483,7 @@
     "id": "com.craxiom.networksurvey",
     "name": "Network Survey",
     "source_url": "https://github.com/christianrowlands/android-network-survey",
-    "stars": 256
+    "stars": 260
   },
   {
     "id": "org.gc.networktester",
@@ -12501,7 +12501,7 @@
     "id": "org.kost.nmap.android.networkmapper",
     "name": "NetworkMapper",
     "source_url": "https://github.com/kost/NetworkMapper",
-    "stars": 68
+    "stars": 69
   },
   {
     "id": "com.EthanHeming.NeuralNetworkSimulator",
@@ -12525,13 +12525,13 @@
     "id": "com.gero.newpass",
     "name": "NewPass",
     "source_url": "https://github.com/6eero/NewPass",
-    "stars": 250
+    "stars": 251
   },
   {
     "id": "org.schabi.newpipe",
     "name": "NewPipe",
     "source_url": "https://github.com/TeamNewPipe/NewPipe",
-    "stars": 34006
+    "stars": 34023
   },
   {
     "id": "co.appreactor.news",
@@ -12555,13 +12555,13 @@
     "id": "com.newsblur",
     "name": "NewsBlur - News reader",
     "source_url": "https://github.com/samuelclay/NewsBlur",
-    "stars": 7084
+    "stars": 7086
   },
   {
     "id": "com.swatian.nexnotes",
     "name": "Nex Notes",
     "source_url": "https://github.com/Swatian/nexnotes",
-    "stars": 32
+    "stars": 33
   },
   {
     "id": "com.pcinpact",
@@ -12573,13 +12573,13 @@
     "id": "dev.anilbeesetti.nextplayer",
     "name": "Next Player",
     "source_url": "https://github.com/anilbeesetti/nextplayer",
-    "stars": 2681
+    "stars": 2690
   },
   {
     "id": "com.nextcloud.client",
     "name": "Nextcloud",
     "source_url": "https://github.com/nextcloud/android",
-    "stars": 4639
+    "stars": 4643
   },
   {
     "id": "org.schabi.nxbookmarks",
@@ -12609,7 +12609,7 @@
     "id": "com.nextcloud.android.beta",
     "name": "Nextcloud Dev",
     "source_url": "https://github.com/nextcloud/android",
-    "stars": 4639
+    "stars": 4643
   },
   {
     "id": "it.danieleverducci.nextcloudmaps",
@@ -12651,7 +12651,7 @@
     "id": "com.nextcloud.talk2",
     "name": "Nextcloud Talk",
     "source_url": "https://github.com/nextcloud/talk-android",
-    "stars": 608
+    "stars": 610
   },
   {
     "id": "com.github.vauvenal5.yaga",
@@ -12675,7 +12675,7 @@
     "id": "com.doubleangels.nextdnsmanagement",
     "name": "NextDNS Manager",
     "source_url": "https://github.com/doubleangels/NextDNSManager",
-    "stars": 402
+    "stars": 401
   },
   {
     "id": "com.nextgis.mobile",
@@ -12723,7 +12723,7 @@
     "id": "com.github.muellerma.nfcreader",
     "name": "NFC Reader",
     "source_url": "https://github.com/mueller-ma/NFCReader",
-    "stars": 82
+    "stars": 83
   },
   {
     "id": "com.sinpo.xnfc",
@@ -12735,7 +12735,7 @@
     "id": "de.tu_darmstadt.seemoo.nfcgate",
     "name": "NFCGate",
     "source_url": "https://github.com/nfcgate/nfcgate",
-    "stars": 1610
+    "stars": 1612
   },
   {
     "id": "com.briankhuu.nfcmessageboard",
@@ -12753,7 +12753,7 @@
     "id": "gov.anzong.androidnga",
     "name": "NGA\u5ba2\u6237\u7aef\u5f00\u6e90\u7248",
     "source_url": "https://github.com/Justwen/NGA-CLIENT-VER-OPEN-SOURCE",
-    "stars": 508
+    "stars": 509
   },
   {
     "id": "simbio.se.nheengare",
@@ -12801,7 +12801,7 @@
     "id": "de.csicar.ning",
     "name": "Ning",
     "source_url": "https://github.com/csicar/Ning",
-    "stars": 241
+    "stars": 240
   },
   {
     "id": "io.github.mthli.Ninja",
@@ -12831,7 +12831,7 @@
     "id": "com.termux.nix",
     "name": "Nix-on-Droid",
     "source_url": "https://github.com/nix-community/nix-on-droid",
-    "stars": 1597
+    "stars": 1601
   },
   {
     "id": "foss.cnugteren.nlweer",
@@ -12969,13 +12969,13 @@
     "id": "com.omgodse.notally",
     "name": "Notally | Minimalist Notes",
     "source_url": "https://github.com/OmGodse/Notally",
-    "stars": 1881
+    "stars": 1883
   },
   {
     "id": "com.philkes.notallyx",
     "name": "NotallyX - Quick Notes/Tasks",
     "source_url": "https://github.com/PhilKes/NotallyX",
-    "stars": 291
+    "stars": 295
   },
   {
     "id": "com.notecryptpro",
@@ -13017,7 +13017,7 @@
     "id": "com.streetwriters.notesnook",
     "name": "Notesnook - Private notes app",
     "source_url": "https://github.com/streetwriters/notesnook",
-    "stars": 12053
+    "stars": 12063
   },
   {
     "id": "ru.ttyh.neko259.notey",
@@ -13065,7 +13065,7 @@
     "id": "com.noto",
     "name": "Noto",
     "source_url": "https://github.com/alialbaali/Noto",
-    "stars": 537
+    "stars": 538
   },
   {
     "id": "ca.rmen.nounours",
@@ -13083,7 +13083,7 @@
     "id": "org.courville.nova",
     "name": "NOVA Video Player",
     "source_url": "https://github.com/nova-video-player/aos-AVP",
-    "stars": 3929
+    "stars": 3931
   },
   {
     "id": "me.shrimadhavuk.numselapp",
@@ -13107,13 +13107,13 @@
     "id": "io.heckel.ntfy",
     "name": "ntfy - PUT/POST to your phone",
     "source_url": "https://github.com/binwiederhier/ntfy-android",
-    "stars": 663
+    "stars": 666
   },
   {
     "id": "de.tnmgl.ntodotxt",
     "name": "ntodotxt",
     "source_url": "https://github.com/tmaegel/ntodotxt",
-    "stars": 125
+    "stars": 126
   },
   {
     "id": "net.rocboronat.android.wallpaper.npe",
@@ -13227,7 +13227,7 @@
     "id": "dev.imranr.obtainium.fdroid",
     "name": "Obtainium",
     "source_url": "https://github.com/ImranR98/Obtainium",
-    "stars": 11203
+    "stars": 11221
   },
   {
     "id": "fr.s3i.pointeuse",
@@ -13245,7 +13245,7 @@
     "id": "io.github.subhamtyagi.ocr",
     "name": "OCR",
     "source_url": "https://github.com/SubhamTyagi/android-ocr",
-    "stars": 484
+    "stars": 485
   },
   {
     "id": "org.totschnig.ocr.tesseract",
@@ -13269,7 +13269,7 @@
     "id": "com.gh4a",
     "name": "OctoDroid",
     "source_url": "https://github.com/slapperwan/gh4a",
-    "stars": 1807
+    "stars": 1812
   },
   {
     "id": "fr.nihilus.music",
@@ -13353,7 +13353,7 @@
     "id": "com.github.emavgl.piggybankpro",
     "name": "Oinkoin",
     "source_url": "https://github.com/emavgl/oinkoin",
-    "stars": 221
+    "stars": 224
   },
   {
     "id": "it.danieleverducci.ojo",
@@ -13383,13 +13383,13 @@
     "id": "app.olauncher",
     "name": "Olauncher",
     "source_url": "https://github.com/tanujnotes/Olauncher",
-    "stars": 2689
+    "stars": 2697
   },
   {
     "id": "app.olaunchercf",
     "name": "Olauncher Clutter Free",
     "source_url": "https://github.com/OlauncherCF/OlauncherCF",
-    "stars": 208
+    "stars": 207
   },
   {
     "id": "com.enjoyingfoss.om",
@@ -13407,13 +13407,13 @@
     "id": "it.feio.android.omninotes.foss",
     "name": "Omni Notes",
     "source_url": "https://github.com/federicoiosue/Omni-Notes",
-    "stars": 2744
+    "stars": 2745
   },
   {
     "id": "com.bartixxx.opflashcontrol",
     "name": "OnePlus Flash Control",
     "source_url": "https://github.com/Bartixxx32/Opflashcontrol-app",
-    "stars": 14
+    "stars": 15
   },
   {
     "id": "de.ptrlx.oneshot",
@@ -13509,7 +13509,7 @@
     "id": "openfoodfacts.github.scrachx.openfood",
     "name": "Open Food Facts",
     "source_url": "https://github.com/openfoodfacts/smooth-app",
-    "stars": 1052
+    "stars": 1055
   },
   {
     "id": "me.mgerdes.open_golf",
@@ -13539,7 +13539,7 @@
     "id": "org.osmdroid",
     "name": "Open Map",
     "source_url": "https://github.com/osmdroid/osmdroid",
-    "stars": 2987
+    "stars": 2989
   },
   {
     "id": "net.basov.omn.fdroid",
@@ -13557,7 +13557,7 @@
     "id": "com.todobom.opennotescanner",
     "name": "Open Note Scanner",
     "source_url": "https://github.com/allgood/OpenNoteScanner",
-    "stars": 1430
+    "stars": 1433
   },
   {
     "id": "org.openpetfoodfacts.scanner",
@@ -13599,7 +13599,7 @@
     "id": "io.github.devhyper.openvideoeditor",
     "name": "Open Video Editor",
     "source_url": "https://github.com/devhyper/open-video-editor",
-    "stars": 473
+    "stars": 474
   },
   {
     "id": "top.linesoft.open2share",
@@ -13629,7 +13629,7 @@
     "id": "com.schwegelbin.openbible",
     "name": "OpenBible",
     "source_url": "https://github.com/SchweGELBin/OpenBible2",
-    "stars": 35
+    "stars": 36
   },
   {
     "id": "dev.cyberme0w.openbike",
@@ -13647,13 +13647,13 @@
     "id": "com.darkempire78.opencalculator",
     "name": "OpenCalc",
     "source_url": "https://github.com/Darkempire78/OpenCalc",
-    "stars": 1101
+    "stars": 1106
   },
   {
     "id": "com.opencamera_sensors.app",
     "name": "OpenCamera Sensors",
     "source_url": "https://github.com/prime-slam/OpenCamera-Sensors",
-    "stars": 59
+    "stars": 60
   },
   {
     "id": "org.proninyaroslav.opencomicvine",
@@ -13719,19 +13719,19 @@
     "id": "com.thirtydegreesray.openhub",
     "name": "OpenHub",
     "source_url": "https://github.com/ThirtyDegreesRay/OpenHub",
-    "stars": 4266
+    "stars": 4267
   },
   {
     "id": "org.sufficientlysecure.keychain",
     "name": "OpenKeychain: Easy PGP",
     "source_url": "https://github.com/open-keychain/open-keychain",
-    "stars": 2382
+    "stars": 2383
   },
   {
     "id": "com.app.openlib",
     "name": "Openlib",
     "source_url": "https://github.com/dstark5/Openlib",
-    "stars": 1526
+    "stars": 1532
   },
   {
     "id": "page.codeberg.jumpingpants.opentransit",
@@ -13863,13 +13863,13 @@
     "id": "de.dennisguse.opentracks",
     "name": "OpenTracks (Non-reproducible)",
     "source_url": "https://github.com/OpenTracksApp/OpenTracks",
-    "stars": 1265
+    "stars": 1268
   },
   {
     "id": "de.dennisguse.opentracks.playstore",
     "name": "OpenTracks (Reproducible build)",
     "source_url": "https://github.com/OpenTracksApp/OpenTracks",
-    "stars": 1265
+    "stars": 1268
   },
   {
     "id": "org.openttd.fdroid",
@@ -13881,7 +13881,7 @@
     "id": "com.Arturo254.opentune",
     "name": "OpenTune",
     "source_url": "https://github.com/Arturo254/OpenTune",
-    "stars": 528
+    "stars": 533
   },
   {
     "id": "com.open_usos",
@@ -13899,7 +13899,7 @@
     "id": "de.blinkt.openvpn",
     "name": "OpenVPN for Android",
     "source_url": "https://github.com/schwabe/ics-openvpn",
-    "stars": 3557
+    "stars": 3558
   },
   {
     "id": "de.deftk.openww.android",
@@ -13959,19 +13959,19 @@
     "id": "app.organicmaps",
     "name": "Organic Maps: Hike, Bike, Drive Offline",
     "source_url": "https://github.com/organicmaps/organicmaps",
-    "stars": 11243
+    "stars": 11250
   },
   {
     "id": "com.madlonkay.orgro",
     "name": "Orgro",
     "source_url": "https://github.com/amake/orgro",
-    "stars": 581
+    "stars": 584
   },
   {
     "id": "com.orgzlyrevived",
     "name": "Orgzly Revived",
     "source_url": "https://github.com/orgzly-revived/orgzly-android-revived",
-    "stars": 837
+    "stars": 839
   },
   {
     "id": "com.lubenard.oring_reminder",
@@ -14025,7 +14025,7 @@
     "id": "net.osmand.plus",
     "name": "OsmAnd~",
     "source_url": "https://github.com/osmandapp/Osmand",
-    "stars": 5104
+    "stars": 5109
   },
   {
     "id": "org.gittner.osmbugs",
@@ -14109,13 +14109,13 @@
     "id": "com.owncloud.android",
     "name": "ownCloud",
     "source_url": "https://github.com/owncloud/android",
-    "stars": 3967
+    "stars": 3965
   },
   {
     "id": "org.owntracks.android",
     "name": "OwnTracks",
     "source_url": "https://github.com/owntracks/android/",
-    "stars": 1477
+    "stars": 1481
   },
   {
     "id": "de.nproth.pin",
@@ -14169,7 +14169,7 @@
     "id": "com.mikifus.padland",
     "name": "Padland",
     "source_url": "https://github.com/mikifus/padland",
-    "stars": 78
+    "stars": 79
   },
   {
     "id": "it.rgp.nyagua.pafcalc",
@@ -14187,7 +14187,7 @@
     "id": "com.page.bizzle",
     "name": "Page",
     "source_url": "https://github.com/8izzle/page",
-    "stars": 13
+    "stars": 14
   },
   {
     "id": "net.nightwhistler.pageturner",
@@ -14235,7 +14235,7 @@
     "id": "com.anthonyla.paperize",
     "name": "Paperize - A Wallpaper Changer",
     "source_url": "https://github.com/Anthonyy232/Paperize",
-    "stars": 731
+    "stars": 735
   },
   {
     "id": "de.devmil.paperlaunch",
@@ -14421,7 +14421,7 @@
     "id": "org.secuso.privacyfriendlypausinghealthily",
     "name": "Pausing Healthily (Privacy Friendly)",
     "source_url": "https://github.com/SecUSo/privacy-friendly-pausing-healthily",
-    "stars": 19
+    "stars": 20
   },
   {
     "id": "com.github.samotari.paynoway",
@@ -14433,13 +14433,13 @@
     "id": "com.cyb3rko.pazzword",
     "name": "Pazzword - Password Evaluator",
     "source_url": "https://github.com/cyb3rko/pazzword",
-    "stars": 75
+    "stars": 76
   },
   {
     "id": "com.emanuelef.remote_capture",
     "name": "PCAPdroid",
     "source_url": "https://github.com/emanuele-f/PCAPdroid",
-    "stars": 2944
+    "stars": 2949
   },
   {
     "id": "de.phoenixstudios.pc_dimmer",
@@ -14565,7 +14565,7 @@
     "id": "app.simple.peri",
     "name": "Peristyle",
     "source_url": "https://github.com/Hamza417/Peristyle",
-    "stars": 384
+    "stars": 387
   },
   {
     "id": "org.androidsoft.app.permission",
@@ -14577,7 +14577,7 @@
     "id": "com.mirfatif.permissionmanagerx",
     "name": "Permission Manager X",
     "source_url": "https://github.com/mirfatif/PermissionManagerX",
-    "stars": 458
+    "stars": 460
   },
   {
     "id": "open.com.permissionsmanager",
@@ -14589,7 +14589,7 @@
     "id": "com.byagowi.persiancalendar",
     "name": "Persian Calendar",
     "source_url": "https://github.com/persian-calendar/persian-calendar",
-    "stars": 825
+    "stars": 826
   },
   {
     "id": "com.tiwa.pl",
@@ -14637,7 +14637,7 @@
     "id": "org.sunsetware.phocid",
     "name": "Phocid",
     "source_url": "https://github.com/tjysunset/phocid",
-    "stars": 320
+    "stars": 322
   },
   {
     "id": "tk.giesecke.phoenix",
@@ -14667,13 +14667,13 @@
     "id": "player.phonograph.plus",
     "name": "Phonograph Plus",
     "source_url": "https://github.com/chr56/Phonograph_Plus",
-    "stars": 538
+    "stars": 539
   },
   {
     "id": "com.burhanrashid52.photoediting",
     "name": "Photo Editor",
     "source_url": "https://github.com/burhanrashid52/PhotoEditor",
-    "stars": 4314
+    "stars": 4315
   },
   {
     "id": "fr.s13d.photobackup",
@@ -14697,7 +14697,7 @@
     "id": "dev.leonlatsch.photok",
     "name": "Photok",
     "source_url": "https://github.com/leonlatsch/Photok",
-    "stars": 659
+    "stars": 663
   },
   {
     "id": "com.ruesga.android.wallpapers.photophase",
@@ -14709,7 +14709,7 @@
     "id": "de.rwth_aachen.phyphox",
     "name": "phyphox",
     "source_url": "https://github.com/phyphox/phyphox-android",
-    "stars": 425
+    "stars": 427
   },
   {
     "id": "com.pilockerstable",
@@ -14787,7 +14787,7 @@
     "id": "com.guozhigq.pilipala",
     "name": "PiliPala",
     "source_url": "https://github.com/guozhigq/pilipala",
-    "stars": 10912
+    "stars": 10962
   },
   {
     "id": "com.cliambrown.pilltime",
@@ -14817,7 +14817,7 @@
     "id": "com.pindroid",
     "name": "PinDroid",
     "source_url": "https://github.com/maxpower47/PinDroid",
-    "stars": 298
+    "stars": 297
   },
   {
     "id": "net.blumia.pineapple.lockscreen.oss",
@@ -14847,13 +14847,13 @@
     "id": "InfinityLoop1309.NewPipeEnhanced",
     "name": "PipePipe",
     "source_url": "https://github.com/InfinityLoop1308/PipePipe",
-    "stars": 3176
+    "stars": 3186
   },
   {
     "id": "com.mrl.pixiv",
     "name": "PiPixiv",
     "source_url": "https://github.com/master-lzh/PiPixiv",
-    "stars": 63
+    "stars": 64
   },
   {
     "id": "io.itch.pirate_solitaire",
@@ -14889,7 +14889,7 @@
     "id": "com.perol.asdpl.play.pixivez.libre",
     "name": "Pix-EzViewer",
     "source_url": "https://github.com/ultranity/Pix-EzViewer",
-    "stars": 922
+    "stars": 956
   },
   {
     "id": "com.therealbluepandabear.pixapencil",
@@ -14931,25 +14931,25 @@
     "id": "com.daniebeler.pfpixelix",
     "name": "Pixelix",
     "source_url": "https://github.com/ghostbyte-dev/pixelix",
-    "stars": 237
+    "stars": 238
   },
   {
     "id": "info.guardianproject.pixelknot",
     "name": "PixelKnot: Hidden Messages",
     "source_url": "https://github.com/guardianproject/PixelKnot",
-    "stars": 200
+    "stars": 201
   },
   {
     "id": "com.antony.muzei.pixiv",
     "name": "Pixiv for Muzei 3",
     "source_url": "https://github.com/yellowbluesky/PixivforMuzei3",
-    "stars": 185
+    "stars": 186
   },
   {
     "id": "top.kagg886.pmf",
     "name": "Pixiv-MultiPlatform",
     "source_url": "https://github.com/kagg886/Pixiv-MultiPlatform",
-    "stars": 181
+    "stars": 184
   },
   {
     "id": "de.drhoffmannsoft.pizza",
@@ -14967,7 +14967,7 @@
     "id": "com.ismartcoding.plain",
     "name": "PlainApp: File & Web Access",
     "source_url": "https://github.com/ismartcoding/plain-app",
-    "stars": 2844
+    "stars": 2848
   },
   {
     "id": "com.planes.android",
@@ -15003,7 +15003,7 @@
     "id": "com.github.mdeluise.plantit",
     "name": "Plant-it",
     "source_url": "https://github.com/MDeLuise/plant-it",
-    "stars": 980
+    "stars": 982
   },
   {
     "id": "tech.platypush.platypush",
@@ -15027,7 +15027,7 @@
     "id": "com.mshdabiola.playnotepad.foss",
     "name": "Play NotePad",
     "source_url": "https://github.com/mshdabiola/NotePad",
-    "stars": 103
+    "stars": 104
   },
   {
     "id": "com.cleveroad.sample",
@@ -15069,7 +15069,7 @@
     "id": "com.dijia1124.plusplusbattery",
     "name": "Plus Plus Battery",
     "source_url": "https://github.com/dijia1124/plusplusbattery",
-    "stars": 15
+    "stars": 23
   },
   {
     "id": "eu.lavarde.pmtd",
@@ -15135,7 +15135,7 @@
     "id": "com.skyd.anivu",
     "name": "PodAura",
     "source_url": "https://github.com/SkyD666/PodAura",
-    "stars": 1038
+    "stars": 1040
   },
   {
     "id": "ac.mdiq.podcini.X",
@@ -15147,7 +15147,7 @@
     "id": "com.podverse.fdroid",
     "name": "Podverse",
     "source_url": "https://github.com/podverse/podverse-fdroid",
-    "stars": 116
+    "stars": 115
   },
   {
     "id": "ca.rmen.android.poetassistant",
@@ -15291,7 +15291,7 @@
     "id": "luci.sixsixsix.powerampache2.fdroid",
     "name": "Power Ampache 2",
     "source_url": "https://github.com/icefields/Power-Ampache-2",
-    "stars": 138
+    "stars": 140
   },
   {
     "id": "io.github.domi04151309.powerapp",
@@ -15321,7 +15321,7 @@
     "id": "org.ppsspp.ppsspp",
     "name": "PPSSPP",
     "source_url": "https://github.com/hrydgard/ppsspp",
-    "stars": 12324
+    "stars": 12348
   },
   {
     "id": "com.proch.practicehub",
@@ -15501,7 +15501,7 @@
     "id": "com.jpwolfso.privdnsqt",
     "name": "Private DNS Quick Tile",
     "source_url": "https://github.com/joshuawolfsohn/Private-DNS-Quick-Tile",
-    "stars": 152
+    "stars": 153
   },
   {
     "id": "com.wesaphzt.privatelock",
@@ -15513,13 +15513,13 @@
     "id": "com.arduia.expense",
     "name": "Pro Expense - Daily Finance Tracker",
     "source_url": "https://github.com/arduia/ProExpense",
-    "stars": 100
+    "stars": 99
   },
   {
     "id": "me.timeto.app",
     "name": "Productivity Tools - timeto.me",
     "source_url": "https://github.com/Medvedev91/timeto.me",
-    "stars": 340
+    "stars": 341
   },
   {
     "id": "pl.kuben.progressapp",
@@ -15555,13 +15555,13 @@
     "id": "proton.android.pass.fdroid",
     "name": "Proton Pass: Password Manager",
     "source_url": "https://github.com/protonpass/android-pass",
-    "stars": 469
+    "stars": 471
   },
   {
     "id": "ch.protonvpn.android",
     "name": "ProtonVPN - Secure and Free VPN",
     "source_url": "https://github.com/ProtonVPN/android-app",
-    "stars": 2739
+    "stars": 2746
   },
   {
     "id": "com.ml.proximitysensorfix",
@@ -15657,7 +15657,7 @@
     "id": "org.lufebe16.pysolfc",
     "name": "PySolFC",
     "source_url": "https://github.com/shlomif/PySolFC",
-    "stars": 493
+    "stars": 494
   },
   {
     "id": "com.hassaneltantawy.qadaa",
@@ -15675,7 +15675,7 @@
     "id": "dev.bartuzen.qbitcontroller",
     "name": "qBitController",
     "source_url": "https://github.com/Bartuzen/qBitController",
-    "stars": 689
+    "stars": 691
   },
   {
     "id": "dev.yashgarg.qbit",
@@ -15711,7 +15711,7 @@
     "id": "com.example.barcodescanner",
     "name": "QR & Barcode Scanner",
     "source_url": "https://github.com/wewewe718/QrAndBarcodeScanner",
-    "stars": 792
+    "stars": 791
   },
   {
     "id": "com.secuso.privacyFriendlyCodeScanner",
@@ -15723,7 +15723,7 @@
     "id": "com.sweak.qralarm",
     "name": "QRAlarm",
     "source_url": "https://github.com/sweakpl/qralarm-android",
-    "stars": 229
+    "stars": 231
   },
   {
     "id": "com.github.andremiras.qrscan",
@@ -15741,7 +15741,7 @@
     "id": "com.thehcj.quacker",
     "name": "Quacker",
     "source_url": "https://github.com/TheHCJ/Quacker",
-    "stars": 266
+    "stars": 267
   },
   {
     "id": "com.quad9.aegis",
@@ -15825,7 +15825,7 @@
     "id": "com.rbn.qtsettings",
     "name": "QuickTile Settings",
     "source_url": "https://github.com/RBN-Apps/Quick-Tile-Settings",
-    "stars": 32
+    "stars": 34
   },
   {
     "id": "com.asdoi.quicktiles",
@@ -15843,13 +15843,13 @@
     "id": "dev.octoshrimpy.quik",
     "name": "QUIK SMS",
     "source_url": "https://github.com/octoshrimpy/quik",
-    "stars": 1348
+    "stars": 1359
   },
   {
     "id": "io.github.quillpad",
     "name": "Quillpad",
     "source_url": "https://github.com/quillpad/quillpad",
-    "stars": 966
+    "stars": 969
   },
   {
     "id": "xyz.deepdaikon.quinb",
@@ -15939,7 +15939,7 @@
     "id": "net.programmierecke.radiodroid2",
     "name": "RadioDroid",
     "source_url": "https://github.com/segler-alex/RadioDroid",
-    "stars": 830
+    "stars": 831
   },
   {
     "id": "org.onedroid.radiowave",
@@ -16029,7 +16029,7 @@
     "id": "me.ash.reader",
     "name": "Read You",
     "source_url": "https://github.com/Ashinch/ReadYou",
-    "stars": 5988
+    "stars": 6000
   },
   {
     "id": "com.prhlt.aemus.Read4SpeechExperiments",
@@ -16041,7 +16041,7 @@
     "id": "de.readeckapp",
     "name": "Readeck App",
     "source_url": "https://github.com/jensomato/ReadeckApp",
-    "stars": 64
+    "stars": 67
   },
   {
     "id": "bou.amine.apps.readerforselfossv2.android",
@@ -16083,13 +16083,13 @@
     "id": "io.github.leonidius20.recorder.lite",
     "name": "Recording Studio Lite",
     "source_url": "https://github.com/Leonidius20/RecordingStudio",
-    "stars": 121
+    "stars": 122
   },
   {
     "id": "de.dbauer.expensetracker",
     "name": "Recurring Expense Tracker",
     "source_url": "https://github.com/DennisBauer/RecurringExpenseTracker",
-    "stars": 197
+    "stars": 198
   },
   {
     "id": "net.damsy.soupeaucaillou.recursiveRunner",
@@ -16119,13 +16119,13 @@
     "id": "com.acszo.redomi.repo",
     "name": "Redomi",
     "source_url": "http://github.com/acszo/Redomi",
-    "stars": 409
+    "stars": 410
   },
   {
     "id": "org.quantumbadger.redreader",
     "name": "RedReader",
     "source_url": "https://github.com/QuantumBadger/RedReader",
-    "stars": 2161
+    "stars": 2162
   },
   {
     "id": "org.vi_server.red_screen",
@@ -16179,7 +16179,7 @@
     "id": "in.umairkhan.remotedroid",
     "name": "Remote Droid",
     "source_url": "https://github.com/omerjerk/RemoteDroid",
-    "stars": 493
+    "stars": 494
   },
   {
     "id": "de.onyxbits.remotekeyboard",
@@ -16233,7 +16233,7 @@
     "id": "com.futurice.android.reservator",
     "name": "Reservator",
     "source_url": "https://github.com/futurice/meeting-room-tablet",
-    "stars": 181
+    "stars": 182
   },
   {
     "id": "com.ibrahimyousre.resumebuilder",
@@ -16245,19 +16245,19 @@
     "id": "com.rk.terminal",
     "name": "ReTerminal",
     "source_url": "https://github.com/RohitKushvaha01/ReTerminal",
-    "stars": 232
+    "stars": 236
   },
   {
     "id": "com.celzero.bravedns",
     "name": "Rethink: DNS + Firewall + VPN",
     "source_url": "https://github.com/celzero/rethink-app",
-    "stars": 3548
+    "stars": 3549
   },
   {
     "id": "code.name.monkey.retromusic",
     "name": "Retro Music",
     "source_url": "https://github.com/RetroMusicPlayer/RetroMusicPlayer",
-    "stars": 4434
+    "stars": 4438
   },
   {
     "id": "ro.hume.cosmin.retrostack",
@@ -16269,7 +16269,7 @@
     "id": "com.retroarch",
     "name": "RetroArch",
     "source_url": "https://github.com/libretro/RetroArch",
-    "stars": 11448
+    "stars": 11453
   },
   {
     "id": "se.embargo.retroboy",
@@ -16311,7 +16311,7 @@
     "id": "com.github.olga_yakovleva.rhvoice.android",
     "name": "RHVoice - a free and open source speech synthesize",
     "source_url": "https://github.com/RHVoice/RHVoice",
-    "stars": 1655
+    "stars": 1656
   },
   {
     "id": "com.adilhanney.ricochlime",
@@ -16347,13 +16347,13 @@
     "id": "it.fast4x.rimusic",
     "name": "RiMusic",
     "source_url": "https://github.com/fast4x/RiMusic",
-    "stars": 3715
+    "stars": 3718
   },
   {
     "id": "info.guardianproject.ripple",
     "name": "Ripple: respond when panicking",
     "source_url": "https://github.com/guardianproject/ripple",
-    "stars": 246
+    "stars": 247
   },
   {
     "id": "se.leap.riseupvpn",
@@ -16395,7 +16395,7 @@
     "id": "xdsopl.robot36",
     "name": "Robot36 - SSTV Image Decoder",
     "source_url": "https://github.com/xdsopl/robot36",
-    "stars": 373
+    "stars": 375
   },
   {
     "id": "info.staticfree.android.robotfindskitten",
@@ -16443,7 +16443,7 @@
     "id": "wseemann.media.romote",
     "name": "RoMote",
     "source_url": "https://github.com/wseemann/RoMote",
-    "stars": 132
+    "stars": 133
   },
   {
     "id": "com.mattieapps.roommates",
@@ -16467,7 +16467,7 @@
     "id": "me.timschneeberger.rootlessjamesdsp",
     "name": "RootlessJamesDSP",
     "source_url": "https://github.com/ThePBone/RootlessJamesDSP",
-    "stars": 1174
+    "stars": 1177
   },
   {
     "id": "at.krixec.rosary",
@@ -16497,7 +16497,7 @@
     "id": "de.felixnuesse.extract",
     "name": "Round Sync - Rclone for Android",
     "source_url": "https://github.com/newhinton/Round-Sync",
-    "stars": 1686
+    "stars": 1687
   },
   {
     "id": "net.yolosec.routerkeygen2",
@@ -16527,7 +16527,7 @@
     "id": "com.gmail.cn.leetao94.rssaid",
     "name": "RSSAid",
     "source_url": "https://github.com/LeetaoGoooo/RSSAid",
-    "stars": 1181
+    "stars": 1182
   },
   {
     "id": "com.github.ktsr42.rsyncserver",
@@ -16617,7 +16617,7 @@
     "id": "com.carriez.flutter_hbb",
     "name": "RustDesk",
     "source_url": "https://github.com/rustdesk/rustdesk",
-    "stars": 90168
+    "stars": 90375
   },
   {
     "id": "com.hexbit.rutmath",
@@ -16665,7 +16665,7 @@
     "id": "com.adilhanney.saber",
     "name": "Saber",
     "source_url": "https://github.com/saber-notes/saber",
-    "stars": 3298
+    "stars": 3303
   },
   {
     "id": "de.kromke.andreas.safmediascanner",
@@ -16683,7 +16683,7 @@
     "id": "org.privacymatters.safespace",
     "name": "Safe Space",
     "source_url": "https://github.com/aashishksahu/SafeSpace",
-    "stars": 249
+    "stars": 250
   },
   {
     "id": "com.aravi.dot",
@@ -16695,7 +16695,7 @@
     "id": "com.aefyr.sai.fdroid",
     "name": "SAI",
     "source_url": "https://github.com/Aefyr/SAI",
-    "stars": 2876
+    "stars": 2878
   },
   {
     "id": "net.xvello.salasana",
@@ -16743,13 +16743,13 @@
     "id": "com.klee.sapio",
     "name": "Sapio",
     "source_url": "https://github.com/jonathanklee/Sapio",
-    "stars": 142
+    "stars": 143
   },
   {
     "id": "org.satdump.SatDump",
     "name": "SatDump",
     "source_url": "https://github.com/satdump/satdump",
-    "stars": 1603
+    "stars": 1605
   },
   {
     "id": "org.ligi.satoshiproof",
@@ -16833,7 +16833,7 @@
     "id": "com.btcontract.wallet",
     "name": "SBW",
     "source_url": "https://github.com/akumaigorodski/wallet",
-    "stars": 247
+    "stars": 246
   },
   {
     "id": "com.scalepractice",
@@ -16845,7 +16845,7 @@
     "id": "io.github.chrisimx.scanbridge",
     "name": "ScanBridge",
     "source_url": "https://github.com/Chrisimx/ScanBridge",
-    "stars": 115
+    "stars": 117
   },
   {
     "id": "de.westnordost.streetcomplete.expert",
@@ -16863,7 +16863,7 @@
     "id": "de.spiritcroc.riotx",
     "name": "SchildiChat",
     "source_url": "https://github.com/SchildiChat/SchildiChat-android",
-    "stars": 441
+    "stars": 443
   },
   {
     "id": "chat.schildi.android",
@@ -16887,7 +16887,7 @@
     "id": "io.cardijey.schulrechner",
     "name": "Schulrechner",
     "source_url": "https://github.com/CardiJey/schulrechner",
-    "stars": 9
+    "stars": 11
   },
   {
     "id": "org.scid.android",
@@ -16899,7 +16899,7 @@
     "id": "taco.scoop",
     "name": "Scoop",
     "source_url": "https://github.com/TacoTheDank/Scoop",
-    "stars": 327
+    "stars": 328
   },
   {
     "id": "de.beisteiners.spieleblock",
@@ -16947,7 +16947,7 @@
     "id": "de.markusfisch.android.screentime",
     "name": "Screen Time",
     "source_url": "https://github.com/markusfisch/ScreenTime",
-    "stars": 134
+    "stars": 135
   },
   {
     "id": "com.orpheusdroid.screenrecorder",
@@ -16965,13 +16965,13 @@
     "id": "com.github.cvzi.screenshottile",
     "name": "Screenshot Tile (NoRoot)",
     "source_url": "https://github.com/cvzi/ScreenshotTile",
-    "stars": 294
+    "stars": 295
   },
   {
     "id": "info.dvkr.screenstream",
     "name": "ScreenStream",
     "source_url": "https://github.com/dkrivoruchko/ScreenStream",
-    "stars": 2064
+    "stars": 2070
   },
   {
     "id": "eu.ryuu.screeps",
@@ -17013,7 +17013,7 @@
     "id": "eu.darken.sdmse",
     "name": "SD Maid 2/SE - System Cleaner",
     "source_url": "https://github.com/d4rken-org/sdmaid-se",
-    "stars": 4590
+    "stars": 4620
   },
   {
     "id": "com.gmail.jerickson314.sdscanner",
@@ -17025,7 +17025,7 @@
     "id": "com.shifthackz.aisdv1.app.foss",
     "name": "SDAI FOSS",
     "source_url": "https://github.com/ShiftHackZ/Stable-Diffusion-Android",
-    "stars": 935
+    "stars": 939
   },
   {
     "id": "org.zephyrsoft.sdbviewer",
@@ -17067,7 +17067,7 @@
     "id": "com.junkfood.seal",
     "name": "Seal",
     "source_url": "https://github.com/JunkFood02/Seal",
-    "stars": 19250
+    "stars": 19345
   },
   {
     "id": "org.seamapdroid",
@@ -17109,7 +17109,7 @@
     "id": "com.farmerbb.secondscreen.free",
     "name": "SecondScreen",
     "source_url": "https://github.com/farmerbb/SecondScreen",
-    "stars": 414
+    "stars": 415
   },
   {
     "id": "com.paranoiaworks.unicus.android.sse",
@@ -17181,7 +17181,7 @@
     "id": "me.zhanghai.android.textselectionwebsearch",
     "name": "Select Text to Search",
     "source_url": "https://github.com/zhanghai/TextSelectionWebSearch",
-    "stars": 95
+    "stars": 96
   },
   {
     "id": "com.github.rahul_gill.attendance",
@@ -17253,7 +17253,7 @@
     "id": "com.github.umer0586.sensagram",
     "name": "Sensa Gram",
     "source_url": "https://github.com/umer0586/SensaGram",
-    "stars": 29
+    "stars": 30
   },
   {
     "id": "de.onyxbits.sensorreadout",
@@ -17265,7 +17265,7 @@
     "id": "github.umer0586.sensorserver",
     "name": "Sensor Server",
     "source_url": "https://github.com/umer0586/SensorServer",
-    "stars": 321
+    "stars": 323
   },
   {
     "id": "org.sensorkraken",
@@ -17325,7 +17325,7 @@
     "id": "priv.wh201906.serialtest",
     "name": "SerialTest",
     "source_url": "https://github.com/wh201906/SerialTest",
-    "stars": 1377
+    "stars": 1379
   },
   {
     "id": "org.servalproject",
@@ -17343,7 +17343,7 @@
     "id": "tech.lolli.toolbox",
     "name": "ServerBox",
     "source_url": "https://github.com/lollipopkit/flutter_server_box",
-    "stars": 6200
+    "stars": 6213
   },
   {
     "id": "sony.hidden.servicemenu",
@@ -17355,13 +17355,13 @@
     "id": "network.loki.messenger.fdroid",
     "name": "Session",
     "source_url": "https://github.com/session-foundation/session-android",
-    "stars": 278
+    "stars": 282
   },
   {
     "id": "io.github.muntashirakon.setedit",
     "name": "SetEdit - Settings Database Editor",
     "source_url": "https://github.com/MuntashirAkon/SetEdit",
-    "stars": 411
+    "stars": 412
   },
   {
     "id": "site.leos.setter",
@@ -17397,13 +17397,13 @@
     "id": "com.github.shadowsocks.tv",
     "name": "Shadowsocks",
     "source_url": "https://github.com/shadowsocks/shadowsocks-android",
-    "stars": 35788
+    "stars": 35800
   },
   {
     "id": "com.github.shadowsocks",
     "name": "Shadowsocks",
     "source_url": "https://github.com/shadowsocks/shadowsocks-android",
-    "stars": 35788
+    "stars": 35800
   },
   {
     "id": "org.gnosco.share2archivetoday",
@@ -17421,7 +17421,7 @@
     "id": "com.tengu.sharetoclipboard",
     "name": "Share to Clipboard",
     "source_url": "https://github.com/tengusw/share_to_clipboard",
-    "stars": 168
+    "stars": 169
   },
   {
     "id": "com.jim.sharetocomputer",
@@ -17481,7 +17481,7 @@
     "id": "com.shatteredpixel.shatteredpixeldungeon",
     "name": "Shattered Pixel Dungeon",
     "source_url": "https://github.com/00-Evan/shattered-pixel-dungeon",
-    "stars": 5286
+    "stars": 5297
   },
   {
     "id": "com.mendhak.sheepyhorn",
@@ -17511,7 +17511,7 @@
     "id": "org.woheller69.ttsengine",
     "name": "SherpaTTS",
     "source_url": "https://github.com/woheller69/ttsengine",
-    "stars": 244
+    "stars": 245
   },
   {
     "id": "de.nulide.shiftcal",
@@ -17715,7 +17715,7 @@
     "id": "de.buttercookie.simbadroid",
     "name": "SimbaDroid",
     "source_url": "https://github.com/buttercookie42/SimbaDroid",
-    "stars": 39
+    "stars": 41
   },
   {
     "id": "org.simlar",
@@ -17727,7 +17727,7 @@
     "id": "name.boyle.chris.sgtpuzzles",
     "name": "Simon Tatham's Puzzles",
     "source_url": "https://github.com/chrisboyle/sgtpuzzles",
-    "stars": 627
+    "stars": 628
   },
   {
     "id": "com.winston69.simpill",
@@ -17805,7 +17805,7 @@
     "id": "com.simplemobiletools.dialer",
     "name": "Simple Dialer",
     "source_url": "https://github.com/SimpleMobileTools/Simple-Dialer",
-    "stars": 666
+    "stars": 667
   },
   {
     "id": "com.brentpanther.ethereumwidget",
@@ -17823,7 +17823,7 @@
     "id": "rkr.simplekeyboard.inputmethod",
     "name": "Simple Keyboard",
     "source_url": "https://github.com/rkkr/simple-keyboard",
-    "stars": 1295
+    "stars": 1298
   },
   {
     "id": "com.brentpanther.litecoinwidget",
@@ -17925,13 +17925,13 @@
     "id": "io.simplelogin.android.fdroid",
     "name": "SimpleLogin | Anti-spam",
     "source_url": "https://github.com/simple-login/Simple-Login-Android",
-    "stars": 416
+    "stars": 417
   },
   {
     "id": "com.wbrawner.simplemarkdown.free",
     "name": "SimpleMarkdown",
     "source_url": "https://github.com/wbrawner/SimpleMarkdown",
-    "stars": 186
+    "stars": 189
   },
   {
     "id": "felixwiemuth.simplereminder",
@@ -17973,25 +17973,25 @@
     "id": "chat.simplex.app",
     "name": "SimpleX Chat",
     "source_url": "https://github.com/simplex-chat/simplex-chat",
-    "stars": 8788
+    "stars": 8807
   },
   {
     "id": "com.simplytranslate_mobile",
     "name": "SimplyTranslate Mobile",
     "source_url": "https://github.com/ManeraKai/simplytranslate_mobile",
-    "stars": 188
+    "stars": 189
   },
   {
     "id": "com.maxrave.simpmusic",
     "name": "SimpMusic",
     "source_url": "https://github.com/maxrave-dev/SimpMusic",
-    "stars": 3437
+    "stars": 3477
   },
   {
     "id": "io.nekohasekai.sfa",
     "name": "sing-box",
     "source_url": "https://github.com/SagerNet/sing-box",
-    "stars": 24175
+    "stars": 24216
   },
   {
     "id": "gal.sli.singal",
@@ -18045,19 +18045,19 @@
     "id": "com.google.android.stardroid",
     "name": "Sky Map",
     "source_url": "https://github.com/sky-map-team/stardroid",
-    "stars": 1372
+    "stars": 1378
   },
   {
     "id": "free.rm.skytube.oss",
     "name": "SkyTube",
     "source_url": "https://github.com/SkyTubeTeam/SkyTube",
-    "stars": 2537
+    "stars": 2539
   },
   {
     "id": "free.rm.skytube.legacy.oss",
     "name": "SkyTube Legacy",
     "source_url": "https://github.com/SkyTubeTeam/SkyTubeLegacy",
-    "stars": 64
+    "stars": 65
   },
   {
     "id": "fr.smarquis.sleeptimer",
@@ -18111,7 +18111,7 @@
     "id": "it.rignanese.leo.slimfacebook",
     "name": "SlimSocial for Facebook",
     "source_url": "https://github.com/rignaneseleo/SlimSocial-for-Facebook",
-    "stars": 435
+    "stars": 436
   },
   {
     "id": "tritop.androidSLWCpuWidget",
@@ -18129,19 +18129,19 @@
     "id": "com.vsmartcard.acardemulator",
     "name": "Smart Card Emulator",
     "source_url": "https://github.com/frankmorgner/vsmartcard/tree/HEAD/ACardEmulator",
-    "stars": 784
+    "stars": 785
   },
   {
     "id": "com.vsmartcard.remotesmartcardreader.app",
     "name": "Smart Card Reader",
     "source_url": "https://github.com/frankmorgner/vsmartcard/tree/HEAD/remote-reader",
-    "stars": 784
+    "stars": 785
   },
   {
     "id": "cu.axel.smartdock",
     "name": "Smart Dock",
     "source_url": "https://github.com/axel358/smartdock",
-    "stars": 938
+    "stars": 943
   },
   {
     "id": "org.woheller69.eggtimer",
@@ -18177,13 +18177,13 @@
     "id": "com.fpf.smartscan",
     "name": "SmartScan",
     "source_url": "https://github.com/dev-diaries41/smartscan",
-    "stars": 206
+    "stars": 207
   },
   {
     "id": "eu.hydrologis.smash",
     "name": "SMASH \u2014 Smart Mobile App for Surveyor's Happiness",
     "source_url": "https://github.com/geopaparazzi/smash",
-    "stars": 82
+    "stars": 83
   },
   {
     "id": "com.spacestation14.Smile",
@@ -18243,7 +18243,7 @@
     "id": "com.github.tmo1.sms_ie",
     "name": "SMS Import / Export",
     "source_url": "https://github.com/tmo1/sms-ie",
-    "stars": 450
+    "stars": 452
   },
   {
     "id": "com.github.yeriomin.smsscheduler",
@@ -18255,7 +18255,7 @@
     "id": "tech.bogomolov.incomingsmsgateway",
     "name": "SMS to URL Forwarder",
     "source_url": "https://github.com/bogkonstantin/android_income_sms_gateway_webhook",
-    "stars": 461
+    "stars": 464
   },
   {
     "id": "dev.n4n5.sms2call",
@@ -18279,13 +18279,13 @@
     "id": "de.badaix.snapcast",
     "name": "Snapcast - multi-room audio in perfect sync",
     "source_url": "https://github.com/badaix/snapcast",
-    "stars": 6718
+    "stars": 6740
   },
   {
     "id": "com.fmsys.snapdrop",
     "name": "Snapdrop & PairDrop for Android",
     "source_url": "https://github.com/fm-sys/snapdrop-android",
-    "stars": 946
+    "stars": 945
   },
   {
     "id": "com.darkrockstudios.app.securecamera",
@@ -18507,7 +18507,7 @@
     "id": "spam.blocker",
     "name": "SpamBlocker (Call & SMS)",
     "source_url": "https://github.com/aj3423/SpamBlocker",
-    "stars": 871
+    "stars": 877
   },
   {
     "id": "com.anysoftkeyboard.languagepack.spain",
@@ -18591,7 +18591,7 @@
     "id": "com.toasterofbread.spmp",
     "name": "SpMp",
     "source_url": "https://github.com/toasterofbread/spmp",
-    "stars": 1394
+    "stars": 1396
   },
   {
     "id": "com.rohit2810.spotit",
@@ -18603,7 +18603,7 @@
     "id": "oss.krtirtho.spotube",
     "name": "Spotube",
     "source_url": "https://github.com/KRTirtho/spotube",
-    "stars": 40561
+    "stars": 40589
   },
   {
     "id": "net.majorkernelpanic.spydroid",
@@ -18651,7 +18651,7 @@
     "id": "com.blacksquircle.ui",
     "name": "Squircle CE - Code Editor",
     "source_url": "https://github.com/massivemadness/Squircle-CE",
-    "stars": 1524
+    "stars": 1527
   },
   {
     "id": "com.daemon.ssh",
@@ -18663,13 +18663,13 @@
     "id": "com.ssrlive.ssrdroid",
     "name": "ssrDroid",
     "source_url": "https://github.com/ShadowsocksR-Live/ssrDroid",
-    "stars": 73
+    "stars": 74
   },
   {
     "id": "om.sstvencoder",
     "name": "SSTV Encoder ",
     "source_url": "https://github.com/olgamiller/SSTVEncoder2",
-    "stars": 172
+    "stars": 174
   },
   {
     "id": "com.fr3ts0n.stagefever",
@@ -18681,7 +18681,7 @@
     "id": "com.standardnotes",
     "name": "Standard Notes",
     "source_url": "https://github.com/standardnotes/app",
-    "stars": 5778
+    "stars": 5785
   },
   {
     "id": "fr.xgouchet.packageexplorer",
@@ -18741,7 +18741,7 @@
     "id": "im.status.ethereum",
     "name": "Status: Ethereum Crypto Wallet",
     "source_url": "https://github.com/status-im/status-mobile",
-    "stars": 3976
+    "stars": 3977
   },
   {
     "id": "org.y20k.stayput",
@@ -18795,7 +18795,7 @@
     "id": "soko.ekibun.stitch",
     "name": "Stitch",
     "source_url": "https://github.com/ekibun/Stitch",
-    "stars": 159
+    "stars": 158
   },
   {
     "id": "com.github.premnirmal.tickerwidget",
@@ -18867,7 +18867,7 @@
     "id": "de.westnordost.streetcomplete",
     "name": "Street\u00adComplete",
     "source_url": "https://github.com/streetcomplete/StreetComplete",
-    "stars": 4173
+    "stars": 4176
   },
   {
     "id": "org.stridetasks.stride",
@@ -18885,7 +18885,7 @@
     "id": "org.strongswan.android",
     "name": "strongSwan VPN Client",
     "source_url": "https://github.com/strongswan/strongswan",
-    "stars": 2514
+    "stars": 2520
   },
   {
     "id": "de.hfu.funfpunktnull",
@@ -18915,13 +18915,13 @@
     "id": "org.subsurface",
     "name": "Subsurface",
     "source_url": "https://github.com/Subsurface-divelog/subsurface",
-    "stars": 2786
+    "stars": 2787
   },
   {
     "id": "com.subtracks",
     "name": "Subtracks",
     "source_url": "https://github.com/austinried/subtracks",
-    "stars": 738
+    "stars": 739
   },
   {
     "id": "com.flasskamp.subz",
@@ -19023,7 +19023,7 @@
     "id": "com.superproductivity.superproductivity",
     "name": "Super Productivity",
     "source_url": "https://github.com/johannesjo/super-productivity/",
-    "stars": 13861
+    "stars": 13877
   },
   {
     "id": "com.serwylo.retrowars",
@@ -19047,13 +19047,13 @@
     "id": "org.supertuxkart.stk",
     "name": "SuperTuxKart",
     "source_url": "https://github.com/supertuxkart/stk-code",
-    "stars": 4763
+    "stars": 4766
   },
   {
     "id": "com.myAllVideoBrowser",
     "name": "SuperX",
     "source_url": "https://github.com/alexch33/super-video-downloader",
-    "stars": 289
+    "stars": 292
   },
   {
     "id": "org.ligi.survivalmanual",
@@ -19071,7 +19071,7 @@
     "id": "ai.susi",
     "name": "SUSI.AI",
     "source_url": "https://github.com/fossasia/susi_android",
-    "stars": 2435
+    "stars": 2436
   },
   {
     "id": "eu.veldsoft.svarka.odds.calculator",
@@ -19125,7 +19125,7 @@
     "id": "io.github.zyrouge.symphony",
     "name": "Symphony",
     "source_url": "https://github.com/zyrouge/symphony/",
-    "stars": 1493
+    "stars": 1492
   },
   {
     "id": "jp.muo.syncmemories",
@@ -19155,7 +19155,7 @@
     "id": "com.github.catfriend1.syncthingandroid",
     "name": "Syncthing-Fork",
     "source_url": "https://github.com/Catfriend1/syncthing-android-fdroid",
-    "stars": 345
+    "stars": 347
   },
   {
     "id": "theakki.synctool",
@@ -19173,7 +19173,7 @@
     "id": "com.tortel.syslog",
     "name": "SysLog",
     "source_url": "https://github.com/Tortel/SysLog",
-    "stars": 247
+    "stars": 248
   },
   {
     "id": "com.oliverszabo.tcrbdetector",
@@ -19185,7 +19185,7 @@
     "id": "ohi.andre.consolelauncher",
     "name": "T-UI",
     "source_url": "https://github.com/fAndreuzzi/TUI-ConsoleLauncher",
-    "stars": 1281
+    "stars": 1283
   },
   {
     "id": "es.ideotec.t16fling",
@@ -19203,7 +19203,7 @@
     "id": "io.github.friesi23.mhabit",
     "name": "Table Habit",
     "source_url": "https://github.com/FriesI23/mhabit",
-    "stars": 680
+    "stars": 684
   },
   {
     "id": "fr.bux.rollingdashboard",
@@ -19263,7 +19263,7 @@
     "id": "com.tailscale.ipn",
     "name": "Tailscale",
     "source_url": "https://github.com/tailscale/tailscale-android",
-    "stars": 1329
+    "stars": 1331
   },
   {
     "id": "com.weicheng.taipeiyoubikeoffline",
@@ -19275,7 +19275,7 @@
     "id": "liou.rayyuan.ebooksearchtaiwan",
     "name": "TaiwanEbookSearcher",
     "source_url": "https://github.com/YuanLiou/TaiwanEbookSearch",
-    "stars": 42
+    "stars": 43
   },
   {
     "id": "net.taler.cashier",
@@ -19347,7 +19347,7 @@
     "id": "cn.ac.lz233.tarnhelm",
     "name": "Tarnhelm",
     "source_url": "https://github.com/lz233/Tarnhelm",
-    "stars": 579
+    "stars": 580
   },
   {
     "id": "si.palcka.tarok",
@@ -19371,7 +19371,7 @@
     "id": "org.tasks",
     "name": "Tasks.org: Open-source To-Do Lists & Reminders",
     "source_url": "https://github.com/tasks/tasks",
-    "stars": 4231
+    "stars": 4234
   },
   {
     "id": "kvj.taskw",
@@ -19431,7 +19431,7 @@
     "id": "com.cappielloantonio.notquitemy.tempo",
     "name": "Tempo",
     "source_url": "https://github.com/CappielloAntonio/tempo",
-    "stars": 1585
+    "stars": 1594
   },
   {
     "id": "com.dev.xavier.tempusromanum",
@@ -19473,49 +19473,49 @@
     "id": "com.termux",
     "name": "Termux",
     "source_url": "https://github.com/termux/termux-app",
-    "stars": 42120
+    "stars": 42195
   },
   {
     "id": "com.termux.api",
     "name": "Termux:API",
     "source_url": "https://github.com/termux/termux-api",
-    "stars": 2748
+    "stars": 2758
   },
   {
     "id": "com.termux.boot",
     "name": "Termux:Boot",
     "source_url": "https://github.com/termux/termux-boot",
-    "stars": 1197
+    "stars": 1202
   },
   {
     "id": "com.termux.window",
     "name": "Termux:Float",
     "source_url": "https://github.com/termux/termux-float",
-    "stars": 577
+    "stars": 580
   },
   {
     "id": "com.termux.gui",
     "name": "Termux:GUI",
     "source_url": "https://github.com/termux/termux-gui",
-    "stars": 862
+    "stars": 865
   },
   {
     "id": "com.termux.styling",
     "name": "Termux:Styling",
     "source_url": "https://github.com/termux/termux-styling",
-    "stars": 1356
+    "stars": 1360
   },
   {
     "id": "com.termux.tasker",
     "name": "Termux:Tasker",
     "source_url": "https://github.com/termux/termux-tasker",
-    "stars": 1172
+    "stars": 1174
   },
   {
     "id": "com.termux.widget",
     "name": "Termux:Widget",
     "source_url": "https://github.com/termux/termux-widget",
-    "stars": 1215
+    "stars": 1220
   },
   {
     "id": "page.codeberg.terratactician_expandoria",
@@ -19659,7 +19659,7 @@
     "id": "ch.threema.app.libre",
     "name": "Threema Libre",
     "source_url": "https://github.com/threema-ch/threema-android",
-    "stars": 891
+    "stars": 893
   },
   {
     "id": "de.mangelow.throughput",
@@ -19683,19 +19683,19 @@
     "id": "com.dessalines.thumbkey",
     "name": "Thumb-Key",
     "source_url": "https://github.com/dessalines/thumb-key",
-    "stars": 1189
+    "stars": 1190
   },
   {
     "id": "net.thunderbird.android.beta",
     "name": "Thunderbird Beta for Testers",
     "source_url": "https://github.com/thunderbird/thunderbird-android",
-    "stars": 12062
+    "stars": 12069
   },
   {
     "id": "net.thunderbird.android",
     "name": "Thunderbird: Free Your Inbox",
     "source_url": "https://github.com/thunderbird/thunderbird-android",
-    "stars": 12062
+    "stars": 12069
   },
   {
     "id": "org.ironrabbit.bhoboard",
@@ -19749,7 +19749,7 @@
     "id": "com.slavabarkov.tidy",
     "name": "TIDY Text-to-Image Discovery",
     "source_url": "https://github.com/slavabarkov/tidy",
-    "stars": 439
+    "stars": 440
   },
   {
     "id": "io.github.tiefseetauchner.tiefprompt",
@@ -19779,7 +19779,7 @@
     "id": "ca.hamaluik.timecop",
     "name": "Time Cop",
     "source_url": "https://github.com/hamaluik/timecop",
-    "stars": 861
+    "stars": 860
   },
   {
     "id": "com.maforn.timedshutdown",
@@ -19803,7 +19803,7 @@
     "id": "org.woheller69.TimeLapseCam",
     "name": "TimeLapseCam",
     "source_url": "https://github.com/woheller69/timelapsecamera",
-    "stars": 254
+    "stars": 255
   },
   {
     "id": "io.timelimit.android.aosp.direct",
@@ -19869,7 +19869,7 @@
     "id": "com.martinmimigames.tinymusicplayer",
     "name": "Tiny Music Player",
     "source_url": "https://github.com/martinmimigames/tiny-music-player",
-    "stars": 89
+    "stars": 90
   },
   {
     "id": "com.rareventure.gps2",
@@ -19971,7 +19971,7 @@
     "id": "org.andstatus.todoagenda",
     "name": "Todo Agenda",
     "source_url": "https://github.com/andstatus/todoagenda",
-    "stars": 157
+    "stars": 158
   },
   {
     "id": "org.secuso.privacyfriendlytodolist",
@@ -20121,7 +20121,7 @@
     "id": "info.zamojski.soft.towercollector",
     "name": "Tower Collector",
     "source_url": "https://github.com/zamojski/TowerCollector",
-    "stars": 271
+    "stars": 272
   },
   {
     "id": "org.pipoypipagames.towerjumper",
@@ -20139,19 +20139,19 @@
     "id": "org.traccar.client",
     "name": "Traccar Client",
     "source_url": "https://github.com/traccar/traccar-client-android",
-    "stars": 704
+    "stars": 705
   },
   {
     "id": "app.traced_it",
     "name": "traced it",
     "source_url": "https://github.com/traced-it/traced-it-android",
-    "stars": 32
+    "stars": 33
   },
   {
     "id": "com.samco.trackandgraph",
     "name": "Track & Graph",
     "source_url": "https://github.com/SamAmco/track-and-graph",
-    "stars": 507
+    "stars": 508
   },
   {
     "id": "org.zephyrsoft.trackworktime",
@@ -20175,7 +20175,7 @@
     "id": "io.github.sspanak.tt9",
     "name": "Traditional T9",
     "source_url": "https://github.com/sspanak/tt9",
-    "stars": 346
+    "stars": 345
   },
   {
     "id": "org.softcatala.traductor",
@@ -20187,7 +20187,7 @@
     "id": "com.kylecorry.trail_sense",
     "name": "Trail Sense",
     "source_url": "https://github.com/kylecorry31/Trail-Sense",
-    "stars": 1476
+    "stars": 1483
   },
   {
     "id": "de.sorunome.unifiednlp.trains",
@@ -20205,7 +20205,7 @@
     "id": "de.quantumphysique.trale",
     "name": "trale",
     "source_url": "https://github.com/QuantumPhysique/trale",
-    "stars": 118
+    "stars": 119
   },
   {
     "id": "com.andybotting.tramhunter",
@@ -20229,7 +20229,7 @@
     "id": "org.transdroid.full",
     "name": "Transdroid",
     "source_url": "https://github.com/erickok/transdroid",
-    "stars": 1375
+    "stars": 1376
   },
   {
     "id": "org.transdroid.search",
@@ -20241,7 +20241,7 @@
     "id": "org.transdroid.lite",
     "name": "Transdrone",
     "source_url": "https://github.com/erickok/transdroid",
-    "stars": 1375
+    "stars": 1376
   },
   {
     "id": "com.wmstein.transektcount",
@@ -20265,7 +20265,7 @@
     "id": "com.bnyro.translate",
     "name": "Translate You",
     "source_url": "https://github.com/you-apps/TranslateYou",
-    "stars": 1145
+    "stars": 1147
   },
   {
     "id": "com.easwareapps.transparentwidget",
@@ -20277,7 +20277,7 @@
     "id": "de.grobox.liberario",
     "name": "Transportr - Public Transit",
     "source_url": "https://github.com/grote/Transportr",
-    "stars": 1101
+    "stars": 1102
   },
   {
     "id": "fr.ybo.transportsbordeaux",
@@ -20313,7 +20313,7 @@
     "id": "org.equeim.tremotesf",
     "name": "Tremotesf",
     "source_url": "https://github.com/equeim/tremotesf-android",
-    "stars": 257
+    "stars": 258
   },
   {
     "id": "eu.veldsoft.tri.peaks",
@@ -20511,7 +20511,7 @@
     "id": "org.polymorphicshade.tubular",
     "name": "Tubular",
     "source_url": "https://github.com/polymorphicshade/Tubular",
-    "stars": 2309
+    "stars": 2315
   },
   {
     "id": "com.dalthed.tucan",
@@ -20523,7 +20523,7 @@
     "id": "com.aks_labs.tulsi",
     "name": "Tulsi Gallery",
     "source_url": "https://github.com/AKS-Labs/Tulsi",
-    "stars": 21
+    "stars": 23
   },
   {
     "id": "de.moekadu.tuner",
@@ -20595,13 +20595,13 @@
     "id": "de.tutao.calendar",
     "name": "Tuta Calendar",
     "source_url": "https://github.com/tutao/tutanota",
-    "stars": 6619
+    "stars": 6625
   },
   {
     "id": "de.tutao.tutanota",
     "name": "Tuta Mail",
     "source_url": "https://github.com/tutao/tutanota",
-    "stars": 6619
+    "stars": 6625
   },
   {
     "id": "eu.veldsoft.tuty.fruty.slot",
@@ -20643,7 +20643,7 @@
     "id": "com.perflyst.twire",
     "name": "Twire",
     "source_url": "https://github.com/twireapp/Twire",
-    "stars": 1147
+    "stars": 1145
   },
   {
     "id": "com.twsitedapps.homemanager",
@@ -20721,13 +20721,13 @@
     "id": "com.unciv.app",
     "name": "Unciv",
     "source_url": "https://github.com/yairm210/Unciv",
-    "stars": 9284
+    "stars": 9296
   },
   {
     "id": "juloo.keyboard2",
     "name": "Unexpected Keyboard",
     "source_url": "https://github.com/Julow/Unexpected-Keyboard",
-    "stars": 2213
+    "stars": 2215
   },
   {
     "id": "org.madore.android.unicodeMap",
@@ -20757,7 +20757,7 @@
     "id": "com.physphil.android.unitconverterultimate",
     "name": "Unit Converter Ultimate",
     "source_url": "https://github.com/physphil/UnitConverterUltimate",
-    "stars": 226
+    "stars": 225
   },
   {
     "id": "info.staticfree.android.units",
@@ -20781,7 +20781,7 @@
     "id": "com.wbpxre150.unjumbleapp",
     "name": "unjumble",
     "source_url": "https://github.com/wbpxre150/unjumble",
-    "stars": 6
+    "stars": 7
   },
   {
     "id": "com.jkuester.unlauncher",
@@ -20823,13 +20823,13 @@
     "id": "io.horizontalsystems.bankwallet",
     "name": "Unstoppable Crypto Wallet",
     "source_url": "https://github.com/horizontalsystems/unstoppable-wallet-android",
-    "stars": 999
+    "stars": 1000
   },
   {
     "id": "me.zhanghai.android.untracker",
     "name": "Untracker",
     "source_url": "https://github.com/zhanghai/Untracker",
-    "stars": 474
+    "stars": 477
   },
   {
     "id": "app.fedilab.nitterizeme",
@@ -20865,7 +20865,7 @@
     "id": "net.xzos.upgradeall",
     "name": "UpgradeAll",
     "source_url": "https://github.com/DUpdateSystem/UpgradeAll",
-    "stars": 1166
+    "stars": 1165
   },
   {
     "id": "net.daverix.urlforward",
@@ -20877,7 +20877,7 @@
     "id": "com.trianguloy.urlchecker",
     "name": "URLCheck",
     "source_url": "https://github.com/TrianguloY/UrlChecker",
-    "stars": 1357
+    "stars": 1363
   },
   {
     "id": "moe.dic1911.urlsanitizer",
@@ -20919,7 +20919,7 @@
     "id": "net.tjado.usbgadget",
     "name": "USB Gadget Tool",
     "source_url": "https://github.com/tejado/android-usb-gadget",
-    "stars": 998
+    "stars": 1000
   },
   {
     "id": "com.appspot.usbhidterminal",
@@ -20949,7 +20949,7 @@
     "id": "tech.ula",
     "name": "UserLAnd",
     "source_url": "https://github.com/CypherpunkArmory/UserLAnd",
-    "stars": 3845
+    "stars": 3844
   },
   {
     "id": "com.emacberry.uuid0xfd6fscan",
@@ -20979,7 +20979,7 @@
     "id": "com.github.shadowsocks.plugin.v2ray",
     "name": "V2ray Plugin",
     "source_url": "https://github.com/shadowsocks/v2ray-plugin-android",
-    "stars": 450
+    "stars": 449
   },
   {
     "id": "rocks.poopjournal.vacationdays",
@@ -21021,7 +21021,7 @@
     "id": "v4lpt.vpt.c016.TPC",
     "name": "Valentin's PowerTools #016 - Tomato Potato Clock",
     "source_url": "https://github.com/v4lpt/TPC",
-    "stars": 15
+    "stars": 16
   },
   {
     "id": "v4lpt.vpt.i018.vpc",
@@ -21039,7 +21039,7 @@
     "id": "v4lpt.vpt.f036.esw",
     "name": "Valentin's PowerTools #036 - Ease The Waiting",
     "source_url": "https://github.com/v4lpt/ETW",
-    "stars": 11
+    "stars": 12
   },
   {
     "id": "finance.valet",
@@ -21057,7 +21057,7 @@
     "id": "se.arctosoft.vault",
     "name": "Valv",
     "source_url": "https://github.com/Arctosoft/Valv-Android",
-    "stars": 165
+    "stars": 166
   },
   {
     "id": "com.kanedias.vanilla.lyrics",
@@ -21075,7 +21075,7 @@
     "id": "ch.blinkenlights.android.vanilla",
     "name": "Vanilla Music",
     "source_url": "https://github.com/vanilla-music/vanilla",
-    "stars": 1244
+    "stars": 1245
   },
   {
     "id": "com.kanedias.vanilla.audiotag",
@@ -21117,7 +21117,7 @@
     "id": "is.xyz.vcmi",
     "name": "VCMI",
     "source_url": "https://github.com/vcmi/vcmi",
-    "stars": 4958
+    "stars": 4960
   },
   {
     "id": "com.dozingcatsoftware.vectorcamera",
@@ -21153,7 +21153,7 @@
     "id": "com.github.wgh136.venera",
     "name": "venera",
     "source_url": "https://github.com/venera-app/venera",
-    "stars": 1891
+    "stars": 1916
   },
   {
     "id": "de.andicodes.vergissnix",
@@ -21165,7 +21165,7 @@
     "id": "org.fsociety.vernet",
     "name": "Vernet - Network Analyzer",
     "source_url": "https://github.com/osociety/vernet",
-    "stars": 395
+    "stars": 397
   },
   {
     "id": "io.vertretungsplan.client.android",
@@ -21183,7 +21183,7 @@
     "id": "de.blau.android",
     "name": "Vespucci",
     "source_url": "https://github.com/MarcusWolschon/osmeditor4android",
-    "stars": 407
+    "stars": 408
   },
   {
     "id": "me.lucky.vibe",
@@ -21291,7 +21291,7 @@
     "id": "de.ph1b.audiobook",
     "name": "Voice Audiobook Player",
     "source_url": "https://github.com/PaulWoitaschek/Voice",
-    "stars": 2572
+    "stars": 2576
   },
   {
     "id": "groomiac.voicemailplayer",
@@ -21303,7 +21303,7 @@
     "id": "com.pilot51.voicenotify",
     "name": "Voice Notify",
     "source_url": "https://github.com/pilot51/voicenotify",
-    "stars": 191
+    "stars": 192
   },
   {
     "id": "de.jurihock.voicesmith",
@@ -21327,7 +21327,7 @@
     "id": "com.punksta.apps.volumecontrol",
     "name": "Volume Control",
     "source_url": "https://github.com/punksta/volume_control_android",
-    "stars": 56
+    "stars": 57
   },
   {
     "id": "mancioboxblog.altervista.it.volumecontrol",
@@ -21369,7 +21369,7 @@
     "id": "app.vger.voyager",
     "name": "Voyager for Lemmy",
     "source_url": "https://github.com/aeharding/voyager",
-    "stars": 1629
+    "stars": 1628
   },
   {
     "id": "be.mygod.vpnhotspot_foss",
@@ -21381,7 +21381,7 @@
     "id": "cc.sovellus.vrcaa",
     "name": "VRChat Android Assistant",
     "source_url": "https://github.com/Nyabsi/VRCAA",
-    "stars": 76
+    "stars": 77
   },
   {
     "id": "com.vuze.android.remote",
@@ -21441,7 +21441,7 @@
     "id": "com.bnyro.wallpaper",
     "name": "Wall You",
     "source_url": "https://github.com/you-apps/WallYou",
-    "stars": 777
+    "stars": 779
   },
   {
     "id": "fr.gaulupeau.apps.InThePoche",
@@ -21453,19 +21453,19 @@
     "id": "com.lako.walletcount",
     "name": "WalletCount",
     "source_url": "https://github.com/GittyMac/WalletCount",
-    "stars": 33
+    "stars": 34
   },
   {
     "id": "com.ammar.wallflow",
     "name": "WallFlow",
     "source_url": "https://github.com/ammargitham/WallFlow/",
-    "stars": 398
+    "stars": 399
   },
   {
     "id": "com.ammar.wallflow.plus",
     "name": "WallFlow Plus",
     "source_url": "https://github.com/ammargitham/WallFlow/",
-    "stars": 398
+    "stars": 399
   },
   {
     "id": "com.github.cvzi.wallpaperexport",
@@ -21717,13 +21717,13 @@
     "id": "com.zaneschepke.wireguardautotunnel",
     "name": "WG Tunnel",
     "source_url": "https://github.com/wgtunnel/wgtunnel",
-    "stars": 1539
+    "stars": 1549
   },
   {
     "id": "de.wger.flutter",
     "name": "wger Workout Manager",
     "source_url": "https://github.com/wger-project/flutter",
-    "stars": 707
+    "stars": 703
   },
   {
     "id": "fr.ludo1520.whatexp",
@@ -21735,19 +21735,19 @@
     "id": "io.kuenzler.whatsappwebtogo",
     "name": "WhatsApp Web To Go - Mobile Client for WhatsApp We",
     "source_url": "https://github.com/92lleo/WhatsappWebToGo",
-    "stars": 277
+    "stars": 276
   },
   {
     "id": "com.vishnu.whatsappcleaner",
     "name": "WhatsAppCleaner",
     "source_url": "https://github.com/VishnuSanal/WhatsAppCleaner",
-    "stars": 150
+    "stars": 151
   },
   {
     "id": "com.simplified.wsstatussaver",
     "name": "WhatSave",
     "source_url": "https://github.com/mardous/WhatSave",
-    "stars": 97
+    "stars": 98
   },
   {
     "id": "com.gmail.anubhavdas54.whatsdeleted",
@@ -21783,7 +21783,7 @@
     "id": "org.woheller69.whisper",
     "name": "Whisper",
     "source_url": "https://github.com/woheller69/whisperIME",
-    "stars": 364
+    "stars": 365
   },
   {
     "id": "dev.j7126.who_goes_first",
@@ -21807,7 +21807,7 @@
     "id": "org.woheller69.whobird",
     "name": "whoBIRD",
     "source_url": "https://github.com/woheller69/whoBIRD",
-    "stars": 544
+    "stars": 550
   },
   {
     "id": "be.uhasselt.privacypolice",
@@ -21873,7 +21873,7 @@
     "id": "com.vrem.wifianalyzer",
     "name": "WiFiAnalyzer",
     "source_url": "https://github.com/VREMSoftwareDevelopment/WifiAnalyzer",
-    "stars": 3982
+    "stars": 3985
   },
   {
     "id": "com.csmarosi.wifiautoff",
@@ -21903,7 +21903,7 @@
     "id": "net.wigle.wigleandroid",
     "name": "WiGLE WiFi Wardriving FOSS",
     "source_url": "https://github.com/wiglenet/wigle-wifi-wardriving",
-    "stars": 741
+    "stars": 742
   },
   {
     "id": "com.hicorenational.wikipedia",
@@ -21921,19 +21921,19 @@
     "id": "org.wikipedia",
     "name": "Wikipedia",
     "source_url": "https://github.com/wikimedia/apps-android-wikipedia",
-    "stars": 2605
+    "stars": 2610
   },
   {
     "id": "org.nsh07.wikireader",
     "name": "WikiReader",
     "source_url": "https://github.com/nsh07/WikiReader",
-    "stars": 337
+    "stars": 340
   },
   {
     "id": "com.github.terrakok.wikwok.androidApp",
     "name": "WikWok",
     "source_url": "https://github.com/terrakok/Wikwok",
-    "stars": 120
+    "stars": 123
   },
   {
     "id": "com.windscribe.vpn",
@@ -21957,7 +21957,7 @@
     "id": "com.wire",
     "name": "Wire \u2022 Secure Messenger",
     "source_url": "https://github.com/wireapp/wire-android",
-    "stars": 174
+    "stars": 175
   },
   {
     "id": "com.github.sryze.wirebug",
@@ -22059,7 +22059,7 @@
     "id": "com.sigseg.android.worldmap",
     "name": "WorldMap",
     "source_url": "https://github.com/johnnylambada/WorldMap",
-    "stars": 1147
+    "stars": 1148
   },
   {
     "id": "S.N.A.K.E",
@@ -22089,7 +22089,7 @@
     "id": "com.ezpnix.writeon",
     "name": "Write On: Simple Notepad",
     "source_url": "https://github.com/3zpnix/WriteOn",
-    "stars": 92
+    "stars": 94
   },
   {
     "id": "com.pikselbit.wrongpinshutdown",
@@ -22143,7 +22143,7 @@
     "id": "com.xBrowserSync.android",
     "name": "xBrowserSync",
     "source_url": "https://github.com/xbrowsersync/app",
-    "stars": 1615
+    "stars": 1614
   },
   {
     "id": "org.xcsoar",
@@ -22167,7 +22167,7 @@
     "id": "com.rk.xededitor",
     "name": "Xed-Editor",
     "source_url": "https://github.com/Xed-Editor/Xed-Editor",
-    "stars": 842
+    "stars": 845
   },
   {
     "id": "space.rocketnine.xenia",
@@ -22191,7 +22191,7 @@
     "id": "io.github.exclude0122.xivpn",
     "name": "XiVPN",
     "source_url": "https://github.com/Exclude0122/xivpn",
-    "stars": 52
+    "stars": 53
   },
   {
     "id": "com.stripe1.xmouse",
@@ -22233,7 +22233,7 @@
     "id": "io.github.saeeddev94.xray",
     "name": "Xray",
     "source_url": "https://github.com/SaeedDev94/Xray",
-    "stars": 320
+    "stars": 321
   },
   {
     "id": "com.xrcbapp",
@@ -22251,7 +22251,7 @@
     "id": "com.github.andreyasadchy.xtra",
     "name": "Xtra",
     "source_url": "https://github.com/crackededed/Xtra/",
-    "stars": 1496
+    "stars": 1500
   },
   {
     "id": "com.twoeightnine.root.xvii",
@@ -22329,13 +22329,13 @@
     "id": "yetzio.yetcalc",
     "name": "yetCalc",
     "source_url": "https://github.com/Yet-Zio/yetCalc",
-    "stars": 316
+    "stars": 317
   },
   {
     "id": "eu.neilalexander.yggdrasil",
     "name": "Yggdrasil",
     "source_url": "https://github.com/yggdrasil-network/yggdrasil-android",
-    "stars": 153
+    "stars": 154
   },
   {
     "id": "click.dummer.yidkey",
@@ -22365,7 +22365,7 @@
     "id": "com.simonramstedt.yoke",
     "name": "Yoke",
     "source_url": "https://github.com/rmst/yoke-android",
-    "stars": 53
+    "stars": 54
   },
   {
     "id": "dev.lbeernaert.youhavemail",
@@ -22413,7 +22413,7 @@
     "id": "com.yubico.yubioath",
     "name": "Yubico Authenticator",
     "source_url": "https://github.com/Yubico/yubioath-flutter",
-    "stars": 1136
+    "stars": 1139
   },
   {
     "id": "kaba.yucata.envoy",
@@ -22473,13 +22473,13 @@
     "id": "app.zimly.backup",
     "name": "Zimly S3 Backup",
     "source_url": "https://github.com/zimly/zimly-backup",
-    "stars": 62
+    "stars": 63
   },
   {
     "id": "com.wirelessalien.zipxtract",
     "name": "ZipXtract FD",
     "source_url": "https://github.com/WirelessAlien/ZipXtract",
-    "stars": 619
+    "stars": 621
   },
   {
     "id": "com.zorinos.zorin_connect",
@@ -22503,13 +22503,13 @@
     "id": "com.zulipmobile",
     "name": "Zulip",
     "source_url": "https://github.com/zulip/zulip-mobile",
-    "stars": 1330
+    "stars": 1331
   },
   {
     "id": "net.basov.lws.qr.fdroid",
     "name": "[lWS.QR] lightweight Web Server QR code",
     "source_url": "https://github.com/mvbasov/lWS.QR",
-    "stars": 21
+    "stars": 22
   },
   {
     "id": "com.corphish.nightlight.generic",
@@ -22545,25 +22545,25 @@
     "id": "lab.rreedd.oyatsu",
     "name": "\u304a\u3084\u3064 Oyatsu",
     "source_url": "https://github.com/tknv/Oyatsu",
-    "stars": 0
+    "stars": 1
   },
   {
     "id": "kzs.th000.tsdm_client",
     "name": "\u5929\u4f7f\u52a8\u6f2b",
     "source_url": "https://github.com/realth000/tsdm_client",
-    "stars": 220
+    "stars": 223
   },
   {
     "id": "com.zfdang.touchhelper",
     "name": "\u5f00\u5c4f\u8df3\u8fc7",
     "source_url": "https://github.com/zfdang/Android-Touch-Helper",
-    "stars": 5258
+    "stars": 5257
   },
   {
     "id": "top.fumiama.copymanga",
     "name": "\u62f7\u8d1d\u6f2b\u753b",
     "source_url": "https://github.com/fumiama/copymanga",
-    "stars": 3530
+    "stars": 3549
   },
   {
     "id": "com.gonnaggstudio.oh_tai_gi",

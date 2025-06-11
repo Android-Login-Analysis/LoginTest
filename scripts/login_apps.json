@@ -1,0 +1,98 @@
+[
+  {
+    "id": "com.carriez.flutter_hbb",
+    "name": "RustDesk",
+    "source_url": "https://github.com/rustdesk/rustdesk",
+    "stars": 90375
+  },
+  {
+    "id": "com.github.shadowsocks",
+    "name": "Shadowsocks",
+    "source_url": "https://github.com/shadowsocks/shadowsocks-android",
+    "stars": 35800
+  },
+  {
+    "id": "org.jitsi.meet",
+    "name": "Jitsi Meet",
+    "source_url": "https://github.com/jitsi/jitsi-meet",
+    "stars": 25719
+  },
+  {
+    "id": "io.ente.auth",
+    "name": "Ente Auth",
+    "source_url": "https://github.com/ente-io/ente/",
+    "stars": 19593
+  },
+  {
+    "id": "io.ente.photos.fdroid",
+    "name": "Ente Photos - Encrypted photo storage",
+    "source_url": "https://github.com/ente-io/ente",
+    "stars": 19593
+  },
+  {
+    "id": "com.fsck.k9",
+    "name": "K-9 Mail",
+    "source_url": "https://github.com/thunderbird/thunderbird-android",
+    "stars": 12069
+  },
+  {
+    "id": "com.streetwriters.notesnook",
+    "name": "Notesnook - Private notes app",
+    "source_url": "https://github.com/streetwriters/notesnook",
+    "stars": 12063
+  },
+  {
+    "id": "chat.simplex.app",
+    "name": "SimpleX Chat",
+    "source_url": "https://github.com/simplex-chat/simplex-chat",
+    "stars": 8807
+  },
+  {
+    "id": "org.electrum.electrum",
+    "name": "Electrum Bitcoin Wallet",
+    "source_url": "https://github.com/spesmilo/electrum",
+    "stars": 7927
+  },
+  {
+    "id": "com.newsblur",
+    "name": "NewsBlur - News reader",
+    "source_url": "https://github.com/samuelclay/NewsBlur",
+    "stars": 7086
+  },
+  {
+    "id": "com.standardnotes",
+    "name": "Standard Notes",
+    "source_url": "https://github.com/standardnotes/app",
+    "stars": 5785
+  },
+  {
+    "id": "com.zionhuang.music",
+    "name": "InnerTune",
+    "source_url": "https://github.com/z-huang/InnerTune",
+    "stars": 5499
+  },
+  {
+    "id": "net.osmand.plus",
+    "name": "OsmAnd~",
+    "source_url": "https://github.com/osmandapp/Osmand",
+    "stars": 5109
+  },
+  {
+    "id": "com.nextcloud.client",
+    "name": "Nextcloud",
+    "source_url": "https://github.com/nextcloud/android",
+    "stars": 4643
+  },
+  {
+    "id": "com.nextcloud.android.beta",
+    "name": "Nextcloud Dev",
+    "source_url": "https://github.com/nextcloud/android",
+    "stars": 4643
+  },
+  {
+    "id": "com.owncloud.android",
+    "name": "ownCloud",
+    "source_url": "https://github.com/owncloud/android",
+    "stars": 3965
+  }
+]

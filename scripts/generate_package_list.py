@@ -1,22 +1,29 @@
-import requests
+import zipfile
 
-def fetch_fdroid_packages():
-    url = "https://f-droid.org/repo/index-v1.json"
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        data = response.json()
-        packages = data.get("packages", {}).keys()
+# Path to the APK you want to test
+apk_path = "apks/org.jitsi.meet.apk"
 
-        with open("last_segments.txt", "w") as f:
-            for pkg in packages:
-                f.write(pkg + "\n")
+# Keywords to search for (can expand later)
+keywords = [
+    "login", "sign in", "signin", "sign-in", "auth", "authentication",
+    "username", "password", "email", "token", "user", "credentials", "account"
+]
 
-        print(f"[✓] Extracted {len(packages)} packages to last_segments.txt")
+print(f"[*] Scanning {apk_path} for login-related keywords...\n")
 
-    except Exception as e:
-        print(f"[-] Failed to fetch packages: {e}")
+with zipfile.ZipFile(apk_path, 'r') as zip_ref:
+    matches = []
+    for file in zip_ref.namelist():
+        if any(file.endswith(ext) for ext in [".xml", ".json", ".txt", ".html", ".smali"]):
+            try:
+                content = zip_ref.read(file).decode(errors="ignore").lower()
+                if any(k in content for k in keywords):
+                    matches.append(file)
+                    print(f"[✓] Keyword match in: {file}")
+            except Exception:
+                continue
 
-if __name__ == "__main__":
-    print("Generating package list from F-Droid index...")
-    fetch_fdroid_packages()
+if not matches:
+    print("[-] No login-related keywords found.")
+else:
+    print(f"\n[✓] Found login keywords in {len(matches)} file(s).")
