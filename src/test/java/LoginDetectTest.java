@@ -56,10 +56,10 @@ public class LoginDetectTest {
     private String currentRoundCredentials = "Not Available"; // For tracking credentials used in current round
 
     // Default paths, can be made configurable
-    private String fridaAgentJsPath = "src/main/resources/login_agent.js"; // Path in resources directory
-    private String fridaLogFilePath = "src/main/resources/frida_api_log.txt"; // Log file in resources directory
-    private String regexPatternsFilePathConfig = "src/main/resources/regex_patterns.txt"; // Regex patterns file in
-                                                                                          // resources directory
+    private String fridaAgentJsPath = "/app/src/main/resources/login_agent.js"; // Path in resources directory
+    private String fridaLogFilePath = "/app/src/main/resources/frida_api_log.txt"; // Log file in resources directory
+    private String regexPatternsFilePathConfig = "/app/src/main/resources/regex_patterns.txt"; // Regex patterns file in
+                                                                                               // resources directory
 
     private Map<String, List<String>> validStateTransitions;
     private boolean currentRoundUsedSpecialChars = false; // For Credential Rejection Oracle
@@ -67,11 +67,11 @@ public class LoginDetectTest {
     @BeforeTest
     public void setUp() throws MalformedURLException, IOException {
         stopMonkey();
-        String projectRoot = System.getProperty("user.dir");
+        String projectRoot = "/app";
         // Construct absolute paths if needed, or ensure files are in expected locations
-        String actualRegexPath = projectRoot + File.separator + regexPatternsFilePathConfig;
-        String actualAgentPath = projectRoot + File.separator + fridaAgentJsPath;
-        String actualLogPath = projectRoot + File.separator + fridaLogFilePath;
+        String actualRegexPath = regexPatternsFilePathConfig;
+        String actualAgentPath = fridaAgentJsPath;
+        String actualLogPath = fridaLogFilePath;
 
         accountPool = readLinesFromFile(projectRoot + "/pools/accounts.txt");
         passwordPool = readLinesFromFile(projectRoot + "/pools/passwords.txt");
@@ -114,7 +114,7 @@ public class LoginDetectTest {
         caps.setCapability("appium:automationName", "UiAutomator2");
         caps.setCapability("appium:platformVersion", "14.0");
         caps.setCapability("appium:deviceName", "Android Emulator");
-        caps.setCapability("appium:app", System.getProperty("user.dir") + "/apps/org.mian.gitnex_550.apk");
+        caps.setCapability("appium:app", "/app/apps/org.mian.gitnex_550.apk");
         caps.setCapability("appium:appPackage", app);
         caps.setCapability("appium:appActivity", activity);
 
