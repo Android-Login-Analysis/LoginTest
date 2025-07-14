@@ -40,3 +40,4 @@ build/
 ### Android ###
 /reports/frida-server-*
 frida-server-*
+frida-server-*
