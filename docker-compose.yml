@@ -10,8 +10,6 @@ services:
       - .:/app
       - /dev/bus/usb:/dev/bus/usb
       - /var/run/usbmuxd:/var/run/usbmuxd
-      - ${HOME}/.android:/root/.android
-      - /dev/kvm:/dev/kvm
     ports:
       - "4723:4723"  # Appium server
       - "5555:5555"  # ADB
@@ -20,13 +18,8 @@ services:
       - ANDROID_HOME=/opt/android-sdk
       - ANDROID_SDK_ROOT=/opt/android-sdk
       - PATH=/opt/android-sdk/platform-tools:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/emulator:${PATH}
-      - ANDROID_AVD_HOME=${HOME}/.android/avd
-      - ANDROID_EMULATOR_HOME=${HOME}/.android
-      - QT_X11_NO_MITSHM=1
-      - DISPLAY=${DISPLAY}
     devices:
       - /dev/bus/usb:/dev/bus/usb
-      - /dev/kvm:/dev/kvm
     tmpfs:
       - /tmp:exec,mode=1777
       - /var/tmp:exec,mode=1777
