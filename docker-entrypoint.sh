@@ -3,13 +3,12 @@
 # Start ADB server
 adb start-server
 
-# Launch Android emulator with software emulation (force disable acceleration)
+# Launch Android emulator (ARM64 native, no Rosetta needed)
 ${ANDROID_HOME}/emulator/emulator -avd test_device \
     -no-window \
     -no-audio \
     -no-boot-anim \
     -gpu swiftshader_indirect \
-    -accel off \
     -no-snapshot \
     -wipe-data \
     -memory 2048 &

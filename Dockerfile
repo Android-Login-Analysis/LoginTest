@@ -24,7 +24,7 @@ ENV ANDROID_HOME=/opt/android-sdk
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
 ENV PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/emulator
 
-# Install Android command line tools (修正目录结构)
+# Install Android command line tools (Fix directory structure)
 RUN mkdir -p ${ANDROID_HOME}/cmdline-tools && \
     cd ${ANDROID_HOME}/cmdline-tools && \
     wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip && \
@@ -34,7 +34,7 @@ RUN mkdir -p ${ANDROID_HOME}/cmdline-tools && \
     rmdir cmdline-tools && \
     rm commandlinetools-linux-8512546_latest.zip
 
-# 确认 sdkmanager 可用
+# Verify sdkmanager is available
 RUN ls -l ${ANDROID_HOME}/cmdline-tools/latest/bin && \
     ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --version
 
@@ -44,19 +44,19 @@ RUN mkdir -p ${ANDROID_HOME}/licenses && \
     echo "84831b9409646a918e30573bab4c9c91346d8abd" > ${ANDROID_HOME}/licenses/android-sdk-preview-license && \
     mkdir -p ~/.android && touch ~/.android/repositories.cfg
 
-# 直接下载 platform-tools
+# Download platform-tools directly
 RUN cd ${ANDROID_HOME} && \
     wget https://dl.google.com/android/repository/platform-tools_r34.0.5-linux.zip && \
     unzip platform-tools_r34.0.5-linux.zip && \
     rm platform-tools_r34.0.5-linux.zip
 
-# 直接下载 emulator
+# Download emulator directly
 RUN cd ${ANDROID_HOME} && \
     wget https://dl.google.com/android/repository/emulator-linux_x64-10511200.zip && \
     unzip emulator-linux_x64-10511200.zip && \
     rm emulator-linux_x64-10511200.zip
 
-# 为 emulator 创建 package.xml 元数据
+# Create package.xml metadata for emulator
 RUN mkdir -p ${ANDROID_HOME}/emulator && \
     echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_HOME}/emulator/package.xml && \
     echo '<ns2:repository xmlns:ns2="http://schemas.android.com/repository/android/common/01" xmlns:ns3="http://schemas.android.com/repository/android/generic/01">' >> ${ANDROID_HOME}/emulator/package.xml && \
@@ -71,13 +71,13 @@ RUN mkdir -p ${ANDROID_HOME}/emulator && \
     echo '  </localPackage>' >> ${ANDROID_HOME}/emulator/package.xml && \
     echo '</ns2:repository>' >> ${ANDROID_HOME}/emulator/package.xml
 
-# 直接下载 build-tools
+# Download build-tools directly
 RUN mkdir -p ${ANDROID_HOME}/build-tools && cd ${ANDROID_HOME}/build-tools && \
     wget https://dl.google.com/android/repository/build-tools_r32-linux.zip && \
     unzip build-tools_r32-linux.zip -d 32.0.0 && \
     rm build-tools_r32-linux.zip
 
-# 为 build-tools 创建 package.xml 元数据
+# Create package.xml metadata for build-tools
 RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
     echo '<ns2:repository xmlns:ns2="http://schemas.android.com/repository/android/common/01" xmlns:ns3="http://schemas.android.com/sdk/android/repo/addon2/03">' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
     echo '  <localPackage path="build-tools;32.0.0">' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
@@ -91,14 +91,14 @@ RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_H
     echo '  </localPackage>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
     echo '</ns2:repository>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml
 
-# 直接下载 platforms
+# Download platforms directly
 RUN mkdir -p ${ANDROID_HOME}/platforms && cd ${ANDROID_HOME}/platforms && \
     wget https://dl.google.com/android/repository/platform-31_r01.zip && \
     unzip platform-31_r01.zip && \
     mv android-12 android-31 && \
     rm platform-31_r01.zip
 
-# 为 platforms 创建 package.xml 元数据
+# Create package.xml metadata for platforms
 RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_HOME}/platforms/android-31/package.xml && \
     echo '<ns2:repository xmlns:ns2="http://schemas.android.com/repository/android/common/01" xmlns:ns3="http://schemas.android.com/sdk/android/repo/repository2/03">' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
     echo '  <localPackage path="platforms;android-31">' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
@@ -112,36 +112,36 @@ RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_H
     echo '  </localPackage>' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
     echo '</ns2:repository>' >> ${ANDROID_HOME}/platforms/android-31/package.xml
 
-# 直接下载 system-images
+# Download system-images directly (using ARM64 architecture)
 RUN mkdir -p ${ANDROID_HOME}/system-images/android-31 && cd ${ANDROID_HOME}/system-images/android-31 && \
-    wget https://dl.google.com/android/repository/sys-img/google_apis/x86_64-31_r13.zip && \
-    unzip x86_64-31_r13.zip -d google_apis && \
-    rm x86_64-31_r13.zip
+    wget https://dl.google.com/android/repository/sys-img/google_apis/arm64-v8a-31_r13.zip && \
+    unzip arm64-v8a-31_r13.zip -d google_apis && \
+    rm arm64-v8a-31_r13.zip
 
-# 为 system-images 创建 package.xml 元数据
-RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '<ns2:repository xmlns:ns2="http://schemas.android.com/repository/android/common/01" xmlns:ns3="http://schemas.android.com/sdk/android/repo/sys-img2/03">' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '  <localPackage path="system-images;android-31;google_apis;x86_64">' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '    <type-details xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns3:sysImgDetailsType">' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '      <api-level>31</api-level>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '      <tag>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '        <id>google_apis</id>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '        <display>Google APIs</display>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '      </tag>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '      <abi>x86_64</abi>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '    </type-details>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '    <revision>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '      <major>13</major>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '    </revision>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '    <display-name>Google APIs Intel x86 Atom_64 System Image</display-name>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '  </localPackage>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '</ns2:repository>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml
+# Create package.xml metadata for system-images (ARM64)
+RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '<ns2:repository xmlns:ns2="http://schemas.android.com/repository/android/common/01" xmlns:ns3="http://schemas.android.com/sdk/android/repo/sys-img2/03">' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '  <localPackage path="system-images;android-31;google_apis;arm64-v8a">' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '    <type-details xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns3:sysImgDetailsType">' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '      <api-level>31</api-level>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '      <tag>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '        <id>google_apis</id>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '        <display>Google APIs</display>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '      </tag>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '      <abi>arm64-v8a</abi>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '    </type-details>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '    <revision>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '      <major>13</major>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '    </revision>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '    <display-name>Google APIs ARM 64 v8a System Image</display-name>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '  </localPackage>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml && \
+    echo '</ns2:repository>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/arm64-v8a/package.xml
 
-# Create AVD using avdmanager (使用标准设备)
+# Create AVD using avdmanager (using ARM64 architecture)
 RUN echo "no" | ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd \
     --name "test_device" \
-    --package "system-images;android-31;google_apis;x86_64" \
-    --abi "x86_64"
+    --package "system-images;android-31;google_apis;arm64-v8a" \
+    --abi "arm64-v8a"
 
 # Set working directory
 WORKDIR /app
