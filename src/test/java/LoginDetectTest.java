@@ -112,7 +112,7 @@ public class LoginDetectTest {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platformName", "Android");
         caps.setCapability("appium:automationName", "UiAutomator2");
-        caps.setCapability("appium:platformVersion", "14.0");
+        caps.setCapability("appium:platformVersion", "12");
         caps.setCapability("appium:deviceName", "Android Emulator");
         caps.setCapability("appium:app", "/app/apps/org.mian.gitnex_550.apk");
         caps.setCapability("appium:appPackage", app);
