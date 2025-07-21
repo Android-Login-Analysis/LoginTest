@@ -45,7 +45,128 @@ A comprehensive automated testing and analysis tool for detecting login-related 
 - **frida_controller.py**: Python script for Frida RPC communication
 - **ConfigLoader**: Manages test configuration and patterns
 
-## Prerequisites
+## Quick Start with Docker
+
+### Prerequisites
+
+1. **Docker and Docker Compose**
+   - Install Docker Desktop for your platform
+   - Ensure Docker Compose is included
+
+2. **System Requirements**
+   - For Apple Silicon Macs: Latest Docker Desktop with Rosetta 2 enabled
+   - For x86_64 systems: Standard Docker installation
+   - At least 8GB RAM and 64GB free disk space
+
+### Step 1: Clone and Setup
+
+```bash
+git clone <repository-url>
+cd android-login-detection-tool
+```
+
+### Step 2: Configure Application Path
+
+1. **Place your APK file** in the project directory:
+
+   ```
+   android-login-detection-tool/
+   ├── apps/
+   │   └── your-app.apk
+   ├── docker-compose.yml
+   └── ...
+   ```
+
+2. **Update configuration** in `src/test/resources/config.properties`:
+
+   ```properties
+   # Application configuration
+   app.path=/app/apps/your-app.apk
+   app.package=com.yourcompany.yourapp
+   app.activity=com.yourcompany.yourapp.MainActivity
+   
+   # Test configuration
+   test.rounds=5
+   test.timeout=60000
+   
+   # Appium configuration
+   appium.url=http://localhost:4723/wd/hub
+   device.name=test_device
+   platform.name=Android
+   platform.version=12
+   ```
+
+### Step 3: Start the Container
+
+```bash
+# Start the testing environment
+docker compose up --build
+
+# Or run in detached mode
+docker compose up -d --build
+```
+
+The container will automatically:
+
+- ✅ Start ADB server
+- ✅ Launch Android emulator
+- ✅ Start Appium server
+- ✅ Prepare testing environment
+
+### Step 4: Run Tests
+
+**Option A: Interactive Mode**
+
+```bash
+# Enter the container
+docker exec -it test-test-runner-1 /bin/bash
+
+# Run the main test suite
+cd /app
+mvn test -Dtest=LoginDetectTest
+
+# Or run specific tests
+mvn test -Dtest=LoginDetectTest#testNativeLogin
+```
+
+**Option B: Direct Command**
+
+```bash
+# Run tests without entering container
+docker exec test-test-runner-1 bash -c "cd /app && mvn test -Dtest=LoginDetectTest"
+
+# Run with custom parameters
+docker exec test-test-runner-1 bash -c "cd /app && mvn test -Dtest=LoginDetectTest -Dapp.path=/app/apps/your-app.apk"
+```
+
+### Step 5: View Results
+
+**Test Reports:**
+
+```bash
+# View test results
+docker exec test-test-runner-1 ls -la /app/target/surefire-reports/
+
+# Copy reports to host
+docker cp test-test-runner-1:/app/target/surefire-reports/ ./reports/
+```
+
+**Logs and Artifacts:**
+
+```bash
+# View Appium logs
+docker logs test-test-runner-1
+
+# View Frida analysis results
+docker exec test-test-runner-1 ls -la /app/frida-logs/
+
+# View screenshots and recordings
+docker exec test-test-runner-1 ls -la /app/test-artifacts/
+```
+
+## Manual Setup (Without Docker)
+
+### Prerequisites
 
 1. **Java Development Environment**
    - JDK 8 or higher
@@ -60,6 +181,7 @@ A comprehensive automated testing and analysis tool for detecting login-related 
 
    ```bash
    npm install -g appium
+   appium driver install uiautomator2
    ```
 
 4. **Frida**
@@ -72,84 +194,147 @@ A comprehensive automated testing and analysis tool for detecting login-related 
 5. **Python Dependencies**
 
    ```bash
-   pip install frida
+   pip install requests pyyaml
    ```
 
-## Setup
+### Configuration
 
-1. **Device Setup**
-   - Enable USB debugging on your Android device
-   - Install and start frida-server on the device
+1. **Update `config.properties`** with your local paths:
+
+   ```properties
+   app.path=/path/to/your/app.apk
+   android.sdk.path=/path/to/android/sdk
+   appium.url=http://localhost:4723/wd/hub
+   ```
+
+2. **Start required services:**
 
    ```bash
-   adb push frida-server /data/local/tmp/
-   adb shell "chmod 755 /data/local/tmp/frida-server"
-   adb shell "/data/local/tmp/frida-server &"
+   # Start ADB
+   adb start-server
+   
+   # Start Android emulator
+   emulator -avd your_avd_name
+   
+   # Start Appium
+   appium --allow-insecure chromedriver_autodownload
    ```
 
-2. **Project Setup**
-   - Clone the repository
-   - Place test APK in the `apps/` directory
-   - Configure test credentials in the `pools/` directory
-   - Update regex patterns in `regex_patterns.txt`
-
-3. **Configuration**
-   - Update `ConfigLoader` with appropriate patterns for your target app
-   - Configure test parameters in `LoginDetectTest`
-
-## Usage
-
-1. **Start Appium Server**
+3. **Run tests:**
 
    ```bash
-   appium
+   mvn test -Dtest=LoginDetectTest
    ```
 
-2. **Run Tests**
+## Configuration Options
 
-   ```bash
-   mvn test
-   ```
+### Application Settings
 
-3. **View Results**
-   - Check the `reports/` directory for detailed test reports
-   - Review console output for real-time test progress
+| Property | Description | Example |
+|----------|-------------|---------|
+| `app.path` | Path to APK file | `/app/apps/myapp.apk` |
+| `app.package` | App package name | `com.example.myapp` |
+| `app.activity` | Main activity | `com.example.myapp.MainActivity` |
 
-## Test Data
+### Test Parameters
 
-The tool uses several pools of test data:
+| Property | Description | Default |
+|----------|-------------|---------|
+| `test.rounds` | Number of test iterations | `5` |
+| `test.timeout` | Test timeout (ms) | `60000` |
+| `test.credentials.file` | Credentials file path | `credentials.json` |
 
-- `pools/accounts.txt`: Username pool
-- `pools/passwords.txt`: Password pool
-- `pools/instances.txt`: Instance URLs
-- `pools/google_accounts.txt`: Google account credentials
-- `pools/facebook_accounts.txt`: Facebook account credentials
+### Device Configuration
 
-## Report Format
+| Property | Description | Default |
+|----------|-------------|---------|
+| `device.name` | Device/emulator name | `test_device` |
+| `platform.name` | Platform name | `Android` |
+| `platform.version` | Android version | `12` |
 
-Test reports include:
+## Troubleshooting
 
-- Timestamp and test duration
-- Total login attempts
-- Successful/failed login counts
-- Detailed issue breakdown
-- Issue descriptions and credentials used
-- State transition analysis
+### Common Issues
+
+**1. Emulator won't start**
+
+```bash
+# Check emulator status
+docker exec test-test-runner-1 ${ANDROID_HOME}/emulator/emulator -list-avds
+
+# Check ADB connection
+docker exec test-test-runner-1 adb devices
+```
+
+**2. App installation fails**
+
+```bash
+# Verify APK path
+docker exec test-test-runner-1 ls -la /app/apps/
+
+# Check APK compatibility
+docker exec test-test-runner-1 aapt dump badging /app/apps/your-app.apk
+```
+
+**3. Frida connection issues**
+
+```bash
+# Check Frida server status
+docker exec test-test-runner-1 frida-ps -U
+
+# Restart Frida server
+docker exec test-test-runner-1 adb shell "su -c 'killall frida-server'"
+```
+
+### Performance Optimization
+
+**For Apple Silicon Macs:**
+
+- Use software emulation (already configured)
+- Allocate sufficient resources to Docker Desktop
+- Consider using x86_64 Linux servers for better performance
+
+**For x86_64 Systems:**
+
+- Hardware acceleration is automatically used
+- Optimal performance expected
+
+## Development
+
+### Project Structure
+
+```
+├── src/
+│   ├── main/java/           # Core detection logic
+│   └── test/java/           # Test implementations
+├── scripts/                 # Python analysis scripts
+├── apps/                    # APK files directory
+├── frida-scripts/          # Frida instrumentation scripts
+├── docker-entrypoint.sh    # Container startup script
+├── Dockerfile              # Container definition
+└── docker-compose.yml      # Service orchestration
+```
+
+### Adding New Tests
+
+1. Create test class extending `BaseLoginTest`
+2. Implement detection logic
+3. Add configuration to `config.properties`
+4. Update test suite
+
+### Extending Frida Analysis
+
+1. Modify `login_agent.js` for new hooks
+2. Update `frida_controller.py` for data processing
+3. Add analysis patterns to `ApiLogAnalyzer`
 
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+2. Create feature branch
+3. Add tests for new functionality
+4. Submit pull request
 
 ## License
 
-[Add your license information here]
-
-## Acknowledgments
-
-- Appium for UI automation
-- Frida for dynamic analysis capabilities
-- TestNG for test framework
+[Your License Here]
