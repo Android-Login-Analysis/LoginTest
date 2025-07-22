@@ -119,7 +119,7 @@ The container will automatically:
 
 ```bash
 # Enter the container
-docker exec -it test-test-runner-1 /bin/bash
+docker exec -it logintest-test-runner-1 /bin/bash
 
 # Run the main test suite
 cd /app
