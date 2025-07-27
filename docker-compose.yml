@@ -1,5 +1,5 @@
 services:
-  test-runner:
+  android-login-detector:
     build: .
     platform: linux/amd64
     network_mode: host
@@ -16,6 +16,7 @@ services:
       - ANDROID_HOME=/opt/android-sdk
       - ANDROID_SDK_ROOT=/opt/android-sdk
       - PATH=/opt/android-sdk/platform-tools:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/emulator:${PATH}
+      - DISPLAY=${DISPLAY}
     devices:
       - /dev/bus/usb:/dev/bus/usb
     tmpfs:
@@ -27,3 +28,4 @@ services:
       - SYS_ADMIN
     security_opt:
       - seccomp:unconfined
+    restart: unless-stopped 

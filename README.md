@@ -1,340 +1,213 @@
-# Android Login Issue Detection Tool
+# AndroidLoginDetector
 
-A comprehensive automated testing and analysis tool for detecting login-related issues in Android applications. This tool combines UI automation with dynamic analysis to identify various types of login problems.
+Automated Android login bug detection tool based on research paper workflow.
 
-## Features
+## Quick Start
 
-- **Automated Login Testing**: Tests multiple login methods (native, Google, Facebook)
-- **Dynamic Analysis**: Uses Frida for API call monitoring and state tracking
-- **Issue Detection**:
-  - Navigation flow errors
-  - Application crashes
-  - ANR (Application Not Responding) detection
-  - Login timeouts
-  - Credential rejection issues
-  - Special character handling problems
-
-## System Architecture
-
-### Core Components
-
-1. **LoginDetectTest**: Main test runner that orchestrates the testing process
-   - Manages test rounds and credentials
-   - Handles UI interactions via Appium
-   - Coordinates with Frida for API monitoring
-   - Analyzes test results
-
-2. **FridaManager**: Manages Frida integration
-   - Handles Frida process lifecycle
-   - Manages API hook patterns
-   - Coordinates with login_agent.js
-
-3. **ApiLogAnalyzer**: Processes API call logs
-   - Maps API calls to application states
-   - Detects invalid state transitions
-   - Identifies potential issues
-
-4. **LoginReportManager**: Generates detailed test reports
-   - Tracks detected issues
-   - Generates test summaries
-   - Maintains issue statistics
-
-### Supporting Components
-
-- **login_agent.js**: Frida script for API monitoring
-- **frida_controller.py**: Python script for Frida RPC communication
-- **ConfigLoader**: Manages test configuration and patterns
-
-## Quick Start with Docker
-
-### Prerequisites
-
-1. **Docker and Docker Compose**
-   - Install Docker Desktop for your platform
-   - Ensure Docker Compose is included
-
-2. **System Requirements**
-   - For Apple Silicon Macs: Latest Docker Desktop with Rosetta 2 enabled
-   - For x86_64 systems: Standard Docker installation
-   - At least 8GB RAM and 64GB free disk space
-
-### Step 1: Clone and Setup
+### 1. Environment Setup
 
 ```bash
-git clone <repository-url>
-cd android-login-detection-tool
+# Check environment compatibility
+./scripts/docker-environment-check.sh
+
+# Or use the main script
+./run_detector.sh -c
 ```
 
-### Step 2: Configure Application Path
-
-1. **Place your APK file** in the project directory:
-
-   ```
-   android-login-detection-tool/
-   ├── apps/
-   │   └── your-app.apk
-   ├── docker-compose.yml
-   └── ...
-   ```
-
-2. **Update configuration** in `src/test/resources/config.properties`:
-
-   ```properties
-   # Application configuration
-   app.path=/app/apps/your-app.apk
-   app.package=com.yourcompany.yourapp
-   app.activity=com.yourcompany.yourapp.MainActivity
-   
-   # Test configuration
-   test.rounds=5
-   test.timeout=60000
-   
-   # Appium configuration
-   appium.url=http://localhost:4723/wd/hub
-   device.name=test_device
-   platform.name=Android
-   platform.version=12
-   ```
-
-### Step 3: Start the Container
+### 2. Build Project
 
 ```bash
-# Start the testing environment
-docker compose up --build
+# Compile Java project
+mvn clean compile
 
-# Or run in detached mode
-docker compose up -d --build
+# Or use the main script
+./run_detector.sh --no-check
 ```
 
-The container will automatically:
-
-- ✅ Start ADB server
-- ✅ Launch Android emulator
-- ✅ Start Appium server
-- ✅ Prepare testing environment
-
-### Step 4: Run Tests
-
-**Option A: Interactive Mode**
+### 3. Run Tests
 
 ```bash
-# Enter the container
-docker exec -it test-test-runner-1 /bin/bash
+# Full run (with environment check and compilation)
+./run_detector.sh
 
-# Run the main test suite
-cd /app
-mvn test -Dtest=LoginDetectTest
+# Skip environment check
+./run_detector.sh --no-check
 
-# Or run specific tests
-mvn test -Dtest=LoginDetectTest#testNativeLogin
+# Skip compilation (use existing class files)
+./run_detector.sh --no-compile
+
+# Environment check only
+./run_detector.sh -c
+
+# Show project structure
+./run_detector.sh -s
 ```
 
-**Option B: Direct Command**
+### 4. Docker Deployment
 
 ```bash
-# Run tests without entering container
-docker exec test-test-runner-1 bash -c "cd /app && mvn test -Dtest=LoginDetectTest"
+# Build and start all services
+docker-compose up -d
 
-# Run with custom parameters
-docker exec test-test-runner-1 bash -c "cd /app && mvn test -Dtest=LoginDetectTest -Dapp.path=/app/apps/your-app.apk"
+# View logs
+docker-compose logs -f android-login-detector
+
+# Stop services
+docker-compose down
 ```
 
-### Step 5: View Results
+## Configuration
 
-**Test Reports:**
+### Main Configuration File
 
-```bash
-# View test results
-docker exec test-test-runner-1 ls -la /app/target/surefire-reports/
+**Location**: `src/main/resources/config.properties`
 
-# Copy reports to host
-docker cp test-test-runner-1:/app/target/surefire-reports/ ./reports/
+```properties
+# App Configuration
+app.path=apps/org.mian.gitnex_550.apk
+app.package=org.mian.gitnex
+app.activity=org.mian.gitnex.activities.MainActivity
+
+# Test Configuration
+test.duration=30000
+test.rounds=3
+test.round.interval=5000
+
+# Emulator Configuration
+emulator.snapshot=snap_gitnex_login
+emulator.startup.timeout=60000
+emulator.restart.timeout=30000
+
+# Frida Configuration
+frida.enabled=true
+frida.timeout=30
+frida.retry.count=3
+frida.retry.delay=2
+
+# Monkey Configuration
+monkey.events=50
+monkey.throttle=100
+monkey.touch.percentage=100
+
+# UI Element Detection
+ui.login.button.patterns=login,sign_in,signin,submit,enter,go,continue
+ui.username.field.patterns=username,user,email,login,account,user_id
+ui.password.field.patterns=password,passwd,pass,pwd,secret,password1
 ```
 
-**Logs and Artifacts:**
+### API Regex Patterns
 
-```bash
-# View Appium logs
-docker logs test-test-runner-1
+**Location**: `src/main/resources/regex_patterns.txt`
 
-# View Frida analysis results
-docker exec test-test-runner-1 ls -la /app/frida-logs/
-
-# View screenshots and recordings
-docker exec test-test-runner-1 ls -la /app/test-artifacts/
+```properties
+# Format: STATE_NAME:::REGEX_PATTERN
+InitialState:::^(android\.app\.Application\.onCreate|android\.app\.ActivityThread\.main)$
+CredentialInput:::^(.*\.showLoginScreen|.*\.displayCredentialsView)$
+Authenticating:::^(.*\.performLoginAction|.*\.initiateAuthentication)$
 ```
 
-## Manual Setup (Without Docker)
+### Credential Pools
 
-### Prerequisites
+**Location**: `pools/` directory
 
-1. **Java Development Environment**
-   - JDK 8 or higher
-   - Maven for dependency management
+- `accounts.txt` - Standard accounts
+- `passwords.txt` - Standard passwords  
+- `google_accounts.txt` - Google accounts
+- `google_passwords.txt` - Google passwords
+- `facebook_accounts.txt` - Facebook accounts
+- `facebook_passwords.txt` - Facebook passwords
 
-2. **Android Development Tools**
-   - Android SDK
-   - ADB (Android Debug Bridge)
-   - An Android device or emulator
+## Project Structure
 
-3. **Appium**
+```
+AndroidLoginDetector/
+├── src/main/java/           # Core Java code
+│   ├── AndroidLoginDetector.java    # Main controller
+│   ├── FridaManager.java            # Frida management
+│   ├── UIManager.java               # UI automation (ADB-based)
+│   ├── StateMachineManager.java     # State machine validation
+│   ├── ConfigLoader.java            # Configuration loader
+│   └── LoginReportManager.java      # Report management
+├── src/main/resources/      # Configuration files
+│   ├── config.properties            # Main configuration
+│   ├── regex_patterns.txt           # API regex patterns
+│   └── login_agent.js               # Frida agent script
+├── scripts/                 # Scripts
+│   ├── frida_controller.py          # Frida controller
+│   └── run_detector.sh              # Main run script
+├── pools/                   # Credential pools
+├── logs/                    # Log files
+├── reports/                 # Report files
+├── apps/                    # APK files
+├── docker-compose.yml       # Docker configuration
+├── Dockerfile               # Docker image
+└── pom.xml                  # Maven configuration
+```
 
-   ```bash
-   npm install -g appium
-   appium driver install uiautomator2
-   ```
+## Workflow
 
-4. **Frida**
+1. **Initialize**: Load configs, start Frida monitoring, load credential pools
+2. **Test Loop**: For each round:
+   - Restart emulator snapshot
+   - Start Frida monitoring
+   - Detect login page using UI elements
+   - Input credentials if login page found
+   - Run Monkey exploration if no login page
+   - Analyze API logs and validate state machine
+   - Check for crashes/ANRs
+   - Stop Frida monitoring
+3. **Report**: Generate final report with errors and statistics
 
-   ```bash
-   pip install frida-tools
-   pip install frida
-   ```
+## Error Detection
 
-5. **Python Dependencies**
+- **Crash**: Detect `FATAL EXCEPTION` in logs
+- **ANR**: Detect Application Not Responding
+- **Navigation Flow Error**: Validate state transitions
+- **Login Timeout**: Monitor login button disappearance time
+- **Credential Rejection**: Detect authentication failures
 
-   ```bash
-   pip install requests pyyaml
-   ```
+## Requirements
 
-### Configuration
-
-1. **Update `config.properties`** with your local paths:
-
-   ```properties
-   app.path=/path/to/your/app.apk
-   android.sdk.path=/path/to/android/sdk
-   appium.url=http://localhost:4723/wd/hub
-   ```
-
-2. **Start required services:**
-
-   ```bash
-   # Start ADB
-   adb start-server
-   
-   # Start Android emulator
-   emulator -avd your_avd_name
-   
-   # Start Appium
-   appium --allow-insecure chromedriver_autodownload
-   ```
-
-3. **Run tests:**
-
-   ```bash
-   mvn test -Dtest=LoginDetectTest
-   ```
-
-## Configuration Options
-
-### Application Settings
-
-| Property | Description | Example |
-|----------|-------------|---------|
-| `app.path` | Path to APK file | `/app/apps/myapp.apk` |
-| `app.package` | App package name | `com.example.myapp` |
-| `app.activity` | Main activity | `com.example.myapp.MainActivity` |
-
-### Test Parameters
-
-| Property | Description | Default |
-|----------|-------------|---------|
-| `test.rounds` | Number of test iterations | `5` |
-| `test.timeout` | Test timeout (ms) | `60000` |
-| `test.credentials.file` | Credentials file path | `credentials.json` |
-
-### Device Configuration
-
-| Property | Description | Default |
-|----------|-------------|---------|
-| `device.name` | Device/emulator name | `test_device` |
-| `platform.name` | Platform name | `Android` |
-| `platform.version` | Android version | `12` |
+- **OS**: Linux (Ubuntu 20.04+ recommended)
+- **Java**: OpenJDK 11+
+- **Maven**: 3.6+
+- **Python**: 3.7+
+- **ADB**: Android Debug Bridge
+- **Frida**: 16.0+
+- **Docker**: 20.10+ (optional)
 
 ## Troubleshooting
 
 ### Common Issues
 
-**1. Emulator won't start**
+1. **ADB Connection Failed**
 
-```bash
-# Check emulator status
-docker exec test-test-runner-1 ${ANDROID_HOME}/emulator/emulator -list-avds
+   ```bash
+   adb devices
+   adb kill-server && adb start-server
+   ```
 
-# Check ADB connection
-docker exec test-test-runner-1 adb devices
-```
+2. **Frida Server Not Running**
 
-**2. App installation fails**
+   ```bash
+   adb shell ps | grep frida-server
+   adb push resources/frida-server /data/local/tmp/
+   adb shell "chmod 755 /data/local/tmp/frida-server"
+   adb shell "/data/local/tmp/frida-server &"
+   ```
 
-```bash
-# Verify APK path
-docker exec test-test-runner-1 ls -la /app/apps/
+3. **File Permissions**
 
-# Check APK compatibility
-docker exec test-test-runner-1 aapt dump badging /app/apps/your-app.apk
-```
+   ```bash
+   chmod +x scripts/*.sh scripts/*.py resources/frida-server
+   ```
 
-**3. Frida connection issues**
+### Log Files
 
-```bash
-# Check Frida server status
-docker exec test-test-runner-1 frida-ps -U
-
-# Restart Frida server
-docker exec test-test-runner-1 adb shell "su -c 'killall frida-server'"
-```
-
-### Performance Optimization
-
-**For Apple Silicon Macs:**
-
-- Use software emulation (already configured)
-- Allocate sufficient resources to Docker Desktop
-- Consider using x86_64 Linux servers for better performance
-
-**For x86_64 Systems:**
-
-- Hardware acceleration is automatically used
-- Optimal performance expected
-
-## Development
-
-### Project Structure
-
-```
-├── src/
-│   ├── main/java/           # Core detection logic
-│   └── test/java/           # Test implementations
-├── scripts/                 # Python analysis scripts
-├── apps/                    # APK files directory
-├── frida-scripts/          # Frida instrumentation scripts
-├── docker-entrypoint.sh    # Container startup script
-├── Dockerfile              # Container definition
-└── docker-compose.yml      # Service orchestration
-```
-
-### Adding New Tests
-
-1. Create test class extending `BaseLoginTest`
-2. Implement detection logic
-3. Add configuration to `config.properties`
-4. Update test suite
-
-### Extending Frida Analysis
-
-1. Modify `login_agent.js` for new hooks
-2. Update `frida_controller.py` for data processing
-3. Add analysis patterns to `ApiLogAnalyzer`
-
-## Contributing
-
-1. Fork the repository
-2. Create feature branch
-3. Add tests for new functionality
-4. Submit pull request
+- **Run Log**: `logs/run_detector_YYYYMMDD_HHMMSS.log`
+- **Detector Log**: `logs/android_login_detector_YYYYMMDD_HHMMSS.log`
+- **Reports**: `reports/` directory
 
 ## License
 
-[Your License Here]
+MIT License

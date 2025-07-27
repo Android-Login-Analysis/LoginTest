@@ -5,9 +5,28 @@ Java.perform(function () {
     function readRegexPatterns() {
         try {
             const patterns = {};
-            const patternFile = new File("/data/local/tmp/regex_patterns.txt");
-            if (!patternFile.exists()) {
-                console.log("[!] regex_patterns.txt not found, using default patterns");
+            // Try multiple possible paths for the regex patterns file
+            const possiblePaths = [
+                "/data/local/tmp/regex_patterns.txt",
+                "/app/src/main/resources/regex_patterns.txt",
+                "/app/regex_patterns.txt"
+            ];
+
+            let patternFile = null;
+            for (const path of possiblePaths) {
+                try {
+                    patternFile = new File(path);
+                    if (patternFile.exists()) {
+                        console.log(`[*] Found regex_patterns.txt at: ${path}`);
+                        break;
+                    }
+                } catch (e) {
+                    console.log(`[!] Could not access ${path}: ${e}`);
+                }
+            }
+
+            if (!patternFile || !patternFile.exists()) {
+                console.log("[!] regex_patterns.txt not found in any location, using default patterns");
                 return getDefaultPatterns();
             }
 
@@ -20,7 +39,12 @@ Java.perform(function () {
                     if (parts.length === 2) {
                         const stateName = parts[0].trim();
                         const pattern = parts[1].trim();
-                        patterns[stateName] = new RegExp(pattern);
+                        try {
+                            patterns[stateName] = new RegExp(pattern);
+                            console.log(`[*] Loaded pattern for state '${stateName}': ${pattern}`);
+                        } catch (e) {
+                            console.log(`[!] Invalid regex pattern for state '${stateName}': ${pattern}`);
+                        }
                     }
                 }
             }
@@ -33,19 +57,17 @@ Java.perform(function () {
         }
     }
 
-    // Default patterns as fallback
+    // Default patterns as fallback - 简化版本，主要依赖配置文件
     function getDefaultPatterns() {
         return {
+            // 只保留最基本的模式作为备用
             InitialState: /^(onCreate|onStart|onResume)$/,
-            CheckingToken: /^(validateToken|checkAuthToken)$/,
-            CredentialInput: /^(showLoginScreen|displayCredentialsView)$/,
-            Authenticating: /^(performLoginAction|initiateAuthentication)$/,
+            CredentialInput: /^(showLoginScreen|displayCredentialsView|promptUserLogin)$/,
+            Authenticating: /^(performLoginAction|initiateAuthentication|attemptUserSignIn)$/,
             CheckingCredentials: /^(AuthService\.checkCredentials|UserAuthenticator\.verifyPassword)$/,
-            ServiceUnavailable_Auth: /^(onNetworkError|handleServerUnreachable)$/,
-            InvalidCredentials: /^(onLoginFailure|handleIncorrectCredentials)$/,
-            LoggedIn_NoMFA: /^(onLoginSuccessMfaNotRequired|proceedToAppWithoutMfa)$/,
-            AppMainScreen: /^(navigateToDashboard|showHomeScreen)$/,
-            UserLogout: /^(performLogout|signOutUser)$/
+            InvalidCredentials: /^(onLoginFailure|handleIncorrectCredentials|displayAuthenticationError)$/,
+            LoginSuccess: /^(onLoginSuccess|navigateToHome|completeLogin)$/,
+            UserLogout: /^(performLogout|signOutUser|clearSessionAndLogout)$/
         };
     }
 

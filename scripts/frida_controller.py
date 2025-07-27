@@ -26,13 +26,21 @@ def setup_logging():
 
 def load_config():
     config = configparser.ConfigParser()
-    config_path = os.path.join(os.path.dirname(
-        __file__), 'frida_config.properties')
-
-    if os.path.exists(config_path):
-        config.read(config_path)
-    else:
-        logging.warning("Config file not found, using defaults")
+    config_paths = [
+        os.path.join(os.path.dirname(__file__), '..', 'src', 'main', 'resources', 'config.properties'),
+        os.path.join(os.path.dirname(__file__), 'frida_config.properties')  # 备用
+    ]
+    
+    config_loaded = False
+    for config_path in config_paths:
+        if os.path.exists(config_path):
+            config.read(config_path)
+            logging.info(f"Loaded config from: {config_path}")
+            config_loaded = True
+            break
+    
+    if not config_loaded:
+        logging.warning("No config file found, using defaults")
         config['DEFAULT'] = {
             'frida.timeout': '30',
             'frida.retry.count': '3',

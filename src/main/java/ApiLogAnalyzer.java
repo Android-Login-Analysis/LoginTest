@@ -72,57 +72,60 @@ public class ApiLogAnalyzer {
         return patterns;
     }
 
+    /**
+     * Parse log file and extract API calls
+     */
     public void parseLogFile(String logFilePath) throws IOException {
-        this.apiCallLog.clear(); // Clear previous logs if any
+        apiCallLog.clear();
         try (BufferedReader reader = new BufferedReader(new FileReader(logFilePath))) {
             String line;
-            // Frida log format: TIMESTAMP ::: CLASS_NAME.METHOD_NAME
-            Pattern logEntryPattern = Pattern.compile("([0-9]+)[ ]*:::[ ]*([^.]+).([^ ]+)");
-
             while ((line = reader.readLine()) != null) {
-                Matcher matcher = logEntryPattern.matcher(line);
-                if (matcher.find()) {
-                    try {
-                        long timestamp = Long.parseLong(matcher.group(1));
-                        String className = matcher.group(2);
-                        String methodName = matcher.group(3);
-                        ApiCallEntry entry = new ApiCallEntry(timestamp, className, methodName);
-                        mapApiCallToState(entry);
-                        this.apiCallLog.add(entry);
-                    } catch (NumberFormatException e) {
-                        System.err.println("Skipping log line due to timestamp parse error: " + line);
-                    } catch (Exception e) {
-                        System.err
-                                .println("Skipping log line due to unexpected error: " + line + " - " + e.getMessage());
-                    }
-                } else {
-                    // Optionally log lines that don\'t match the expected Frida output,
-                    // but be mindful of Frida's own console.log messages from the agent.
-                    if (line.contains(" ::: ")) { // Heuristic to only log potential API calls
-                        System.err.println("Skipping unparsable API log line: " + line);
-                    }
+                ApiCallEntry entry = parseLogLine(line);
+                if (entry != null) {
+                    apiCallLog.add(entry);
                 }
             }
         }
     }
 
-    private void mapApiCallToState(ApiCallEntry entry) {
-        String fullMethodName = entry.getMethodSignature();
-        for (Map.Entry<String, Pattern> regexEntry : this.stateRegexPatterns.entrySet()) {
-            if (regexEntry.getValue().matcher(fullMethodName).matches()
-                    || regexEntry.getValue().matcher(entry.methodName).matches()) {
-                // First check full signature, then just method name for broader compatibility
-                entry.mappedState = regexEntry.getKey();
-                return; // First match wins
+    /**
+     * Parse a single log line
+     */
+    private ApiCallEntry parseLogLine(String line) {
+        // Frida log format: TIMESTAMP ::: CLASS_NAME.METHOD_NAME
+        Pattern logEntryPattern = Pattern.compile("([0-9]+)[ ]*:::[ ]*([^.]+).([^ ]+)");
+        Matcher matcher = logEntryPattern.matcher(line);
+
+        if (matcher.find()) {
+            try {
+                long timestamp = Long.parseLong(matcher.group(1));
+                String className = matcher.group(2);
+                String methodName = matcher.group(3);
+                return new ApiCallEntry(timestamp, className, methodName);
+            } catch (NumberFormatException e) {
+                System.err.println("Skipping log line due to timestamp parse error: " + line);
+            } catch (Exception e) {
+                System.err.println("Skipping log line due to unexpected error: " + line + " - " + e.getMessage());
+            }
+        } else {
+            // Optionally log lines that don't match the expected Frida output
+            if (line.contains(" ::: ")) { // Heuristic to only log potential API calls
+                System.err.println("Skipping unparsable API log line: " + line);
             }
         }
-        // If no specific regex matches, it remains "Unknown"
+        return null;
     }
 
+    /**
+     * Get API call log
+     */
     public List<ApiCallEntry> getApiCallLog() {
-        return apiCallLog;
+        return new ArrayList<>(apiCallLog);
     }
 
+    /**
+     * Get observed state sequence (excluding Unknown states)
+     */
     public List<String> getObservedStateSequence() {
         return apiCallLog.stream()
                 .map(entry -> entry.mappedState)
@@ -130,40 +133,18 @@ public class ApiLogAnalyzer {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get observed state sequence (including Unknown states)
+     */
     public List<String> getObservedStateSequenceWithUnknown() {
         return apiCallLog.stream()
                 .map(entry -> entry.mappedState)
                 .collect(Collectors.toList());
     }
 
-    // Placeholder for actual state machine transition validation
-    public List<String> findIncorrectTransitions(List<String> observedStates,
-            Map<String, List<String>> validTransitions) {
-        List<String> errors = new ArrayList<>();
-        if (observedStates.size() < 2) {
-            return errors; // Not enough states for a transition
-        }
-
-        for (int i = 0; i < observedStates.size() - 1; i++) {
-            String currentState = observedStates.get(i);
-            String nextState = observedStates.get(i + 1);
-
-            if (currentState.equals("Unknown") || nextState.equals("Unknown")) {
-                // Optionally decide how to handle transitions involving Unknown states
-                // For now, we might skip them or log them as potential points of interest
-                // errors.add("Transition involving Unknown state: " + currentState + " -> " +
-                // nextState);
-                continue;
-            }
-
-            List<String> allowedNextStates = validTransitions.get(currentState);
-            if (allowedNextStates == null || !allowedNextStates.contains(nextState)) {
-                errors.add("Invalid transition: " + currentState + " -> " + nextState + " at index " + i);
-            }
-        }
-        return errors;
-    }
-
+    /**
+     * Main method for testing
+     */
     public static void main(String[] args) {
         // Example Usage:
         try {
@@ -215,11 +196,12 @@ public class ApiLogAnalyzer {
             // ... add all valid transitions for your defined states
 
             System.out.println("\n--- Incorrect Navigation Flow Detection ---");
-            List<String> navigationErrors = analyzer.findIncorrectTransitions(stateSequence, validTransitions);
-            if (navigationErrors.isEmpty()) {
-                System.out.println("No incorrect navigation flows detected.");
+            // State transition validation now handled by StateMachineManager
+            System.out.println("State transition validation has been moved to StateMachineManager");
+            if (stateSequence.isEmpty()) {
+                System.out.println("No navigation flows detected.");
             } else {
-                navigationErrors.forEach(System.err::println);
+                System.out.println("Observed " + stateSequence.size() + " state transitions.");
             }
 
         } catch (IOException e) {

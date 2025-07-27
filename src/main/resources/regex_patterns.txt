@@ -1,69 +1,119 @@
-# regex_patterns.txt
-# Format: YOUR_STATE_NAME:::REGEX_PATTERN
-# These state names should match the keys used in LoginDetectTest.java's validStateTransitions map.
+# =============================================================================
+# AndroidLoginDetector API regex_patterns   
+# =============================================================================
+# Format: STATE_NAME:::REGEX_PATTERN
+# =============================================================================
 
-# --- Pre-Login Phase ---
-InitialState:::^(onCreate|onStart|onResume)$#com\.yourcompany\.yourapp\.(SplashActivity|EntryActivity|MainActivity)
-InitialState:::^(Application\.onCreate|initializeMainApplication|coldStartInit)$
+# =============================================================================
+# Pre-Login Phase 
+# =============================================================================
 
-CheckingToken:::^(validateToken|checkAuthToken|verifySession|restoreSession|isTokenValid|getCachedAuthToken|performSilentLogin)$
-CheckingToken:::^(AccountManager\.getAuthToken|TokenRepository\.getCurrentToken|SessionManager\.getActiveSession)$
+# InitialState 
+InitialState:::^(android\.app\.Application\.onCreate|android\.app\.ActivityThread\.main|android\.app\.ActivityThread\.performLaunchActivity)$
+InitialState:::^(com\.android\.internal\.os\.ZygoteInit\.main|android\.os\.Process\.start|android\.app\.Instrumentation\.callApplicationOnCreate)$
+InitialState:::^(.*\.SplashActivity\.onCreate|.*\.MainActivity\.onCreate|.*\.EntryActivity\.onCreate|.*\.WelcomeActivity\.onCreate)$
+InitialState:::^(.*\.Application\.onCreate|.*\.initializeMainApplication|.*\.coldStartInit|.*\.setupApplication)$
 
-# State representing successful login directly via a valid token
-LoggedIn_Via_Token:::^(onTokenValidationSuccess|navigateToHomeFromToken|autoLoginSucceeded)$
+# checkAuthToken
+CheckingToken:::^(.*\.TokenManager\.validateToken|.*\.AuthTokenManager\.checkAuthToken|.*\.SessionManager\.verifySession|.*\.TokenRepository\.isTokenValid)$
+CheckingToken:::^(.*\.AccountManager\.getAuthToken|.*\.TokenService\.getCurrentToken|.*\.AuthManager\.getActiveSession|.*\.TokenValidator\.validateExistingToken)$
+CheckingToken:::^(.*\.performSilentLogin|.*\.autoLoginWithToken|.*\.restoreUserSession|.*\.checkCachedAuthentication)$
+CheckingToken:::^(.*\.FirebaseAuth\.getCurrentUser|.*\.GoogleSignIn\.getLastSignedInAccount|.*\.FacebookLoginManager\.getCurrentAccessToken)$
 
-# CredentialInput represents the UI state where user can input credentials.
-# API calls mapping to this state are usually about navigating to or preparing this screen.
-CredentialInput:::^(showLoginScreen|displayCredentialsView|promptUserLogin|onRequiresAuthentication|setupLoginFields)$
-CredentialInput:::^(onFocus|requestFocus)$#.*\.(UsernameField|PasswordField|EmailInput|UserIdText) # UI Element Focused
-CredentialInput:::^(setText|append|onTextChanged)$#android\.widget\.EditText # Generic, use with caution or more context
+# login
+LoggedIn_Via_Token:::^(.*\.onTokenValidationSuccess|.*\.navigateToHomeFromToken|.*\.autoLoginSucceeded|.*\.tokenBasedLoginComplete)$
+LoggedIn_Via_Token:::^(.*\.TokenLoginUseCase\.execute|.*\.SilentLoginRepository\.loginWithToken|.*\.TokenAuthService\.authenticateWithToken)$
 
-EncodingCredentials:::^(encryptPassword|encodeCredentialsForApi|prepareAuthPayload|hashUserPassword|Base64\.encodeToString)$
+CredentialInput:::^(.*\.showLoginScreen|.*\.displayCredentialsView|.*\.promptUserLogin|.*\.onRequiresAuthentication|.*\.setupLoginFields)$
+CredentialInput:::^(.*\.LoginActivity\.onCreate|.*\.SignInActivity\.onCreate|.*\.AuthActivity\.onCreate|.*\.LoginFragment\.onViewCreated)$
+CredentialInput:::^(.*\.EditText\.onFocusChanged|.*\.TextInputLayout\.onFocusChange|.*\.requestFocus)$#.*\.(UsernameField|PasswordField|EmailInput|UserIdText|LoginInput)
+CredentialInput:::^(.*\.EditText\.setText|.*\.EditText\.append|.*\.EditText\.onTextChanged|.*\.TextWatcher\.onTextChanged)$#.*\.(username|password|email|login|user)
 
-CredentialFormatError:::^(onInvalidEmailFormat|onPasswordPolicyViolation|displayInputValidationError|showCredentialFormatError)$#.*(Username|Password)
-CredentialFormatError:::^(InputFilter\.filter|TextValidator\.validate)$#.*(returned false|threw ValidationException)
+EncodingCredentials:::^(.*\.encryptPassword|.*\.encodeCredentialsForApi|.*\.prepareAuthPayload|.*\.hashUserPassword|.*\.Base64\.encodeToString)$
+EncodingCredentials:::^(.*\.PasswordEncoder\.encode|.*\.CredentialHasher\.hash|.*\.AuthPayloadBuilder\.build|.*\.SecurityUtils\.encryptCredentials)$
+EncodingCredentials:::^(.*\.SHA256\.digest|.*\.BCrypt\.hashpw|.*\.PBKDF2WithHmacSHA1|.*\.MessageDigest\.getInstance)$#.*password
 
-# --- Login Phase ---
-# Authenticating is usually triggered by a login button click or form submission.
-Authenticating:::^(onClick)$#.*(LoginButton|SignInButton|SubmitCredentials)
-Authenticating:::^(performLoginAction|initiateAuthentication|attemptUserSignIn|viewModel\.loginUser)$
-Authenticating:::^(LoginUseCase\.execute|AuthRepository\.loginWithCredentials|UserService\.authenticate)$
+CredentialFormatError:::^(.*\.onInvalidEmailFormat|.*\.onPasswordPolicyViolation|.*\.displayInputValidationError|.*\.showCredentialFormatError)$
+CredentialFormatError:::^(.*\.EmailValidator\.validate|.*\.PasswordValidator\.validate|.*\.InputValidator\.validateCredentials|.*\.ValidationUtils\.checkFormat)$
+CredentialFormatError:::^(.*\.InputFilter\.filter|.*\.TextValidator\.validate|.*\.Pattern\.matcher)$#.*(returned false|threw ValidationException|invalid format)
 
-# CheckingCredentials is the actual backend/API call for credential verification.
-CheckingCredentials:::^(AuthService\.checkCredentials|UserAuthenticator\.verifyPassword|ApiClient\.postLoginRequest|validateAccountPassword)$
-CheckingCredentials:::^(retrofit\.Call\.execute|okhttp3\.Call\.enqueue|HttpURLConnection\.connect)$#.*(login|auth|signin|token)
+# =============================================================================
+# Login Phase 
+# =============================================================================
 
-# ServiceUnavailable_Auth can be general or specific to authentication service.
-ServiceUnavailable_Auth:::^(onNetworkError|handleServerUnreachable|displayServiceDownMessage|onAuthServiceFailure)$
-ServiceUnavailable_Auth:::^(retrofit\.Callback\.onFailure)$#java\.net\.(SocketTimeoutException|UnknownHostException|ConnectException)
-ServiceUnavailable_Auth:::^(VolleyError)$#com\.android\.volley\.(NoConnectionError|TimeoutError|ServerError)
+Authenticating:::^(.*\.onClick)$#.*\.(LoginButton|SignInButton|SubmitCredentials|AuthenticateButton|LoginSubmitButton)
+Authenticating:::^(.*\.performLoginAction|.*\.initiateAuthentication|.*\.attemptUserSignIn|.*\.viewModel\.loginUser|.*\.startLoginProcess)$
+Authenticating:::^(.*\.LoginUseCase\.execute|.*\.AuthRepository\.loginWithCredentials|.*\.UserService\.authenticate|.*\.AuthenticationManager\.login)$
+Authenticating:::^(.*\.LoginPresenter\.onLoginClicked|.*\.LoginController\.handleLoginRequest|.*\.AuthController\.processLogin|.*\.LoginInteractor\.execute)$
 
-InvalidCredentials:::^(onLoginFailure|handleIncorrectCredentials|displayAuthenticationError|showInvalidUserOrPassword)$
-InvalidCredentials:::^(FirebaseAuthInvalidUserException|FirebaseAuthInvalidCredentialsException|ApiException)$#.*(401|403|INVALID_CREDENTIALS)
+CheckingCredentials:::^(.*\.AuthService\.checkCredentials|.*\.UserAuthenticator\.verifyPassword|.*\.ApiClient\.postLoginRequest|.*\.validateAccountPassword)$
+CheckingCredentials:::^(.*\.retrofit\.Call\.execute|.*\.okhttp3\.Call\.enqueue|.*\.HttpURLConnection\.connect|.*\.URLConnection\.getInputStream)$#.*(login|auth|signin|token|authenticate)
+CheckingCredentials:::^(.*\.FirebaseAuth\.signInWithEmailAndPassword|.*\.GoogleSignIn\.getSignInIntent|.*\.FacebookLoginManager\.logInWithReadPermissions)$
+CheckingCredentials:::^(.*\.ApiService\.login|.*\.AuthApi\.authenticate|.*\.UserApi\.signIn|.*\.LoginApi\.validateCredentials)$
+CheckingCredentials:::^(.*\.HttpClient\.execute|.*\.OkHttpClient\.newCall|.*\.Volley\.Request\.execute|.*\.AsyncHttpClient\.post)$#.*(login|auth|signin)
 
-CheckingMFASettings:::^(isMfaRequiredForUser|fetchMfaStatus|getUserAccountSettings)$#.*(twoFactor|mfa)
-CheckingMFASettings:::^(AccountFeatures\.isFeatureEnabled)$#MFA
+ServiceUnavailable_Auth:::^(.*\.onNetworkError|.*\.handleServerUnreachable|.*\.displayServiceDownMessage|.*\.onAuthServiceFailure|.*\.handleConnectionTimeout)$
+ServiceUnavailable_Auth:::^(.*\.retrofit\.Callback\.onFailure|.*\.okhttp3\.Callback\.onFailure|.*\.VolleyError|.*\.IOException)$#java\.net\.(SocketTimeoutException|UnknownHostException|ConnectException|NoRouteToHostException)
+ServiceUnavailable_Auth:::^(.*\.NetworkErrorHandler\.handle|.*\.ConnectionManager\.onConnectionFailed|.*\.ServiceUnavailableException|.*\.NetworkUnavailableException)$
+ServiceUnavailable_Auth:::^(.*\.TimeoutException|.*\.ConnectTimeoutException|.*\.ReadTimeoutException|.*\.ConnectionPoolTimeoutException)$
 
-# LoggedIn_NoMFA is a success state if credentials are valid and MFA is not required.
-LoggedIn_NoMFA:::^(onLoginSuccessMfaNotRequired|proceedToAppWithoutMfa|completeLoginNoTwoFactor)$
+InvalidCredentials:::^(.*\.onLoginFailure|.*\.handleIncorrectCredentials|.*\.displayAuthenticationError|.*\.showInvalidUserOrPassword|.*\.onAuthFailed)$
+InvalidCredentials:::^(.*\.FirebaseAuthInvalidUserException|.*\.FirebaseAuthInvalidCredentialsException|.*\.ApiException|.*\.AuthenticationException)$#.*(401|403|INVALID_CREDENTIALS|WRONG_PASSWORD|USER_NOT_FOUND)
+InvalidCredentials:::^(.*\.LoginErrorHandler\.handle|.*\.AuthErrorManager\.processError|.*\.InvalidCredentialsException|.*\.AuthenticationFailedException)$
+InvalidCredentials:::^(.*\.HttpException|.*\.ResponseException)$#.*(401|403|UNAUTHORIZED|FORBIDDEN)
 
-MFACodePending:::^(promptForMfaCode|showOtpInputScreen|navigateToMfaVerificationPage)$
-SendingMFACode:::^(sendMfaCodeViaSms|dispatchOtpEmail|TwoFactorService\.requestVerificationCode)$
-ServiceUnavailable_MFA_Send:::^(onMfaCodeSendError|handleOtpDispatchFailure|displayMfaServiceError_Send)$
+CheckingMFASettings:::^(.*\.isMfaRequiredForUser|.*\.fetchMfaStatus|.*\.getUserAccountSettings|.*\.checkTwoFactorStatus|.*\.getMfaConfiguration)$
+CheckingMFASettings:::^(.*\.AccountFeatures\.isFeatureEnabled|.*\.UserSettings\.getMfaEnabled|.*\.SecuritySettings\.getTwoFactorStatus|.*\.MfaManager\.isEnabled)$#.*(MFA|TWO_FACTOR|2FA)
+CheckingMFASettings:::^(.*\.ApiService\.getUserSettings|.*\.UserApi\.getAccountInfo|.*\.SettingsApi\.getSecuritySettings|.*\.AccountApi\.getMfaStatus)$
 
-MFAVerification:::^(onClick)$#.*(VerifyMfaButton|SubmitOtpButton|ConfirmTwoFactorButton)
-MFAVerification:::^(submitMfaToken|validateOtpEntered|confirmTwoFactorAuthentication)$
-VerifyingMFA:::^(AuthService\.verifyMfaToken|MfaRepository\.checkOtp|UserAccount\.confirmMfaDevice)$
-ServiceUnavailable_MFA_Verify:::^(onMfaVerificationError|handleOtpValidationErrorServiceDown|displayMfaServiceError_Verify)$
-MFAError:::^(onInvalidMfaCode|handleIncorrectOtp|displayMfaAttemptFailed|showTwoFactorCodeError)$
+LoggedIn_NoMFA:::^(.*\.onLoginSuccessMfaNotRequired|.*\.proceedToAppWithoutMfa|.*\.completeLoginNoTwoFactor|.*\.navigateToMainAfterLogin|.*\.loginSuccessNoMfa)$
+LoggedIn_NoMFA:::^(.*\.LoginSuccessHandler\.handle|.*\.AuthSuccessManager\.processSuccess|.*\.LoginCompleteUseCase\.execute|.*\.MainNavigationManager\.navigateAfterLogin)$
 
-# --- Post-Login Phase ---
-# LoggedIn_WithMFA is a success state after MFA is successfully verified.
-LoggedIn_WithMFA:::^(onMfaVerificationSuccess|completeLoginWithMfa|navigateToHomeAfterMfa)$
+# =============================================================================
+# MFA Phase 
+# =============================================================================
 
-AppMainScreen:::^(navigateToDashboard|showHomeScreen|startAppMainActivity|onLoginCompleteAndVerified)$
-UserLogout:::^(performLogout|signOutUser|clearSessionAndLogout|AuthManager\.logout)$
 
-# General login success/failure if you want broader states (less precise than the specific ones above)
-# LoginSuccess:::^(onLoginSuccess|handleSuccessfulAuthentication|navigateToMainScreen|startMainActivity|finishLoginActivity)$
-# LoginFailure:::^(onLoginFailure|handleAuthenticationError|displayLoginErrorScreen)$
+MFACodePending:::^(.*\.promptForMfaCode|.*\.showOtpInputScreen|.*\.navigateToMfaVerificationPage|.*\.displayMfaChallenge|.*\.showTwoFactorInput)$
+MFACodePending:::^(.*\.MfaActivity\.onCreate|.*\.OtpActivity\.onCreate|.*\.TwoFactorActivity\.onCreate|.*\.MfaFragment\.onViewCreated)$
+MFACodePending:::^(.*\.MfaManager\.showMfaPrompt|.*\.OtpManager\.displayOtpInput|.*\.TwoFactorManager\.showChallenge|.*\.MfaUIManager\.showInputScreen)$
+
+SendingMFACode:::^(.*\.sendMfaCodeViaSms|.*\.dispatchOtpEmail|.*\.TwoFactorService\.requestVerificationCode|.*\.sendOtpToUser|.*\.requestMfaCode)$
+SendingMFACode:::^(.*\.SmsManager\.sendTextMessage|.*\.EmailService\.sendOtpEmail|.*\.NotificationManager\.sendMfaNotification|.*\.MfaCodeSender\.send)$
+SendingMFACode:::^(.*\.ApiService\.requestMfaCode|.*\.MfaApi\.sendCode|.*\.OtpApi\.requestOtp|.*\.TwoFactorApi\.sendVerificationCode)$
+
+ServiceUnavailable_MFA_Send:::^(.*\.onMfaCodeSendError|.*\.handleOtpDispatchFailure|.*\.displayMfaServiceError_Send|.*\.mfaSendFailed|.*\.otpSendError)$
+ServiceUnavailable_MFA_Send:::^(.*\.MfaSendException|.*\.OtpSendException|.*\.TwoFactorSendException|.*\.MfaServiceUnavailableException)$
+ServiceUnavailable_MFA_Send:::^(.*\.SmsSendFailedException|.*\.EmailSendException|.*\.NotificationSendException|.*\.MfaCodeSendTimeoutException)$
+
+MFAVerification:::^(.*\.onClick)$#.*\.(VerifyMfaButton|SubmitOtpButton|ConfirmTwoFactorButton|VerifyCodeButton|MfaSubmitButton)
+MFAVerification:::^(.*\.submitMfaToken|.*\.validateOtpEntered|.*\.confirmTwoFactorAuthentication|.*\.verifyMfaCode|.*\.submitOtpCode)$
+MFAVerification:::^(.*\.MfaVerificationUseCase\.execute|.*\.OtpValidator\.validate|.*\.TwoFactorVerifier\.verify|.*\.MfaCodeValidator\.validate)$
+
+VerifyingMFA:::^(.*\.AuthService\.verifyMfaToken|.*\.MfaRepository\.checkOtp|.*\.UserAccount\.confirmMfaDevice|.*\.verifyTwoFactorCode|.*\.validateMfaToken)$
+VerifyingMFA:::^(.*\.ApiService\.verifyMfa|.*\.MfaApi\.verifyCode|.*\.OtpApi\.validateOtp|.*\.TwoFactorApi\.verifyCode|.*\.MfaVerificationApi\.verify)$
+VerifyingMFA:::^(.*\.FirebaseAuth\.signInWithCredential|.*\.GoogleSignIn\.getSignedInAccountFromIntent|.*\.FacebookLoginManager\.logInWithReadPermissions)$#.*mfa
+
+ServiceUnavailable_MFA_Verify:::^(.*\.onMfaVerificationError|.*\.handleOtpValidationErrorServiceDown|.*\.displayMfaServiceError_Verify|.*\.mfaVerifyFailed|.*\.otpVerifyError)$
+ServiceUnavailable_MFA_Verify:::^(.*\.MfaVerificationException|.*\.OtpVerificationException|.*\.TwoFactorVerificationException|.*\.MfaVerifyServiceUnavailableException)$
+ServiceUnavailable_MFA_Verify:::^(.*\.MfaVerificationTimeoutException|.*\.OtpVerificationTimeoutException|.*\.TwoFactorVerificationTimeoutException)$
+
+MFAError:::^(.*\.onInvalidMfaCode|.*\.handleIncorrectOtp|.*\.displayMfaAttemptFailed|.*\.showTwoFactorCodeError|.*\.mfaCodeInvalid)$
+MFAError:::^(.*\.InvalidMfaCodeException|.*\.IncorrectOtpException|.*\.TwoFactorCodeException|.*\.MfaValidationException|.*\.OtpValidationException)$
+MFAError:::^(.*\.MfaAttemptFailedException|.*\.OtpAttemptFailedException|.*\.TwoFactorAttemptFailedException|.*\.MfaCodeExpiredException)$
+
+# =============================================================================
+# Post-Login Phase 
+# =============================================================================
+
+LoggedIn_WithMFA:::^(.*\.onMfaVerificationSuccess|.*\.completeLoginWithMfa|.*\.navigateToHomeAfterMfa|.*\.loginSuccessWithMfa|.*\.twoFactorLoginComplete)$
+LoggedIn_WithMFA:::^(.*\.MfaSuccessHandler\.handle|.*\.TwoFactorSuccessManager\.processSuccess|.*\.MfaLoginCompleteUseCase\.execute|.*\.MfaNavigationManager\.navigateAfterLogin)$
+
+
+AppMainScreen:::^(.*\.navigateToDashboard|.*\.showHomeScreen|.*\.startAppMainActivity|.*\.onLoginCompleteAndVerified|.*\.launchMainApplication)$
+AppMainScreen:::^(.*\.MainActivity\.onCreate|.*\.DashboardActivity\.onCreate|.*\.HomeActivity\.onCreate|.*\.AppMainActivity\.onCreate|.*\.MainFragment\.onViewCreated)$
+AppMainScreen:::^(.*\.MainNavigationManager\.navigate|.*\.HomeNavigationManager\.navigate|.*\.DashboardNavigationManager\.navigate|.*\.MainScreenManager\.show)$
+
+UserLogout:::^(.*\.performLogout|.*\.signOutUser|.*\.clearSessionAndLogout|.*\.AuthManager\.logout|.*\.logoutUser|.*\.signOut)$
+UserLogout:::^(.*\.FirebaseAuth\.signOut|.*\.GoogleSignIn\.signOut|.*\.FacebookLoginManager\.logOut|.*\.clearUserSession|.*\.destroyUserSession)$
+UserLogout:::^(.*\.LogoutUseCase\.execute|.*\.LogoutRepository\.logout|.*\.LogoutService\.performLogout|.*\.SessionManager\.clearSession|.*\.TokenManager\.clearToken)$

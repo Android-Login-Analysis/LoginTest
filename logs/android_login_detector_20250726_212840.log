@@ -1,0 +1,24 @@
+[2025-07-26 21:28:40.975] [INFO] === AndroidLoginDetector Started ===
+[2025-07-26 21:28:40.979] [INFO] Log file: logs/android_login_detector_20250726_212840.log
+[2025-07-26 21:28:40.979] [INFO] Timestamp: 2025-07-26 21:28:40.979
+[2025-07-26 21:28:41.005] [INFO] App configuration loaded:
+[2025-07-26 21:28:41.006] [INFO]   - Package: org.mian.gitnex
+[2025-07-26 21:28:41.006] [INFO]   - Activity: org.mian.gitnex.activities.MainActivity
+[2025-07-26 21:28:41.006] [INFO]   - APK Path: apps/org.mian.gitnex_550.apk
+[2025-07-26 21:28:41.006] [INFO]   - Emulator Snapshot: snap_gitnex_login
+[2025-07-26 21:28:41.007] [INFO] Loaded credential pools:
+[2025-07-26 21:28:41.007] [INFO]   - Standard accounts: 17
+[2025-07-26 21:28:41.007] [INFO]   - Standard passwords: 15
+[2025-07-26 21:28:41.007] [INFO]   - Google accounts: 5
+[2025-07-26 21:28:41.007] [INFO]   - Google passwords: 5
+[2025-07-26 21:28:41.007] [INFO]   - Facebook accounts: 5
+[2025-07-26 21:28:41.007] [INFO]   - Facebook passwords: 5
+[2025-07-26 21:28:41.007] [INFO] Initialized state machine with 22 states
+[2025-07-26 21:28:46.100] [INFO] Frida monitoring started for package: org.mian.gitnex
+[2025-07-26 21:28:46.101] [INFO] === Starting AndroidLoginDetector Test ===
+[2025-07-26 21:28:46.101] [INFO] Target app: org.mian.gitnex
+[2025-07-26 21:28:46.103] [INFO] Test duration: 30 seconds
+[2025-07-26 21:28:46.103] [INFO] Checking Docker environment compatibility...
+[2025-07-26 21:28:46.122] [ERROR] ADB connection failed
+[2025-07-26 21:28:46.123] [ERROR] Docker environment check failed, aborting test
+[2025-07-26 21:28:46.126] [INFO] Monkey stopped

@@ -147,5 +147,11 @@ RUN echo "no" | ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd \
 WORKDIR /app
 COPY . .
 
+# Make Python scripts executable
+RUN chmod +x scripts/*.sh scripts/*.py resources/frida-server
+
+# Create necessary directories
+RUN mkdir -p logs reports
+
 EXPOSE 4723 5555 5554
-ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["./scripts/docker-startup.sh"] 
