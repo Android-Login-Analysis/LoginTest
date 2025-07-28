@@ -422,49 +422,39 @@ public class AndroidLoginDetector {
             // Step 2: Start Frida monitoring API calls
             startFridaMonitoring();
 
-            // Step 3: Start Appium to get UI elements
-            // Appium is already started in constructor
+            // Step 3: Start UI automation
+            // UI manager is already initialized in constructor
 
             // Step 4: Detect login page
-            boolean loginPageDetected = detectLoginPageWithAppium();
+            boolean loginPageDetected = detectLoginPageWithUI();
 
             if (loginPageDetected) {
-                logInfo("Login page detected, starting credential input");
-
-                // Step 5: Select credentials based on detected login type
+                // Step 5: Select appropriate credentials based on login type
                 String username = selectCredentials();
                 String password = selectPassword();
 
                 // Step 6: Input credentials and monitor login process
-                boolean loginSuccess = inputCredentialsWithAppium(username, password);
+                boolean loginSuccess = inputCredentialsWithUI(username, password);
 
                 if (loginSuccess) {
+                    logInfo("Login process completed successfully");
                     successfulLogins++;
-                    logInfo("Login successful");
                 } else {
+                    logError("Login process failed");
                     failedLogins++;
-                    logInfo("Login failed");
                 }
-
-                // Step 7: Check login duration and timeout
-                checkLoginTimeout();
             } else {
-                logInfo("未检测到登录页面，启动Monkey探索");
-
-                // Step 8: Start Monkey for exploration
+                logInfo("No login page detected, starting Monkey exploration");
                 startMonkeyWithUIMonitoring();
             }
 
-            // Step 9: Stop Monkey
-            stopMonkey();
-
-            // Step 10: Analyze API logs and rebuild state machine
+            // Step 7: Analyze API logs and validate state machine
             analyzeApiLogsAndValidateStateMachine();
 
-            // Step 11: Check crash and ANR logs
+            // Step 8: Check for crashes and ANRs
             checkCrashAndAnrLogs();
 
-            // Step 12: Stop Frida monitoring
+            // Step 9: Stop Frida monitoring
             stopFridaMonitoring();
 
             long roundDuration = System.currentTimeMillis() - roundStartTime;
@@ -519,22 +509,21 @@ public class AndroidLoginDetector {
     }
 
     /**
-     * Step 3: Detect login page and credential related UI input elements
+     * Detect login page using UI manager
      */
     private boolean detectLoginPage() {
-        // This method has been replaced by detectLoginPageWithAppium()
+        // This method has been replaced by detectLoginPageWithUI()
         // Keep this method to avoid breaking existing calls
-        return detectLoginPageWithAppium();
+        return detectLoginPageWithUI();
     }
 
     /**
-     * Step 4: Randomly select credentials from the predefined credential pool as
-     * input
+     * Input credentials using UI manager
      */
     private void inputCredentials(String username, String password) {
-        // This method has been replaced by inputCredentialsWithAppium()
+        // This method has been replaced by inputCredentialsWithUI()
         // Keep this method to avoid breaking existing calls
-        inputCredentialsWithAppium(username, password);
+        inputCredentialsWithUI(username, password);
     }
 
     /**
@@ -680,7 +669,7 @@ public class AndroidLoginDetector {
     /**
      * Use UI manager to detect login page
      */
-    private boolean detectLoginPageWithAppium() {
+    private boolean detectLoginPageWithUI() {
         try {
             logInfo("Using UI manager to detect login page...");
             boolean isLoginPage = uiManager.detectLoginPage();
@@ -745,7 +734,7 @@ public class AndroidLoginDetector {
     /**
      * Use UI manager to input credentials
      */
-    private boolean inputCredentialsWithAppium(String username, String password) {
+    private boolean inputCredentialsWithUI(String username, String password) {
         try {
             logInfo("Using UI manager to input credentials...");
             boolean success = uiManager.inputCredentials(username, password);

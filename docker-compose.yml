@@ -8,8 +8,10 @@ services:
       - .:/app
       - /dev/bus/usb:/dev/bus/usb
       - /var/run/usbmuxd:/var/run/usbmuxd
+      - /dev/kvm:/dev/kvm
+      - /dev/vhost-net:/dev/vhost-net
+      - /dev/net/tun:/dev/net/tun
     ports:
-      - "4723:4723"  # Appium server
       - "5555:5555"  # ADB
       - "5554:5554"  # Emulator console
     environment:
@@ -17,15 +19,26 @@ services:
       - ANDROID_SDK_ROOT=/opt/android-sdk
       - PATH=/opt/android-sdk/platform-tools:/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/emulator:${PATH}
       - DISPLAY=${DISPLAY}
+      - ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL=10
+      - ANDROID_EMU_ENABLE_CRASH_REPORTING=0
+      - ANDROID_EMU_ENABLE_CONSOLE=0
+      - ANDROID_EMU_ENABLE_GRPC=0
     devices:
       - /dev/bus/usb:/dev/bus/usb
+      - /dev/kvm:/dev/kvm
     tmpfs:
       - /tmp:exec,mode=1777
       - /var/tmp:exec,mode=1777
       - /var/lib/docker:exec,mode=1777
+      - /root/.android/avd:exec,mode=1777
     cap_add:
       - NET_ADMIN
       - SYS_ADMIN
+      - SYS_PTRACE
+      - SYS_CHROOT
+      - SETUID
+      - SETGID
     security_opt:
       - seccomp:unconfined
+      - apparmor:unconfined
     restart: unless-stopped 

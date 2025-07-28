@@ -1,9 +1,12 @@
 FROM ubuntu:22.04
 
-# Install basic dependencies
+# Install basic dependencies including audio and X11 libraries
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl wget git unzip python3 python3-pip openjdk-11-jdk maven \
     ca-certificates gnupg qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils \
+    pulseaudio libpulse0 libpulse-dev \
+    libx11-6 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 \
+    libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \
     && rm -rf /var/lib/apt/lists/* && apt-get clean
 
 # Install Node.js and npm
@@ -13,11 +16,14 @@ RUN mkdir -p /etc/apt/keyrings && \
     apt-get update && apt-get install -y --no-install-recommends nodejs && \
     rm -rf /var/lib/apt/lists/* && apt-get clean
 
-# Install Appium
-RUN npm install -g appium && appium driver install uiautomator2 && npm cache clean --force
+# Install Python and pip
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install Python deps
-RUN pip3 install --no-cache-dir frida-tools requests pyyaml
+# Install Python dependencies
+RUN pip3 install frida-tools
 
 # Set Android SDK environment
 ENV ANDROID_HOME=/opt/android-sdk
@@ -77,11 +83,11 @@ RUN mkdir -p ${ANDROID_HOME}/build-tools && cd ${ANDROID_HOME}/build-tools && \
     unzip build-tools_r32-linux.zip -d 32.0.0 && \
     rm build-tools_r32-linux.zip
 
-# Create package.xml metadata for build-tools
+# Create package.xml metadata for build-tools (FIXED format)
 RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
     echo '<ns2:repository xmlns:ns2="http://schemas.android.com/repository/android/common/01" xmlns:ns3="http://schemas.android.com/sdk/android/repo/addon2/03">' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
     echo '  <localPackage path="build-tools;32.0.0">' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
-    echo '    <type-details xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns3:buildToolsDetailsType"/>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
+    echo '    <type-details xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns3:addonDetailsType"/>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
     echo '    <revision>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
     echo '      <major>32</major>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
     echo '      <minor>0</minor>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
@@ -137,12 +143,6 @@ RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_H
     echo '  </localPackage>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
     echo '</ns2:repository>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml
 
-# Create AVD using avdmanager (with standard device)
-RUN echo "no" | ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd \
-    --name "test_device" \
-    --package "system-images;android-31;google_apis;x86_64" \
-    --abi "x86_64"
-
 # Set working directory
 WORKDIR /app
 COPY . .
@@ -153,5 +153,25 @@ RUN chmod +x scripts/*.sh scripts/*.py resources/frida-server
 # Create necessary directories
 RUN mkdir -p logs reports
 
-EXPOSE 4723 5555 5554
-ENTRYPOINT ["./scripts/docker-startup.sh"] 
+# Create AVD using avdmanager (with standard device) - moved after copying files
+RUN echo "no" | ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd \
+    --name "test_device" \
+    --package "system-images;android-31;google_apis;x86_64" \
+    --abi "x86_64"
+
+# Verify AVD was created
+RUN ls -la ~/.android/avd/ && \
+    ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager list avd
+
+# Add permission fix script execution to startup
+RUN echo '#!/bin/bash' > /entrypoint.sh && \
+    echo 'set -e' >> /entrypoint.sh && \
+    echo 'echo "Running permission fixes..."' >> /entrypoint.sh && \
+    echo 'chmod +x scripts/fix-permissions.sh' >> /entrypoint.sh && \
+    echo 'scripts/fix-permissions.sh || true' >> /entrypoint.sh && \
+    echo 'echo "Starting main application..."' >> /entrypoint.sh && \
+    echo 'exec ./scripts/docker-startup.sh "$@"' >> /entrypoint.sh && \
+    chmod +x /entrypoint.sh
+
+EXPOSE 5555 5554
+ENTRYPOINT ["/entrypoint.sh"] 

@@ -26,6 +26,62 @@ log_debug() {
     echo -e "${BLUE}[DEBUG]${NC} $1"
 }
 
+# Clean up any existing emulator processes and snapshots
+cleanup_emulator() {
+    log_info "Cleaning up existing emulator processes..."
+    
+    # Kill any existing emulator processes
+    pkill -f "emulator.*test_device" 2>/dev/null || true
+    pkill -f "qemu" 2>/dev/null || true
+    
+    # Wait for processes to terminate
+    sleep 2
+    
+    # Clean up AVD snapshots that might be stuck
+    if [ -d "$HOME/.android/avd/test_device.avd" ]; then
+        log_info "Cleaning up AVD snapshots..."
+        rm -rf "$HOME/.android/avd/test_device.avd/snapshots" 2>/dev/null || true
+        rm -f "$HOME/.android/avd/test_device.avd"/*.lock 2>/dev/null || true
+    fi
+    
+    # Clean up running emulator registry
+    rm -f "$HOME/.android/avd/running"/* 2>/dev/null || true
+    
+    # Restart ADB server
+    adb kill-server 2>/dev/null || true
+    sleep 1
+    adb start-server 2>/dev/null || true
+}
+
+# Check and create AVD if needed
+check_and_create_avd() {
+    log_info "Checking AVD availability..."
+    
+    # Check if AVD exists
+    if [ ! -d "$HOME/.android/avd/test_device.avd" ]; then
+        log_info "AVD 'test_device' not found, creating..."
+        
+        # Create AVD
+        echo "no" | ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd \
+            --name "test_device" \
+            --package "system-images;android-31;google_apis;x86_64" \
+            --abi "x86_64"
+        
+        if [ $? -eq 0 ]; then
+            log_info "AVD created successfully"
+        else
+            log_error "Failed to create AVD"
+            return 1
+        fi
+    else
+        log_info "AVD 'test_device' found"
+    fi
+    
+    # List available AVDs
+    log_info "Available AVDs:"
+    ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager list avd
+}
+
 # Wait for condition
 wait_for_condition() {
     local condition=$1
@@ -59,12 +115,27 @@ check_adb_devices() {
 
 # Check emulator running
 check_emulator_running() {
-    adb shell getprop ro.build.version.release >/dev/null 2>&1
+    local device=$(get_active_device)
+    if [ -n "$device" ]; then
+        adb -s $device shell getprop ro.build.version.release > /dev/null 2>&1
+    else
+        return 1
+    fi
+}
+
+# Get active device ID
+get_active_device() {
+    adb devices | grep -E "emulator-[0-9]+.*device$" | head -1 | cut -f1
 }
 
 # Check Frida server running
 check_frida_server() {
-    adb shell ps | grep frida-server >/dev/null 2>&1
+    local device=$(get_active_device)
+    if [ -n "$device" ]; then
+        adb -s $device shell ps | grep frida-server > /dev/null 2>&1
+    else
+        return 1
+    fi
 }
 
 # Main startup process
@@ -72,9 +143,28 @@ main() {
     log_info "=== AndroidLoginDetector Docker Startup ==="
     log_info "Timestamp: $(date)"
     
-    # Start emulator
+    # Clean up before starting
+    cleanup_emulator
+    
+    # Check and create AVD if needed
+    if ! check_and_create_avd; then
+        log_error "Failed to setup AVD"
+        exit 1
+    fi
+    
+    # Start emulator with additional parameters to avoid snapshot issues
     log_info "Step 1: Starting Android emulator..."
-    emulator -avd test_device -no-audio -no-window -gpu swiftshader_indirect -camera-back none -camera-front none &
+    emulator -avd test_device \
+        -no-audio \
+        -no-window \
+        -gpu swiftshader_indirect \
+        -camera-back none \
+        -camera-front none \
+        -no-snapshot-save \
+        -no-snapshot-load \
+        -wipe-data \
+        -memory 2048 \
+        -cores 2 &
     EMULATOR_PID=$!
     
     # Wait for emulator to start
@@ -94,13 +184,43 @@ main() {
     
     # Push Frida server to device
     if [ -f "resources/frida-server" ]; then
-        adb push resources/frida-server /data/local/tmp/
-        adb shell "chmod 755 /data/local/tmp/frida-server"
-        adb shell "/data/local/tmp/frida-server &"
+        local device=$(get_active_device)
+        if [ -z "$device" ]; then
+            log_error "No active device found"
+            exit 1
+        fi
+        
+        log_info "Pushing Frida server to device ($device)..."
+        adb -s $device push resources/frida-server /data/local/tmp/
+        adb -s $device shell "chmod 755 /data/local/tmp/frida-server"
+        
+        # Check if Frida server is already running
+        if adb -s $device shell "ps | grep frida-server" | grep -q frida-server; then
+            log_info "Frida server already running, killing existing process..."
+            adb -s $device shell "pkill -f frida-server" 2>/dev/null || true
+            sleep 2
+        fi
+        
+        # Start Frida server with better error handling
+        log_info "Starting Frida server..."
+        adb -s $device shell "cd /data/local/tmp && nohup ./frida-server > /data/local/tmp/frida.log 2>&1 &" 2>/dev/null || true
+        
+        # Wait a bit for the server to start
+        sleep 5
+        
+        # Check Frida server logs
+        log_info "Checking Frida server logs..."
+        adb -s $device shell "cat /data/local/tmp/frida.log" 2>/dev/null || true
         
         # Wait for Frida server to start
         if ! wait_for_condition "check_frida_server" 15 3 "Frida server to start"; then
             log_error "Frida server failed to start"
+            log_info "Checking Frida server process..."
+            adb -s $device shell "ps aux | grep frida" 2>/dev/null || true
+            log_info "Checking Frida server logs..."
+            adb -s $device shell "cat /data/local/tmp/frida.log" 2>/dev/null || true
+            log_info "Checking if Frida server binary is executable..."
+            adb -s $device shell "ls -la /data/local/tmp/frida-server" 2>/dev/null || true
             exit 1
         fi
     else
@@ -138,7 +258,10 @@ cleanup() {
     fi
     
     # Stop Frida server
-    adb shell "pkill -f frida-server" 2>/dev/null || true
+    local device=$(get_active_device)
+    if [ -n "$device" ]; then
+        adb -s $device shell "pkill -f frida-server" 2>/dev/null || true
+    fi
     
     # Stop ADB server
     adb kill-server 2>/dev/null || true

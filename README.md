@@ -2,6 +2,14 @@
 
 Automated Android login bug detection tool based on research paper workflow.
 
+## Technology Stack
+
+- **UI Automation**: ADB + uiautomator dump (no Appium required)
+- **API Monitoring**: Frida for API call interception
+- **State Machine**: Custom state machine validation
+- **Testing Framework**: TestNG
+- **Containerization**: Docker
+
 ## Quick Start
 
 ### 1. Environment Setup
@@ -150,7 +158,7 @@ AndroidLoginDetector/
 2. **Test Loop**: For each round:
    - Restart emulator snapshot
    - Start Frida monitoring
-   - Detect login page using UI elements
+   - Detect login page using UI elements (ADB + uiautomator)
    - Input credentials if login page found
    - Run Monkey exploration if no login page
    - Analyze API logs and validate state machine
