@@ -64,7 +64,7 @@ check_and_create_avd() {
         # Create AVD
         echo "no" | ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd \
             --name "test_device" \
-            --package "system-images;android-31;google_apis;x86_64" \
+            --package "system-images;android-29;google_apis;x86_64" \
             --abi "x86_64"
         
         if [ $? -eq 0 ]; then
@@ -132,8 +132,61 @@ get_active_device() {
 check_frida_server() {
     local device=$(get_active_device)
     if [ -n "$device" ]; then
-        adb -s $device shell ps | grep frida-server > /dev/null 2>&1
+        # Try multiple ps command formats for compatibility
+        adb -s $device shell "ps aux | grep frida-server | grep -v grep" >/dev/null 2>&1 || \
+        adb -s $device shell "ps | grep frida-server | grep -v grep" >/dev/null 2>&1 || \
+        adb -s $device shell "pgrep frida-server" >/dev/null 2>&1
     else
+        return 1
+    fi
+}
+
+# Install target application from config
+install_target_app() {
+    local device=$(get_active_device)
+    if [ -z "$device" ]; then
+        log_error "No active device found for app installation"
+        return 1
+    fi
+    
+    # Read app configuration from config.properties
+    local app_package=$(grep '^app.package=' src/main/resources/config.properties | cut -d'=' -f2 | tr -d ' ')
+    local app_path=$(grep '^app.path=' src/main/resources/config.properties | cut -d'=' -f2 | tr -d ' ')
+    
+    if [ -z "$app_package" ] || [ -z "$app_path" ]; then
+        log_error "App package or path not found in config.properties"
+        return 1
+    fi
+    
+    log_info "Installing app: $app_package from $app_path"
+    
+    # Check if app is already installed
+    if adb -s $device shell "pm list packages | grep $app_package" | grep -q "$app_package"; then
+        log_info "App $app_package already installed, skipping installation"
+        return 0
+    fi
+    
+    # Check if APK file exists
+    if [ ! -f "$app_path" ]; then
+        log_error "APK file not found: $app_path"
+        return 1
+    fi
+    
+    # Install the APK
+    log_info "Installing APK: $app_path"
+    if adb -s $device install "$app_path"; then
+        log_info "Successfully installed $app_package"
+        
+        # Verify installation
+        if adb -s $device shell "pm list packages | grep $app_package" | grep -q "$app_package"; then
+            log_info "Installation verified: $app_package is now available"
+            return 0
+        else
+            log_error "Installation verification failed for $app_package"
+            return 1
+        fi
+    else
+        log_error "Failed to install $app_package from $app_path"
         return 1
     fi
 }
@@ -154,22 +207,30 @@ main() {
     
     # Start emulator with additional parameters to avoid snapshot issues
     log_info "Step 1: Starting Android emulator..."
-    emulator -avd test_device \
-        -no-audio \
-        -no-window \
+    
+    # Kill any existing ADB server first
+    adb kill-server 2>/dev/null || true
+    sleep 2
+    
+    # Start emulator with stable parameters
+    $ANDROID_HOME/emulator/emulator -avd test_device \
+        -no-window -no-audio \
         -gpu swiftshader_indirect \
-        -camera-back none \
-        -camera-front none \
-        -no-snapshot-save \
-        -no-snapshot-load \
-        -wipe-data \
         -memory 2048 \
-        -cores 2 &
+        -no-boot-anim \
+        -netdelay none -netspeed full \
+        -qemu -enable-kvm &
     EMULATOR_PID=$!
     
-    # Wait for emulator to start
-    if ! wait_for_condition "check_emulator_running" 30 10 "Emulator to boot"; then
-        log_error "Emulator failed to start"
+    log_info "Emulator started with PID: $EMULATOR_PID"
+    
+    # Wait for emulator to boot (reduced to 60 seconds, 3 attempts)
+    if ! wait_for_condition "check_emulator_running" 60 20 "Emulator to boot"; then
+        log_error "Emulator failed to start after multiple attempts"
+        log_info "Emulator process status: $(ps aux | grep emulator | grep -v grep || echo 'No emulator process found')"
+        log_error "This may be due to hardware acceleration issues in Docker environment"
+        log_error "Exiting to prevent infinite retry loop"
+        cleanup
         exit 1
     fi
     
@@ -179,8 +240,12 @@ main() {
         exit 1
     fi
     
-    # Start Frida server
-    log_info "Step 2: Starting Frida server..."
+    # Step 2: Install target application
+    log_info "Step 2: Installing target application..."
+    install_target_app
+    
+    # Step 3: Start Frida server
+    log_info "Step 3: Starting Frida server..."
     
     # Push Frida server to device
     if [ -f "resources/frida-server" ]; then
@@ -203,14 +268,26 @@ main() {
         
         # Start Frida server with better error handling
         log_info "Starting Frida server..."
-        adb -s $device shell "cd /data/local/tmp && nohup ./frida-server > /data/local/tmp/frida.log 2>&1 &" 2>/dev/null || true
+        # Try simple startup first (no listen address)
         
-        # Wait a bit for the server to start
-        sleep 5
+        # Check system compatibility first
+        log_info "Checking Android system compatibility..."
+        adb -s $device shell "getprop ro.build.version.sdk" || true
+        adb -s $device shell "uname -a" || true
         
-        # Check Frida server logs
-        log_info "Checking Frida server logs..."
-        adb -s $device shell "cat /data/local/tmp/frida.log" 2>/dev/null || true
+        # Try multiple startup methods
+        log_info "Attempting Frida server startup (method 1: standard)..."
+        adb -s $device shell "nohup /data/local/tmp/frida-server > /data/local/tmp/frida.log 2>&1 &" || {
+            log_warning "Method 1 failed, trying method 2 with explicit listen address..."
+            adb -s $device shell "nohup /data/local/tmp/frida-server -l 0.0.0.0:27042 > /data/local/tmp/frida.log 2>&1 &" || {
+                log_warning "Method 2 failed, trying method 3 with su privileges..."
+                adb -s $device shell "su -c 'nohup /data/local/tmp/frida-server > /data/local/tmp/frida.log 2>&1 &'" || {
+                    log_error "All Frida startup methods failed"
+                }
+            }
+        }
+        
+        sleep 3
         
         # Wait for Frida server to start
         if ! wait_for_condition "check_frida_server" 15 3 "Frida server to start"; then
@@ -238,8 +315,8 @@ main() {
     
     # Start AndroidLoginDetector
     log_info "Step 4: Starting AndroidLoginDetector..."
-    if [ -f "run_detector.sh" ]; then
-        ./run_detector.sh --no-check --no-compile
+    if [ -f "scripts/run_detector.sh" ]; then
+        ./scripts/run_detector.sh --no-check --no-compile
     else
         log_error "run_detector.sh not found"
         exit 1

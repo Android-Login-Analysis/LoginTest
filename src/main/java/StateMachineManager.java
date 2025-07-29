@@ -13,6 +13,7 @@ public class StateMachineManager {
     public StateMachineManager(ConfigLoader configLoader) {
         this.configLoader = configLoader;
         this.observedStateSequence = new ArrayList<>();
+        this.validStateTransitions = new HashMap<>(); // Initialize the map to prevent NullPointerException
         // State machine initialization now handled by AndroidLoginDetector
         System.out.println("StateMachineManager: initialization complete, waiting for state machine configuration");
     }

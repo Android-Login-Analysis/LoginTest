@@ -1,0 +1,127 @@
+[2025-07-29 02:24:14.874] [INFO] === AndroidLoginDetector Started ===
+[2025-07-29 02:24:14.879] [INFO] Log file: logs/android_login_detector_20250729_022414.log
+[2025-07-29 02:24:14.879] [INFO] Timestamp: 2025-07-29 02:24:14.879
+[2025-07-29 02:24:14.916] [INFO] App configuration loaded:
+[2025-07-29 02:24:14.916] [INFO]   - Package: org.mian.gitnex
+[2025-07-29 02:24:14.916] [INFO]   - Activity: org.mian.gitnex.activities.MainActivity
+[2025-07-29 02:24:14.916] [INFO]   - APK Path: apps/org.mian.gitnex_550.apk
+[2025-07-29 02:24:14.916] [INFO]   - Emulator Snapshot: snap_gitnex_login
+[2025-07-29 02:24:14.917] [INFO] Loaded credential pools:
+[2025-07-29 02:24:14.917] [INFO]   - Standard accounts: 17
+[2025-07-29 02:24:14.917] [INFO]   - Standard passwords: 15
+[2025-07-29 02:24:14.917] [INFO]   - Google accounts: 5
+[2025-07-29 02:24:14.917] [INFO]   - Google passwords: 5
+[2025-07-29 02:24:14.918] [INFO]   - Facebook accounts: 5
+[2025-07-29 02:24:14.918] [INFO]   - Facebook passwords: 5
+[2025-07-29 02:24:14.919] [INFO] Initialized state machine with 22 states
+[2025-07-29 02:24:48.284] [INFO] Frida monitoring started for package: org.mian.gitnex
+[2025-07-29 02:24:48.286] [INFO] === Starting AndroidLoginDetector Test ===
+[2025-07-29 02:24:48.286] [INFO] Target app: org.mian.gitnex
+[2025-07-29 02:24:48.286] [INFO] Test rounds: 5
+[2025-07-29 02:24:48.286] [INFO] Checking Docker environment compatibility...
+[2025-07-29 02:24:48.290] [INFO] ADB device found: emulator-5554	device
+[2025-07-29 02:24:48.306] [INFO] Emulator Android version: 10
+[2025-07-29 02:24:48.426] [INFO] Frida version: 17.2.14
+[2025-07-29 02:24:48.427] [INFO] All required files found
+[2025-07-29 02:24:48.427] [INFO] Docker environment check passed
+[2025-07-29 02:24:48.432] [INFO] ================================================================================
+[2025-07-29 02:24:48.432] [INFO] ROUND 1 STARTED
+[2025-07-29 02:24:48.433] [INFO] Round timestamp: 2025-07-29 02:24:48.433
+[2025-07-29 02:24:48.433] [INFO] ================================================================================
+[2025-07-29 02:24:48.433] [INFO] Restarting emulator snapshot: snap_gitnex_login
+[2025-07-29 02:25:33.435] [INFO] Emulator snapshot restored
+[2025-07-29 02:26:06.763] [INFO] Frida monitoring started for package: org.mian.gitnex
+[2025-07-29 02:26:06.763] [INFO] Using UI manager to detect login page...
+[2025-07-29 02:26:06.896] [INFO] UI manager did not detect login page
+[2025-07-29 02:26:06.897] [INFO] No login page detected, starting Monkey exploration
+[2025-07-29 02:26:06.897] [INFO] Starting Monkey and monitoring UI elements...
+[2025-07-29 02:26:06.897] [INFO] Starting Monkey to generate events...
+[2025-07-29 02:26:06.899] [INFO] Monkey command executed: adb shell monkey -p org.mian.gitnex -v --throttle 200 --pct-touch 100 --pct-motion 0 --pct-trackball 0 --pct-syskeys 0 --pct-nav 0 --pct-majornav 0 --pct-appswitch 0 --pct-anyevent 0 100
+[2025-07-29 02:26:52.950] [INFO] Analyzing API logs and validating state machine...
+[2025-07-29 02:26:52.952] [INFO] No API calls captured
+[2025-07-29 02:26:53.030] [INFO] Stopping Frida monitoring...
+[2025-07-29 02:26:53.030] [INFO] Frida monitoring stopped
+[2025-07-29 02:26:53.031] [INFO] --------------------------------------------------------------------------------
+[2025-07-29 02:26:53.031] [INFO] ROUND 1 COMPLETED
+[2025-07-29 02:26:53.031] [INFO] Round duration: 124599ms
+[2025-07-29 02:26:53.032] [INFO] Total attempts: 1
+[2025-07-29 02:26:53.032] [INFO] Successful logins: 0
+[2025-07-29 02:26:53.032] [INFO] Failed logins: 0
+[2025-07-29 02:26:53.032] [INFO] --------------------------------------------------------------------------------
+[2025-07-29 02:26:56.032] [INFO] ================================================================================
+[2025-07-29 02:26:56.033] [INFO] ROUND 2 STARTED
+[2025-07-29 02:26:56.033] [INFO] Round timestamp: 2025-07-29 02:26:56.033
+[2025-07-29 02:26:56.033] [INFO] ================================================================================
+[2025-07-29 02:26:56.033] [INFO] Restarting emulator snapshot: snap_gitnex_login
+[2025-07-29 02:27:41.036] [INFO] Emulator snapshot restored
+[2025-07-29 02:28:14.356] [INFO] Frida monitoring started for package: org.mian.gitnex
+[2025-07-29 02:28:14.356] [INFO] Using UI manager to detect login page...
+[2025-07-29 02:28:14.566] [INFO] UI manager did not detect login page
+[2025-07-29 02:28:14.566] [INFO] No login page detected, starting Monkey exploration
+[2025-07-29 02:28:14.566] [INFO] Starting Monkey and monitoring UI elements...
+[2025-07-29 02:28:14.566] [INFO] Starting Monkey to generate events...
+[2025-07-29 02:28:14.568] [INFO] Monkey command executed: adb shell monkey -p org.mian.gitnex -v --throttle 200 --pct-touch 100 --pct-motion 0 --pct-trackball 0 --pct-syskeys 0 --pct-nav 0 --pct-majornav 0 --pct-appswitch 0 --pct-anyevent 0 100
+[2025-07-29 02:29:00.148] [INFO] Analyzing API logs and validating state machine...
+[2025-07-29 02:29:00.149] [INFO] No API calls captured
+[2025-07-29 02:29:00.306] [INFO] Stopping Frida monitoring...
+[2025-07-29 02:29:00.306] [INFO] Frida monitoring stopped
+[2025-07-29 02:29:00.306] [INFO] --------------------------------------------------------------------------------
+[2025-07-29 02:29:00.306] [INFO] ROUND 2 COMPLETED
+[2025-07-29 02:29:00.306] [INFO] Round duration: 124274ms
+[2025-07-29 02:29:00.306] [INFO] Total attempts: 2
+[2025-07-29 02:29:00.306] [INFO] Successful logins: 0
+[2025-07-29 02:29:00.306] [INFO] Failed logins: 0
+[2025-07-29 02:29:00.307] [INFO] --------------------------------------------------------------------------------
+[2025-07-29 02:29:03.307] [INFO] ================================================================================
+[2025-07-29 02:29:03.307] [INFO] ROUND 3 STARTED
+[2025-07-29 02:29:03.307] [INFO] Round timestamp: 2025-07-29 02:29:03.307
+[2025-07-29 02:29:03.307] [INFO] ================================================================================
+[2025-07-29 02:29:03.308] [INFO] Restarting emulator snapshot: snap_gitnex_login
+[2025-07-29 02:29:48.309] [INFO] Emulator snapshot restored
+[2025-07-29 02:30:21.636] [INFO] Frida monitoring started for package: org.mian.gitnex
+[2025-07-29 02:30:21.636] [INFO] Using UI manager to detect login page...
+[2025-07-29 02:30:21.780] [INFO] UI manager did not detect login page
+[2025-07-29 02:30:21.780] [INFO] No login page detected, starting Monkey exploration
+[2025-07-29 02:30:21.780] [INFO] Starting Monkey and monitoring UI elements...
+[2025-07-29 02:30:21.780] [INFO] Starting Monkey to generate events...
+[2025-07-29 02:30:21.782] [INFO] Monkey command executed: adb shell monkey -p org.mian.gitnex -v --throttle 200 --pct-touch 100 --pct-motion 0 --pct-trackball 0 --pct-syskeys 0 --pct-nav 0 --pct-majornav 0 --pct-appswitch 0 --pct-anyevent 0 100
+[2025-07-29 02:31:06.910] [INFO] Analyzing API logs and validating state machine...
+[2025-07-29 02:31:06.911] [INFO] No API calls captured
+[2025-07-29 02:31:07.002] [INFO] Stopping Frida monitoring...
+[2025-07-29 02:31:07.003] [INFO] Frida monitoring stopped
+[2025-07-29 02:31:07.003] [INFO] --------------------------------------------------------------------------------
+[2025-07-29 02:31:07.003] [INFO] ROUND 3 COMPLETED
+[2025-07-29 02:31:07.003] [INFO] Round duration: 123696ms
+[2025-07-29 02:31:07.003] [INFO] Total attempts: 3
+[2025-07-29 02:31:07.003] [INFO] Successful logins: 0
+[2025-07-29 02:31:07.003] [INFO] Failed logins: 0
+[2025-07-29 02:31:07.003] [INFO] --------------------------------------------------------------------------------
+[2025-07-29 02:31:10.003] [INFO] ================================================================================
+[2025-07-29 02:31:10.004] [INFO] ROUND 4 STARTED
+[2025-07-29 02:31:10.004] [INFO] Round timestamp: 2025-07-29 02:31:10.004
+[2025-07-29 02:31:10.004] [INFO] ================================================================================
+[2025-07-29 02:31:10.004] [INFO] Restarting emulator snapshot: snap_gitnex_login
+[2025-07-29 02:31:55.006] [INFO] Emulator snapshot restored
+[2025-07-29 02:32:28.325] [INFO] Frida monitoring started for package: org.mian.gitnex
+[2025-07-29 02:32:28.326] [INFO] Using UI manager to detect login page...
+[2025-07-29 02:32:28.480] [INFO] UI manager did not detect login page
+[2025-07-29 02:32:28.480] [INFO] No login page detected, starting Monkey exploration
+[2025-07-29 02:32:28.480] [INFO] Starting Monkey and monitoring UI elements...
+[2025-07-29 02:32:28.480] [INFO] Starting Monkey to generate events...
+[2025-07-29 02:32:28.481] [INFO] Monkey command executed: adb shell monkey -p org.mian.gitnex -v --throttle 200 --pct-touch 100 --pct-motion 0 --pct-trackball 0 --pct-syskeys 0 --pct-nav 0 --pct-majornav 0 --pct-appswitch 0 --pct-anyevent 0 100
+[2025-07-29 02:33:14.015] [INFO] Analyzing API logs and validating state machine...
+[2025-07-29 02:33:14.016] [INFO] No API calls captured
+[2025-07-29 02:33:14.148] [INFO] Stopping Frida monitoring...
+[2025-07-29 02:33:14.148] [INFO] Frida monitoring stopped
+[2025-07-29 02:33:14.148] [INFO] --------------------------------------------------------------------------------
+[2025-07-29 02:33:14.148] [INFO] ROUND 4 COMPLETED
+[2025-07-29 02:33:14.148] [INFO] Round duration: 124145ms
+[2025-07-29 02:33:14.149] [INFO] Total attempts: 4
+[2025-07-29 02:33:14.149] [INFO] Successful logins: 0
+[2025-07-29 02:33:14.149] [INFO] Failed logins: 0
+[2025-07-29 02:33:14.149] [INFO] --------------------------------------------------------------------------------
+[2025-07-29 02:33:17.149] [INFO] ================================================================================
+[2025-07-29 02:33:17.149] [INFO] ROUND 5 STARTED
+[2025-07-29 02:33:17.150] [INFO] Round timestamp: 2025-07-29 02:33:17.150
+[2025-07-29 02:33:17.150] [INFO] ================================================================================
+[2025-07-29 02:33:17.150] [INFO] Restarting emulator snapshot: snap_gitnex_login

@@ -2,11 +2,12 @@ FROM ubuntu:22.04
 
 # Install basic dependencies including audio and X11 libraries
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl wget git unzip python3 python3-pip openjdk-11-jdk maven \
+    curl wget git unzip python3 python3-pip openjdk-17-jdk maven \
     ca-certificates gnupg qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils \
     pulseaudio libpulse0 libpulse-dev \
     libx11-6 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 \
     libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \
+    xz-utils \
     && rm -rf /var/lib/apt/lists/* && apt-get clean
 
 # Install Node.js and npm
@@ -118,37 +119,42 @@ RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_H
     echo '  </localPackage>' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
     echo '</ns2:repository>' >> ${ANDROID_HOME}/platforms/android-31/package.xml
 
-# Download system-images directly
-RUN mkdir -p ${ANDROID_HOME}/system-images/android-31 && cd ${ANDROID_HOME}/system-images/android-31 && \
-    wget https://dl.google.com/android/repository/sys-img/google_apis/x86_64-31_r13.zip && \
-    unzip x86_64-31_r13.zip -d google_apis && \
-    rm x86_64-31_r13.zip
+# Download system-images directly (API 29 for better Frida compatibility)
+RUN mkdir -p ${ANDROID_HOME}/system-images/android-29 && cd ${ANDROID_HOME}/system-images/android-29 && \
+    wget https://dl.google.com/android/repository/sys-img/google_apis/x86_64-29_r11.zip && \
+    unzip x86_64-29_r11.zip -d google_apis && \
+    rm x86_64-29_r11.zip
 
-# Create package.xml metadata for system-images
-RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '<ns2:repository xmlns:ns2="http://schemas.android.com/repository/android/common/01" xmlns:ns3="http://schemas.android.com/sdk/android/repo/sys-img2/03">' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '  <localPackage path="system-images;android-31;google_apis;x86_64">' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '    <type-details xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns3:sysImgDetailsType">' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '      <api-level>31</api-level>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '      <tag>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '        <id>google_apis</id>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '        <display>Google APIs</display>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '      </tag>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '      <abi>x86_64</abi>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '    </type-details>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '    <revision>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '      <major>13</major>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '    </revision>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '    <display-name>Google APIs Intel x86 Atom_64 System Image</display-name>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '  </localPackage>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml && \
-    echo '</ns2:repository>' >> ${ANDROID_HOME}/system-images/android-31/google_apis/x86_64/package.xml
+# Create package.xml metadata for system-images (API 29)
+RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '<ns2:repository xmlns:ns2="http://schemas.android.com/repository/android/common/01" xmlns:ns3="http://schemas.android.com/sdk/android/repo/sys-img2/03">' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '  <localPackage path="system-images;android-29;google_apis;x86_64">' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '    <type-details xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns3:sysImgDetailsType">' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '      <api-level>29</api-level>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '      <tag>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '        <id>google_apis</id>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '        <display>Google APIs</display>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '      </tag>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '      <abi>x86_64</abi>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '    </type-details>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '    <revision>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '      <major>11</major>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '    </revision>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '    <display-name>Google APIs Intel x86 Atom_64 System Image</display-name>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '  </localPackage>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
+    echo '</ns2:repository>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml
 
 # Set working directory
 WORKDIR /app
 COPY . .
 
 # Make Python scripts executable
-RUN chmod +x scripts/*.sh scripts/*.py resources/frida-server
+# Frida binaries are already present in local resources directory
+RUN echo "[BUILD] Checking frida files..." && \
+    ls -la resources/ || echo "[BUILD] Resources directory will be mounted from host"
+
+# Make scripts executable
+RUN chmod +x scripts/*.sh scripts/*.py
 
 # Create necessary directories
 RUN mkdir -p logs reports
@@ -156,7 +162,7 @@ RUN mkdir -p logs reports
 # Create AVD using avdmanager (with standard device) - moved after copying files
 RUN echo "no" | ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd \
     --name "test_device" \
-    --package "system-images;android-31;google_apis;x86_64" \
+    --package "system-images;android-29;google_apis;x86_64" \
     --abi "x86_64"
 
 # Verify AVD was created

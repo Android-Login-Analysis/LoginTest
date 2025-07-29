@@ -9,6 +9,11 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# Get active device function
+get_active_device() {
+    adb devices | grep -E "emulator-[0-9]+.*device$" | head -1 | cut -f1
+}
+
 log_info() {
     echo -e "${GREEN}[INFO]${NC} $1"
 }
@@ -29,68 +34,70 @@ log_success() {
 test_frida() {
     log_info "=== Testing Frida Server ==="
     
-    # Check if device is connected
-    if ! adb devices | grep -q "device$"; then
-        log_error "No Android device connected"
+    # Get active device
+    local device=$(get_active_device)
+    if [ -z "$device" ]; then
+        log_error "No active device found"
+        return 1
+    fi
+    log_info "Using device: $device"
+    
+    # Check if resources directory exists
+    if [ ! -d "resources" ]; then
+        log_error "Resources directory not found"
         return 1
     fi
     
-    log_info "Device connected: $(adb devices | grep 'device$')"
-    
-    # Check if Frida server binary exists
+    # Check if frida-server exists
     if [ ! -f "resources/frida-server" ]; then
-        log_error "Frida server binary not found at resources/frida-server"
+        log_error "Frida server binary not found"
         return 1
     fi
     
-    log_info "Frida server binary found"
-    
-    # Check Frida server binary permissions
-    ls -la resources/frida-server
-    
-    # Push Frida server to device
+    # Push frida-server to device
     log_info "Pushing Frida server to device..."
-    adb push resources/frida-server /data/local/tmp/
+    adb -s $device push resources/frida-server /data/local/tmp/
+    adb -s $device shell "chmod 755 /data/local/tmp/frida-server"
     
-    # Set permissions
-    adb shell "chmod 755 /data/local/tmp/frida-server"
+    # Check if file was pushed
+    log_info "Verifying Frida server binary..."
+    adb -s $device shell "ls -la /data/local/tmp/frida-server"
     
-    # Check if file was pushed correctly
-    log_info "Checking Frida server on device..."
-    adb shell "ls -la /data/local/tmp/frida-server"
-    
-    # Kill any existing Frida processes
-    log_info "Killing existing Frida processes..."
-    adb shell "pkill -f frida-server" 2>/dev/null || true
+    # Kill any existing frida-server
+    log_info "Killing existing Frida server..."
+    adb -s $device shell "pkill -f frida-server" 2>/dev/null || true
     sleep 2
     
     # Check if Frida server is compatible with device architecture
     log_info "Checking device architecture..."
-    adb shell "uname -m"
+    adb -s $device shell "uname -m"
     
-    # Try to run Frida server directly to see error messages
-    log_info "Testing Frida server execution..."
-    adb shell "cd /data/local/tmp && ./frida-server --version" 2>&1 || true
+    # Try to run Frida server directly
+    log_info "Testing Frida server version..."
+    adb -s $device shell "cd /data/local/tmp && ./frida-server --version" 2>&1 || true
     
-    # Start Frida server in background with logging
+    # Start Frida server in background
     log_info "Starting Frida server..."
-    adb shell "cd /data/local/tmp && nohup ./frida-server > /data/local/tmp/frida.log 2>&1 &"
+    adb -s $device shell "cd /data/local/tmp && nohup ./frida-server > /data/local/tmp/frida.log 2>&1 &"
     
     # Wait for server to start
     sleep 5
     
-    # Check if Frida server is running
+    # Check if frida-server is running
+    sleep 3
     log_info "Checking if Frida server is running..."
-    if adb shell "ps | grep frida-server" | grep -q frida-server; then
-        log_success "Frida server is running!"
-        adb shell "ps | grep frida-server"
+    if adb -s $device shell "ps aux | grep frida-server | grep -v grep" >/dev/null 2>&1 || \
+       adb -s $device shell "ps | grep frida-server | grep -v grep" >/dev/null 2>&1 || \
+       adb -s $device shell "pgrep frida-server" >/dev/null 2>&1; then
+        log_success "Frida server is running"
+        adb -s $device shell "ps aux | grep frida" 2>/dev/null || adb -s $device shell "ps | grep frida" 2>/dev/null || true
     else
         log_error "Frida server is not running"
     fi
     
-    # Check Frida server logs
+    # Show frida logs
     log_info "Frida server logs:"
-    adb shell "cat /data/local/tmp/frida.log" 2>/dev/null || true
+    adb -s $device shell "cat /data/local/tmp/frida.log" 2>/dev/null || true
     
     # Test Frida connection from host
     log_info "Testing Frida connection..."
@@ -101,8 +108,8 @@ test_frida() {
     fi
     
     # Check if port 27042 is listening (Frida default port)
-    log_info "Checking Frida port..."
-    adb shell "netstat -tlnp | grep 27042" 2>/dev/null || true
+    log_info "Checking network status..."
+    adb -s $device shell "netstat -tlnp | grep 27042" 2>/dev/null || true
     
     return 0
 }
