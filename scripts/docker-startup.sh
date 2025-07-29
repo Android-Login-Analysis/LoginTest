@@ -212,14 +212,14 @@ main() {
     adb kill-server 2>/dev/null || true
     sleep 2
     
-    # Start emulator with stable parameters
+    # Start emulator with stable parameters and filter graphics errors
     $ANDROID_HOME/emulator/emulator -avd test_device \
         -no-window -no-audio \
         -gpu swiftshader_indirect \
         -memory 2048 \
         -no-boot-anim \
         -netdelay none -netspeed full \
-        -qemu -enable-kvm &
+        -qemu -enable-kvm 2>&1 | grep -v "FrameBuffer.cpp" | grep -v "ColorBuffer" &
     EMULATOR_PID=$!
     
     log_info "Emulator started with PID: $EMULATOR_PID"
@@ -289,16 +289,31 @@ main() {
         
         sleep 3
         
-        # Wait for Frida server to start
-        if ! wait_for_condition "check_frida_server" 15 3 "Frida server to start"; then
-            log_error "Frida server failed to start"
-            log_info "Checking Frida server process..."
-            adb -s $device shell "ps aux | grep frida" 2>/dev/null || true
-            log_info "Checking Frida server logs..."
-            adb -s $device shell "cat /data/local/tmp/frida.log" 2>/dev/null || true
-            log_info "Checking if Frida server binary is executable..."
-            adb -s $device shell "ls -la /data/local/tmp/frida-server" 2>/dev/null || true
-            exit 1
+        # Verify Frida server is running and check version compatibility
+        if check_frida_server; then
+            log_info "Frida server started successfully"
+            
+            # Check version compatibility
+            log_info "Verifying Frida version compatibility..."
+            local client_version=$(frida --version 2>/dev/null || echo "unknown")
+            local server_version=$(adb -s $device shell '/data/local/tmp/frida-server --version' 2>/dev/null || echo "unknown")
+            
+            log_info "Client Frida version: $client_version"
+            log_info "Server Frida version: $server_version"
+            
+            if [ "$client_version" != "$server_version" ]; then
+                log_warning "Frida version mismatch detected!"
+                log_warning "Client: $client_version, Server: $server_version"
+                log_warning "This may cause RPC communication failures"
+            else
+                log_info "Frida versions match - RPC communication should work correctly"
+            fi
+        else
+            log_error "Frida server failed to start or not responding"
+            # Show frida logs for debugging
+            log_info "Frida server logs:"
+            adb -s $device shell "cat /data/local/tmp/frida.log" 2>/dev/null || log_warning "No frida logs available"
+            return 1
         fi
     else
         log_error "Frida server binary not found"
@@ -311,6 +326,14 @@ main() {
         ./scripts/docker-environment-check.sh
     else
         log_warn "Environment check script not found"
+    fi
+    
+    # Verify Frida versions
+    log_info "Step 3.5: Verifying Frida version compatibility..."
+    if [ -f "scripts/verify-frida-versions.sh" ]; then
+        ./scripts/verify-frida-versions.sh || log_warn "Frida version verification failed"
+    else
+        log_warn "Frida version verification script not found"
     fi
     
     # Start AndroidLoginDetector

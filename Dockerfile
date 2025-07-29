@@ -23,8 +23,8 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
-RUN pip3 install frida-tools
+# Install Python dependencies - use Frida version 16.7.19 to match server
+RUN pip3 install frida==16.7.19 frida-tools
 
 # Set Android SDK environment
 ENV ANDROID_HOME=/opt/android-sdk
@@ -119,7 +119,7 @@ RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_H
     echo '  </localPackage>' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
     echo '</ns2:repository>' >> ${ANDROID_HOME}/platforms/android-31/package.xml
 
-# Download system-images directly (API 29 for better Frida compatibility)
+# Download system-images directly (API 29)
 RUN mkdir -p ${ANDROID_HOME}/system-images/android-29 && cd ${ANDROID_HOME}/system-images/android-29 && \
     wget https://dl.google.com/android/repository/sys-img/google_apis/x86_64-29_r11.zip && \
     unzip x86_64-29_r11.zip -d google_apis && \
@@ -155,6 +155,11 @@ RUN echo "[BUILD] Checking frida files..." && \
 
 # Make scripts executable
 RUN chmod +x scripts/*.sh scripts/*.py
+
+# Verify Frida installation and version
+RUN echo "[BUILD] Verifying Frida installation..." && \
+    python3 -c "import frida; print(f'Frida client version: {frida.__version__}')" && \
+    echo "[BUILD] Frida client installed successfully"
 
 # Create necessary directories
 RUN mkdir -p logs reports

@@ -1,0 +1,61 @@
+2025-07-29 16:07:33 - Starting AndroidLoginDetector run script
+[2025-07-29 16:07:33.244] [INFO] === AndroidLoginDetector Started ===
+[2025-07-29 16:07:33.249] [INFO] Log file: logs/android_login_detector_20250729_160733.log
+[2025-07-29 16:07:33.249] [INFO] Timestamp: 2025-07-29 16:07:33.249
+ConfigLoader: Configuration loaded successfully
+ConfigLoader: Configuration loaded successfully
+StateMachineManager: initialization complete, waiting for state machine configuration
+FridaManager: Loading regex patterns from: src/main/resources/regex_patterns.txt
+FridaManager: Loaded 71 regex patterns for API hooking and state mapping.
+[2025-07-29 16:07:33.285] [INFO] App configuration loaded:
+[2025-07-29 16:07:33.285] [INFO]   - Package: org.mian.gitnex
+[2025-07-29 16:07:33.285] [INFO]   - Activity: org.mian.gitnex.activities.MainActivity
+[2025-07-29 16:07:33.286] [INFO]   - APK Path: apps/org.mian.gitnex_550.apk
+[2025-07-29 16:07:33.286] [INFO]   - Emulator Snapshot: snap_gitnex_login
+[2025-07-29 16:07:33.286] [INFO] Loaded credential pools:
+[2025-07-29 16:07:33.287] [INFO]   - Standard accounts: 17
+[2025-07-29 16:07:33.287] [INFO]   - Standard passwords: 15
+[2025-07-29 16:07:33.287] [INFO]   - Google accounts: 5
+[2025-07-29 16:07:33.287] [INFO]   - Google passwords: 5
+[2025-07-29 16:07:33.287] [INFO]   - Facebook accounts: 5
+[2025-07-29 16:07:33.287] [INFO]   - Facebook passwords: 5
+Add state transition rule: InitialState -> CheckingToken
+Add state transition rule: InitialState -> CredentialInput
+Add state transition rule: CheckingToken -> LoggedIn_Via_Token
+Add state transition rule: CheckingToken -> CredentialInput
+Add state transition rule: CredentialInput -> EncodingCredentials
+Add state transition rule: CredentialInput -> CredentialFormatError
+Add state transition rule: EncodingCredentials -> Authenticating
+Add state transition rule: CredentialFormatError -> CredentialInput
+Add state transition rule: Authenticating -> CheckingCredentials
+Add state transition rule: CheckingCredentials -> ServiceUnavailable_Auth
+Add state transition rule: CheckingCredentials -> InvalidCredentials
+Add state transition rule: CheckingCredentials -> CheckingMFASettings
+Add state transition rule: ServiceUnavailable_Auth -> CredentialInput
+Add state transition rule: ServiceUnavailable_Auth -> InitialState
+Add state transition rule: InvalidCredentials -> CredentialInput
+Add state transition rule: CheckingMFASettings -> MFACodePending
+Add state transition rule: CheckingMFASettings -> LoggedIn_NoMFA
+Add state transition rule: MFACodePending -> SendingMFACode
+Add state transition rule: SendingMFACode -> MFAVerification
+Add state transition rule: SendingMFACode -> ServiceUnavailable_MFA_Send
+Add state transition rule: ServiceUnavailable_MFA_Send -> MFACodePending
+Add state transition rule: MFAVerification -> VerifyingMFA
+Add state transition rule: VerifyingMFA -> ServiceUnavailable_MFA_Verify
+Add state transition rule: VerifyingMFA -> MFAError
+Add state transition rule: VerifyingMFA -> LoggedIn_WithMFA
+Add state transition rule: ServiceUnavailable_MFA_Verify -> MFAVerification
+Add state transition rule: MFAError -> MFACodePending
+Add state transition rule: LoggedIn_Via_Token -> AppMainScreen
+Add state transition rule: LoggedIn_NoMFA -> AppMainScreen
+Add state transition rule: LoggedIn_WithMFA -> AppMainScreen
+Add state transition rule: AppMainScreen -> UserLogout
+Add state transition rule: AppMainScreen -> InitialState
+Add state transition rule: UserLogout -> InitialState
+Add state transition rule: UserLogout -> CredentialInput
+[2025-07-29 16:07:33.289] [INFO] Initialized state machine with 22 states
+FridaManager: Attempting to start Frida for app: org.mian.gitnex
+FridaManager: Using agent: src/main/resources/login_agent.js
+FridaManager: Logging API calls to: src/main/resources/frida_api_log.txt
+FridaManager: Waiting for Frida to attach to: org.mian.gitnex
+FridaManager: Executing RPC call to send API regex patterns

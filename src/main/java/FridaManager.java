@@ -173,7 +173,17 @@ public class FridaManager {
                     }
                 }
 
-                int exitCode = rpcProcess.waitFor();
+                // Add timeout to RPC process wait to prevent indefinite blocking
+            int timeoutSeconds = configLoader.getFridaTimeout();
+            boolean finished = rpcProcess.waitFor(timeoutSeconds, TimeUnit.SECONDS);
+            
+            if (!finished) {
+                System.err.println("FridaManager: RPC process timed out after " + timeoutSeconds + " seconds");
+                rpcProcess.destroyForcibly();
+                throw new IOException("RPC process timed out after " + timeoutSeconds + " seconds");
+            }
+            
+            int exitCode = rpcProcess.exitValue();
                 if (exitCode == 0) {
                     System.out
                             .println(

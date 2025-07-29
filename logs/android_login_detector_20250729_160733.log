@@ -1,0 +1,16 @@
+[2025-07-29 16:07:33.244] [INFO] === AndroidLoginDetector Started ===
+[2025-07-29 16:07:33.249] [INFO] Log file: logs/android_login_detector_20250729_160733.log
+[2025-07-29 16:07:33.249] [INFO] Timestamp: 2025-07-29 16:07:33.249
+[2025-07-29 16:07:33.285] [INFO] App configuration loaded:
+[2025-07-29 16:07:33.285] [INFO]   - Package: org.mian.gitnex
+[2025-07-29 16:07:33.285] [INFO]   - Activity: org.mian.gitnex.activities.MainActivity
+[2025-07-29 16:07:33.286] [INFO]   - APK Path: apps/org.mian.gitnex_550.apk
+[2025-07-29 16:07:33.286] [INFO]   - Emulator Snapshot: snap_gitnex_login
+[2025-07-29 16:07:33.286] [INFO] Loaded credential pools:
+[2025-07-29 16:07:33.287] [INFO]   - Standard accounts: 17
+[2025-07-29 16:07:33.287] [INFO]   - Standard passwords: 15
+[2025-07-29 16:07:33.287] [INFO]   - Google accounts: 5
+[2025-07-29 16:07:33.287] [INFO]   - Google passwords: 5
+[2025-07-29 16:07:33.287] [INFO]   - Facebook accounts: 5
+[2025-07-29 16:07:33.287] [INFO]   - Facebook passwords: 5
+[2025-07-29 16:07:33.289] [INFO] Initialized state machine with 22 states

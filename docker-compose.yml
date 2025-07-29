@@ -43,4 +43,9 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    restart: unless-stopped 
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"

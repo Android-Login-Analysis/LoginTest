@@ -1,6 +1,157 @@
-2025-07-26 21:11:47,224 - WARNING - Config file not found, using defaults
-2025-07-26 21:11:47,225 - ERROR - Script file not found: /Users/zixuzhou/Programs/Java/test/scripts/login_agent.js
-2025-07-26 21:11:53,314 - WARNING - Config file not found, using defaults
-2025-07-26 21:11:53,314 - ERROR - Script file not found: /Users/zixuzhou/Programs/Java/test/scripts/login_agent.js
-2025-07-26 21:28:44,089 - WARNING - Config file not found, using defaults
-2025-07-26 21:28:44,089 - ERROR - Script file not found: /Users/zixuzhou/Programs/Java/test/scripts/login_agent.js
+2025-07-29 16:01:45,221 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-07-29 16:01:45,221 - INFO - Frida client version: 16.7.19
+2025-07-29 16:01:45,221 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:01:45,221 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:01:45,221 - INFO - Injected regex patterns from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:01:45,224 - INFO - Found active emulator: emulator-5554
+2025-07-29 16:01:45,224 - INFO - Getting root access on device: emulator-5554
+2025-07-29 16:01:48,434 - INFO - Disabling SELinux if possible
+2025-07-29 16:01:48,489 - INFO - Stopping any existing Frida server processes
+2025-07-29 16:01:48,509 - INFO - Pushing Frida server binary to device
+2025-07-29 16:01:48,839 - INFO - Setting executable permissions on Frida server
+2025-07-29 16:01:48,856 - INFO - Starting Frida server in background
+2025-07-29 16:01:51,860 - INFO - Verifying Frida server is running
+2025-07-29 16:01:51,901 - INFO - Frida server started successfully
+2025-07-29 16:01:51,904 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-07-29 16:01:51,911 - INFO - Connected to Android emulator via TCP: 127.0.0.1:27042
+2025-07-29 16:01:51,911 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-07-29 16:01:55,025 - INFO - Found org.mian.gitnex running with PID: 6466
+2025-07-29 16:01:55,199 - INFO - Successfully attached to PID 6466
+2025-07-29 16:02:20,214 - ERROR - Error: timeout was reached
+2025-07-29 16:02:26,280 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-07-29 16:02:26,280 - INFO - Frida client version: 16.7.19
+2025-07-29 16:02:26,280 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:02:26,280 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:02:26,281 - INFO - Injected regex patterns from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:02:26,284 - INFO - Found active emulator: emulator-5554
+2025-07-29 16:02:26,284 - INFO - Getting root access on device: emulator-5554
+2025-07-29 16:02:28,290 - INFO - Disabling SELinux if possible
+2025-07-29 16:02:28,305 - INFO - Stopping any existing Frida server processes
+2025-07-29 16:02:28,319 - INFO - Pushing Frida server binary to device
+2025-07-29 16:02:28,560 - INFO - Setting executable permissions on Frida server
+2025-07-29 16:02:28,575 - INFO - Starting Frida server in background
+2025-07-29 16:02:31,579 - INFO - Verifying Frida server is running
+2025-07-29 16:02:31,612 - INFO - Frida server started successfully
+2025-07-29 16:02:31,615 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-07-29 16:02:31,621 - INFO - Connected to Android emulator via TCP: 127.0.0.1:27042
+2025-07-29 16:02:31,621 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-07-29 16:02:34,687 - INFO - Found org.mian.gitnex running with PID: 6466
+2025-07-29 16:02:34,837 - INFO - Successfully attached to PID 6466
+2025-07-29 16:02:59,843 - ERROR - Error: timeout was reached
+2025-07-29 16:03:05,906 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-07-29 16:03:05,906 - INFO - Frida client version: 16.7.19
+2025-07-29 16:03:05,907 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:03:05,907 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:03:05,907 - INFO - Injected regex patterns from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:03:05,910 - INFO - Found active emulator: emulator-5554
+2025-07-29 16:03:05,910 - INFO - Getting root access on device: emulator-5554
+2025-07-29 16:03:07,916 - INFO - Disabling SELinux if possible
+2025-07-29 16:03:07,937 - INFO - Stopping any existing Frida server processes
+2025-07-29 16:03:07,953 - INFO - Pushing Frida server binary to device
+2025-07-29 16:03:08,304 - INFO - Setting executable permissions on Frida server
+2025-07-29 16:03:08,321 - INFO - Starting Frida server in background
+2025-07-29 16:03:11,324 - INFO - Verifying Frida server is running
+2025-07-29 16:03:11,358 - INFO - Frida server started successfully
+2025-07-29 16:03:11,362 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-07-29 16:03:11,365 - INFO - Connected to Android emulator via TCP: 127.0.0.1:27042
+2025-07-29 16:03:11,365 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-07-29 16:03:14,422 - INFO - Found org.mian.gitnex running with PID: 6466
+2025-07-29 16:03:14,602 - INFO - Successfully attached to PID 6466
+2025-07-29 16:03:39,618 - ERROR - Error: timeout was reached
+2025-07-29 16:03:45,683 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-07-29 16:03:45,683 - INFO - Frida client version: 16.7.19
+2025-07-29 16:03:45,683 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:03:45,683 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:03:45,684 - INFO - Injected regex patterns from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:03:45,686 - INFO - Found active emulator: emulator-5554
+2025-07-29 16:03:45,686 - INFO - Getting root access on device: emulator-5554
+2025-07-29 16:03:47,692 - INFO - Disabling SELinux if possible
+2025-07-29 16:03:47,708 - INFO - Stopping any existing Frida server processes
+2025-07-29 16:03:47,732 - INFO - Pushing Frida server binary to device
+2025-07-29 16:03:47,951 - INFO - Setting executable permissions on Frida server
+2025-07-29 16:03:47,965 - INFO - Starting Frida server in background
+2025-07-29 16:03:50,969 - INFO - Verifying Frida server is running
+2025-07-29 16:03:51,003 - INFO - Frida server started successfully
+2025-07-29 16:03:51,006 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-07-29 16:03:51,011 - INFO - Connected to Android emulator via TCP: 127.0.0.1:27042
+2025-07-29 16:03:51,011 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-07-29 16:03:54,081 - INFO - Found org.mian.gitnex running with PID: 6466
+2025-07-29 16:03:54,282 - INFO - Successfully attached to PID 6466
+2025-07-29 16:04:19,294 - ERROR - Error: timeout was reached
+2025-07-29 16:04:25,357 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-07-29 16:04:25,357 - INFO - Frida client version: 16.7.19
+2025-07-29 16:04:25,357 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:04:25,357 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:04:25,357 - INFO - Injected regex patterns from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:04:25,361 - INFO - Found active emulator: emulator-5554
+2025-07-29 16:04:25,361 - INFO - Getting root access on device: emulator-5554
+2025-07-29 16:04:27,367 - INFO - Disabling SELinux if possible
+2025-07-29 16:04:27,382 - INFO - Stopping any existing Frida server processes
+2025-07-29 16:04:27,400 - INFO - Pushing Frida server binary to device
+2025-07-29 16:04:27,739 - INFO - Setting executable permissions on Frida server
+2025-07-29 16:04:27,754 - INFO - Starting Frida server in background
+2025-07-29 16:04:30,757 - INFO - Verifying Frida server is running
+2025-07-29 16:04:30,788 - INFO - Frida server started successfully
+2025-07-29 16:04:30,792 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-07-29 16:04:30,797 - INFO - Connected to Android emulator via TCP: 127.0.0.1:27042
+2025-07-29 16:04:30,797 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-07-29 16:04:33,856 - INFO - Found org.mian.gitnex running with PID: 6466
+2025-07-29 16:04:34,026 - INFO - Successfully attached to PID 6466
+2025-07-29 16:04:59,040 - ERROR - Error: timeout was reached
+2025-07-29 16:05:05,103 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-07-29 16:05:05,103 - INFO - Frida client version: 16.7.19
+2025-07-29 16:05:05,103 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:05:05,103 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:05:05,104 - INFO - Injected regex patterns from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:05:05,107 - INFO - Found active emulator: emulator-5554
+2025-07-29 16:05:05,108 - INFO - Getting root access on device: emulator-5554
+2025-07-29 16:05:07,113 - INFO - Disabling SELinux if possible
+2025-07-29 16:05:07,132 - INFO - Stopping any existing Frida server processes
+2025-07-29 16:05:07,161 - INFO - Pushing Frida server binary to device
+2025-07-29 16:05:07,449 - INFO - Setting executable permissions on Frida server
+2025-07-29 16:05:07,464 - INFO - Starting Frida server in background
+2025-07-29 16:05:10,468 - INFO - Verifying Frida server is running
+2025-07-29 16:05:10,492 - INFO - Frida server started successfully
+2025-07-29 16:05:10,497 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-07-29 16:05:10,500 - INFO - Connected to Android emulator via TCP: 127.0.0.1:27042
+2025-07-29 16:05:10,500 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-07-29 16:05:13,570 - INFO - Found org.mian.gitnex running with PID: 6466
+2025-07-29 16:05:13,757 - INFO - Successfully attached to PID 6466
+2025-07-29 16:05:38,772 - ERROR - Error: timeout was reached
+2025-07-29 16:06:26,992 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-07-29 16:06:26,992 - INFO - Frida client version: 16.7.19
+2025-07-29 16:06:26,992 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:06:26,992 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:06:26,992 - INFO - Regex patterns will be passed via RPC, no injection needed.
+2025-07-29 16:06:26,996 - INFO - Found active emulator: emulator-5554
+2025-07-29 16:06:26,996 - INFO - Getting root access on device: emulator-5554
+2025-07-29 16:06:29,002 - INFO - Disabling SELinux if possible
+2025-07-29 16:06:29,013 - INFO - Stopping any existing Frida server processes
+2025-07-29 16:06:29,035 - INFO - Pushing Frida server binary to device
+2025-07-29 16:06:29,330 - INFO - Setting executable permissions on Frida server
+2025-07-29 16:06:29,358 - INFO - Starting Frida server in background
+2025-07-29 16:06:32,362 - INFO - Verifying Frida server is running
+2025-07-29 16:06:32,399 - INFO - Frida server started successfully
+2025-07-29 16:06:32,403 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-07-29 16:06:32,408 - INFO - Connected to Android emulator via TCP: 127.0.0.1:27042
+2025-07-29 16:06:32,408 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-07-29 16:07:36,339 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-07-29 16:07:36,339 - INFO - Frida client version: 16.7.19
+2025-07-29 16:07:36,340 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:07:36,340 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-29 16:07:36,340 - INFO - Regex patterns will be passed via RPC, no injection needed.
+2025-07-29 16:07:36,344 - INFO - Found active emulator: emulator-5554
+2025-07-29 16:07:36,344 - INFO - Getting root access on device: emulator-5554
+2025-07-29 16:07:39,555 - INFO - Disabling SELinux if possible
+2025-07-29 16:07:39,624 - INFO - Stopping any existing Frida server processes
+2025-07-29 16:07:39,649 - INFO - Pushing Frida server binary to device
+2025-07-29 16:07:40,002 - INFO - Setting executable permissions on Frida server
+2025-07-29 16:07:40,014 - INFO - Starting Frida server in background
+2025-07-29 16:07:43,018 - INFO - Verifying Frida server is running
+2025-07-29 16:07:43,043 - INFO - Frida server started successfully
+2025-07-29 16:07:43,047 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-07-29 16:07:43,053 - INFO - Connected to Android emulator via TCP: 127.0.0.1:27042
+2025-07-29 16:07:43,053 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-07-29 16:07:46,163 - INFO - Found org.mian.gitnex running with PID: 6585
+2025-07-29 16:07:46,321 - INFO - Successfully attached to PID 6585
+2025-07-29 16:07:46,336 - INFO - Script loaded successfully
