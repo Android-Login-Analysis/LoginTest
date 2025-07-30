@@ -483,3 +483,31 @@ Exception: No active Android emulator found
 2025-07-30 01:21:57,371 - INFO - Agent health check: {'status': 'active', 'timestamp': 1753838516498}
 2025-07-30 01:22:27,405 - INFO - Agent health check: {'status': 'active', 'timestamp': 1753838546532}
 2025-07-30 01:22:57,441 - INFO - Agent health check: {'status': 'active', 'timestamp': 1753838576567}
+2025-07-30 03:20:38,035 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-07-30 03:20:38,035 - INFO - Frida client version: 16.7.19
+2025-07-30 03:20:38,035 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-30 03:20:38,035 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-30 03:20:38,035 - INFO - Loaded 22 patterns from file
+2025-07-30 03:20:38,037 - INFO - Found active emulator: emulator-5554
+2025-07-30 03:20:38,037 - INFO - Getting root access on device: emulator-5554
+2025-07-30 03:21:17,520 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-07-30 03:21:17,520 - INFO - Frida client version: 16.7.19
+2025-07-30 03:21:17,520 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-30 03:21:17,520 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-30 03:21:17,520 - INFO - Loaded 22 patterns from file
+2025-07-30 03:21:17,522 - INFO - Found active emulator: emulator-5554
+2025-07-30 03:21:17,522 - INFO - Getting root access on device: emulator-5554
+2025-07-30 03:41:18,193 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-07-30 03:41:18,193 - INFO - Frida client version: 16.7.19
+2025-07-30 03:41:18,193 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-30 03:41:18,193 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-30 03:41:18,193 - INFO - Loaded 22 patterns from file
+2025-07-30 03:41:18,196 - INFO - Found active emulator: emulator-5554
+2025-07-30 03:41:18,196 - INFO - Getting root access on device: emulator-5554
+2025-07-30 03:41:57,172 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-07-30 03:41:57,173 - INFO - Frida client version: 16.7.19
+2025-07-30 03:41:57,173 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-30 03:41:57,173 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-07-30 03:41:57,173 - INFO - Loaded 22 patterns from file
+2025-07-30 03:41:57,176 - INFO - Found active emulator: emulator-5554
+2025-07-30 03:41:57,176 - INFO - Getting root access on device: emulator-5554

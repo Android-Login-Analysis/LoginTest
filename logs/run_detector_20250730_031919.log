@@ -1,0 +1,20 @@
+2025-07-30 03:19:19 - Starting AndroidLoginDetector run script
+[2025-07-30 03:19:19.727] [INFO] === AndroidLoginDetector Started ===
+[2025-07-30 03:19:19.731] [INFO] Log file: logs/android_login_detector_20250730_031919.log
+[2025-07-30 03:19:19.731] [INFO] Timestamp: 2025-07-30 03:19:19.731
+ConfigLoader: Configuration loaded successfully
+ConfigLoader: Configuration loaded successfully
+StateMachineManager: initialization complete, waiting for state machine configuration
+FridaManager: Loading regex patterns from: src/main/resources/regex_patterns.txt
+FridaManager: Loaded 71 regex patterns for API hooking and state mapping.
+Exception in thread "main" java.lang.NoClassDefFoundError: com/google/gson/Gson
+	at FridaManager.prepareJsonRegexForAgent(FridaManager.java:77)
+	at FridaManager.<init>(FridaManager.java:34)
+	at AndroidLoginDetector.initializeComponents(AndroidLoginDetector.java:140)
+	at AndroidLoginDetector.<init>(AndroidLoginDetector.java:59)
+	at AndroidLoginDetector.main(AndroidLoginDetector.java:696)
+Caused by: java.lang.ClassNotFoundException: com.google.gson.Gson
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525)
+	... 5 more

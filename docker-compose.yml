@@ -17,6 +17,7 @@ services:
       - /dev/kvm:/dev/kvm
       - /dev/vhost-net:/dev/vhost-net
       - /dev/net/tun:/dev/net/tun
+      - ./logs:/app/logs
     ports:
       - "5555:5555"  # ADB
       - "5554:5554"  # Emulator console
