@@ -7,9 +7,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 128G
+          memory: 16G
         reservations:
-          memory: 64G
+          memory: 8G
     volumes:
       - .:/app
       - /dev/bus/usb:/dev/bus/usb
@@ -29,7 +29,7 @@ services:
       - ANDROID_EMU_ENABLE_CRASH_REPORTING=0
       - ANDROID_EMU_ENABLE_CONSOLE=0
       - ANDROID_EMU_ENABLE_GRPC=0
-      - FRIDA_AGENT_MEMORY_LIMIT=4G
+      - FRIDA_AGENT_MEMORY_LIMIT=2G
     devices:
       - /dev/bus/usb:/dev/bus/usb
       - /dev/kvm:/dev/kvm
@@ -38,7 +38,7 @@ services:
       - /var/tmp:exec,mode=1777
       - /var/lib/docker:exec,mode=1777
       - /root/.android/avd:exec,mode=1777
-    shm_size: 8g
+    shm_size: 4g
     ipc: host
     cap_add:
       - NET_ADMIN

@@ -86,9 +86,9 @@ RUN mkdir -p ${ANDROID_HOME}/build-tools && cd ${ANDROID_HOME}/build-tools && \
 
 # Create package.xml metadata for build-tools (FIXED format)
 RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
-    echo '<ns2:repository xmlns:ns2="http://schemas.android.com/repository/android/common/01" xmlns:ns3="http://schemas.android.com/sdk/android/repo/addon2/03">' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
+    echo '<ns2:repository xmlns:ns2="http://schemas.android.com/repository/android/common/01">' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
     echo '  <localPackage path="build-tools;32.0.0">' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
-    echo '    <type-details xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns3:addonDetailsType"/>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
+    echo '    <type-details xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns2:genericDetailsType"/>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
     echo '    <revision>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
     echo '      <major>32</major>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
     echo '      <minor>0</minor>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
@@ -133,8 +133,8 @@ COPY . .
 # Compile and package the application, skipping the tests which are failing in the build environment
 RUN mvn clean package -DskipTests
 
-# Set the entrypoint to the startup script
-ENTRYPOINT ["/app/scripts/docker_startup.sh"]
+# Ensure dependencies are copied for runtime
+RUN mvn dependency:copy-dependencies
 
 # Download system-images directly (API 29)
 RUN mkdir -p ${ANDROID_HOME}/system-images/android-29 && cd ${ANDROID_HOME}/system-images/android-29 && \
@@ -161,10 +161,6 @@ RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_H
     echo '  </localPackage>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
     echo '</ns2:repository>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml
 
-# Set working directory
-WORKDIR /app
-COPY . .
-
 # Make Python scripts executable
 # Frida binaries are already present in local resources directory
 RUN echo "[BUILD] Checking frida files..." && \
@@ -181,7 +177,7 @@ RUN echo "[BUILD] Verifying Frida installation..." && \
 # Create necessary directories
 RUN mkdir -p logs reports
 
-# Create AVD using avdmanager (with standard device) - moved after copying files
+# Create AVD
 RUN echo "no" | ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd \
     --name "test_device" \
     --package "system-images;android-29;google_apis;x86_64" \

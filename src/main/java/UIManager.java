@@ -40,7 +40,12 @@ public class UIManager {
             boolean deviceFound = false;
 
             while ((line = reader.readLine()) != null) {
-                if (line.contains("device") && !line.contains("List of devices")) {
+                // Skip the header line "List of devices attached"
+                if (line.contains("List of devices")) {
+                    continue;
+                }
+                // Check for any device line that ends with "device" (not "offline" or "unauthorized")
+                if (line.trim().endsWith("device")) {
                     deviceFound = true;
                     System.out.println("ADB device connected: " + line.trim());
                 }

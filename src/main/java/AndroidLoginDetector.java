@@ -838,13 +838,12 @@ public class AndroidLoginDetector {
             boolean monkeyCompleted = false;
             
             while (System.currentTimeMillis() - startTime < totalMonitoringTime && !monkeyCompleted) {
-                // Check if Monkey process is still running
-                try {
-                    int exitCode = monkeyProcess.exitValue();
-                    logInfo("Monkey process completed with exit code: " + exitCode);
+                // Check if Monkey process is still running using ADB
+                boolean monkeyStillRunning = checkMonkeyProcessRunning();
+                
+                if (!monkeyStillRunning) {
+                    logInfo("Monkey process completed");
                     monkeyCompleted = true;
-                } catch (IllegalThreadStateException e) {
-                    // Process is still running
                 }
                 
                 // Check if current focused element is a login field
@@ -873,6 +872,21 @@ public class AndroidLoginDetector {
         } catch (Exception e) {
             logError("Monkey UI monitoring failed: " + e.getMessage());
             stopMonkey();
+        }
+    }
+    
+    private boolean checkMonkeyProcessRunning() {
+        try {
+            Process process = Runtime.getRuntime().exec("adb shell ps | grep monkey");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line = reader.readLine();
+            reader.close();
+            process.waitFor();
+            
+            return line != null && line.contains("monkey");
+        } catch (Exception e) {
+            logError("Error checking Monkey process: " + e.getMessage());
+            return false;
         }
     }
     

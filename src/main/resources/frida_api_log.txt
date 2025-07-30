@@ -1,0 +1,2 @@
+# Frida API Call Log
+# Format: timestamp|class|method|pattern

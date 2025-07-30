@@ -186,9 +186,55 @@ run_detector() {
         exit 1
     fi
     
-    # Run the detector
+    # Ensure dependencies are copied
+    print_status "Ensuring dependencies are available..."
+    if [[ ! -d "target/dependency" ]] || [[ -z "$(ls -A target/dependency 2>/dev/null)" ]]; then
+        print_status "Copying dependencies..."
+        mvn dependency:copy-dependencies
+    fi
+    
+    # Verify Gson dependency exists (check for any gson jar)
+    local gson_found=false
+    for jar in target/dependency/gson-*.jar; do
+        if [[ -f "$jar" ]]; then
+            gson_found=true
+            print_status "Found Gson dependency: $(basename "$jar")"
+            break
+        fi
+    done
+    
+    if [[ "$gson_found" == false ]]; then
+        print_error "Gson dependency not found in target/dependency/. Available files:"
+        ls -la target/dependency/ 2>/dev/null || echo "No dependency directory found"
+        print_status "Attempting to copy dependencies..."
+        mvn dependency:copy-dependencies
+        # Check again after copying
+        for jar in target/dependency/gson-*.jar; do
+            if [[ -f "$jar" ]]; then
+                gson_found=true
+                print_status "Found Gson dependency after copying: $(basename "$jar")"
+                break
+            fi
+        done
+        if [[ "$gson_found" == false ]]; then
+            print_error "Gson dependency still not found after copying dependencies"
+            exit 1
+        fi
+    fi
+    
+    # Build classpath with explicit dependency inclusion
+    local classpath="target/classes"
+    for jar in target/dependency/*.jar; do
+        if [[ -f "$jar" ]]; then
+            classpath="$classpath:$jar"
+        fi
+    done
+    
+    print_status "Using classpath: $classpath"
+    
+    # Run the detector with explicit classpath
     print_status "Executing AndroidLoginDetector..."
-    java -cp "target/classes:target/dependency/*" AndroidLoginDetector 2>&1 | tee -a "$LOG_FILE"
+    java -cp "$classpath" AndroidLoginDetector 2>&1 | tee -a "$LOG_FILE"
     
     if [[ ${PIPESTATUS[0]} -eq 0 ]]; then
         print_success "Android Login Detector completed successfully"

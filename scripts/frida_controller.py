@@ -25,6 +25,37 @@ def setup_logging():
     )
 
 
+def setup_api_logging():
+    """Setup API call logging to the file expected by Java application"""
+    api_log_dir = os.path.join(os.path.dirname(__file__), '..', 'src', 'main', 'resources')
+    if not os.path.exists(api_log_dir):
+        os.makedirs(api_log_dir)
+    
+    api_log_file = os.path.join(api_log_dir, 'frida_api_log.txt')
+    
+    # Create empty API log file if it doesn't exist
+    if not os.path.exists(api_log_file):
+        with open(api_log_file, 'w') as f:
+            f.write("# Frida API Call Log\n")
+            f.write("# Format: timestamp|class|method|pattern\n")
+    
+    return api_log_file
+
+
+def log_api_call(api_log_file, payload):
+    """Log API call to the file expected by Java application"""
+    try:
+        timestamp = payload.get('timestamp', int(time.time() * 1000))
+        class_name = payload.get('class', 'Unknown')
+        method_name = payload.get('method', 'Unknown')
+        pattern = payload.get('pattern', 'Unknown')
+        
+        with open(api_log_file, 'a') as f:
+            f.write(f"{timestamp}|{class_name}|{method_name}|{pattern}\n")
+    except Exception as e:
+        logging.error(f"Failed to log API call: {e}")
+
+
 def load_config():
     # Load Java properties file manually since configparser expects INI format
     config = {}
@@ -73,6 +104,8 @@ def on_message(message, data):
             
             if payload.get('type') == 'api_call':
                 logging.info(f"API Call #{payload.get('callId', 'N/A')}: {payload.get('class', 'Unknown')}.{payload.get('method', 'Unknown')} (Pattern: {payload.get('pattern', 'Unknown')})")
+                # Log to API log file
+                log_api_call(api_log_file, payload)
             elif payload.get('type') == 'statistics':
                 logging.info(f"Statistics: {payload.get('matchedClasses', 0)} classes, {payload.get('hookedMethods', 0)} methods, {payload.get('apiCallCount', 0)} API calls")
             elif payload.get('type') == 'periodic_stats':
@@ -94,6 +127,11 @@ def on_message(message, data):
 def main():
     setup_logging()
     config = load_config()
+    
+    # Setup API logging
+    global api_log_file
+    api_log_file = setup_api_logging()
+    logging.info(f"API log file: {api_log_file}")
 
     if len(sys.argv) < 2:
         logging.error("Usage: python frida_controller.py <package_name>")

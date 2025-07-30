@@ -339,7 +339,7 @@ main() {
     # Start AndroidLoginDetector
     log_info "Step 4: Starting AndroidLoginDetector..."
     if [ -f "scripts/run_detector.sh" ]; then
-        ./scripts/run_detector.sh --no-check --no-compile
+        ./scripts/run_detector.sh --no-check
     else
         log_error "run_detector.sh not found"
         exit 1
