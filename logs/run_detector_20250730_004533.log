@@ -1,0 +1,109 @@
+2025-07-30 00:45:33 - Starting AndroidLoginDetector run script
+[2025-07-30 00:45:33.285] [INFO] === AndroidLoginDetector Started ===
+[2025-07-30 00:45:33.289] [INFO] Log file: logs/android_login_detector_20250730_004533.log
+[2025-07-30 00:45:33.289] [INFO] Timestamp: 2025-07-30 00:45:33.289
+ConfigLoader: Configuration loaded successfully
+ConfigLoader: Configuration loaded successfully
+StateMachineManager: initialization complete, waiting for state machine configuration
+FridaManager: Loading regex patterns from: src/main/resources/regex_patterns.txt
+FridaManager: Loaded 71 regex patterns for API hooking and state mapping.
+FridaManager: Prepared JSON regex patterns for agent: {"LoggedIn_Via_Token":"^(.*\\.TokenLoginUseCase\\.execute|.*\\.SilentLoginRepository\\.loginWithToken|.*\\.TokenAuthService\\.authenticateWithToken)$","AppMainScreen":"^(.*\\.MainNavigationManager\\.navigate|.*\\.HomeNavigationManager\\.navigate|.*\\.DashboardNavigationManager\\.navigate|.*\\.MainScreenManager\\.show)$","EncodingCredentials":"^(.*\\.SHA256\\.digest|.*\\.BCrypt\\.hashpw|.*\\.PBKDF2WithHmacSHA1|.*\\.MessageDigest\\.getInstance)$#.*password","InvalidCredentials":"^(.*\\.HttpException|.*\\.ResponseException)$#.*(401|403|UNAUTHORIZED|FORBIDDEN)","CheckingMFASettings":"^(.*\\.ApiService\\.getUserSettings|.*\\.UserApi\\.getAccountInfo|.*\\.SettingsApi\\.getSecuritySettings|.*\\.AccountApi\\.getMfaStatus)$","CheckingToken":"^(.*\\.FirebaseAuth\\.getCurrentUser|.*\\.GoogleSignIn\\.getLastSignedInAccount|.*\\.FacebookLoginManager\\.getCurrentAccessToken)$","UserLogout":"^(.*\\.LogoutUseCase\\.execute|.*\\.LogoutRepository\\.logout|.*\\.LogoutService\\.performLogout|.*\\.SessionManager\\.clearSession|.*\\.TokenManager\\.clearToken)$","MFACodePending":"^(.*\\.MfaManager\\.showMfaPrompt|.*\\.OtpManager\\.displayOtpInput|.*\\.TwoFactorManager\\.showChallenge|.*\\.MfaUIManager\\.showInputScreen)$","InitialState":"^(.*\\.Application\\.onCreate|.*\\.initializeMainApplication|.*\\.coldStartInit|.*\\.setupApplication)$","LoggedIn_NoMFA":"^(.*\\.LoginSuccessHandler\\.handle|.*\\.AuthSuccessManager\\.processSuccess|.*\\.LoginCompleteUseCase\\.execute|.*\\.MainNavigationManager\\.navigateAfterLogin)$","SendingMFACode":"^(.*\\.ApiService\\.requestMfaCode|.*\\.MfaApi\\.sendCode|.*\\.OtpApi\\.requestOtp|.*\\.TwoFactorApi\\.sendVerificationCode)$","ServiceUnavailable_MFA_Verify":"^(.*\\.MfaVerificationTimeoutException|.*\\.OtpVerificationTimeoutException|.*\\.TwoFactorVerificationTimeoutException)$","MFAVerification":"^(.*\\.MfaVerificationUseCase\\.execute|.*\\.OtpValidator\\.validate|.*\\.TwoFactorVerifier\\.verify|.*\\.MfaCodeValidator\\.validate)$","MFAError":"^(.*\\.MfaAttemptFailedException|.*\\.OtpAttemptFailedException|.*\\.TwoFactorAttemptFailedException|.*\\.MfaCodeExpiredException)$","CredentialFormatError":"^(.*\\.InputFilter\\.filter|.*\\.TextValidator\\.validate|.*\\.Pattern\\.matcher)$#.*(returned false|threw ValidationException|invalid format)","Authenticating":"^(.*\\.LoginPresenter\\.onLoginClicked|.*\\.LoginController\\.handleLoginRequest|.*\\.AuthController\\.processLogin|.*\\.LoginInteractor\\.execute)$","CheckingCredentials":"^(.*\\.HttpClient\\.execute|.*\\.OkHttpClient\\.newCall|.*\\.Volley\\.Request\\.execute|.*\\.AsyncHttpClient\\.post)$#.*(login|auth|signin)","ServiceUnavailable_Auth":"^(.*\\.TimeoutException|.*\\.ConnectTimeoutException|.*\\.ReadTimeoutException|.*\\.ConnectionPoolTimeoutException)$","ServiceUnavailable_MFA_Send":"^(.*\\.SmsSendFailedException|.*\\.EmailSendException|.*\\.NotificationSendException|.*\\.MfaCodeSendTimeoutException)$","VerifyingMFA":"^(.*\\.FirebaseAuth\\.signInWithCredential|.*\\.GoogleSignIn\\.getSignedInAccountFromIntent|.*\\.FacebookLoginManager\\.logInWithReadPermissions)$#.*mfa","LoggedIn_WithMFA":"^(.*\\.MfaSuccessHandler\\.handle|.*\\.TwoFactorSuccessManager\\.processSuccess|.*\\.MfaLoginCompleteUseCase\\.execute|.*\\.MfaNavigationManager\\.navigateAfterLogin)$","CredentialInput":"^(.*\\.EditText\\.setText|.*\\.EditText\\.append|.*\\.EditText\\.onTextChanged|.*\\.TextWatcher\\.onTextChanged)$#.*\\.(username|password|email|login|user)"}
+[2025-07-30 00:45:33.370] [INFO] App configuration loaded:
+[2025-07-30 00:45:33.371] [INFO]   - Package: org.mian.gitnex
+[2025-07-30 00:45:33.371] [INFO]   - Activity: org.mian.gitnex.activities.MainActivity
+[2025-07-30 00:45:33.371] [INFO]   - APK Path: apps/org.mian.gitnex_550.apk
+[2025-07-30 00:45:33.371] [INFO]   - Emulator Snapshot: snap_gitnex_login
+[2025-07-30 00:45:33.372] [INFO] Loaded credential pools:
+[2025-07-30 00:45:33.372] [INFO]   - Standard accounts: 17
+[2025-07-30 00:45:33.372] [INFO]   - Standard passwords: 15
+[2025-07-30 00:45:33.372] [INFO]   - Google accounts: 5
+[2025-07-30 00:45:33.372] [INFO]   - Google passwords: 5
+[2025-07-30 00:45:33.372] [INFO]   - Facebook accounts: 5
+[2025-07-30 00:45:33.373] [INFO]   - Facebook passwords: 5
+Add state transition rule: InitialState -> CheckingToken
+Add state transition rule: InitialState -> CredentialInput
+Add state transition rule: CheckingToken -> LoggedIn_Via_Token
+Add state transition rule: CheckingToken -> CredentialInput
+Add state transition rule: CredentialInput -> EncodingCredentials
+Add state transition rule: CredentialInput -> CredentialFormatError
+Add state transition rule: EncodingCredentials -> Authenticating
+Add state transition rule: CredentialFormatError -> CredentialInput
+Add state transition rule: Authenticating -> CheckingCredentials
+Add state transition rule: CheckingCredentials -> ServiceUnavailable_Auth
+Add state transition rule: CheckingCredentials -> InvalidCredentials
+Add state transition rule: CheckingCredentials -> CheckingMFASettings
+Add state transition rule: ServiceUnavailable_Auth -> CredentialInput
+Add state transition rule: ServiceUnavailable_Auth -> InitialState
+Add state transition rule: InvalidCredentials -> CredentialInput
+Add state transition rule: CheckingMFASettings -> MFACodePending
+Add state transition rule: CheckingMFASettings -> LoggedIn_NoMFA
+Add state transition rule: MFACodePending -> SendingMFACode
+Add state transition rule: SendingMFACode -> MFAVerification
+Add state transition rule: SendingMFACode -> ServiceUnavailable_MFA_Send
+Add state transition rule: ServiceUnavailable_MFA_Send -> MFACodePending
+Add state transition rule: MFAVerification -> VerifyingMFA
+Add state transition rule: VerifyingMFA -> ServiceUnavailable_MFA_Verify
+Add state transition rule: VerifyingMFA -> MFAError
+Add state transition rule: VerifyingMFA -> LoggedIn_WithMFA
+Add state transition rule: ServiceUnavailable_MFA_Verify -> MFAVerification
+Add state transition rule: MFAError -> MFACodePending
+Add state transition rule: LoggedIn_Via_Token -> AppMainScreen
+Add state transition rule: LoggedIn_NoMFA -> AppMainScreen
+Add state transition rule: LoggedIn_WithMFA -> AppMainScreen
+Add state transition rule: AppMainScreen -> UserLogout
+Add state transition rule: AppMainScreen -> InitialState
+Add state transition rule: UserLogout -> InitialState
+Add state transition rule: UserLogout -> CredentialInput
+[2025-07-30 00:45:33.374] [INFO] Initialized state machine with 22 states
+FridaManager: Attempting to start Frida for app: org.mian.gitnex
+FridaManager: Using agent: src/main/resources/login_agent.js
+FridaManager: Logging API calls to: src/main/resources/frida_api_log.txt
+FridaManager: Launching Python controller in the background...
+FridaManager: Python controller launched. Detector will now proceed.
+[2025-07-30 00:45:38.382] [INFO] Frida monitoring started for package: org.mian.gitnex
+Configuration validation passed
+=== Configuration Summary ===
+Test Rounds: 5
+Duration per Round: 300000ms
+Round Interval: 3s
+Login Timeout: 15s
+Monkey Events: 100
+Monkey Delay: 200ms
+Frida Timeout: 120s
+Frida Retry Count: 5
+==================
+[2025-07-30 00:45:38.385] [INFO] === Starting AndroidLoginDetector Test ===
+[2025-07-30 00:45:38.385] [INFO] Target app: org.mian.gitnex
+[2025-07-30 00:45:38.385] [INFO] Test rounds: 5
+[2025-07-30 00:45:38.385] [INFO] Checking Docker environment compatibility...
+[2025-07-30 00:45:38.389] [INFO] ADB device found: emulator-5554	device
+[2025-07-30 00:45:38.403] [INFO] Emulator Android version: 10
+[2025-07-30 00:45:38.522] [INFO] Frida version: 16.7.19
+[2025-07-30 00:45:38.522] [INFO] All required files found
+[2025-07-30 00:45:38.523] [INFO] Docker environment check passed
+ADB device connected: emulator-5554	device
+UI manager started successfully
+[2025-07-30 00:45:38.528] [INFO] ================================================================================
+[2025-07-30 00:45:38.529] [INFO] ROUND 1 STARTED
+[2025-07-30 00:45:38.529] [INFO] Round timestamp: 2025-07-30 00:45:38.529
+[2025-07-30 00:45:38.529] [INFO] ================================================================================
+[2025-07-30 00:45:38.529] [INFO] Restarting emulator snapshot: snap_gitnex_login
+[2025-07-30 00:46:23.531] [INFO] Emulator snapshot restored
+FridaManager: Attempting to start Frida for app: org.mian.gitnex
+FridaManager: Using agent: src/main/resources/login_agent.js
+FridaManager: Logging API calls to: src/main/resources/frida_api_log.txt
+FridaManager: Launching Python controller in the background...
+FridaManager: Python controller launched. Detector will now proceed.
+[2025-07-30 00:46:28.533] [INFO] Frida monitoring started for package: org.mian.gitnex
+[2025-07-30 00:46:28.533] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Login page detection result: false
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+[2025-07-30 00:46:29.892] [INFO] UI manager did not detect login page
+[2025-07-30 00:46:29.893] [INFO] No login page detected, starting Monkey exploration
+[2025-07-30 00:46:29.893] [INFO] Starting Monkey and monitoring UI elements...
+[2025-07-30 00:46:29.893] [INFO] Starting Monkey to generate events...
+[2025-07-30 00:46:29.894] [INFO] Monkey command executed: adb shell monkey -p org.mian.gitnex -v --throttle 200 --pct-touch 100 --pct-motion 0 --pct-trackball 0 --pct-syskeys 0 --pct-nav 0 --pct-majornav 0 --pct-appswitch 0 --pct-anyevent 0 100

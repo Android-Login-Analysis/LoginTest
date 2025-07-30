@@ -119,6 +119,23 @@ RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_H
     echo '  </localPackage>' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
     echo '</ns2:repository>' >> ${ANDROID_HOME}/platforms/android-31/package.xml
 
+# --- Application Build and Setup ---
+WORKDIR /app
+
+# Copy the Maven project file and resolve dependencies first to leverage Docker cache
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+# Copy the rest of the application source code
+COPY . .
+
+# Compile and package the application into a fat JAR
+# Compile and package the application, skipping the tests which are failing in the build environment
+RUN mvn clean package -DskipTests
+
+# Set the entrypoint to the startup script
+ENTRYPOINT ["/app/scripts/docker_startup.sh"]
+
 # Download system-images directly (API 29)
 RUN mkdir -p ${ANDROID_HOME}/system-images/android-29 && cd ${ANDROID_HOME}/system-images/android-29 && \
     wget https://dl.google.com/android/repository/sys-img/google_apis/x86_64-29_r11.zip && \

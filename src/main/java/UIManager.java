@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
  */
 public class UIManager {
     private ConfigLoader configLoader;
+    private String appPackage;
 
     // Login detection flags
     private boolean googleLoginDetected = false;
@@ -24,6 +25,7 @@ public class UIManager {
 
     public UIManager(ConfigLoader configLoader) {
         this.configLoader = configLoader;
+        this.appPackage = configLoader.getAppPackage();
     }
 
     /**
@@ -509,6 +511,73 @@ public class UIManager {
             }
         }
         return false;
+    }
+
+    /**
+     * Check if the currently focused element is a login field
+     */
+    public boolean checkFocusedLoginField() {
+        try {
+            // Get the currently focused element
+            Process process = Runtime.getRuntime().exec("adb shell uiautomator dump");
+            process.waitFor();
+            
+            // Get the focused element bounds
+            Process focusProcess = Runtime.getRuntime().exec("adb shell dumpsys window windows | grep -E 'mCurrentFocus|mFocusedApp'");
+            BufferedReader focusReader = new BufferedReader(new InputStreamReader(focusProcess.getInputStream()));
+            String focusLine = focusReader.readLine();
+            focusReader.close();
+            focusProcess.waitFor();
+            
+            if (focusLine != null && focusLine.contains(appPackage)) {
+                // Get the UI dump and find the focused element
+                Process dumpProcess = Runtime.getRuntime().exec("adb shell cat /sdcard/window_dump.xml");
+                BufferedReader dumpReader = new BufferedReader(new InputStreamReader(dumpProcess.getInputStream()));
+                String line;
+                boolean foundFocusedElement = false;
+                
+                while ((line = dumpReader.readLine()) != null) {
+                    // Look for elements with focused="true" attribute
+                    if (line.contains("focused=\"true\"")) {
+                        // Parse the focused element
+                        UIElement focusedElement = parseUIElement(line);
+                        
+                        if (focusedElement != null) {
+                            // Check if it's a login field
+                            if (matchesUsernamePattern(focusedElement.text, focusedElement.resourceId, focusedElement.className) ||
+                                matchesPasswordPattern(focusedElement.text, focusedElement.resourceId, focusedElement.className)) {
+                                
+                                System.out.println("Monkey focused on login field: " + focusedElement.text + 
+                                                 " (ID: " + focusedElement.resourceId + ")");
+                                return true;
+                            }
+                        }
+                        foundFocusedElement = true;
+                    }
+                }
+                dumpReader.close();
+                dumpProcess.waitFor();
+                
+                if (!foundFocusedElement) {
+                    // If no focused element found, check if any login fields are visible
+                    List<UIElement> visibleElements = getVisibleUIElements();
+                    for (UIElement element : visibleElements) {
+                        if (matchesUsernamePattern(element.text, element.resourceId, element.className) ||
+                            matchesPasswordPattern(element.text, element.resourceId, element.className)) {
+                            
+                            System.out.println("Login field visible but not focused: " + element.text);
+                            // Don't return true here, only if it's actually focused
+                        }
+                    }
+                }
+            }
+            
+            return false;
+            
+        } catch (Exception e) {
+            System.err.println("Error checking focused login field: " + e.getMessage());
+            return false;
+        }
     }
 
     // Getter methods

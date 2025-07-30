@@ -1,4 +1,4 @@
-// import com.google.gson.Gson; // For converting list to JSON string - Temporarily commented out
+import com.google.gson.Gson; // For converting map to JSON string
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,8 +17,7 @@ public class FridaManager {
     private Process fridaProcess;
     private final String fridaLogFilePath; // Set via constructor or config
     private final String fridaAgentJsPath; // Path to login_agent.js
-    private List<String> apiRegexOnlyPatternsForAgent; // Parsed regex strings for the agent
-    private String apiRegexPatternsJsonString; // JSON string of the above list
+    private String apiRegexPatternsJsonString; // JSON string of the state-to-regex map
     private ConfigLoader configLoader; // Configuration loader
 
     // This map is for ApiLogAnalyzer to map API calls to States.
@@ -30,7 +29,6 @@ public class FridaManager {
         this.fridaAgentJsPath = agentJsPath;
         this.fridaLogFilePath = logPath;
         this.configLoader = configLoader;
-        this.apiRegexOnlyPatternsForAgent = new ArrayList<>();
         this.stateToApiRegexPatterns = new HashMap<>();
         loadRegexesFromFile(stateAndApiRegexFilePath);
         prepareJsonRegexForAgent();
@@ -52,7 +50,6 @@ public class FridaManager {
                     String regexStr = parts[1].trim();
                     try {
                         stateToApiRegexPatterns.put(stateName, Pattern.compile(regexStr));
-                        apiRegexOnlyPatternsForAgent.add(regexStr); // Add only the regex for the agent
                         count++;
                     } catch (Exception e) {
                         System.err.println("FridaManager: Error compiling regex for state " + stateName + ": "
@@ -70,31 +67,19 @@ public class FridaManager {
     }
 
     private void prepareJsonRegexForAgent() {
-        if (apiRegexOnlyPatternsForAgent != null && !apiRegexOnlyPatternsForAgent.isEmpty()) {
-            // Gson gson = new Gson(); // Temporarily commented out
-            // this.apiRegexPatternsJsonString = gson.toJson(apiRegexOnlyPatternsForAgent);
-
-            // Manual JSON array construction (simple version, not robust for all edge
-            // cases)
-            StringBuilder sb = new StringBuilder();
-            sb.append("[");
-            for (int i = 0; i < apiRegexOnlyPatternsForAgent.size(); i++) {
-                // Basic escaping for quotes if regex string itself contains quotes.
-                // Proper JSON string escaping is more complex.
-                String regex = apiRegexOnlyPatternsForAgent.get(i);
-                sb.append("\"").append(regex.replace("\"", "\\\"")).append("\"");
-                if (i < apiRegexOnlyPatternsForAgent.size() - 1) {
-                    sb.append(",");
-                }
+        if (stateToApiRegexPatterns != null && !stateToApiRegexPatterns.isEmpty()) {
+            // Convert Map<String, Pattern> to Map<String, String> for Gson serialization
+            Map<String, String> stringPatternMap = new HashMap<>();
+            for (Map.Entry<String, Pattern> entry : stateToApiRegexPatterns.entrySet()) {
+                stringPatternMap.put(entry.getKey(), entry.getValue().pattern());
             }
-            sb.append("]");
-            this.apiRegexPatternsJsonString = sb.toString();
 
-            // System.out.println("FridaManager: Prepared JSON for agent: " +
-            // apiRegexPatternsJsonString);
+            Gson gson = new Gson();
+            this.apiRegexPatternsJsonString = gson.toJson(stringPatternMap);
+            System.out.println("FridaManager: Prepared JSON regex patterns for agent: " + this.apiRegexPatternsJsonString);
         } else {
-            this.apiRegexPatternsJsonString = "[]"; // Empty JSON array
-            System.out.println("FridaManager: No API regex patterns loaded, agent will receive empty list.");
+            this.apiRegexPatternsJsonString = "{}"; // Send empty JSON object if no patterns
+            System.out.println("FridaManager: No regex patterns loaded, prepared empty JSON object.");
         }
     }
 
@@ -109,121 +94,94 @@ public class FridaManager {
         return this.stateToApiRegexPatterns;
     }
 
+    /**
+     * Start Frida monitoring with timeout
+     */
     public void startFrida(String appPackageName) {
-        if (this.apiRegexPatternsJsonString == null || this.apiRegexPatternsJsonString.equals("[]")) {
-            System.err.println(
-                    "FridaManager: Cannot start Frida, API regex patterns JSON string is not prepared or empty.");
-            return;
-        }
-        System.out.println("FridaManager: Attempting to start Frida for app: " + appPackageName);
-        System.out.println("FridaManager: Using agent: " + fridaAgentJsPath);
-        System.out.println("FridaManager: Logging API calls to: " + fridaLogFilePath);
-
-        int retryCount = 0;
-        int maxRetries = configLoader.getFridaRetryCount();
-        int retryDelay = configLoader.getFridaRetryDelay();
-
-        while (retryCount <= maxRetries) {
-            try {
-                // Step 1: Launch Frida and attach to the application
-                // Ensure the frida_log_file is empty or ready for appending
-                new File(fridaLogFilePath).delete();
-
-                // Create the basic Frida command
-                List<String> command = new ArrayList<>();
-                command.add("frida");
-                command.add("-U"); // USB device
-                command.add("-f"); // Force spawn
-                command.add(appPackageName);
-                command.add("-l");
-                command.add(fridaAgentJsPath);
-                command.add("--no-pause");
-                command.add("--runtime=v8");
-
-                ProcessBuilder processBuilder = new ProcessBuilder(command);
-                // Redirect output to our log file
-                processBuilder.redirectOutput(new File(fridaLogFilePath));
-                processBuilder.redirectErrorStream(true);
-
-                fridaProcess = processBuilder.start();
-
-                // Step 2: Wait for Frida to attach (this is crucial)
-                System.out.println("FridaManager: Waiting for Frida to attach to: " + appPackageName);
-                TimeUnit.SECONDS.sleep(3); // Adjust as necessary
-
-                // Step 3: Send API regex patterns to the agent via RPC
-                // Note: The actual RPC mechanism requires pyfrida or similar tools
-                // For this implementation, we'll use a separate python script to establish RPC
-
-                String escapedJson = this.apiRegexPatternsJsonString.replace("\"", "\\\"");
-                List<String> rpcCommand = new ArrayList<>();
-                rpcCommand.add("python3");
-                rpcCommand.add("scripts/frida_controller.py");
-                rpcCommand.add(appPackageName);
-                rpcCommand.add(escapedJson);
-
-                System.out.println("FridaManager: Executing RPC call to send API regex patterns");
-                Process rpcProcess = new ProcessBuilder(rpcCommand).start();
-
-                // Read output from RPC command
-                try (BufferedReader reader = new BufferedReader(new InputStreamReader(rpcProcess.getInputStream()))) {
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        System.out.println("RPC: " + line);
+        try {
+            logInfo("Starting Frida monitoring for package: " + appPackageName);
+            
+            // Kill any existing Frida processes
+            stopFrida();
+            
+            // Start Frida controller with timeout
+            ProcessBuilder pb = new ProcessBuilder();
+            List<String> command = new ArrayList<>();
+            command.add("python3");
+            command.add("scripts/frida_controller.py");
+            command.add(appPackageName);
+            
+            pb.command(command);
+            pb.redirectErrorStream(true);
+            
+            logInfo("Executing command: " + String.join(" ", command));
+            
+            Process process = pb.start();
+            
+            // Wait for Frida to start with timeout
+            long startTime = System.currentTimeMillis();
+            long timeout = 60000; // 60 seconds timeout
+            
+            while (System.currentTimeMillis() - startTime < timeout) {
+                try {
+                    // Check if process is still running
+                    int exitCode = process.exitValue();
+                    if (exitCode != 0) {
+                        logError("Frida controller exited with code: " + exitCode);
+                        return;
+                    }
+                } catch (IllegalThreadStateException e) {
+                    // Process is still running, check if it's ready
+                    if (isFridaReady()) {
+                        logInfo("Frida monitoring started successfully");
+                        this.fridaProcess = process; // Store the process
+                        return;
                     }
                 }
-
-                // Add timeout to RPC process wait to prevent indefinite blocking
-            int timeoutSeconds = configLoader.getFridaTimeout();
-            boolean finished = rpcProcess.waitFor(timeoutSeconds, TimeUnit.SECONDS);
-            
-            if (!finished) {
-                System.err.println("FridaManager: RPC process timed out after " + timeoutSeconds + " seconds");
-                rpcProcess.destroyForcibly();
-                throw new IOException("RPC process timed out after " + timeoutSeconds + " seconds");
+                
+                Thread.sleep(1000); // Check every second
             }
             
-            int exitCode = rpcProcess.exitValue();
-                if (exitCode == 0) {
-                    System.out
-                            .println(
-                                    "FridaManager: RPC call successful. Agent should be initialized with regex patterns.");
-                } else {
-                    System.err.println("FridaManager: RPC call failed with exit code: " + exitCode);
-                    throw new IOException("RPC call failed with exit code: " + exitCode);
-                }
-
-                // Give Frida agent time to set up all hooks
-                TimeUnit.SECONDS.sleep(2);
-                System.out.println("FridaManager: Frida agent should now be monitoring API calls");
-
-                // Successfully started, break out of retry loop
-                break;
-
-            } catch (IOException | InterruptedException e) {
-                retryCount++;
-                System.err.println("FridaManager: Error starting Frida process (attempt " + retryCount + "/"
-                        + (maxRetries + 1) + "): " + e.getMessage());
-
-                if (fridaProcess != null) {
-                    fridaProcess.destroyForcibly();
-                    fridaProcess = null;
-                }
-
-                if (retryCount <= maxRetries) {
-                    System.out.println("FridaManager: Retrying in " + retryDelay + " seconds...");
-                    try {
-                        TimeUnit.SECONDS.sleep(retryDelay);
-                    } catch (InterruptedException ie) {
-                        Thread.currentThread().interrupt();
-                        break;
-                    }
-                } else {
-                    System.err.println("FridaManager: Failed to start Frida after " + (maxRetries + 1) + " attempts");
-                    e.printStackTrace();
-                }
-            }
+            // Timeout reached
+            logError("Frida startup timeout reached");
+            process.destroy();
+            
+        } catch (Exception e) {
+            logError("Failed to start Frida: " + e.getMessage());
         }
+    }
+    
+    /**
+     * Check if Frida is ready by looking for specific log messages
+     */
+    private boolean isFridaReady() {
+        try {
+            // Check if Frida log file exists and contains success message
+            File fridaLog = new File("logs/frida.log");
+            if (fridaLog.exists()) {
+                BufferedReader reader = new BufferedReader(new FileReader(fridaLog));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (line.contains("Frida agent initialized with regex patterns") ||
+                        line.contains("Frida controller is now monitoring")) {
+                        reader.close();
+                        return true;
+                    }
+                }
+                reader.close();
+            }
+        } catch (Exception e) {
+            // Ignore errors
+        }
+        return false;
+    }
+    
+    private void logInfo(String message) {
+        System.out.println("FridaManager: " + message);
+    }
+    
+    private void logError(String message) {
+        System.err.println("FridaManager: " + message);
     }
 
     public void stopFrida() {

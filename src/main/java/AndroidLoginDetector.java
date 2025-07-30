@@ -532,11 +532,51 @@ public class AndroidLoginDetector {
     private void restartEmulatorSnapshot() {
         try {
             logInfo("Restarting emulator snapshot: " + emulatorSnapshot);
-            Runtime.getRuntime().exec("adb emu avd snapshot load " + emulatorSnapshot);
+            
+            // Check if snapshot exists
+            Process checkProcess = Runtime.getRuntime().exec("adb emu avd snapshot list");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(checkProcess.getInputStream()));
+            String line;
+            boolean snapshotExists = false;
+            
+            while ((line = reader.readLine()) != null) {
+                if (line.contains(emulatorSnapshot)) {
+                    snapshotExists = true;
+                    break;
+                }
+            }
+            reader.close();
+            checkProcess.waitFor();
+            
+            if (snapshotExists) {
+                // Load existing snapshot
+                Runtime.getRuntime().exec("adb emu avd snapshot load " + emulatorSnapshot);
+                logInfo("Emulator snapshot restored from existing snapshot");
+            } else {
+                // Create new snapshot if it doesn't exist
+                logInfo("Snapshot '" + emulatorSnapshot + "' not found, creating new snapshot...");
+                
+                // Wait for emulator to be ready
+                TimeUnit.SECONDS.sleep(5);
+                
+                // Create snapshot
+                Process createProcess = Runtime.getRuntime().exec("adb emu avd snapshot save " + emulatorSnapshot);
+                createProcess.waitFor();
+                
+                if (createProcess.exitValue() == 0) {
+                    logInfo("New snapshot '" + emulatorSnapshot + "' created successfully");
+                } else {
+                    logError("Failed to create snapshot '" + emulatorSnapshot + "'");
+                    // Continue without snapshot
+                }
+            }
+            
             TimeUnit.SECONDS.sleep(configLoader.getTestSnapshotWait());
-            logInfo("Emulator snapshot restored");
+            logInfo("Emulator snapshot operation completed");
+            
         } catch (Exception e) {
-            logError("Error restarting emulator snapshot: " + e.getMessage());
+            logError("Error with emulator snapshot: " + e.getMessage());
+            // Continue without snapshot
         }
     }
 
@@ -780,23 +820,39 @@ public class AndroidLoginDetector {
      */
     private void startMonkeyWithUIMonitoring() {
         try {
-            logInfo("Starting Monkey and monitoring UI elements...");
+            logInfo("Starting Monkey and monitoring focused elements...");
 
-            // Start Monkey
-            startMonkey();
+            // Start Monkey in background
+            Process monkeyProcess = startMonkeyWithProcess();
+            
+            if (monkeyProcess == null) {
+                logError("Failed to start Monkey process");
+                return;
+            }
 
-            // Monitor UI elements during Monkey execution
+            // Monitor focused elements during Monkey execution
             int monitoringInterval = configLoader.getDetectionApiInterval() * 1000; // 转换为毫秒
             long totalMonitoringTime = configLoader.getTestDuration(); // 毫秒
 
             long startTime = System.currentTimeMillis();
-            while (System.currentTimeMillis() - startTime < totalMonitoringTime) {
-                uiManager.monitorUIElements();
-
-                // If login elements are detected, stop Monkey
-                if (uiManager.isUsernameFieldDetected() || uiManager.isPasswordFieldDetected() ||
-                        uiManager.isGoogleLoginDetected() || uiManager.isFacebookLoginDetected()) {
-                    logInfo("Monkey exploration detected login elements, stopping exploration");
+            boolean monkeyCompleted = false;
+            
+            while (System.currentTimeMillis() - startTime < totalMonitoringTime && !monkeyCompleted) {
+                // Check if Monkey process is still running
+                try {
+                    int exitCode = monkeyProcess.exitValue();
+                    logInfo("Monkey process completed with exit code: " + exitCode);
+                    monkeyCompleted = true;
+                } catch (IllegalThreadStateException e) {
+                    // Process is still running
+                }
+                
+                // Check if current focused element is a login field
+                boolean loginFieldFocused = uiManager.checkFocusedLoginField();
+                
+                if (loginFieldFocused) {
+                    logInfo("Monkey focused on login field, stopping exploration");
+                    stopMonkey();
                     break;
                 }
 
@@ -808,8 +864,36 @@ public class AndroidLoginDetector {
                 }
             }
 
+            // If Monkey is still running after timeout, stop it
+            if (!monkeyCompleted) {
+                logInfo("Monkey monitoring timeout reached, stopping Monkey");
+                stopMonkey();
+            }
+
         } catch (Exception e) {
             logError("Monkey UI monitoring failed: " + e.getMessage());
+            stopMonkey();
+        }
+    }
+    
+    private Process startMonkeyWithProcess() {
+        try {
+            logInfo("Starting Monkey to generate events...");
+            String monkeyCommand = String.format(
+                    "adb shell monkey -p %s -v --throttle %d " +
+                            "--pct-touch %d --pct-motion 0 --pct-trackball 0 --pct-syskeys 0 " +
+                            "--pct-nav 0 --pct-majornav 0 --pct-appswitch 0 --pct-anyevent 0 %d",
+                    appPackage,
+                    configLoader.getMonkeyThrottle(),
+                    configLoader.getMonkeyTouchPercentage(),
+                    configLoader.getMonkeyEvents());
+            
+            Process process = Runtime.getRuntime().exec(monkeyCommand);
+            logInfo("Monkey command executed: " + monkeyCommand);
+            return process;
+        } catch (Exception e) {
+            logError("Error starting Monkey: " + e.getMessage());
+            return null;
         }
     }
 

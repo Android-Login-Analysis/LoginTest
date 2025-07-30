@@ -9,18 +9,19 @@ import java.util.regex.Pattern;
  */
 public class ConfigLoader {
     private Properties config;
+    private String appPackage = "org.mian.gitnex"; // Default app package
 
     // Default timeout (seconds)
     private int loginTimeoutSeconds = 10;
 
     // Test time configuration
     private int testRounds = 3;
-    private long testTimeout = 60000; // 毫秒
-    private long testDuration = 30000; // 毫秒
-    private int testRoundInterval = 2; // 秒
-    private int testInputInterval = 500; // 毫秒
-    private int testLoginWait = 5; // 秒
-    private int testSnapshotWait = 30; // 秒
+    private long testTimeout = 60000; // milliseconds
+    private long testDuration = 30000; // milliseconds
+    private int testRoundInterval = 2; // seconds
+    private int testInputInterval = 500; // milliseconds
+    private int testLoginWait = 5; // seconds
+    private int testSnapshotWait = 30; // seconds
 
     // Monkey configuration
     private int monkeyEvents = 50;
@@ -28,14 +29,14 @@ public class ConfigLoader {
     private int monkeyTouchPercentage = 100;
 
     // Detection configuration
-    private int detectionLoginTimeout = 10; // 秒
-    private int detectionApiInterval = 1; // 秒
-    private int detectionCrashInterval = 2; // 秒
+    private int detectionLoginTimeout = 10; // seconds
+    private int detectionApiInterval = 1; // seconds
+    private int detectionCrashInterval = 2; // seconds
 
     // Frida configuration
-    private int fridaTimeout = 30; // 秒
+    private int fridaTimeout = 30; // seconds
     private int fridaRetryCount = 3;
-    private int fridaRetryDelay = 2; // 秒
+    private int fridaRetryDelay = 2; // seconds
 
     // UI element recognition configuration
     private String loginButtonPatterns = "login,sign_in,signin,submit,enter,go,continue,authenticate,log_in";
@@ -66,6 +67,7 @@ public class ConfigLoader {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
             if (input != null) {
                 config.load(input);
+                loadAppConfigs();
                 loadTimeConfigs();
                 loadMonkeyConfigs();
                 loadDetectionConfigs();
@@ -78,6 +80,13 @@ public class ConfigLoader {
         } catch (IOException e) {
             System.err.println("ConfigLoader: Failed to load config.properties: " + e.getMessage());
         }
+    }
+
+    /**
+     * Load app related configurations
+     */
+    private void loadAppConfigs() {
+        appPackage = config.getProperty("app.package", "org.mian.gitnex");
     }
 
     /**
@@ -320,5 +329,9 @@ public class ConfigLoader {
         System.out.println("Frida Timeout: " + fridaTimeout + "s");
         System.out.println("Frida Retry Count: " + fridaRetryCount);
         System.out.println("==================");
+    }
+
+    public String getAppPackage() {
+        return appPackage;
     }
 }

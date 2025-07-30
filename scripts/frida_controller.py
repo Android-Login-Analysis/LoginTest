@@ -7,6 +7,7 @@ import os
 import configparser
 import logging
 from datetime import datetime
+import subprocess
 
 
 def setup_logging():
@@ -29,7 +30,7 @@ def load_config():
     config = {}
     config_paths = [
         os.path.join(os.path.dirname(__file__), '..', 'src', 'main', 'resources', 'config.properties'),
-        os.path.join(os.path.dirname(__file__), 'frida_config.properties')  # 备用
+        os.path.join(os.path.dirname(__file__), 'frida_config.properties')  # backup
     ]
     
     config_loaded = False
@@ -63,34 +64,31 @@ def load_config():
 def on_message(message, data):
     if message['type'] == 'send':
         try:
-            # Try to parse the message as JSON
-            payload = json.loads(message['payload'])
-            logging.info(f"API Call: {json.dumps(payload, indent=2)}")
+            # Check if payload is already a dict or needs parsing
+            if isinstance(message['payload'], dict):
+                payload = message['payload']
+            else:
+                # Try to parse the message as JSON
+                payload = json.loads(message['payload'])
+            
+            if payload.get('type') == 'api_call':
+                logging.info(f"API Call #{payload.get('callId', 'N/A')}: {payload.get('class', 'Unknown')}.{payload.get('method', 'Unknown')} (Pattern: {payload.get('pattern', 'Unknown')})")
+            elif payload.get('type') == 'statistics':
+                logging.info(f"Statistics: {payload.get('matchedClasses', 0)} classes, {payload.get('hookedMethods', 0)} methods, {payload.get('apiCallCount', 0)} API calls")
+            elif payload.get('type') == 'periodic_stats':
+                logging.info(f"Periodic Stats: {payload.get('apiCallCount', 0)} total calls, {payload.get('matchedApiCallCount', 0)} matched calls")
+            else:
+                logging.info(f"Message: {json.dumps(payload, indent=2)}")
         except json.JSONDecodeError:
             # If not JSON, log as plain text
             logging.info(f"Message: {message['payload']}")
+        except Exception as e:
+            logging.error(f"Error processing message: {e}")
+            logging.info(f"Raw message: {message['payload']}")
     elif message['type'] == 'error':
         logging.error(f"Error: {message['description']}")
         if 'stack' in message:
             logging.error(f"Stack: {message['stack']}")
-
-
-def copy_regex_patterns():
-    try:
-        patterns_path = os.path.join(
-            os.path.dirname(__file__), 'regex_patterns.txt')
-        if not os.path.exists(patterns_path):
-            logging.error(f"regex_patterns.txt not found at: {patterns_path}")
-            return False
-
-        # Copy file to device
-        os.system(
-            f"adb push {patterns_path} /data/local/tmp/regex_patterns.txt")
-        logging.info("Copied regex_patterns.txt to device")
-        return True
-    except Exception as e:
-        logging.error(f"Error copying regex_patterns.txt: {e}")
-        return False
 
 
 def main():
@@ -117,6 +115,10 @@ def main():
 
     script_dir = os.path.dirname(__file__)
     regex_patterns_path = os.path.join(script_dir, '..', 'src', 'main', 'resources', 'regex_patterns.txt')
+    
+    # Initialize patterns_dict
+    patterns_dict = {}
+    
     try:
         with open(regex_patterns_path, 'r') as f:
             regex_patterns = f.read()
@@ -126,40 +128,33 @@ def main():
             f.write(regex_patterns)
         logging.info(f"Regex patterns copied from: {regex_patterns_path}")
         logging.info(f"Regex patterns copied to: {agent_regex_path}")
+        
+        # Parse regex patterns into dict format
+        for line in regex_patterns.strip().split('\n'):
+            line = line.strip()
+            if line and not line.startswith('#') and ':::' in line:
+                parts = line.split(':::', 1)
+                if len(parts) == 2:
+                    state_name = parts[0].strip()
+                    pattern = parts[1].strip()
+                    patterns_dict[state_name] = pattern
+        logging.info(f"Loaded {len(patterns_dict)} patterns from file")
+        
     except FileNotFoundError:
         logging.error(f"regex_patterns.txt not found at: {regex_patterns_path}")
-        logging.warning(
-            "Failed to copy regex patterns, agent will use default patterns")
+        logging.warning("Failed to copy regex patterns, agent will use default patterns")
+    except Exception as e:
+        logging.warning(f"Failed to load regex patterns: {e}, using default patterns")
 
     try:
-        # Load the JavaScript code and inject regex patterns
+        # Load the JavaScript code
         with open(script_path, 'r') as f:
             js_code = f.read()
-        
-        # Load regex patterns and inject into JavaScript
-        regex_patterns_path = os.path.join(script_dir, '..', 'src', 'main', 'resources', 'regex_patterns.txt')
-        try:
-            with open(regex_patterns_path, 'r') as f:
-                regex_content = f.read()
-            
-            # Parse regex patterns into JavaScript object format
-            patterns_js = "{"
-            for line in regex_content.strip().split('\n'):
-                line = line.strip()
-                if line and not line.startswith('#') and ':::' in line:
-                    parts = line.split(':::', 1)
-                    if len(parts) == 2:
-                        state_name = parts[0].strip()
-                        pattern = parts[1].strip().replace('\\', '\\\\')
-                        patterns_js += f'\n    "{state_name}": /{pattern}/g,'
-            patterns_js = patterns_js.rstrip(',') + "\n}"
-            
-            # Replace the readRegexPatterns function with direct pattern injection
-            logging.info("Regex patterns will be passed via RPC, no injection needed.")
-            
-        except Exception as e:
-            logging.warning(f"Failed to load regex patterns: {e}, using default patterns")
+    except Exception as e:
+        logging.error(f"Failed to load script: {e}")
+        sys.exit(1)
 
+    try:
         # Connect to Android emulator via USB with dynamic device detection
         import subprocess
         
@@ -237,120 +232,97 @@ def main():
         # Connect to Android emulator - force connection to emulator not local system
         device = None
         
-        # Method 1: Try TCP connection to emulator first (most reliable for Docker)
+        # Enumerate devices and find Android emulator
         try:
-            device = frida.get_device_manager().add_remote_device('127.0.0.1:27042')
-            logging.info(f"Connected to Android emulator via TCP: {device.name}")
-        except Exception as tcp_error:
-            logging.warning(f"TCP connection failed: {tcp_error}")
+            devices = frida.get_device_manager().enumerate_devices()
+            android_device = None
             
-            # Method 2: Enumerate devices and find Android emulator
-            try:
-                devices = frida.get_device_manager().enumerate_devices()
-                android_device = None
-                
-                for dev in devices:
-                    logging.info(f"Found device: {dev.name} (type: {dev.type})")
-                    # Look for Android emulator device (not Local System)
-                    if 'android' in dev.name.lower() or 'emulator' in dev.name.lower() or dev.type == 'usb':
-                        android_device = dev
-                        break
-                
-                if android_device:
-                    device = android_device
-                    logging.info(f"Connected to Android device: {device.name}")
-                else:
-                    # Method 3: Last resort - try to connect to any non-local device
-                    for dev in devices:
-                        if 'local' not in dev.name.lower():
-                            device = dev
-                            logging.info(f"Connected to device (fallback): {device.name}")
-                            break
-                            
-            except Exception as enum_error:
-                logging.error(f"Device enumeration failed: {enum_error}")
+            for dev in devices:
+                logging.info(f"Found device: {dev.name} (type: {dev.type})")
+                if dev.type != 'local':
+                    android_device = dev
+                    break
+            
+            if android_device:
+                device = android_device
+                logging.info(f"Connected to device: {device.name}")
+            else:
+                raise Exception("No non-local device found")
+                        
+        except Exception as enum_error:
+            logging.error(f"Device enumeration failed: {enum_error}")
         
         if not device:
             raise Exception(f"Cannot find Android emulator device - ensure Frida server is running on emulator")
 
-        # Android 29 bypass: Direct PID attachment without system_server dependency
+        # Use direct PID attachment to bypass Android 29 system_server restrictions
         session = None
         
-        # Method 1: Find running app process via ADB and attach by PID
+        # Assume the app is already running
+        logging.info(f"Assuming {package_name} is already running")
+        
+        # Method 1: Find app process via ADB and attach directly to PID
         try:
             logging.info(f"Method 1: Finding {package_name} process via ADB...")
             
-            # Start the app first
-            subprocess.run(['adb', '-s', device_id, 'shell', 'am', 'start', '-n', 
-                          f'{package_name}/org.mian.gitnex.activities.MainActivity'], 
-                         capture_output=True, check=False)
-            
-            # Wait for app to start
-            time.sleep(3)
-            
-            # Find the app's PID using ADB
-            result = subprocess.run(['adb', '-s', device_id, 'shell', 'ps | grep ' + package_name], 
-                                  capture_output=True, text=True, check=False)
+            # Use ps command to find the process
+            result = subprocess.run(['adb', '-s', device_id, 'shell', 'ps -A | grep ' + package_name], 
+                                   capture_output=True, text=True, check=False)
             
             if result.stdout.strip():
-                # Parse PID from ps output
+                # Parse PID
                 lines = result.stdout.strip().split('\n')
                 for line in lines:
-                    if package_name in line:
+                    if package_name in line and 'grep' not in line:
                         parts = line.split()
                         if len(parts) >= 2:
-                            pid = int(parts[1])  # PID is usually the second column
-                            logging.info(f"Found {package_name} running with PID: {pid}")
-                            
-                            # Attach directly by PID
-                            session = device.attach(pid)
-                            logging.info(f"Successfully attached to PID {pid}")
-                            break
+                            try:
+                                pid = int(parts[1])  # PID is usually in the second column
+                                logging.info(f"Found {package_name} running with PID: {pid}")
+                                
+                                # Directly attach to PID
+                                session = device.attach(pid)
+                                logging.info(f"Successfully attached to PID {pid}")
+                                break
+                            except ValueError:
+                                continue
             
+            # If the above method fails, try using pidof
             if not session:
-                raise Exception("Could not find running process")
+                result = subprocess.run(['adb', '-s', device_id, 'shell', 'pidof ' + package_name], 
+                                      capture_output=True, text=True, check=False)
+                if result.stdout.strip():
+                    pid = int(result.stdout.strip())
+                    session = device.attach(pid)
+                    logging.info(f"Successfully attached via pidof: PID {pid}")
+                else:
+                    raise Exception("Could not find running process")
                 
         except Exception as pid_error:
             logging.warning(f"PID attachment failed: {pid_error}")
             
-            # Method 2: Try spawn with error handling
+            # Method 2: Try using spawn method
             try:
-                logging.info(f"Method 2: Attempting spawn {package_name}...")
+                logging.info(f"Method 2: Trying to spawn {package_name}...")
                 
-                # Force stop first
+                # First force stop the application
                 subprocess.run(['adb', '-s', device_id, 'shell', 'am', 'force-stop', package_name], 
                              capture_output=True, check=False)
                 time.sleep(1)
                 
-                # Try to spawn (may fail on Android 29 but worth trying)
-                try:
-                    pid = device.spawn([package_name])
-                    session = device.attach(pid)
-                    device.resume(pid)
-                    logging.info(f"Spawn successful: PID {pid}")
-                except:
-                    # If spawn fails, start via ADB and find PID again
-                    subprocess.run(['adb', '-s', device_id, 'shell', 'am', 'start', '-n', 
-                                  f'{package_name}/org.mian.gitnex.activities.MainActivity'], 
-                                 capture_output=True, check=False)
-                    time.sleep(3)
-                    
-                    # Get PID and attach
-                    result = subprocess.run(['adb', '-s', device_id, 'shell', 'pidof ' + package_name], 
-                                          capture_output=True, text=True, check=False)
-                    if result.stdout.strip():
-                        pid = int(result.stdout.strip())
-                        session = device.attach(pid)
-                        logging.info(f"Attached via pidof: PID {pid}")
-                    else:
-                        raise Exception("Could not get PID")
-                        
+                # Try to spawn
+                pid = device.spawn([package_name])
+                session = device.attach(pid)
+                device.resume(pid)
+                logging.info(f"Spawn successful: PID {pid}")
+                
             except Exception as spawn_error:
-                logging.error(f"All methods failed: {spawn_error}")
+                logging.error(f"All attachment methods failed: {spawn_error}")
                 raise Exception(f"Cannot attach to {package_name}")
         
+        # Ensure we have a valid session
         if not session:
-            raise Exception(f"Failed to establish session with {package_name}")
+            raise Exception(f"Cannot establish session with {package_name}")
 
         # Create the script
         script = session.create_script(js_code)
@@ -358,25 +330,104 @@ def main():
         script.load()
         logging.info("Script loaded successfully")
 
+        # Wait a moment for script to initialize
+        time.sleep(2)
+
         # Call the RPC export to initialize the agent with patterns
-        patterns_dict = dict(line.split(':::', 1) for line in regex_patterns.strip().split('\n') if ':::' in line)
-        script.exports.init(patterns_dict)
-        logging.info("Frida agent initialized with regex patterns.")
+        try:
+            # Use the modern sync method
+            script.exports_sync.init(patterns_dict)
+            logging.info("Frida agent initialized with regex patterns.")
+        except Exception as e:
+            logging.error(f"Failed to initialize agent: {e}")
+            # Try alternative method with async
+            try:
+                script.exports.init(patterns_dict)
+                logging.info("Frida agent initialized with regex patterns (async method).")
+            except Exception as e2:
+                logging.error(f"Failed to initialize agent with async method: {e2}")
+                # Try one more time with a delay
+                time.sleep(1)
+                try:
+                    script.exports_sync.init(patterns_dict)
+                    logging.info("Frida agent initialized with regex patterns (retry sync method).")
+                except Exception as e3:
+                    logging.error(f"All initialization methods failed: {e3}")
+                    raise e3
 
         # Keep the script running to receive messages
         logging.info("Frida controller is now monitoring. Press Ctrl+C to exit.")
-        sys.stdin.read()
+        
+        # Set up periodic health checks
+        last_stats_time = time.time()
+        consecutive_failures = 0
+        max_consecutive_failures = 5
+        
+        while True:
+            try:
+                # Check if script is still alive
+                stats = script.exports_sync.getstats()
+                logging.info(f"Agent health check: {stats}")
+                consecutive_failures = 0  # Reset failure counter on success
+                
+                # Sleep for a while
+                time.sleep(30)
+                
+            except KeyboardInterrupt:
+                logging.info("Monitoring stopped by user.")
+                break
+            except Exception as e:
+                consecutive_failures += 1
+                logging.error(f"Health check failed ({consecutive_failures}/{max_consecutive_failures}): {e}")
+                
+                if consecutive_failures >= max_consecutive_failures:
+                    logging.error("Too many consecutive failures, restarting Frida script...")
+                    try:
+                        # Try to reload the script
+                        script.unload()
+                        time.sleep(2)
+                        script = session.create_script(js_code)
+                        script.on('message', on_message)
+                        script.load()
+                        time.sleep(5)
+                        
+                        # Re-initialize with patterns
+                        try:
+                            script.exports_sync.init(patterns_dict)
+                            logging.info("Frida script reloaded successfully")
+                            consecutive_failures = 0
+                        except Exception as init_error:
+                            logging.error(f"Failed to reinitialize script: {init_error}")
+                            break
+                    except Exception as reload_error:
+                        logging.error(f"Failed to reload script: {reload_error}")
+                        break
+                else:
+                    time.sleep(10)
 
     except frida.ProcessNotFoundError:
-        logging.error(f"Process {package_name} not found")
+        logging.error(f"Process '{package_name}' not found. Is the app installed?")
         sys.exit(1)
     except frida.ServerNotRunningError:
-        logging.error("Frida server is not running on the device")
+        logging.error("Frida server is not running on the device. Please run 'adb shell /data/local/tmp/frida-server &'")
         sys.exit(1)
+    except frida.TransportError:
+        logging.error("Failed to communicate with the Frida server. Check connection.")
+        sys.exit(1)
+    except KeyboardInterrupt:
+        logging.info("Monitoring stopped by user.")
+        sys.exit(0)
     except Exception as e:
-        logging.error(f"Error: {str(e)}")
+        logging.error(f"An unexpected error occurred: {e}")
+        import traceback
+        logging.error(traceback.format_exc())
         sys.exit(1)
-
+    finally:
+        # Sleep briefly to allow any pending messages to be processed
+        time.sleep(2)
+        logging.info("Frida controller exiting cleanly.")
+        # Exit with success code to avoid Java side retrying unnecessarily
+        sys.exit(0)
 
 if __name__ == '__main__':
     main()
