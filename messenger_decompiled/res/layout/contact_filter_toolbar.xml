@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:orientation="horizontal" android:id="@id/toggle_container" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <EditText android:textSize="18.0sp" android:ellipsize="end" android:gravity="center_vertical" android:layout_gravity="center_vertical" android:id="@id/search_view" android:background="@android:color/transparent" android:layout_width="0.0px" android:layout_height="wrap_content" android:hint="@string/search" android:layout_weight="1.0" android:inputType="textPersonName" android:contentDescription="@string/email_address" android:fontFamily="sans-serif" style="@style/TextSecure.TitleTextStyle" />
+            <org.thoughtcrime.securesms.components.AnimatingToggle android:gravity="center" android:layout_gravity="center" android:id="@id/button_toggle" android:paddingLeft="10.0dip" android:paddingRight="10.0dip" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <ImageView android:gravity="center_vertical" android:layout_gravity="center_vertical" android:id="@id/search_clear" android:background="@drawable/circle_touch_highlight_background" android:focusable="true" android:visibility="gone" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_clear_white_24dp" android:contentDescription="@string/clear_search" />
+            </org.thoughtcrime.securesms.components.AnimatingToggle>
+        </LinearLayout>
+    </LinearLayout>
+</merge>

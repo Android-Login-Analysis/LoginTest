@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/webxdc_container" android:focusable="false" android:clickable="false" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <com.google.android.material.imageview.ShapeableImageView android:id="@id/webxdc_icon" android:padding="0.100000024dip" android:layout_width="128.0dip" android:layout_height="128.0dip" android:layout_marginTop="2.0dip" android:scaleType="centerCrop" app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent" />
+        <TextView android:textStyle="bold" android:textColor="?conversation_item_incoming_text_primary_color" android:ellipsize="end" android:id="@id/webxdc_app_name" android:clickable="false" android:layout_width="fill_parent" android:layout_height="wrap_content" android:maxLines="1" android:singleLine="true" style="@style/Signal.Text.Body" />
+        <TextView android:textColor="?conversation_item_incoming_text_primary_color" android:ellipsize="end" android:id="@id/webxdc_subtitle" android:clickable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="1" android:singleLine="true" style="@style/Signal.Text.Body" />
+    </LinearLayout>
+</merge>

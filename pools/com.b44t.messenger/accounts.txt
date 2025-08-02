@@ -1,0 +1,5 @@
+delta_user1@mail.com
+hello123@gmail.com
+mes346@mail.com
+delta_test2@example.com
+delta_user5@mail.com

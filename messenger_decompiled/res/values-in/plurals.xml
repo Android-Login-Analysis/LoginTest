@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">Hapus %d obrolan? Obrolan ini akan menghilang dari daftar tetapi pesan-pesannya akan tetap tersimpan di server.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">Hapus %d pesan disini dan di server?</item>
+    </plurals>
+    <plurals name="ask_delete_messages_simple">
+        <item quantity="other">Menghapus pesan %d?</item>
+    </plurals>
+    <plurals name="ask_send_following_n_files_to">
+        <item quantity="other">Kirimkan yang berikut ini %1$d berkas ke %2$s?</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%dobrolan terarsip</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%dpesan baru</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d obrolan tidak terarsip</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d notifikasi baru</item>
+        <item quantity="one">%d notifikasi baru</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d obrolan</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d kontak</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d jam</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d anggota</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d pesan</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d menit</item>
+    </plurals>
+    <plurals name="n_recipients">
+        <item quantity="other">%d penerima</item>
+    </plurals>
+    <plurals name="n_selected">
+        <item quantity="other">%d Dipilih</item>
+    </plurals>
+</resources>

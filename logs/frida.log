@@ -511,3 +511,317 @@ Exception: No active Android emulator found
 2025-07-30 03:41:57,173 - INFO - Loaded 22 patterns from file
 2025-07-30 03:41:57,176 - INFO - Found active emulator: emulator-5554
 2025-07-30 03:41:57,176 - INFO - Getting root access on device: emulator-5554
+2025-08-01 17:40:19,276 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-01 17:40:19,276 - INFO - Frida client version: 16.7.19
+2025-08-01 17:40:19,276 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:40:19,277 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:40:19,277 - INFO - Loaded 22 patterns from file
+2025-08-01 17:40:19,280 - INFO - Found active emulator: emulator-5554
+2025-08-01 17:40:19,280 - INFO - Getting root access on device: emulator-5554
+2025-08-01 17:40:58,216 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-01 17:40:58,217 - INFO - Frida client version: 16.7.19
+2025-08-01 17:40:58,217 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:40:58,217 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:40:58,217 - INFO - Loaded 22 patterns from file
+2025-08-01 17:40:58,219 - INFO - Found active emulator: emulator-5554
+2025-08-01 17:40:58,219 - INFO - Getting root access on device: emulator-5554
+2025-08-01 17:41:37,986 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-01 17:41:37,986 - INFO - Frida client version: 16.7.19
+2025-08-01 17:41:37,986 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:41:37,986 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:41:37,986 - INFO - Loaded 22 patterns from file
+2025-08-01 17:41:37,990 - INFO - Found active emulator: emulator-5554
+2025-08-01 17:41:37,990 - INFO - Getting root access on device: emulator-5554
+2025-08-01 17:42:17,749 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-01 17:42:17,749 - INFO - Frida client version: 16.7.19
+2025-08-01 17:42:17,749 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:42:17,749 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:42:17,749 - INFO - Loaded 22 patterns from file
+2025-08-01 17:42:17,753 - INFO - Found active emulator: emulator-5554
+2025-08-01 17:42:17,753 - INFO - Getting root access on device: emulator-5554
+2025-08-01 17:42:57,692 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-01 17:42:57,692 - INFO - Frida client version: 16.7.19
+2025-08-01 17:42:57,692 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:42:57,693 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:42:57,693 - INFO - Loaded 22 patterns from file
+2025-08-01 17:42:57,695 - INFO - Found active emulator: emulator-5554
+2025-08-01 17:42:57,695 - INFO - Getting root access on device: emulator-5554
+2025-08-01 17:43:37,624 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-01 17:43:37,624 - INFO - Frida client version: 16.7.19
+2025-08-01 17:43:37,624 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:43:37,624 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:43:37,624 - INFO - Loaded 22 patterns from file
+2025-08-01 17:43:37,627 - INFO - Found active emulator: emulator-5554
+2025-08-01 17:43:37,627 - INFO - Getting root access on device: emulator-5554
+2025-08-01 17:44:17,364 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-01 17:44:17,364 - INFO - Frida client version: 16.7.19
+2025-08-01 17:44:17,364 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:44:17,364 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:44:17,364 - INFO - Loaded 22 patterns from file
+2025-08-01 17:44:17,367 - INFO - Found active emulator: emulator-5554
+2025-08-01 17:44:17,368 - INFO - Getting root access on device: emulator-5554
+2025-08-01 17:44:57,667 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-01 17:44:57,667 - INFO - Frida client version: 16.7.19
+2025-08-01 17:44:57,667 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:44:57,667 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:44:57,667 - INFO - Loaded 22 patterns from file
+2025-08-01 17:44:57,670 - INFO - Found active emulator: emulator-5554
+2025-08-01 17:44:57,670 - INFO - Getting root access on device: emulator-5554
+2025-08-01 17:45:00,985 - INFO - Disabling SELinux if possible
+2025-08-01 17:45:01,050 - INFO - Stopping any existing Frida server processes
+2025-08-01 17:45:01,068 - INFO - Pushing Frida server binary to device
+2025-08-01 17:45:01,377 - INFO - Setting executable permissions on Frida server
+2025-08-01 17:45:01,387 - INFO - Starting Frida server in background
+2025-08-01 17:45:04,391 - INFO - Verifying Frida server is running
+2025-08-01 17:45:49,631 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-01 17:45:49,631 - INFO - Frida client version: 16.7.19
+2025-08-01 17:45:49,631 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:45:49,631 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:45:49,631 - INFO - Loaded 22 patterns from file
+2025-08-01 17:45:49,634 - INFO - Found active emulator: emulator-5554
+2025-08-01 17:45:49,634 - INFO - Getting root access on device: emulator-5554
+2025-08-01 17:45:51,640 - INFO - Disabling SELinux if possible
+2025-08-01 17:45:51,661 - INFO - Stopping any existing Frida server processes
+2025-08-01 17:45:51,682 - INFO - Pushing Frida server binary to device
+2025-08-01 17:45:52,085 - INFO - Setting executable permissions on Frida server
+2025-08-01 17:45:52,104 - INFO - Starting Frida server in background
+2025-08-01 17:45:55,107 - INFO - Verifying Frida server is running
+2025-08-01 17:45:55,241 - INFO - Frida server started successfully
+2025-08-01 17:45:55,245 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-08-01 17:45:55,252 - INFO - Found device: Local System (type: local)
+2025-08-01 17:45:55,252 - INFO - Found device: Local Socket (type: remote)
+2025-08-01 17:45:55,252 - INFO - Connected to device: Local Socket
+2025-08-01 17:45:55,252 - INFO - Assuming org.mian.gitnex is already running
+2025-08-01 17:45:55,252 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-08-01 17:45:55,270 - INFO - Found org.mian.gitnex running with PID: 6709
+2025-08-01 17:45:55,406 - INFO - Successfully attached to PID 6709
+2025-08-01 17:45:55,411 - INFO - Script loaded successfully
+2025-08-01 17:45:57,531 - INFO - Statistics: 0 classes, 0 methods, 0 API calls
+2025-08-01 17:45:57,532 - INFO - Frida agent initialized with regex patterns.
+2025-08-01 17:45:57,532 - INFO - Frida controller is now monitoring. Press Ctrl+C to exit.
+2025-08-01 17:45:57,535 - INFO - Agent health check: {'status': 'active', 'timestamp': 1754070355803}
+2025-08-01 17:46:51,019 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-01 17:46:51,019 - INFO - Frida client version: 16.7.19
+2025-08-01 17:46:51,019 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:46:51,019 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:46:51,020 - INFO - Loaded 22 patterns from file
+2025-08-01 17:46:51,024 - INFO - Found active emulator: emulator-5554
+2025-08-01 17:46:51,024 - INFO - Getting root access on device: emulator-5554
+2025-08-01 17:46:53,031 - INFO - Disabling SELinux if possible
+2025-08-01 17:46:53,055 - INFO - Stopping any existing Frida server processes
+2025-08-01 17:46:53,078 - INFO - Pushing Frida server binary to device
+2025-08-01 17:46:53,341 - INFO - Setting executable permissions on Frida server
+2025-08-01 17:46:53,353 - INFO - Starting Frida server in background
+2025-08-01 17:46:56,356 - INFO - Verifying Frida server is running
+2025-08-01 17:46:56,379 - INFO - Frida server started successfully
+2025-08-01 17:46:56,384 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-08-01 17:46:56,388 - INFO - Found device: Local System (type: local)
+2025-08-01 17:46:56,388 - INFO - Found device: Local Socket (type: remote)
+2025-08-01 17:46:56,388 - INFO - Connected to device: Local Socket
+2025-08-01 17:46:56,388 - INFO - Assuming org.mian.gitnex is already running
+2025-08-01 17:46:56,388 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-08-01 17:46:56,407 - INFO - Found org.mian.gitnex running with PID: 6897
+2025-08-01 17:46:56,552 - INFO - Successfully attached to PID 6897
+2025-08-01 17:46:56,557 - INFO - Script loaded successfully
+2025-08-01 17:46:58,642 - INFO - Statistics: 0 classes, 0 methods, 0 API calls
+2025-08-01 17:46:58,642 - INFO - Frida agent initialized with regex patterns.
+2025-08-01 17:46:58,643 - INFO - Frida controller is now monitoring. Press Ctrl+C to exit.
+2025-08-01 17:46:58,644 - INFO - Agent health check: {'status': 'active', 'timestamp': 1754070354575}
+2025-08-01 17:47:53,358 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-01 17:47:53,358 - INFO - Frida client version: 16.7.19
+2025-08-01 17:47:53,358 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:47:53,358 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:47:53,358 - INFO - Loaded 22 patterns from file
+2025-08-01 17:47:53,362 - INFO - Found active emulator: emulator-5554
+2025-08-01 17:47:53,363 - INFO - Getting root access on device: emulator-5554
+2025-08-01 17:47:55,368 - INFO - Disabling SELinux if possible
+2025-08-01 17:47:55,387 - INFO - Stopping any existing Frida server processes
+2025-08-01 17:47:55,401 - INFO - Pushing Frida server binary to device
+2025-08-01 17:47:55,662 - INFO - Setting executable permissions on Frida server
+2025-08-01 17:47:55,674 - INFO - Starting Frida server in background
+2025-08-01 17:47:58,678 - INFO - Verifying Frida server is running
+2025-08-01 17:47:58,703 - INFO - Frida server started successfully
+2025-08-01 17:47:58,706 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-08-01 17:47:58,709 - INFO - Found device: Local System (type: local)
+2025-08-01 17:47:58,709 - INFO - Found device: Local Socket (type: remote)
+2025-08-01 17:47:58,709 - INFO - Connected to device: Local Socket
+2025-08-01 17:47:58,709 - INFO - Assuming org.mian.gitnex is already running
+2025-08-01 17:47:58,709 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-08-01 17:47:58,725 - INFO - Found org.mian.gitnex running with PID: 6896
+2025-08-01 17:47:58,849 - INFO - Successfully attached to PID 6896
+2025-08-01 17:47:58,854 - INFO - Script loaded successfully
+2025-08-01 17:48:00,983 - INFO - Statistics: 0 classes, 0 methods, 0 API calls
+2025-08-01 17:48:00,983 - INFO - Frida agent initialized with regex patterns.
+2025-08-01 17:48:00,983 - INFO - Frida controller is now monitoring. Press Ctrl+C to exit.
+2025-08-01 17:48:00,991 - INFO - Agent health check: {'status': 'active', 'timestamp': 1754070354681}
+2025-08-01 17:48:55,860 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-01 17:48:55,860 - INFO - Frida client version: 16.7.19
+2025-08-01 17:48:55,860 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:48:55,861 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-01 17:48:55,861 - INFO - Loaded 22 patterns from file
+2025-08-01 17:48:55,864 - INFO - Found active emulator: emulator-5554
+2025-08-01 17:48:55,864 - INFO - Getting root access on device: emulator-5554
+2025-08-01 17:48:57,868 - INFO - Disabling SELinux if possible
+2025-08-01 17:48:57,882 - INFO - Stopping any existing Frida server processes
+2025-08-01 17:48:57,904 - INFO - Pushing Frida server binary to device
+2025-08-01 17:48:58,177 - INFO - Setting executable permissions on Frida server
+2025-08-01 17:48:58,190 - INFO - Starting Frida server in background
+2025-08-01 17:49:01,193 - INFO - Verifying Frida server is running
+2025-08-01 17:49:01,255 - INFO - Frida server started successfully
+2025-08-01 17:49:01,259 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-08-01 17:49:01,265 - INFO - Found device: Local System (type: local)
+2025-08-01 17:49:01,265 - INFO - Found device: Local Socket (type: remote)
+2025-08-01 17:49:01,265 - INFO - Connected to device: Local Socket
+2025-08-01 17:49:01,265 - INFO - Assuming org.mian.gitnex is already running
+2025-08-01 17:49:01,265 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-08-01 17:49:01,463 - INFO - Found org.mian.gitnex running with PID: 6903
+2025-08-01 17:49:01,654 - INFO - Successfully attached to PID 6903
+2025-08-01 17:49:01,660 - INFO - Script loaded successfully
+2025-08-01 17:49:03,749 - INFO - Statistics: 0 classes, 0 methods, 0 API calls
+2025-08-01 17:49:03,750 - INFO - Frida agent initialized with regex patterns.
+2025-08-01 17:49:03,750 - INFO - Frida controller is now monitoring. Press Ctrl+C to exit.
+2025-08-01 17:49:03,752 - INFO - Agent health check: {'status': 'active', 'timestamp': 1754070354966}
+2025-08-02 04:12:24,852 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-02 04:12:24,852 - INFO - Frida client version: 16.7.19
+2025-08-02 04:12:24,852 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:12:24,852 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:12:24,852 - INFO - Loaded 22 patterns from file
+2025-08-02 04:12:24,856 - INFO - Found active emulator: emulator-5554
+2025-08-02 04:12:24,856 - INFO - Getting root access on device: emulator-5554
+2025-08-02 04:12:28,166 - INFO - Disabling SELinux if possible
+2025-08-02 04:12:28,231 - INFO - Stopping any existing Frida server processes
+2025-08-02 04:12:28,253 - INFO - Pushing Frida server binary to device
+2025-08-02 04:12:28,551 - INFO - Setting executable permissions on Frida server
+2025-08-02 04:12:28,563 - INFO - Starting Frida server in background
+2025-08-02 04:12:31,567 - INFO - Verifying Frida server is running
+2025-08-02 04:13:16,832 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-02 04:13:16,832 - INFO - Frida client version: 16.7.19
+2025-08-02 04:13:16,833 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:13:16,833 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:13:16,833 - INFO - Loaded 22 patterns from file
+2025-08-02 04:13:16,835 - INFO - Found active emulator: emulator-5554
+2025-08-02 04:13:16,835 - INFO - Getting root access on device: emulator-5554
+2025-08-02 04:13:18,841 - INFO - Disabling SELinux if possible
+2025-08-02 04:13:18,862 - INFO - Stopping any existing Frida server processes
+2025-08-02 04:13:18,878 - INFO - Pushing Frida server binary to device
+2025-08-02 04:13:19,307 - INFO - Setting executable permissions on Frida server
+2025-08-02 04:13:19,331 - INFO - Starting Frida server in background
+2025-08-02 04:14:09,538 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-02 04:14:09,538 - INFO - Frida client version: 16.7.19
+2025-08-02 04:14:09,538 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:14:09,538 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:14:09,538 - INFO - Loaded 22 patterns from file
+2025-08-02 04:14:09,541 - INFO - Found active emulator: emulator-5554
+2025-08-02 04:14:09,542 - INFO - Getting root access on device: emulator-5554
+2025-08-02 04:14:11,549 - INFO - Disabling SELinux if possible
+2025-08-02 04:14:11,565 - INFO - Stopping any existing Frida server processes
+2025-08-02 04:14:11,581 - INFO - Pushing Frida server binary to device
+2025-08-02 04:14:11,864 - INFO - Setting executable permissions on Frida server
+2025-08-02 04:14:11,877 - INFO - Starting Frida server in background
+2025-08-02 04:15:02,285 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-02 04:15:02,285 - INFO - Frida client version: 16.7.19
+2025-08-02 04:15:02,285 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:15:02,285 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:15:02,286 - INFO - Loaded 22 patterns from file
+2025-08-02 04:15:02,288 - INFO - Found active emulator: emulator-5554
+2025-08-02 04:15:02,288 - INFO - Getting root access on device: emulator-5554
+2025-08-02 04:15:04,294 - INFO - Disabling SELinux if possible
+2025-08-02 04:15:04,308 - INFO - Stopping any existing Frida server processes
+2025-08-02 04:15:04,321 - INFO - Pushing Frida server binary to device
+2025-08-02 04:15:04,572 - INFO - Setting executable permissions on Frida server
+2025-08-02 04:15:04,584 - INFO - Starting Frida server in background
+2025-08-02 04:15:54,877 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-02 04:15:54,877 - INFO - Frida client version: 16.7.19
+2025-08-02 04:15:54,877 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:15:54,877 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:15:54,877 - INFO - Loaded 22 patterns from file
+2025-08-02 04:15:54,880 - INFO - Found active emulator: emulator-5554
+2025-08-02 04:15:54,880 - INFO - Getting root access on device: emulator-5554
+2025-08-02 04:15:56,885 - INFO - Disabling SELinux if possible
+2025-08-02 04:15:56,901 - INFO - Stopping any existing Frida server processes
+2025-08-02 04:15:56,926 - INFO - Pushing Frida server binary to device
+2025-08-02 04:15:57,228 - INFO - Setting executable permissions on Frida server
+2025-08-02 04:15:57,242 - INFO - Starting Frida server in background
+2025-08-02 04:16:47,454 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-02 04:16:47,454 - INFO - Frida client version: 16.7.19
+2025-08-02 04:16:47,454 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:16:47,454 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:16:47,455 - INFO - Loaded 22 patterns from file
+2025-08-02 04:16:47,457 - INFO - Found active emulator: emulator-5554
+2025-08-02 04:16:47,457 - INFO - Getting root access on device: emulator-5554
+2025-08-02 04:16:49,462 - INFO - Disabling SELinux if possible
+2025-08-02 04:16:49,481 - INFO - Stopping any existing Frida server processes
+2025-08-02 04:16:49,505 - INFO - Pushing Frida server binary to device
+2025-08-02 04:16:49,707 - INFO - Setting executable permissions on Frida server
+2025-08-02 04:16:49,719 - INFO - Starting Frida server in background
+2025-08-02 04:17:29,573 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-02 04:17:29,573 - INFO - Frida client version: 16.7.19
+2025-08-02 04:17:29,573 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:17:29,573 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:17:29,573 - INFO - Loaded 22 patterns from file
+2025-08-02 04:17:29,576 - INFO - Found active emulator: emulator-5554
+2025-08-02 04:17:29,576 - INFO - Getting root access on device: emulator-5554
+2025-08-02 04:18:06,681 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-02 04:18:06,681 - INFO - Frida client version: 16.7.19
+2025-08-02 04:18:06,681 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:18:06,681 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:18:06,681 - INFO - Loaded 22 patterns from file
+2025-08-02 04:18:06,684 - INFO - Found active emulator: emulator-5554
+2025-08-02 04:18:06,684 - INFO - Getting root access on device: emulator-5554
+2025-08-02 04:18:45,238 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-02 04:18:45,238 - INFO - Frida client version: 16.7.19
+2025-08-02 04:18:45,239 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:18:45,239 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:18:45,239 - INFO - Loaded 22 patterns from file
+2025-08-02 04:18:45,241 - INFO - Found active emulator: emulator-5554
+2025-08-02 04:18:45,241 - INFO - Getting root access on device: emulator-5554
+2025-08-02 04:19:21,680 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-02 04:19:21,680 - INFO - Frida client version: 16.7.19
+2025-08-02 04:19:21,681 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:19:21,681 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:19:21,681 - INFO - Loaded 22 patterns from file
+2025-08-02 04:19:21,683 - INFO - Found active emulator: emulator-5554
+2025-08-02 04:19:21,683 - INFO - Getting root access on device: emulator-5554
+2025-08-02 04:19:24,893 - INFO - Disabling SELinux if possible
+2025-08-02 04:19:24,974 - INFO - Stopping any existing Frida server processes
+2025-08-02 04:19:24,998 - INFO - Pushing Frida server binary to device
+2025-08-02 04:19:25,324 - INFO - Setting executable permissions on Frida server
+2025-08-02 04:19:25,342 - INFO - Starting Frida server in background
+2025-08-02 04:19:28,345 - INFO - Verifying Frida server is running
+2025-08-02 04:20:13,656 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-02 04:20:13,656 - INFO - Frida client version: 16.7.19
+2025-08-02 04:20:13,656 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:20:13,656 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:20:13,656 - INFO - Loaded 22 patterns from file
+2025-08-02 04:20:13,660 - INFO - Found active emulator: emulator-5554
+2025-08-02 04:20:13,660 - INFO - Getting root access on device: emulator-5554
+2025-08-02 04:20:15,667 - INFO - Disabling SELinux if possible
+2025-08-02 04:20:15,692 - INFO - Stopping any existing Frida server processes
+2025-08-02 04:20:15,718 - INFO - Pushing Frida server binary to device
+2025-08-02 04:20:16,041 - INFO - Setting executable permissions on Frida server
+2025-08-02 04:20:16,061 - INFO - Starting Frida server in background
+2025-08-02 04:23:26,423 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-02 04:23:26,423 - INFO - Frida client version: 16.7.19
+2025-08-02 04:23:26,423 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:23:26,423 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:23:26,423 - INFO - Loaded 22 patterns from file
+2025-08-02 04:23:26,427 - INFO - Found active emulator: emulator-5554
+2025-08-02 04:23:26,427 - INFO - Getting root access on device: emulator-5554
+2025-08-02 04:23:29,638 - INFO - Disabling SELinux if possible
+2025-08-02 04:23:29,689 - INFO - Stopping any existing Frida server processes
+2025-08-02 04:23:29,714 - INFO - Pushing Frida server binary to device
+2025-08-02 04:23:30,055 - INFO - Setting executable permissions on Frida server
+2025-08-02 04:23:30,070 - INFO - Starting Frida server in background
+2025-08-02 04:23:33,074 - INFO - Verifying Frida server is running
+2025-08-02 04:24:18,392 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-02 04:24:18,392 - INFO - Frida client version: 16.7.19
+2025-08-02 04:24:18,392 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:24:18,392 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-02 04:24:18,392 - INFO - Loaded 22 patterns from file
+2025-08-02 04:24:18,396 - INFO - Found active emulator: emulator-5554
+2025-08-02 04:24:18,396 - INFO - Getting root access on device: emulator-5554
+2025-08-02 04:24:20,402 - INFO - Disabling SELinux if possible
+2025-08-02 04:24:20,419 - INFO - Stopping any existing Frida server processes
+2025-08-02 04:24:20,444 - INFO - Pushing Frida server binary to device
+2025-08-02 04:24:20,743 - INFO - Setting executable permissions on Frida server
+2025-08-02 04:24:20,768 - INFO - Starting Frida server in background

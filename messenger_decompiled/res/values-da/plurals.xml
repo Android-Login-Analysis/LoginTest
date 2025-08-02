@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">Slet %d samtaler? De vil ikke længere blive vist i samtale listen, deres beskeder vil forblive på serveren.</item>
+        <item quantity="one">Slette %d samtale? Den vil ikke længere blive vist i samtale listen, dens beskeder vil forblive på serveren.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">Slet %d beskeder her og på serveren?</item>
+        <item quantity="one">Slette %d besked her og på serveren?</item>
+    </plurals>
+    <plurals name="ask_delete_messages_simple">
+        <item quantity="other">Slet %d beskeder?</item>
+        <item quantity="one">Slet %d besked?</item>
+    </plurals>
+    <plurals name="ask_send_following_n_files_to">
+        <item quantity="other">Send de følgende %1$d filer til %2$s?</item>
+        <item quantity="one">Send den følgende fil til 2%s?</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d samtaler arkiveret</item>
+        <item quantity="one">%d samtale arkiveret</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d nye beskeder</item>
+        <item quantity="one">%d ny besked</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d samtaler frigjort fra arkiv</item>
+        <item quantity="one">%d samtale frigjort fra arkiv</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d nye notifikationer</item>
+        <item quantity="one">%d ny notifikation</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d samtaler</item>
+        <item quantity="one">%d samtale</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d kontakter</item>
+        <item quantity="one">%d kontakt</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d timer</item>
+        <item quantity="one">%d time</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d medlemmer</item>
+        <item quantity="one">%d medlem</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d beskeder</item>
+        <item quantity="one">%d besked</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d min.</item>
+        <item quantity="one">%d min.</item>
+    </plurals>
+</resources>

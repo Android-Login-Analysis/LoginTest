@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">Radera %d chattar? De kommer inte att visas i chattlistan, deras meddelanden kommer finnas kvar på servern.</item>
+        <item quantity="one">Radera %d chatt? Det kommer inte längre synas i chattlistan, meddelanden kommer att finnas kvar på servern.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">Radera %d meddelanden här och på servern?</item>
+        <item quantity="one">Radera %d meddelande här och på servern.</item>
+    </plurals>
+    <plurals name="ask_send_following_n_files_to">
+        <item quantity="other">Skicka de följande filerna %1$d till %2$s ?</item>
+        <item quantity="one">Skicka följande fil till %s?</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d chattar arkiverade</item>
+        <item quantity="one">%d chatt arkiverad</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d nya meddelanden</item>
+        <item quantity="one">%d nytt meddelande</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d chattar avarkiverade</item>
+        <item quantity="one">%d chatt ur arkivet</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d nya aviseringar</item>
+        <item quantity="one">%d ny avisering</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d chattar</item>
+        <item quantity="one">%d chatt</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d kontakter</item>
+        <item quantity="one">%d kontakt</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d timmar</item>
+        <item quantity="one">%d timme</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d medlemmar</item>
+        <item quantity="one">%d medlem</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d meddelanden</item>
+        <item quantity="one">%d meddelande</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d min</item>
+        <item quantity="one">%d min</item>
+    </plurals>
+</resources>

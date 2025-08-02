@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <org.thoughtcrime.securesms.preferences.widgets.ProfilePreference android:key="preference_category_profile" />
+    <Preference android:icon="@drawable/ic_forum_24dp" android:layout="@layout/preference_item" android:title="@string/pref_chats_and_media" android:key="preference_category_chats" />
+    <Preference android:icon="@drawable/ic_notifications_24dp" android:layout="@layout/preference_item" android:title="@string/pref_notifications" android:key="preference_category_notifications" />
+    <Preference android:icon="@drawable/ic_brightness_6_24dp" android:layout="@layout/preference_item" android:title="@string/pref_appearance" android:key="preference_category_appearance" />
+    <Preference android:icon="@drawable/ic_baseline_devices_24" android:layout="@layout/preference_item" android:title="@string/multidevice_title" android:key="preference_category_multidevice" />
+    <Preference android:icon="@drawable/ic_swap_vert_24dp" android:layout="@layout/preference_item" android:title="@string/connectivity" android:key="preference_category_connectivity" />
+    <Preference android:icon="@drawable/ic_advanced_24dp" android:layout="@layout/preference_item" android:title="@string/menu_advanced" android:key="preference_category_advanced" />
+    <Preference android:icon="@drawable/ic_help_24dp" android:layout="@layout/preference_item" android:title="@string/menu_help" android:key="preference_category_help" />
+</PreferenceScreen>

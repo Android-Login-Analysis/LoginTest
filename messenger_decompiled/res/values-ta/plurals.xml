@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d புதிய செய்திகள்</item>
+        <item quantity="one">%d புதிய செய்திகள்</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d புதிய அறிவிப்புகள்</item>
+        <item quantity="one">%d புதிய அறிவிப்பு</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d அரட்டைகள்</item>
+        <item quantity="one">%d அரட்டை</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d தொடர்புகள்</item>
+        <item quantity="one">%d தொடர்புகள்</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d மணிகள்</item>
+        <item quantity="one">%d மணி</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d உறுப்பினர்கள்</item>
+        <item quantity="one">%d உறுப்பினர்கள்</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d செய்திகள்</item>
+        <item quantity="one">%d செய்திகள்</item>
+    </plurals>
+</resources>

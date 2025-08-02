@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple android:color="@color/delta_primary"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/mask" android:drawable="@android:color/black" />
+    <item>
+        <selector>
+            <item android:state_selected="true" android:drawable="@color/primary_alpha33" />
+            <item android:drawable="@color/pinned_bg" />
+        </selector>
+    </item>
+</ripple>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">Ștergeți %d de chat-urilAcestea nu vor mai fi afișate în lista de chat; mesajele lor vor rămâne pe server.</item>
+        <item quantity="one">Ștergeți %d chat-ul? Acestea nu vor mai fi afișate în lista de chat; mesajele lor vor rămâne pe server.</item>
+        <item quantity="few">Ștergeți %d chat-uri? Acestea nu vor mai fi afișate în lista de chat; mesajele lor vor rămâne pe server.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">Ștergeți %d de mesaje de aici și de pe server?</item>
+        <item quantity="one">Ștergeți %d mesajul aici și pe server?</item>
+        <item quantity="few">Ștergeți %d mesajele de aici și de pe server?</item>
+    </plurals>
+    <plurals name="ask_delete_messages_simple">
+        <item quantity="other">Ștergeți %d de mesaje?</item>
+        <item quantity="one">Ștergeți %d mesaj?</item>
+        <item quantity="few">Ștergeți %d mesaje?</item>
+    </plurals>
+    <plurals name="ask_send_following_n_files_to">
+        <item quantity="other">Trimiteți următoarele %1$d de fișiere la %2$s?</item>
+        <item quantity="one">Trimiteți următorul fișier la %s?</item>
+        <item quantity="few">Trimiteți următoarele %1$d fișiere la %2$s?</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d de chat-uri arhivate</item>
+        <item quantity="one">%d chat arhivat</item>
+        <item quantity="few">%d chat-uri arhivate</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d de mesaje noi</item>
+        <item quantity="one">%d nou mesaj</item>
+        <item quantity="few">%d mesaje noi</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d de chat-uri nearhivate</item>
+        <item quantity="one">%d chat nearhivat</item>
+        <item quantity="few">%d chat-uri nearhivate</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d de notificări noi</item>
+        <item quantity="one">%d notificare nouă</item>
+        <item quantity="few">%d notificări noi</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d de chat-uri</item>
+        <item quantity="one">%d chat</item>
+        <item quantity="few">%d chat-uri</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d de contacte</item>
+        <item quantity="one">%d contact</item>
+        <item quantity="few">%d contacte</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d de ore</item>
+        <item quantity="one">%d oră</item>
+        <item quantity="few">%d ore</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d de membrii</item>
+        <item quantity="one">%d membru</item>
+        <item quantity="few">%d membrii</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d de mesaje</item>
+        <item quantity="one">%d mesaj</item>
+        <item quantity="few">%d mesaje</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d de minute</item>
+        <item quantity="one">%d minut</item>
+        <item quantity="few">%d minute</item>
+    </plurals>
+    <plurals name="n_recipients">
+        <item quantity="other">%d de recipiente</item>
+        <item quantity="one">%d recipient</item>
+        <item quantity="few">%d recipiente</item>
+    </plurals>
+    <plurals name="n_selected">
+        <item quantity="other">%d De Selecții</item>
+        <item quantity="one">%d Selectată</item>
+        <item quantity="few">%d Selectate</item>
+    </plurals>
+</resources>

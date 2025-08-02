@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector android:height="24.0dip" android:width="24.0dip" android:viewportWidth="128.0" android:viewportHeight="128.0"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:name="@string/play_icon_group_parts" android:pivotX="64.0" android:pivotY="64.0" android:scaleX="1.5" android:scaleY="1.5">
+        <group android:name="@string/play_icon_group_top">
+            <path android:name="@string/play_icon_top_path_name" android:fillColor="@android:color/white" android:pathData="@string/play_icon_upper_path_data" android:strokeLineCap="butt" android:strokeLineJoin="miter" android:strokeMiterLimit="10.0" />
+        </group>
+        <group android:name="@string/play_icon_group_bottom">
+            <path android:name="@string/play_icon_bottom_path_name" android:fillColor="@android:color/white" android:pathData="@string/play_icon_bottom_path_data" android:strokeLineCap="butt" android:strokeLineJoin="miter" android:strokeMiterLimit="10.0" />
+        </group>
+    </group>
+</vector>

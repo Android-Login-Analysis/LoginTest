@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_notifications" android:key="pref_key_enable_notifications" android:defaultValue="true" />
+    <Preference android:persistent="false" android:title="@string/pref_sound" android:key="pref_key_ringtone" android:dependency="pref_key_enable_notifications" android:defaultValue="content://settings/system/notification_sound" />
+    <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_vibrate" android:key="pref_key_vibrate" android:dependency="pref_key_enable_notifications" android:defaultValue="true" />
+    <ListPreference android:entries="@array/pref_led_color_entries" android:title="@string/pref_led_color" android:key="pref_led_color" android:dependency="pref_key_enable_notifications" android:defaultValue="purple" android:entryValues="@array/pref_led_color_values" />
+    <ListPreference android:entries="@array/pref_notification_privacy_entries" android:title="@string/pref_notifications_show" android:key="pref_notification_privacy" android:dependency="pref_key_enable_notifications" android:defaultValue="all" android:entryValues="@array/pref_notification_privacy_values" />
+    <ListPreference android:entries="@array/pref_notification_priority_entries" android:title="@string/pref_notifications_priority" android:key="pref_notification_priority" android:dependency="pref_key_enable_notifications" android:defaultValue="1" android:entryValues="@array/pref_notification_priority_values" />
+    <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_in_chat_sounds" android:key="pref_key_inthread_notifications" android:dependency="pref_key_enable_notifications" android:defaultValue="true" />
+    <PreferenceCategory android:title="@string/pref_instant_delivery">
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_push_notifications" android:key="pref_push_enabled" android:summary="@string/pref_push_notifications_explain" android:dependency="pref_key_enable_notifications" android:defaultValue="true" />
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_background_notifications" android:key="pref_ignore_battery_optimizations" android:summary="@string/pref_background_notifications_explain" android:dependency="pref_key_enable_notifications" android:defaultValue="false" />
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_reliable_service" android:key="pref_reliable_service" android:summary="@string/pref_reliable_service_explain" android:dependency="pref_key_enable_notifications" android:defaultValue="false" />
+    </PreferenceCategory>
+</PreferenceScreen>

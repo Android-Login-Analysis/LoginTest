@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">Cheres iscantzellare %d tzarradas? No ant a èssere prus ammustradas in sa lista de sas tzarradas, ma sos messàgios ant a abarrare in su servidore.</item>
+        <item quantity="one">Cheres iscantzellare %d tzarrada? No at a èssere prus ammustrada in sa lista de sas tzarradas, ma sos messàgios ant a abarrare in su servidore.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">Iscantzellare %d messàgios inoghe e in su servidore?</item>
+        <item quantity="one">Iscantzellare %d messàgiu inoghe e in su servidore?</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d tzarradas archiviadas</item>
+        <item quantity="one">%d tzarrada archiviada</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%dmessàgios noos</item>
+        <item quantity="one">%d messàgiu nou</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d tzarradas ripristinadas</item>
+        <item quantity="one">%d tzarrada ripristinada</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d tzarradas</item>
+        <item quantity="one">%d tzarrada</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d contatos</item>
+        <item quantity="one">%d contatu</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d oras</item>
+        <item quantity="one">%d ora</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d membros</item>
+        <item quantity="one">%d membru</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d messàgios</item>
+        <item quantity="one">%d messàgiu</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d min</item>
+        <item quantity="one">%d min</item>
+    </plurals>
+</resources>

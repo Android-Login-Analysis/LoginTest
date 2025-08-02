@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">Vymazat %d hovorů? Pak už je neuvidíte v seznamu hovorů, ale jejich zprávy zůstanou na serveru.</item>
+        <item quantity="one">Vymazat %d hovor? Pak už jej neuvidíte v seznamu hovorů, ale jeho zprávy zůstanou na serveru.</item>
+        <item quantity="few">Vymazat %d hovory? Pak už je neuvidíte v seznamu hovorů, ale jejich zprávy zůstanou na serveru.</item>
+        <item quantity="many">Vymazat %d hovorů? Pak už je neuvidíte v seznamu hovorů, ale jejich zprávy zůstanou na serveru.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">Vymaž %d zpráv zde i ze serveru?</item>
+        <item quantity="one">Vymaž %d zprávu zde i ze serveru?</item>
+        <item quantity="few">Vymaž %d zprávy zde i ze serveru?</item>
+        <item quantity="many">Vymaž %d zpráv zde i ze serveru?</item>
+    </plurals>
+    <plurals name="ask_send_following_n_files_to">
+        <item quantity="other">Pošli následujících %1$d souborů na %2$s?</item>
+        <item quantity="one">Pošli následující soubor na %s?</item>
+        <item quantity="few">Pošli následující %1$d soubory na %2$s?</item>
+        <item quantity="many">Pošli následujících %1$d souborů na %2$s?</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d chaty archivovány</item>
+        <item quantity="one">%d hovor archivován</item>
+        <item quantity="few">%d hovory archivovány</item>
+        <item quantity="many">%d hovorů archivováno</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d nových zpráv</item>
+        <item quantity="one">%d nová zpráva</item>
+        <item quantity="few">%d nové zprávy</item>
+        <item quantity="many">%d nových zpráv</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d chaty rozbaleny</item>
+        <item quantity="one">%d hovor rozbalen</item>
+        <item quantity="few">%d hovory rozbaleny</item>
+        <item quantity="many">%d hovorů rozbaleno</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d nových oznámení</item>
+        <item quantity="one">%d nové oznámení</item>
+        <item quantity="few">%d nová oznámení</item>
+        <item quantity="many">%d nového oznámení</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%dChaty</item>
+        <item quantity="one">%d hovor</item>
+        <item quantity="few">%d hovory</item>
+        <item quantity="many">%d hovorů</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d kontaktů</item>
+        <item quantity="one">%d kontakt</item>
+        <item quantity="few">%d kontakty</item>
+        <item quantity="many">%d kontaktů</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d hodin</item>
+        <item quantity="one">%d hodina</item>
+        <item quantity="few">%d hodiny</item>
+        <item quantity="many">%d hodin</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d členů</item>
+        <item quantity="one">%d člen</item>
+        <item quantity="few">%d členové</item>
+        <item quantity="many">%d členů</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d zpráv</item>
+        <item quantity="one">%d zpráva</item>
+        <item quantity="few">%d zprávy</item>
+        <item quantity="many">%d zpráv</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d minut</item>
+        <item quantity="one">%d minuta</item>
+        <item quantity="few">%d minuty</item>
+        <item quantity="many">%d minut</item>
+    </plurals>
+</resources>

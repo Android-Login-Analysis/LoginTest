@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">Slett %d chatter? De vil ikke lenger vises i chattelisten, meldingene vil fortsatt være lagret tjeneren.</item>
+        <item quantity="one">Slett %d chat? Den vil ikke lenger vises</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">Slett %d meldinger? De vil også bli slettet fra tjeneren.</item>
+        <item quantity="one">Slett %d melding? Den vil også bli slettet fra tjeneren?</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d chatter arkivert</item>
+        <item quantity="one">%d chatter</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d nye meldinger</item>
+        <item quantity="one">%d ny melding</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d chatter fjernet fra arkivet</item>
+        <item quantity="one">%d chatter fjernet fra arkivet</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d nye varsler</item>
+        <item quantity="one">%d nytt varsel</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d chatter</item>
+        <item quantity="one">%d sludring</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d kontakter</item>
+        <item quantity="one">%d kontakt</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d timer</item>
+        <item quantity="one">%d time</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d medlemmer</item>
+        <item quantity="one">%d medlem</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d meldinger</item>
+        <item quantity="one">%d melding</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d minutter</item>
+        <item quantity="one">%d minutt</item>
+    </plurals>
+</resources>

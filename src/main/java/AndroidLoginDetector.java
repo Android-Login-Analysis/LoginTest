@@ -158,18 +158,18 @@ public class AndroidLoginDetector {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
             if (input != null) {
                 config.load(input);
-                appPackage = config.getProperty("app.package", "org.mian.gitnex");
-                appActivity = config.getProperty("app.activity", "org.mian.gitnex.activities.MainActivity");
-                appPath = config.getProperty("app.path", "apps/org.mian.gitnex_550.apk");
-                emulatorSnapshot = config.getProperty("emulator.snapshot", "snap_gitnex_login");
+                appPackage = config.getProperty("app.package", "com.b44t.messenger");
+                appActivity = config.getProperty("app.activity", "org.thoughtcrime.securesms.ConversationListActivity");
+                appPath = config.getProperty("app.path", "apps/com.b44t.messenger_6904.apk");
+                emulatorSnapshot = config.getProperty("emulator.snapshot", "snap_com.b44t.messenger_login");
             }
         } catch (Exception e) {
             logError("Failed to load config.properties: " + e.getMessage());
             // Use default values
-            appPackage = "org.mian.gitnex";
-            appActivity = "org.mian.gitnex.activities.MainActivity";
-            appPath = "apps/org.mian.gitnex_550.apk";
-            emulatorSnapshot = "snap_gitnex_login";
+            appPackage = "com.b44t.messenger";
+            appActivity = "org.thoughtcrime.securesms.ConversationListActivity";
+            appPath = "apps/com.b44t.messenger_6904.apk";
+            emulatorSnapshot = "snap_com.b44t.messenger_login";
         }
 
         logInfo("App configuration loaded:");
@@ -180,9 +180,10 @@ public class AndroidLoginDetector {
     }
 
     private void loadCredentialPools() {
-        String projectRoot = ".";
-        accountPool = readLinesFromFile(projectRoot + "/pools/accounts.txt");
-        passwordPool = readLinesFromFile(projectRoot + "/pools/passwords.txt");
+        //String projectRoot = ".";
+        String projectRoot = "pools/" + appPackage;
+        accountPool = readLinesFromFile(projectRoot + "/accounts.txt");
+        passwordPool = readLinesFromFile(projectRoot + "/passwords.txt");
         googleEmailPool = readLinesFromFile(projectRoot + "/pools/google_accounts.txt");
         googlePasswordPool = readLinesFromFile(projectRoot + "/pools/google_passwords.txt");
         facebookEmailPool = readLinesFromFile(projectRoot + "/pools/facebook_accounts.txt");

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference android:entries="@array/pref_show_emails_entries" android:title="@string/pref_show_emails" android:key="pref_show_emails" android:entryValues="@array/pref_show_emails_values" />
+    <Preference android:title="@string/send_stats_to_devs" android:key="pref_self_reporting" />
+    <Preference android:title="@string/pref_view_log" android:key="pref_view_log" />
+    <PreferenceCategory android:title="@string/pref_experimental_features">
+        <Preference android:title="@string/videochat_instance" android:key="pref_webrtc_instance" android:summary="@string/none" />
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/broadcast_lists" android:key="pref_new_broadcast_list" android:defaultValue="false" />
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_on_demand_location_streaming" android:key="pref_location_streaming_enabled" android:defaultValue="false" />
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/enable_realtime" android:key="pref_webxdc_realtime_enabled" android:summary="@string/enable_realtime_explain" android:defaultValue="false" />
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_developer_mode" android:key="pref_developer_mode_enabled" android:summary="@string/pref_developer_mode_explain" android:defaultValue="false" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_app_access">
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_screen_security" android:key="pref_screen_security" android:summary="@string/pref_screen_security_explain" android:defaultValue="false" />
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_incognito_keyboard" android:key="pref_incognito_keyboard" android:summary="@string/pref_incognito_keyboard_explain" android:defaultValue="false" />
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_use_inapp_camera" android:key="pref_builtin_camera" android:summary="@string/pref_use_inapp_camera_explain" android:defaultValue="false" />
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_show_system_contacts" android:key="pref_show_system_contacts" android:summary="@string/pref_show_system_contacts_explain" android:defaultValue="false" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_encryption">
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/autocrypt_prefer_e2ee" android:key="pref_prefer_e2ee" android:defaultValue="true" />
+        <Preference android:title="@string/pref_manage_keys" android:key="pref_manage_keys" />
+        <Preference android:title="@string/autocrypt_send_asm_title" android:key="pref_send_autocrypt_setup_message" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_server">
+        <Preference android:title="@string/pref_password_and_account_settings" android:key="password_account_settings_button" />
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_watch_sent_folder" android:key="pref_sentbox_watch" android:defaultValue="true" />
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_send_copy_to_self" android:key="pref_bcc_self" android:defaultValue="true" />
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_auto_folder_moves" android:key="pref_mvbox_move" android:summary="@string/pref_auto_folder_moves_explain" android:defaultValue="true" />
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_only_fetch_mvbox_title" android:key="pref_only_fetch_mvbox" android:summary="@string/pref_only_fetch_mvbox_explain" android:defaultValue="false" />
+    </PreferenceCategory>
+</PreferenceScreen>

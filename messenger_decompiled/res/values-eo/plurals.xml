@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">Ĉu forigi %d babilojn? Ili ne plu troveblos en la babilaro, tamen iliaj mesaĝoj plurestos en la servilo.</item>
+        <item quantity="one">Ĉu forigi %d babilon? Ĝi ne plu troveblos en la babilaro, tamen ĝiaj mesaĝoj plurestos en la servilo.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">Ĉu forigi %d mesaĝojn kaj ĉi tie kaj en la servilo?</item>
+        <item quantity="one">Ĉu forigi %d mesaĝon kaj ĉi tie kaj en la servilo?</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d babiloj enarĥivigitaj</item>
+        <item quantity="one">%d babilo enarĥivigita</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d novaj mesaĝoj</item>
+        <item quantity="one">%d nova mesaĝo</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d babiloj elarĥivigitaj</item>
+        <item quantity="one">%d babilo elarĥivigita</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d babiloj</item>
+        <item quantity="one">%d Parolado</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d kontaktoj</item>
+        <item quantity="one">%d kontakto</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d horoj</item>
+        <item quantity="one">%d horo</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d anoj</item>
+        <item quantity="one">%d ano</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d mesaĝoj</item>
+        <item quantity="one">%dmesaĝo</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d min</item>
+        <item quantity="one">%d min</item>
+    </plurals>
+    <plurals name="n_recipients">
+        <item quantity="other">%dricevontoj</item>
+        <item quantity="one">%dricevonto</item>
+    </plurals>
+    <plurals name="n_selected">
+        <item quantity="other">%delektita</item>
+        <item quantity="one">%delektitaj</item>
+    </plurals>
+</resources>

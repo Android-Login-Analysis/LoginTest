@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <org.thoughtcrime.securesms.components.emoji.EmojiTextView android:textSize="20.0sp" android:textColor="?emoji_text_color" android:gravity="center_horizontal" android:id="@id/status_line" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="40.0sp" android:textAlignment="center" />
+    <ProgressBar android:id="@id/progress_bar" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="16.0dip" style="?android:progressBarStyleHorizontal" />
+    <LinearLayout android:orientation="vertical" android:id="@id/top_text" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="16.0dip">
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textSize="16.0sp" android:textColor="?emoji_text_color" android:gravity="center_vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="8.0dip" android:text="➊" android:layout_marginEnd="8.0dip" />
+            <TextView android:textSize="16.0sp" android:textColor="?emoji_text_color" android:gravity="center_vertical" android:id="@id/same_network_hint" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/multidevice_same_network_hint" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textSize="16.0sp" android:textColor="?emoji_text_color" android:gravity="center_vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="8.0dip" android:text="➋" android:layout_marginEnd="8.0dip" />
+            <TextView android:textSize="16.0sp" android:textColor="?emoji_text_color" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/multidevice_install_dc_on_other_device" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textSize="16.0sp" android:textColor="?emoji_text_color" android:gravity="center_vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="8.0dip" android:text="➌" android:layout_marginEnd="8.0dip" />
+            <TextView android:textSize="16.0sp" android:textColor="?emoji_text_color" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/multidevice_tap_scan_on_other_device" />
+        </LinearLayout>
+    </LinearLayout>
+    <com.caverock.androidsvg.SVGImageView android:id="@id/qrImage" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_marginBottom="16.0dip" android:layout_weight="1.0" android:contentDescription="@string/qrscan_title" />
+    <TextView android:textSize="16.0sp" android:textColor="?emoji_text_color" android:gravity="center" android:id="@id/bottom_text" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="16.0dip" android:layout_marginRight="16.0dip" android:layout_marginBottom="16.0dip" android:text="@string/multidevice_experimental_hint" />
+</LinearLayout>

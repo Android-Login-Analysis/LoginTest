@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference android:title="@string/pref_blocked_contacts" android:key="preference_category_blocked" />
+    <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_read_receipts" android:key="pref_read_receipts" android:summary="@string/pref_read_receipts_explain" android:defaultValue="false" />
+    <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_enter_sends" android:key="pref_enter_sends" android:summary="@string/pref_enter_sends_explain" android:defaultValue="false" />
+    <ListPreference android:entries="@array/pref_compression_entries" android:title="@string/pref_outgoing_media_quality" android:key="pref_compression" android:dependency="pref_compression" android:defaultValue="0" android:entryValues="@array/pref_compression_values" />
+    <ListPreference android:entries="@array/pref_download_limit_entries" android:title="@string/auto_download_messages" android:key="auto_download" android:entryValues="@array/pref_download_limit_values" />
+    <PreferenceCategory android:title="@string/delete_old_messages">
+        <ListPreference android:entries="@array/autodel_device_durations" android:title="@string/autodel_device_title" android:key="autodel_device" android:entryValues="@array/autodel_device_values" />
+        <ListPreference android:entries="@array/autodel_server_durations" android:title="@string/autodel_server_title" android:key="autodel_server" android:entryValues="@array/autodel_server_values" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_backup">
+        <Preference android:title="@string/pref_backup_explain" android:key="pref_backup" />
+    </PreferenceCategory>
+</PreferenceScreen>

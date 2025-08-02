@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">Usunąć %d czatów? Nie będą już wyświetlane na liście czatów, ich wiadomości pozostaną na serwerze.</item>
+        <item quantity="one">Usunąć %d czat? Nie będzie już wyświetlany na liście czatów, wiadomość pozostanie na serwerze.</item>
+        <item quantity="few">Usunąć %d czatów? Nie będą już wyświetlane na liście czatów, ich wiadomości pozostaną na serwerze.</item>
+        <item quantity="many">Usunąć %d czaty? Nie będą już wyświetlane na liście czatów, ich wiadomości pozostaną na serwerze.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">Usunąć %d wiadomości tutaj i na serwerze?</item>
+        <item quantity="one">Usunąć %d wiadomość tutaj i na serwerze?</item>
+        <item quantity="few">Usunąć %d wiadomości tutaj i na serwerze?</item>
+        <item quantity="many">Usunąć %d wiadomości tutaj i na serwerze?</item>
+    </plurals>
+    <plurals name="ask_delete_messages_simple">
+        <item quantity="other">Usunąć %d wiadomości?</item>
+        <item quantity="one">Usunąć %d wiadomość?</item>
+        <item quantity="few">Usunąć %d wiadomości?</item>
+        <item quantity="many">Usunąć %d wiadomości?</item>
+    </plurals>
+    <plurals name="ask_send_following_n_files_to">
+        <item quantity="other">Wysłać %1$d pliku do %2$s?</item>
+        <item quantity="one">Wysłać plik do %s?</item>
+        <item quantity="few">Wysłać %1$d pliki do %2$s?</item>
+        <item quantity="many">Wysłać %1$d plików do %2$s?</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d czatu zarchiwizowanego</item>
+        <item quantity="one">%d czat zarchiwizowany</item>
+        <item quantity="few">%dczaty zarchiwizowane</item>
+        <item quantity="many">%dczatów zarchiwizowanych</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d nowych wiadomości</item>
+        <item quantity="one">%d nowa wiadomość</item>
+        <item quantity="few">%d nowe wiadomości</item>
+        <item quantity="many">%d nowe wiadomości</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">Przywrócono %d czatu z archiwum</item>
+        <item quantity="one">Przywrócono %dczat z archiwum</item>
+        <item quantity="few">Przywrócono %d czaty z archiwum</item>
+        <item quantity="many">Przywrócono %d czatów z archiwum</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d nowego powiadomienia</item>
+        <item quantity="one">%d nowe powiadomienie</item>
+        <item quantity="few">%d nowe powiadomienia</item>
+        <item quantity="many">%d nowych powiadomień</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d czatów</item>
+        <item quantity="one">%d czat</item>
+        <item quantity="few">%d czaty</item>
+        <item quantity="many">%d czatów</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d kontaktów</item>
+        <item quantity="one">%d kontakt</item>
+        <item quantity="few">%d kontakty</item>
+        <item quantity="many">%d kontaktów</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d godzin</item>
+        <item quantity="one">%d godzina</item>
+        <item quantity="few">%d godziny</item>
+        <item quantity="many">%d godzin</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d członków</item>
+        <item quantity="one">%d członek</item>
+        <item quantity="few">%d członków</item>
+        <item quantity="many">%d członków</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d wiadomości</item>
+        <item quantity="one">%d wiadomość</item>
+        <item quantity="few">%d wiadomości</item>
+        <item quantity="many">%d wiadomości</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d min</item>
+        <item quantity="one">%d min</item>
+        <item quantity="few">%d min</item>
+        <item quantity="many">%d min</item>
+    </plurals>
+    <plurals name="n_recipients">
+        <item quantity="other">%d odbiorcy</item>
+        <item quantity="one">%d odbiorca</item>
+        <item quantity="few">%d odbiorców</item>
+        <item quantity="many">%d odbiorców</item>
+    </plurals>
+    <plurals name="n_selected">
+        <item quantity="other">Wybrano %d</item>
+        <item quantity="one">Wybrano %d</item>
+        <item quantity="few">Wybrano %d</item>
+        <item quantity="many">Wybrano %d</item>
+    </plurals>
+</resources>

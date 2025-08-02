@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageButton android:layout_gravity="center_vertical" android:id="@id/quick_audio_toggle" android:background="@null" android:paddingLeft="11.0dip" android:paddingRight="11.0dip" android:layout_width="wrap_content" android:layout_height="fill_parent" android:src="?quick_mic_icon" android:contentDescription="@string/audio" />
+    <LinearLayout android:layout_gravity="center" android:orientation="vertical" android:id="@id/lock_drop_target" android:background="?recording_lock_background" android:visibility="gone" android:clipChildren="false" android:layout_width="40.0dip" android:layout_height="64.0dip" android:layout_marginLeft="-9.0dip" android:layout_marginStart="-9.0dip">
+        <androidx.appcompat.widget.AppCompatImageView android:layout_gravity="center_horizontal" android:layout_width="24.0dip" android:layout_height="24.0dip" android:layout_marginTop="10.0dip" android:tint="?conversation_item_outgoing_text_primary_color" android:contentDescription="@string/lock_recording" app:srcCompat="@drawable/ic_lock" />
+        <androidx.appcompat.widget.AppCompatImageView android:layout_gravity="center_horizontal" android:layout_width="18.0dip" android:layout_height="18.0dip" android:layout_marginTop="6.0dip" android:tint="?conversation_item_outgoing_text_primary_color" android:contentDescription="@string/lock_recording" app:srcCompat="@drawable/ic_chevron_up" />
+    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatImageView android:id="@id/quick_audio_fab" android:background="@drawable/circle_tintable" android:padding="18.0dip" android:visibility="gone" android:clickable="false" android:layout_width="74.0dip" android:layout_height="74.0dip" android:layout_marginLeft="-18.0dip" android:layout_marginTop="-18.0dip" android:src="@drawable/ic_mic_white_48dp" android:tint="@color/core_white" android:layout_marginStart="-18.0dip" />
+</merge>

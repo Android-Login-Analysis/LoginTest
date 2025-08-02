@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">Të fshihen %d fjalosje? S’do të duken më te lista e fjalosjeve; mesazhet e tyre do të mbeten te shërbyesi.</item>
+        <item quantity="one">Të fshihet %d fjalosje? S’do të duket më te lista e bisedave; mesazhet e saj do të mbeten te shërbyesi.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">Të fshihen %d mesazhe këtu dhe te shërbyesi?</item>
+        <item quantity="one">Të fshihet %d mesazh këtu dhe te shërbyesi?</item>
+    </plurals>
+    <plurals name="ask_delete_messages_simple">
+        <item quantity="other">Të fshihen %d mesazhe?</item>
+        <item quantity="one">Të fshihet %d mesazh?</item>
+    </plurals>
+    <plurals name="ask_send_following_n_files_to">
+        <item quantity="other">Të dërgohen %1$d kartelat vijuese te %2$s?</item>
+        <item quantity="one">Të dërgohet kartela vijuese te %s?</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">U arkivuan %d fjalosje</item>
+        <item quantity="one">U arkivua %d fjalosje</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d mesazhe të rinj</item>
+        <item quantity="one">%d mesazh i ri</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">U çarkivuan %d fjalosje</item>
+        <item quantity="one">U çarkivua %d fjalosje</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d njoftime të reja</item>
+        <item quantity="one">%d njoftim i ri</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d fjalosje</item>
+        <item quantity="one">%d fjalosje</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d kontakte</item>
+        <item quantity="one">%d kontakt</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d orë</item>
+        <item quantity="one">%d orë</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d anëtarë</item>
+        <item quantity="one">%d anëtar</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d mesazhe</item>
+        <item quantity="one">%d mesazh</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d min</item>
+        <item quantity="one">%d min</item>
+    </plurals>
+    <plurals name="n_recipients">
+        <item quantity="other">%d marrës</item>
+        <item quantity="one">%d marrës</item>
+    </plurals>
+    <plurals name="n_selected">
+        <item quantity="other">%d të Përzgjedhur</item>
+        <item quantity="one">%d e Përzgjedhur</item>
+    </plurals>
+</resources>

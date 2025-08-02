@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">"Supprimer %d discussions ? Elles n'apparaîtront plus dans la liste des discussions, mais les messages qu'elles contiennent resteront sur le serveur."</item>
+        <item quantity="one">"Supprimer %d discussion ? Elle n'apparaîtra plus dans la liste des discussions, mais les messages échangés resteront sur le serveur."</item>
+        <item quantity="many">"Supprimer %d discussions ? Elles n'apparaîtront plus dans la liste des discussions, mais les messages qu'elles contiennent resteront sur le serveur."</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">Supprimer %dmessages ici et sur le serveur ?</item>
+        <item quantity="one">Supprimer %d message ici et sur le serveur ?</item>
+        <item quantity="many">Supprimer %dmessages ici et sur le serveur ?</item>
+    </plurals>
+    <plurals name="ask_delete_messages_simple">
+        <item quantity="other">Supprimer %d messages ?</item>
+        <item quantity="one">Supprimer %d message ?</item>
+        <item quantity="many">Supprimer %d messages ?</item>
+    </plurals>
+    <plurals name="ask_send_following_n_files_to">
+        <item quantity="other">Envoyer les %1$d fichiers suivants à %2$s ?</item>
+        <item quantity="one">Envoyer le fichier suivant à %s ?</item>
+        <item quantity="many">Envoyer les %1$d fichiers suivants à %2$s ?</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d discussions archivées</item>
+        <item quantity="one">%d discussion archivée</item>
+        <item quantity="many">%d discussions archivées</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d nouveaux messages</item>
+        <item quantity="one">%dnouveaux messages</item>
+        <item quantity="many">%d nouveaux messages</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d discussions désarchivées</item>
+        <item quantity="one">%d discussion désarchivée</item>
+        <item quantity="many">%d discussions désarchivées</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d nouvelles notifications</item>
+        <item quantity="one">%d nouvelle notification</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d discussions</item>
+        <item quantity="one">%d discussion</item>
+        <item quantity="many">%d discussions</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d contacts</item>
+        <item quantity="one">%d contact</item>
+        <item quantity="many">%d contacts</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d heures</item>
+        <item quantity="one">%d heure</item>
+        <item quantity="many">%d heures</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d membres</item>
+        <item quantity="one">%d membre</item>
+        <item quantity="many">%d membres</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d messages</item>
+        <item quantity="one">%d message</item>
+        <item quantity="many">%d messages</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d mins</item>
+        <item quantity="one">%d min</item>
+        <item quantity="many">%d mins</item>
+    </plurals>
+    <plurals name="n_recipients">
+        <item quantity="other">%d destinataires</item>
+        <item quantity="one">%d destinataire</item>
+        <item quantity="many">%d destinataires</item>
+    </plurals>
+    <plurals name="n_selected">
+        <item quantity="other">%d Sélectionnés</item>
+        <item quantity="one">%d Sélectionné</item>
+        <item quantity="many">%d Sélectionnés</item>
+    </plurals>
+</resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">پاک کردن %d گپ؟ دیگر در فهرست گپ‌ها نشان داده نخواهند شد؛ ولی پیام‌ها در کارساز باقی می‌مانند.</item>
+        <item quantity="one">پاک کردن %d گپ؟ دیگر در لیست گپ‌ها نشان داده نخواهد شد ولی پیام‌ها در سرور باقی می‌مانند.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">پاک کردن %d گپ از این‌جا و از روی کارساز؟</item>
+        <item quantity="one">پاک کردن %d گپ از اینجا و سرور؟</item>
+    </plurals>
+    <plurals name="ask_delete_messages_simple">
+        <item quantity="other">می‌خواهید %d پیام پاک شود؟</item>
+        <item quantity="one">می‌خواهید %dپیام پاک شود؟</item>
+    </plurals>
+    <plurals name="ask_send_following_n_files_to">
+        <item quantity="other">ارسال این %1$d پرونده به %2$s؟</item>
+        <item quantity="one">ارسال این پرونده به %s؟</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d گپ بایگانی شدند</item>
+        <item quantity="one">%d گپ بایگانی شد</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d پیام جدید</item>
+        <item quantity="one">%dپیام جدید</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d گپ از بایگانی خارج شدند</item>
+        <item quantity="one">%d گپ از بایگانی خارج شد</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d اعلان جدید</item>
+        <item quantity="one">%d اعلان جدید</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d گپ</item>
+        <item quantity="one">%d چت</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d مخاطب</item>
+        <item quantity="one">%d مخاطب</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d ساعت</item>
+        <item quantity="one">%d ساعت</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d عضو</item>
+        <item quantity="one">%d عضو</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d پیام</item>
+        <item quantity="one">%d پیام</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d دقیقه</item>
+        <item quantity="one">%d دقیقه</item>
+    </plurals>
+    <plurals name="n_recipients">
+        <item quantity="other">%d گیرنده‌</item>
+        <item quantity="one">%d گیرنده</item>
+    </plurals>
+    <plurals name="n_selected">
+        <item quantity="other">تعداد %dانتخاب شده است</item>
+        <item quantity="one">تعداد %d انتخاب شده است</item>
+    </plurals>
+</resources>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">%d çat silmək? Artıq chat siyahısında göstərilməyəcək, mesajlar serverdə qalacaq.</item>
+        <item quantity="one">%d çat silmək? Artıq chat siyahısında göstərilməyəcək, mesajlar serverdə qalacaq.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">%dmesaj burada və serverdə silin?</item>
+        <item quantity="one">%dmesaj burada və serverdə silin?</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d chats archived</item>
+        <item quantity="one">%d çat arxiv olundu</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d yeni messaj</item>
+        <item quantity="one">%d yeni messaj</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d chats unarchived</item>
+        <item quantity="one">%d çat arxivdən çıxarıldı</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d yeni bildiriş</item>
+        <item quantity="one">%d yeni bildiriş</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d çat</item>
+        <item quantity="one">%d çat</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d kontakt</item>
+        <item quantity="one">%d kontakt</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d saat</item>
+        <item quantity="one">%d saat</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d üzv</item>
+        <item quantity="one">%d üzv</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d mesaj</item>
+        <item quantity="one">%d mesaj</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d dəqiqə</item>
+        <item quantity="one">%d dəqiqə</item>
+    </plurals>
+</resources>

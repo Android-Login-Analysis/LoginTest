@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">Да бъдат ли изтрити%d чата? Те повече няма да се показват в списъка с чатове; техните съобщения ще останат на сървъра.</item>
+        <item quantity="one">Да бъде ли изтрит %d чат? Той повече няма да се показва в списъка с чатове, неговите съобщения ще останат на сървъра.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">Да бъдат ли изтрити %d съобщения тук и на сървъра?</item>
+        <item quantity="one">Да бъде ли изтрито%dсъобщение тук и на сървъра?</item>
+    </plurals>
+    <plurals name="ask_delete_messages_simple">
+        <item quantity="other">Да бъдат ли изтрити %d съобщения?</item>
+        <item quantity="one">Да бъде ли изтрито %d съобщение?</item>
+    </plurals>
+    <plurals name="ask_send_following_n_files_to">
+        <item quantity="other">Да бъдат ли изпратени следните %1$d файлове на %2$s?</item>
+        <item quantity="one">Да бъде ли изпратен следният файл на%s?</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d чата са архивирани</item>
+        <item quantity="one">%d чат е архивиран</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d нови съобщения</item>
+        <item quantity="one">%d ново съобщение</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d чата са деархивирани</item>
+        <item quantity="one">%d чат е възстановен от архив</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d нови известия</item>
+        <item quantity="one">%d ново известие</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d чата</item>
+        <item quantity="one">%d чат</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d контакта</item>
+        <item quantity="one">%d контакт</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d часа</item>
+        <item quantity="one">%d час</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d члена</item>
+        <item quantity="one">%d член</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d съобщения</item>
+        <item quantity="one">%d съобщение</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d минути</item>
+        <item quantity="one">%dминута</item>
+    </plurals>
+    <plurals name="n_recipients">
+        <item quantity="other">%d получателя</item>
+        <item quantity="one">%d получател</item>
+    </plurals>
+    <plurals name="n_selected">
+        <item quantity="other">%d избрани</item>
+        <item quantity="one">%d избрани</item>
+    </plurals>
+</resources>

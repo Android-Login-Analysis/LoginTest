@@ -1,0 +1,28 @@
+[2025-08-01 17:42:17.621] [INFO] === AndroidLoginDetector Started ===
+[2025-08-01 17:42:17.626] [INFO] Log file: logs/android_login_detector_20250801_174217.log
+[2025-08-01 17:42:17.626] [INFO] Timestamp: 2025-08-01 17:42:17.626
+[2025-08-01 17:42:17.701] [INFO] App configuration loaded:
+[2025-08-01 17:42:17.701] [INFO]   - Package: org.mian.gitnex
+[2025-08-01 17:42:17.701] [INFO]   - Activity: org.mian.gitnex.activities.MainActivity
+[2025-08-01 17:42:17.701] [INFO]   - APK Path: apps/org.mian.gitnex_550.apk
+[2025-08-01 17:42:17.701] [INFO]   - Emulator Snapshot: snap_gitnex_login
+[2025-08-01 17:42:17.702] [INFO] Loaded credential pools:
+[2025-08-01 17:42:17.702] [INFO]   - Standard accounts: 17
+[2025-08-01 17:42:17.702] [INFO]   - Standard passwords: 15
+[2025-08-01 17:42:17.703] [INFO]   - Google accounts: 5
+[2025-08-01 17:42:17.703] [INFO]   - Google passwords: 5
+[2025-08-01 17:42:17.703] [INFO]   - Facebook accounts: 5
+[2025-08-01 17:42:17.703] [INFO]   - Facebook passwords: 5
+[2025-08-01 17:42:17.704] [INFO] Initialized state machine with 22 states
+[2025-08-01 17:42:17.713] [INFO] Frida monitoring started for package: org.mian.gitnex
+[2025-08-01 17:42:17.715] [INFO] === Starting AndroidLoginDetector Test ===
+[2025-08-01 17:42:17.715] [INFO] Target app: org.mian.gitnex
+[2025-08-01 17:42:17.716] [INFO] Test rounds: 5
+[2025-08-01 17:42:17.716] [INFO] Checking Docker environment compatibility...
+[2025-08-01 17:42:17.720] [INFO] ADB device found: emulator-5554	device
+[2025-08-01 17:42:17.733] [INFO] Emulator Android version: 10
+[2025-08-01 17:42:17.850] [INFO] Frida version: 16.7.19
+[2025-08-01 17:42:17.851] [INFO] All required files found
+[2025-08-01 17:42:17.851] [INFO] Docker environment check passed
+[2025-08-01 17:42:17.854] [ERROR] UI manager startup failed, aborting test
+[2025-08-01 17:42:17.855] [INFO] Monkey stopped

@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.thoughtcrime.securesms.components.VcardView android:id="@id/vcard_view" android:visibility="gone" android:layout_width="210.0dip" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" />

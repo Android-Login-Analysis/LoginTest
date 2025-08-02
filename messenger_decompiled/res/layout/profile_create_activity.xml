@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <org.thoughtcrime.securesms.components.InputAwareLayout android:orientation="vertical" android:id="@id/container" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginTop="20.0dip">
+        <TextView android:textSize="16.0sp" android:textColor="?android:textColorPrimary" android:gravity="start" android:id="@id/login_success_text" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="16.0dip" android:layout_marginRight="16.0dip" android:layout_marginBottom="20.0dip" android:text="" />
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="16.0dip" android:layout_marginRight="16.0dip">
+            <ImageView android:id="@id/avatar" android:layout_width="64.0dip" android:layout_height="64.0dip" android:contentDescription="@string/pref_profile_photo" />
+            <com.google.android.material.textfield.TextInputLayout android:id="@id/name" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dip">
+                <org.thoughtcrime.securesms.components.emoji.EmojiEditText android:id="@id/name_text" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/pref_your_name" android:inputType="textCapWords" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout android:id="@id/status_text_layout" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="16.0dip" android:layout_marginTop="16.0dip" android:layout_marginRight="16.0dip">
+            <org.thoughtcrime.securesms.components.emoji.EmojiEditText android:gravity="start|center|top" android:id="@id/status_text" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/pref_default_status_label" android:maxLines="3" android:inputType="textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView android:textColor="@color/gray50" android:gravity="start" android:id="@id/information_label" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="16.0dip" android:layout_marginTop="16.0dip" android:layout_marginRight="16.0dip" android:text="@string/pref_who_can_see_profile_explain" />
+        <org.thoughtcrime.securesms.components.emoji.MediaKeyboard android:id="@id/emoji_drawer" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content"
+          xmlns:android="http://schemas.android.com/apk/res/android" />
+    </org.thoughtcrime.securesms.components.InputAwareLayout>
+</FrameLayout>

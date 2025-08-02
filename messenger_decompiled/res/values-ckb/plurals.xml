@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">%d وتووێژ دەسڕیتەوە؟ ئیدی لە نێو لیستەی وتووێژەکاندا دیار نامێنن، بەڵام پەیامەکانیان لەسەر سێرڤەر دەمێنێتەوە.</item>
+        <item quantity="one">%d وتووێژ دەسڕیتەوە؟ ئیدی لە نیو لیستەی وتووێژەکاندا دیار نامێنن، بەڵام پەیامەکانیان لەسەر سێرڤەر دەمێنێتەوە.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">دەتەوێت ئەم %d پەیامە لێرە و لەسەر سێرڤەر بسڕیتەوە؟</item>
+        <item quantity="one">دەتەوێت ئەم %d پەیامە لێرە و لەسەر سێرڤەر بسڕیتەوە؟</item>
+    </plurals>
+    <plurals name="ask_send_following_n_files_to">
+        <item quantity="other">ئەم %1$d پەڕگەیە دەنێریت بۆ %2$s؟</item>
+        <item quantity="one">ئەم پەڕگەیە دەنێریت بۆ %s؟</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d وتووێژ ئەرشیڤ کران</item>
+        <item quantity="one">%dوتووێژ ئەرشیڤ کرا</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d پەیامی نوێ</item>
+        <item quantity="one">%d پەیامی نوێ</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d وتووێژ لە ئەرشیڤ دەرهێنران</item>
+        <item quantity="one">%d وتووێژ لە ئەرشیڤ دەرهێنرا</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%dوتووێژ</item>
+        <item quantity="one">%dوتووێژ</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%dبەردەنگ</item>
+        <item quantity="one">%dبەردەنگ</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%dکاتژمێر</item>
+        <item quantity="one">%dکاتژمێر</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%dئەندام</item>
+        <item quantity="one">%dئەندام</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%dپەیام</item>
+        <item quantity="one">%dپەیام</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%dخولەک</item>
+        <item quantity="one">%dخولەک</item>
+    </plurals>
+</resources>

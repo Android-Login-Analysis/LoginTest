@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">Eliminar %d conversas? Non se mostrarán máis na listas de conversas, as mensaxes permanecerán no servidor.</item>
+        <item quantity="one">Eliminar %d conversa? Non se mostrará na lista de conversas, as súas mensaxes permanecerán no servidor.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">Eliminar %d mensaxes aquí e no servidor?</item>
+        <item quantity="one">Eliminar %d mensaxe aquí e no servidor?</item>
+    </plurals>
+    <plurals name="ask_delete_messages_simple">
+        <item quantity="other">Borrar %d mensaxes?</item>
+        <item quantity="one">Borrar %d mensaxe?</item>
+    </plurals>
+    <plurals name="ask_send_following_n_files_to">
+        <item quantity="other">Enviar os seguintes %1$d ficheiros a %2$s?</item>
+        <item quantity="one">Enviar o seguinte ficheiro a %s?</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d conversas arquivadas</item>
+        <item quantity="one">%d conversa arquivada</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d novas mensaxes</item>
+        <item quantity="one">%d nova mensaxe</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d conversas desarquivadas</item>
+        <item quantity="one">%d conversa desarquivada</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d notificacións novas</item>
+        <item quantity="one">%d notificación nova</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d conversas</item>
+        <item quantity="one">%d conversa</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d contactos</item>
+        <item quantity="one">%d contacto</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d horas</item>
+        <item quantity="one">%d hora</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d membros</item>
+        <item quantity="one">%d membro</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d mensaxes</item>
+        <item quantity="one">%d mensaxe</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d min</item>
+        <item quantity="one">%dmin</item>
+    </plurals>
+    <plurals name="n_recipients">
+        <item quantity="other">%d correspondentes</item>
+        <item quantity="one">%d correspondente</item>
+    </plurals>
+    <plurals name="n_selected">
+        <item quantity="other">%d Seleccionado</item>
+        <item quantity="one">%d Seleccionados</item>
+    </plurals>
+</resources>

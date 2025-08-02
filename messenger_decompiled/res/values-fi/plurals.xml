@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">Poista %d keskustelua? Ne eivät enää näy keskustelulistauksessa, mutta niiden viestit jäävät palvelimelle.</item>
+        <item quantity="one">Poista %d keskustelu? Se ei enää näy keskustelulistauksessa, mutta sen viestit jäävät palvelimelle.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">Poista %d viestiä täältä ja palvelimelta?</item>
+        <item quantity="one">Poista %d viesti täältä ja palvelimelta?</item>
+    </plurals>
+    <plurals name="ask_delete_messages_simple">
+        <item quantity="other">Poista %d viestiä?</item>
+        <item quantity="one">Poista %d viesti?</item>
+    </plurals>
+    <plurals name="ask_send_following_n_files_to">
+        <item quantity="other">Lähetä seuraavat %1$dtiedostot yhteystiedolle%2$s?</item>
+        <item quantity="one">Lähetä seuraava tiedosto yhteystiedolle%s?</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d keskustelua arkistoitu</item>
+        <item quantity="one">%d keskustelu arkistoitu</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d uutta viestiä</item>
+        <item quantity="one">%d uusi viesti</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d keskustelua siirretty pois arkistosta</item>
+        <item quantity="one">%d keskustelu siirretty pois arkistosta</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d uutta ilmoitusta</item>
+        <item quantity="one">%d uusi ilmoitus</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d keskustelua</item>
+        <item quantity="one">%d keskustelu</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d yhteystietoa</item>
+        <item quantity="one">%d yhteystieto</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d tuntia</item>
+        <item quantity="one">%d tunti</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d jäsentä</item>
+        <item quantity="one">%d jäsen</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d viestiä</item>
+        <item quantity="one">%d viesti</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d min</item>
+        <item quantity="one">%d minuutti</item>
+    </plurals>
+    <plurals name="n_recipients">
+        <item quantity="other">%d vastaanottajaa</item>
+        <item quantity="one">%d vastaanottaja</item>
+    </plurals>
+    <plurals name="n_selected">
+        <item quantity="other">%d valittu</item>
+        <item quantity="one">%d valittu</item>
+    </plurals>
+</resources>

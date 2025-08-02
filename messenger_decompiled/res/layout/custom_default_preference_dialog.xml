@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <Spinner android:entries="@array/default_or_custom_entries" android:id="@id/default_or_custom" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="16.0dip" android:entryValues="@array/default_or_custom_values" android:spinnerMode="dropdown" />
+    <TextView android:id="@id/default_label" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="18.0dip" android:layout_marginTop="16.0dip" android:layout_marginRight="16.0dip" android:layout_marginBottom="16.0dip" />
+    <EditText android:id="@id/custom_edit" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_marginLeft="16.0dip" android:layout_marginTop="16.0dip" android:layout_marginRight="16.0dip" android:layout_marginBottom="16.0dip" />
+</LinearLayout>

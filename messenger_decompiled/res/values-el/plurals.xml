@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="ask_delete_chat">
+        <item quantity="other">Διαγραφή %d συνομιλιών; Δεν θα εμφανίζονται πλέον στη λίστα συνομιλιών, αλλά τα μηνύματά τους θα παραμείνουν στον διακομιστή.</item>
+        <item quantity="one">Διαγραφή %d συνομιλίας; Δεν θα εμφανίζετε πλέον στη λίστα συνομιλιών, αλλά τα μηνύματά της θα παραμείνουν στον διακομιστή.</item>
+    </plurals>
+    <plurals name="ask_delete_messages">
+        <item quantity="other">Διαγραφή %d μηνυμάτων εδώ και στον διακομιστη;</item>
+        <item quantity="one">Διαγραφή %d μηνύματος εδώ και στον διακομιστη;</item>
+    </plurals>
+    <plurals name="ask_delete_messages_simple">
+        <item quantity="other">Διαγραφή %d μηνυμάτων;</item>
+        <item quantity="one">Διαγραφή %d μηνύματος;</item>
+    </plurals>
+    <plurals name="ask_send_following_n_files_to">
+        <item quantity="other">Αποστολή των παρακάτω %1$d αρχείων στο %2$s;</item>
+        <item quantity="one">Αποστολή του παρακάτω αρχείου στο %s;</item>
+    </plurals>
+    <plurals name="chat_archived">
+        <item quantity="other">%d συνομιλίες αρχειοθετήθηκαν</item>
+        <item quantity="one">%d συνομιλία αρχειοθετήθηκε</item>
+    </plurals>
+    <plurals name="chat_n_new_messages">
+        <item quantity="other">%d νέα μηνύματα</item>
+        <item quantity="one">%d νέο μήνυμα</item>
+    </plurals>
+    <plurals name="chat_unarchived">
+        <item quantity="other">%d συνομιλίες καταργήθηκαν από την αρχειοθέτηση</item>
+        <item quantity="one">%d συνομιλία καταργήθηκε από την αρχειοθέτηση</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d νέες ειδοποιήσεις</item>
+        <item quantity="one">%d νέα ειδοποίηση</item>
+    </plurals>
+    <plurals name="n_chats">
+        <item quantity="other">%d συνομιλίες</item>
+        <item quantity="one">%d συνομιλία</item>
+    </plurals>
+    <plurals name="n_contacts">
+        <item quantity="other">%d επαφές</item>
+        <item quantity="one">%d επαφή</item>
+    </plurals>
+    <plurals name="n_hours">
+        <item quantity="other">%d ώρες</item>
+        <item quantity="one">%d ώρα</item>
+    </plurals>
+    <plurals name="n_members">
+        <item quantity="other">%d μέλη</item>
+        <item quantity="one">%d μέλος</item>
+    </plurals>
+    <plurals name="n_messages">
+        <item quantity="other">%d μηνύματα</item>
+        <item quantity="one">%d μήνυμα</item>
+    </plurals>
+    <plurals name="n_minutes">
+        <item quantity="other">%d λεπτά</item>
+        <item quantity="one">%d λεπτό</item>
+    </plurals>
+    <plurals name="n_recipients">
+        <item quantity="other">%d παραλήπτες</item>
+        <item quantity="one">%d παραλήπτης</item>
+    </plurals>
+    <plurals name="n_selected">
+        <item quantity="other">%d επιλεγμένα</item>
+        <item quantity="one">%d επιλεγμένο</item>
+    </plurals>
+</resources>

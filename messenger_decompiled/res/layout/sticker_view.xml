@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <View android:id="@id/sticker_missing_shade" android:background="@drawable/sticker_missing_background" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    <org.thoughtcrime.securesms.components.ThumbnailView android:id="@id/sticker_thumbnail" android:layout_width="@dimen/media_bubble_sticker_dimens" android:layout_height="@dimen/media_bubble_sticker_dimens" app:maxHeight="@dimen/media_bubble_max_height" app:maxWidth="@dimen/media_bubble_max_width" app:minHeight="@dimen/media_bubble_min_height" app:minWidth="@dimen/media_bubble_min_width" app:thumbnail_radius="0.0dip" />
+    <org.thoughtcrime.securesms.components.ConversationItemFooter android:gravity="end|bottom|center" android:layout_gravity="end|bottom|center" android:id="@id/sticker_footer" android:background="@drawable/conversation_item_update_background" android:paddingLeft="@dimen/transparent_footer_padding" android:paddingTop="@dimen/transparent_footer_padding" android:paddingRight="@dimen/transparent_footer_padding" android:paddingBottom="@dimen/transparent_footer_padding" android:layout_width="wrap_content" android:layout_height="wrap_content" app:footer_text_color="@color/core_white" />
+</merge>

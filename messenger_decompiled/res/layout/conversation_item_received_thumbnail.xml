@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.thoughtcrime.securesms.components.ConversationItemThumbnail android:id="@id/image_view" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="@dimen/media_bubble_default_dimens" android:contentDescription="@string/image"
+  xmlns:android="http://schemas.android.com/apk/res/android" />

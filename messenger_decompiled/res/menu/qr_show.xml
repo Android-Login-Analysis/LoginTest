@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:icon="@drawable/ic_share_white_24dp" android:id="@id/share" android:title="@string/menu_share" app:showAsAction="ifRoom" />
+    <item android:id="@id/new_classic_contact" android:title="@string/menu_new_classic_contact" app:showAsAction="never" />
+    <item android:id="@id/copy" android:title="@string/menu_copy_to_clipboard" app:showAsAction="never" />
+    <item android:id="@id/paste" android:title="@string/paste_from_clipboard" app:showAsAction="never" />
+    <item android:id="@id/load_from_image" android:title="@string/load_qr_code_as_image" app:showAsAction="never" />
+    <item android:id="@id/withdraw" android:title="@string/withdraw_qr_code" app:showAsAction="never" />
+</menu>

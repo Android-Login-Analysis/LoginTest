@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.tabs.TabLayout android:id="@id/camera_sticker_tabs" android:background="?colorPrimary" android:layout_width="fill_parent" android:layout_height="wrap_content" app:tabBackground="?colorPrimary" app:tabIndicatorColor="@color/white" app:tabMode="fixed" app:tabPaddingEnd="3.0dip" app:tabPaddingStart="3.0dip" app:tabSelectedTextColor="@color/white" app:tabTextColor="@color/gray10" />
+    <androidx.viewpager.widget.ViewPager android:id="@id/camera_sticker_pager" android:background="@color/black" android:layout_width="fill_parent" android:layout_height="0.0px" android:layout_weight="1.0" />
+</LinearLayout>

@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mobi.upod.timedurationpicker.TimeDurationPicker android:id="@id/timeDurationInput" android:layout_width="fill_parent" android:layout_height="fill_parent" style="@style/Widget.TimeDurationPicker.Dialog"
+  xmlns:android="http://schemas.android.com/apk/res/android" />
