@@ -158,18 +158,18 @@ public class AndroidLoginDetector {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
             if (input != null) {
                 config.load(input);
-                appPackage = config.getProperty("app.package", "com.b44t.messenger");
-                appActivity = config.getProperty("app.activity", "org.thoughtcrime.securesms.ConversationListActivity");
-                appPath = config.getProperty("app.path", "apps/com.b44t.messenger_6904.apk");
-                emulatorSnapshot = config.getProperty("emulator.snapshot", "snap_com.b44t.messenger_login");
+                appPackage = config.getProperty("app.package", "com.kickstarter.kickstarter");
+                appActivity = config.getProperty("app.activity", "com.kickstarter.ui.activities.DiscoveryActivity");
+                appPath = config.getProperty("app.path", "apps/Kickstarter_3.24.1_apkcombo.com.apk");
+                emulatorSnapshot = config.getProperty("emulator.snapshot", "snap_kickstarter_login");
             }
         } catch (Exception e) {
             logError("Failed to load config.properties: " + e.getMessage());
             // Use default values
-            appPackage = "com.b44t.messenger";
-            appActivity = "org.thoughtcrime.securesms.ConversationListActivity";
-            appPath = "apps/com.b44t.messenger_6904.apk";
-            emulatorSnapshot = "snap_com.b44t.messenger_login";
+            appPackage = "com.kickstarter.kickstarter";
+            appActivity = "com.kickstarter.ui.activities.DiscoveryActivity";
+            appPath = "apps/Kickstarter_3.24.1_apkcombo.com.apk";
+            emulatorSnapshot = "snap_kickstarter_login";
         }
 
         logInfo("App configuration loaded:");

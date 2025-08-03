@@ -825,3 +825,186 @@ Exception: No active Android emulator found
 2025-08-02 04:24:20,444 - INFO - Pushing Frida server binary to device
 2025-08-02 04:24:20,743 - INFO - Setting executable permissions on Frida server
 2025-08-02 04:24:20,768 - INFO - Starting Frida server in background
+2025-08-03 18:48:42,578 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-03 18:48:42,578 - INFO - Frida client version: 16.7.19
+2025-08-03 18:48:42,578 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:48:42,579 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:48:42,579 - INFO - Loaded 22 patterns from file
+2025-08-03 18:48:42,581 - INFO - Found active emulator: emulator-5554
+2025-08-03 18:48:42,581 - INFO - Getting root access on device: emulator-5554
+2025-08-03 18:48:45,892 - INFO - Disabling SELinux if possible
+2025-08-03 18:48:45,950 - INFO - Stopping any existing Frida server processes
+2025-08-03 18:48:45,978 - INFO - Pushing Frida server binary to device
+2025-08-03 18:48:46,339 - INFO - Setting executable permissions on Frida server
+2025-08-03 18:48:46,357 - INFO - Starting Frida server in background
+2025-08-03 18:48:49,361 - INFO - Verifying Frida server is running
+2025-08-03 18:49:34,563 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-03 18:49:34,563 - INFO - Frida client version: 16.7.19
+2025-08-03 18:49:34,563 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:49:34,563 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:49:34,563 - INFO - Loaded 22 patterns from file
+2025-08-03 18:49:34,566 - INFO - Found active emulator: emulator-5554
+2025-08-03 18:49:34,567 - INFO - Getting root access on device: emulator-5554
+2025-08-03 18:49:36,572 - INFO - Disabling SELinux if possible
+2025-08-03 18:49:36,601 - INFO - Stopping any existing Frida server processes
+2025-08-03 18:49:36,633 - INFO - Pushing Frida server binary to device
+2025-08-03 18:49:36,944 - INFO - Setting executable permissions on Frida server
+2025-08-03 18:49:36,955 - INFO - Starting Frida server in background
+2025-08-03 18:49:39,958 - INFO - Verifying Frida server is running
+2025-08-03 18:49:40,017 - INFO - Frida server started successfully
+2025-08-03 18:49:40,020 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-08-03 18:49:40,028 - INFO - Found device: Local System (type: local)
+2025-08-03 18:49:40,028 - INFO - Found device: Local Socket (type: remote)
+2025-08-03 18:49:40,028 - INFO - Connected to device: Local Socket
+2025-08-03 18:49:40,028 - INFO - Assuming org.mian.gitnex is already running
+2025-08-03 18:49:40,028 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-08-03 18:49:40,086 - WARNING - PID attachment failed: Could not find running process
+2025-08-03 18:49:40,086 - INFO - Method 2: Trying to spawn org.mian.gitnex...
+2025-08-03 18:49:41,429 - ERROR - All attachment methods failed: unable to find process with pid 6964
+2025-08-03 18:49:41,429 - ERROR - An unexpected error occurred: Cannot attach to org.mian.gitnex
+2025-08-03 18:49:41,430 - ERROR - Traceback (most recent call last):
+  File "/app/scripts/frida_controller.py", line 299, in main
+    raise Exception("Could not find running process")
+Exception: Could not find running process
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/scripts/frida_controller.py", line 314, in main
+    pid = device.spawn([package_name])
+  File "/usr/local/lib/python3.10/dist-packages/frida/core.py", line 86, in wrapper
+    return f(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/frida/core.py", line 1029, in spawn
+    return self._impl.spawn(program, **kwargs)
+frida.ProcessNotFoundError: unable to find process with pid 6964
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/scripts/frida_controller.py", line 321, in main
+    raise Exception(f"Cannot attach to {package_name}")
+Exception: Cannot attach to org.mian.gitnex
+
+2025-08-03 18:49:43,432 - INFO - Frida controller exiting cleanly.
+2025-08-03 18:50:32,302 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-03 18:50:32,302 - INFO - Frida client version: 16.7.19
+2025-08-03 18:50:32,303 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:50:32,303 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:50:32,303 - INFO - Loaded 22 patterns from file
+2025-08-03 18:50:32,307 - INFO - Found active emulator: emulator-5554
+2025-08-03 18:50:32,307 - INFO - Getting root access on device: emulator-5554
+2025-08-03 18:50:34,312 - INFO - Disabling SELinux if possible
+2025-08-03 18:50:34,323 - INFO - Stopping any existing Frida server processes
+2025-08-03 18:50:34,338 - INFO - Pushing Frida server binary to device
+2025-08-03 18:50:34,574 - INFO - Setting executable permissions on Frida server
+2025-08-03 18:50:34,591 - INFO - Starting Frida server in background
+2025-08-03 18:51:25,423 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-03 18:51:25,423 - INFO - Frida client version: 16.7.19
+2025-08-03 18:51:25,424 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:51:25,424 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:51:25,424 - INFO - Loaded 22 patterns from file
+2025-08-03 18:51:25,427 - INFO - Found active emulator: emulator-5554
+2025-08-03 18:51:25,427 - INFO - Getting root access on device: emulator-5554
+2025-08-03 18:51:27,433 - INFO - Disabling SELinux if possible
+2025-08-03 18:51:27,449 - INFO - Stopping any existing Frida server processes
+2025-08-03 18:51:27,462 - INFO - Pushing Frida server binary to device
+2025-08-03 18:51:27,695 - INFO - Setting executable permissions on Frida server
+2025-08-03 18:51:27,707 - INFO - Starting Frida server in background
+2025-08-03 18:52:18,546 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-03 18:52:18,546 - INFO - Frida client version: 16.7.19
+2025-08-03 18:52:18,547 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:52:18,547 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:52:18,547 - INFO - Loaded 22 patterns from file
+2025-08-03 18:52:18,551 - INFO - Found active emulator: emulator-5554
+2025-08-03 18:52:18,551 - INFO - Getting root access on device: emulator-5554
+2025-08-03 18:52:20,558 - INFO - Disabling SELinux if possible
+2025-08-03 18:52:20,576 - INFO - Stopping any existing Frida server processes
+2025-08-03 18:52:20,601 - INFO - Pushing Frida server binary to device
+2025-08-03 18:52:20,894 - INFO - Setting executable permissions on Frida server
+2025-08-03 18:52:20,905 - INFO - Starting Frida server in background
+2025-08-03 18:53:11,144 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-03 18:53:11,144 - INFO - Frida client version: 16.7.19
+2025-08-03 18:53:11,145 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:53:11,145 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:53:11,145 - INFO - Loaded 22 patterns from file
+2025-08-03 18:53:11,148 - INFO - Found active emulator: emulator-5554
+2025-08-03 18:53:11,148 - INFO - Getting root access on device: emulator-5554
+2025-08-03 18:53:13,153 - INFO - Disabling SELinux if possible
+2025-08-03 18:53:13,165 - INFO - Stopping any existing Frida server processes
+2025-08-03 18:53:13,189 - INFO - Pushing Frida server binary to device
+2025-08-03 18:53:13,447 - INFO - Setting executable permissions on Frida server
+2025-08-03 18:53:13,461 - INFO - Starting Frida server in background
+2025-08-03 18:54:00,922 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-03 18:54:00,922 - INFO - Frida client version: 16.7.19
+2025-08-03 18:54:00,923 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:54:00,923 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:54:00,923 - INFO - Loaded 22 patterns from file
+2025-08-03 18:54:00,926 - INFO - Found active emulator: emulator-5554
+2025-08-03 18:54:00,926 - INFO - Getting root access on device: emulator-5554
+2025-08-03 18:54:04,237 - INFO - Disabling SELinux if possible
+2025-08-03 18:54:04,287 - INFO - Stopping any existing Frida server processes
+2025-08-03 18:54:04,311 - INFO - Pushing Frida server binary to device
+2025-08-03 18:54:04,624 - INFO - Setting executable permissions on Frida server
+2025-08-03 18:54:04,652 - INFO - Starting Frida server in background
+2025-08-03 18:54:07,655 - INFO - Verifying Frida server is running
+2025-08-03 18:58:01,073 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-03 18:58:01,073 - INFO - Frida client version: 16.7.19
+2025-08-03 18:58:01,073 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:58:01,073 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:58:01,073 - INFO - Loaded 22 patterns from file
+2025-08-03 18:58:01,077 - INFO - Found active emulator: emulator-5554
+2025-08-03 18:58:01,077 - INFO - Getting root access on device: emulator-5554
+2025-08-03 18:58:04,389 - INFO - Disabling SELinux if possible
+2025-08-03 18:58:04,447 - INFO - Stopping any existing Frida server processes
+2025-08-03 18:58:04,474 - INFO - Pushing Frida server binary to device
+2025-08-03 18:58:04,857 - INFO - Setting executable permissions on Frida server
+2025-08-03 18:58:04,876 - INFO - Starting Frida server in background
+2025-08-03 18:58:07,880 - INFO - Verifying Frida server is running
+2025-08-03 18:58:53,064 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-03 18:58:53,064 - INFO - Frida client version: 16.7.19
+2025-08-03 18:58:53,064 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:58:53,065 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:58:53,065 - INFO - Loaded 22 patterns from file
+2025-08-03 18:58:53,069 - INFO - Found active emulator: emulator-5554
+2025-08-03 18:58:53,069 - INFO - Getting root access on device: emulator-5554
+2025-08-03 18:58:55,076 - INFO - Disabling SELinux if possible
+2025-08-03 18:58:55,094 - INFO - Stopping any existing Frida server processes
+2025-08-03 18:58:55,119 - INFO - Pushing Frida server binary to device
+2025-08-03 18:58:55,470 - INFO - Setting executable permissions on Frida server
+2025-08-03 18:58:55,494 - INFO - Starting Frida server in background
+2025-08-03 18:59:45,836 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-03 18:59:45,837 - INFO - Frida client version: 16.7.19
+2025-08-03 18:59:45,837 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:59:45,837 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 18:59:45,837 - INFO - Loaded 22 patterns from file
+2025-08-03 18:59:45,840 - INFO - Found active emulator: emulator-5554
+2025-08-03 18:59:45,840 - INFO - Getting root access on device: emulator-5554
+2025-08-03 18:59:47,851 - INFO - Disabling SELinux if possible
+2025-08-03 18:59:47,867 - INFO - Stopping any existing Frida server processes
+2025-08-03 18:59:47,886 - INFO - Pushing Frida server binary to device
+2025-08-03 18:59:48,132 - INFO - Setting executable permissions on Frida server
+2025-08-03 18:59:48,143 - INFO - Starting Frida server in background
+2025-08-03 19:00:38,972 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-03 19:00:38,972 - INFO - Frida client version: 16.7.19
+2025-08-03 19:00:38,973 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 19:00:38,973 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 19:00:38,973 - INFO - Loaded 22 patterns from file
+2025-08-03 19:00:38,976 - INFO - Found active emulator: emulator-5554
+2025-08-03 19:00:38,977 - INFO - Getting root access on device: emulator-5554
+2025-08-03 19:00:40,982 - INFO - Disabling SELinux if possible
+2025-08-03 19:00:40,992 - INFO - Stopping any existing Frida server processes
+2025-08-03 19:00:41,011 - INFO - Pushing Frida server binary to device
+2025-08-03 19:00:41,247 - INFO - Setting executable permissions on Frida server
+2025-08-03 19:00:41,259 - INFO - Starting Frida server in background
+2025-08-03 19:01:31,561 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-03 19:01:31,561 - INFO - Frida client version: 16.7.19
+2025-08-03 19:01:31,562 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 19:01:31,562 - INFO - Regex patterns copied to: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-03 19:01:31,562 - INFO - Loaded 22 patterns from file
+2025-08-03 19:01:31,565 - INFO - Found active emulator: emulator-5554
+2025-08-03 19:01:31,565 - INFO - Getting root access on device: emulator-5554
+2025-08-03 19:01:33,573 - INFO - Disabling SELinux if possible
+2025-08-03 19:01:33,591 - INFO - Stopping any existing Frida server processes
+2025-08-03 19:01:33,605 - INFO - Pushing Frida server binary to device
+2025-08-03 19:01:33,835 - INFO - Setting executable permissions on Frida server
+2025-08-03 19:01:33,846 - INFO - Starting Frida server in background

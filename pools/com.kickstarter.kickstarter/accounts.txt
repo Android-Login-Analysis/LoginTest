@@ -1,0 +1,5 @@
+testuser1@kick.com
+testuser2@kick.com
+testuser3@kick.com
+testuser4@kick.com
+testuser5@kick.com

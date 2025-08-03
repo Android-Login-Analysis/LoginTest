@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  */
 public class ConfigLoader {
     private Properties config;
-    private String appPackage = "org.mian.gitnex"; // Default app package
+    private String appPackage = "com.kickstarter.kickstarter"; // Default app package
 
     // Default timeout (seconds)
     private int loginTimeoutSeconds = 10;
@@ -86,7 +86,7 @@ public class ConfigLoader {
      * Load app related configurations
      */
     private void loadAppConfigs() {
-        appPackage = config.getProperty("app.package", "org.mian.gitnex");
+        appPackage = config.getProperty("app.package", "com.kickstarter.kickstarter");
     }
 
     /**
