@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView android:textSize="20.0sp" android:textColor="?emoji_text_color" android:gravity="center_horizontal" android:id="@id/status_line" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="40.0sp" />
-    <ProgressBar android:id="@id/progress_bar" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="16.0dip" style="?android:progressBarStyleHorizontal" />
-    <TextView android:textSize="16.0sp" android:textColor="?emoji_text_color" android:gravity="bottom|center" android:id="@id/same_network_hint" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_margin="16.0dip" android:text="@string/multidevice_same_network_hint" android:layout_weight="1.0" />
-</LinearLayout>

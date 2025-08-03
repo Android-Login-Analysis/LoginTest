@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <ImageView android:id="@id/avatar" android:layout_width="64.0dip" android:layout_height="64.0dip" android:layout_margin="16.0dip" android:contentDescription="@string/pref_profile_info_headline" />
-    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginRight="16.0dip" android:layout_marginEnd="16.0dip">
-        <org.thoughtcrime.securesms.components.emoji.EmojiTextView android:textSize="20.0sp" android:gravity="start" android:id="@id/profile_name" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="5.0dip" android:textAlignment="viewStart" />
-        <TextView android:gravity="start" android:id="@id/number" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textAlignment="viewStart" />
-    </LinearLayout>
-</LinearLayout>

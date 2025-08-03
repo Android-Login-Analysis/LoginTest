@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<org.thoughtcrime.securesms.components.ConversationItemThumbnail android:layout_gravity="center" android:id="@id/image_view" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="@dimen/media_bubble_default_dimens" android:layout_marginBottom="5.0dip" android:contentDescription="@string/chat_input_placeholder" android:elevation="8.0dip"
-  xmlns:android="http://schemas.android.com/apk/res/android" />

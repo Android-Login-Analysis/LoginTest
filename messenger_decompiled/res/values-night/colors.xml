@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="action_mode_status_bar">@color/gray95</color>
-    <color name="dummy_avatar_color">#ff808080</color>
-    <color name="reaction_pill_background">@color/black</color>
-    <color name="reaction_pill_background_selected">@color/gray70</color>
-    <color name="reaction_pill_border">#80414347</color>
-    <color name="reaction_pill_text_color">@color/core_dark_05</color>
-</resources>

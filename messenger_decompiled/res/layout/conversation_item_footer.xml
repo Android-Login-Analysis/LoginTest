@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merge android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ImageView android:layout_gravity="end|center" android:id="@id/footer_secure_indicator" android:visibility="gone" android:layout_width="12.0sp" android:layout_height="11.0sp" android:src="@drawable/msg_encr_out" android:importantForAccessibility="no" />
-    <TextView android:textColor="?conversation_item_outgoing_text_secondary_color" android:autoLink="none" android:linksClickable="false" android:id="@id/footer_date" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/Signal.Text.Caption.MessageSent" />
-    <ImageView android:layout_gravity="end|center" android:id="@id/footer_location_indicator" android:visibility="gone" android:layout_width="12.0sp" android:layout_height="11.0sp" android:src="@drawable/ic_location_msg" android:contentDescription="@string/location" />
-    <ImageView android:layout_gravity="end|center" android:id="@id/delivery_indicator" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="6.0dip" android:tint="?conversation_item_outgoing_text_secondary_color" />
-</merge>

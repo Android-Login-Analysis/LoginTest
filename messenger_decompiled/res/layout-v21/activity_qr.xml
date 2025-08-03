@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.google.android.material.appbar.AppBarLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <androidx.appcompat.widget.Toolbar android:theme="?actionBarStyle" android:id="@id/toolbar" android:background="?colorPrimary" android:layout_width="fill_parent" android:layout_height="?actionBarSize" android:minHeight="?actionBarSize" android:elevation="4.0dip" app:contentInsetLeft="14.0dip" app:contentInsetStart="14.0dip" />
-        <com.google.android.material.tabs.TabLayout android:layout_gravity="top" android:id="@id/tab_layout" android:background="?colorPrimary" android:layout_width="fill_parent" android:layout_height="wrap_content" android:elevation="4.0dip" app:tabBackground="?colorPrimary" app:tabIndicatorColor="@color/white" app:tabMode="fixed" app:tabPaddingEnd="3.0dip" app:tabPaddingStart="3.0dip" app:tabSelectedTextColor="@color/white" app:tabTextColor="@color/gray10" />
-    </com.google.android.material.appbar.AppBarLayout>
-    <androidx.viewpager.widget.ViewPager android:id="@id/pager" android:layout_width="fill_parent" android:layout_height="fill_parent" app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>

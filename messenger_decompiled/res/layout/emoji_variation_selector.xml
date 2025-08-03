@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView android:layout_width="wrap_content" android:layout_height="wrap_content"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout android:orientation="horizontal" android:id="@id/emoji_variation_container" android:background="?emoji_variation_selector_background" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-</HorizontalScrollView>

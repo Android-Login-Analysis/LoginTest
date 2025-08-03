@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <ListPreference android:entries="@array/pref_theme_entries" android:title="@string/pref_theme" android:key="pref_theme" android:defaultValue="light" android:entryValues="@array/pref_theme_values" />
-    <Preference android:title="@string/pref_background" android:key="pref_chat_background" />
-    <ListPreference android:entries="@array/pref_message_font_size_entries" android:title="@string/pref_message_text_size" android:key="pref_message_body_text_size" android:defaultValue="16" android:entryValues="@array/pref_message_font_size_values" />
-    <org.thoughtcrime.securesms.components.SwitchPreferenceCompat android:title="@string/pref_use_system_emoji" android:key="pref_system_emoji" android:summary="@string/pref_use_system_emoji_explain" android:defaultValue="false" />
-    <ListPreference android:entries="@array/language_entries" android:title="@string/pref_language" android:key="pref_language" android:defaultValue="zz" android:entryValues="@array/language_values" />
-</PreferenceScreen>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@id/log_scroll_up" android:title="@string/menu_scroll_to_top" />
-    <item android:id="@id/learn_more" android:title="@string/global_menu_help_learn_desktop" app:showAsAction="never" />
-    <item android:id="@id/privacy_policy" android:title="@string/privacy_policy" app:showAsAction="never" />
-    <item android:id="@id/contribute" android:title="@string/global_menu_help_contribute_desktop" app:showAsAction="never" />
-    <item android:id="@id/report_issue" android:title="@string/global_menu_help_report_desktop" app:showAsAction="never" />
-</menu>
