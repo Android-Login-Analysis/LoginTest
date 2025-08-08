@@ -244,81 +244,8 @@ main() {
     log_info "Step 2: Installing target application..."
     install_target_app
     
-    # Step 3: Start Frida server
-    log_info "Step 3: Starting Frida server..."
-    
-    # Push Frida server to device
-    if [ -f "resources/frida-server" ]; then
-        local device=$(get_active_device)
-        if [ -z "$device" ]; then
-            log_error "No active device found"
-            exit 1
-        fi
-        
-        log_info "Pushing Frida server to device ($device)..."
-        adb -s $device push resources/frida-server /data/local/tmp/
-        adb -s $device shell "chmod 755 /data/local/tmp/frida-server"
-        
-        # Check if Frida server is already running
-        if adb -s $device shell "ps | grep frida-server" | grep -q frida-server; then
-            log_info "Frida server already running, killing existing process..."
-            adb -s $device shell "pkill -f frida-server" 2>/dev/null || true
-            sleep 2
-        fi
-        
-        # Start Frida server with better error handling
-        log_info "Starting Frida server..."
-        # Try simple startup first (no listen address)
-        
-        # Check system compatibility first
-        log_info "Checking Android system compatibility..."
-        adb -s $device shell "getprop ro.build.version.sdk" || true
-        adb -s $device shell "uname -a" || true
-        
-        # Try multiple startup methods
-        log_info "Attempting Frida server startup (method 1: standard)..."
-        adb -s $device shell "nohup /data/local/tmp/frida-server > /data/local/tmp/frida.log 2>&1 &" || {
-            log_warning "Method 1 failed, trying method 2 with explicit listen address..."
-            adb -s $device shell "nohup /data/local/tmp/frida-server -l 0.0.0.0:27042 > /data/local/tmp/frida.log 2>&1 &" || {
-                log_warning "Method 2 failed, trying method 3 with su privileges..."
-                adb -s $device shell "su -c 'nohup /data/local/tmp/frida-server > /data/local/tmp/frida.log 2>&1 &'" || {
-                    log_error "All Frida startup methods failed"
-                }
-            }
-        }
-        
-        sleep 3
-        
-        # Verify Frida server is running and check version compatibility
-        if check_frida_server; then
-            log_info "Frida server started successfully"
-            
-            # Check version compatibility
-            log_info "Verifying Frida version compatibility..."
-            local client_version=$(frida --version 2>/dev/null || echo "unknown")
-            local server_version=$(adb -s $device shell '/data/local/tmp/frida-server --version' 2>/dev/null || echo "unknown")
-            
-            log_info "Client Frida version: $client_version"
-            log_info "Server Frida version: $server_version"
-            
-            if [ "$client_version" != "$server_version" ]; then
-                log_warning "Frida version mismatch detected!"
-                log_warning "Client: $client_version, Server: $server_version"
-                log_warning "This may cause RPC communication failures"
-            else
-                log_info "Frida versions match - RPC communication should work correctly"
-            fi
-        else
-            log_error "Frida server failed to start or not responding"
-            # Show frida logs for debugging
-            log_info "Frida server logs:"
-            adb -s $device shell "cat /data/local/tmp/frida.log" 2>/dev/null || log_warning "No frida logs available"
-            return 1
-        fi
-    else
-        log_error "Frida server binary not found"
-        exit 1
-    fi
+    # Step 3: Frida will be managed by frida_controller.py
+    log_info "Step 3: Skipping Frida server startup here; managed by scripts/frida_controller.py"
     
     # Run environment check
     log_info "Step 3: Running environment check..."
@@ -328,13 +255,7 @@ main() {
         log_warn "Environment check script not found"
     fi
     
-    # Verify Frida versions
-    log_info "Step 3.5: Verifying Frida version compatibility..."
-    if [ -f "scripts/verify-frida-versions.sh" ]; then
-        ./scripts/verify-frida-versions.sh || log_warn "Frida version verification failed"
-    else
-        log_warn "Frida version verification script not found"
-    fi
+    # Note: Frida version and health checks are handled by frida_controller.py
     
     # Start AndroidLoginDetector
     log_info "Step 4: Starting AndroidLoginDetector..."

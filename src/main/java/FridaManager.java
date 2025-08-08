@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern; // Keep for stateToApiRegexPatterns if used elsewhere
 import java.util.Map; // Keep for stateToApiRegexPatterns if used elsewhere
 import java.util.HashMap; // Keep for stateToApiRegexPatterns if used elsewhere
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class FridaManager {
 
@@ -19,6 +21,8 @@ public class FridaManager {
     private final String fridaAgentJsPath; // Path to login_agent.js
     private String apiRegexPatternsJsonString; // JSON string of the state-to-regex map
     private ConfigLoader configLoader; // Configuration loader
+    private String staticAnalysisResultPath; // Path to static analysis result
+    private String generatedFridaScriptPath; // Path to generated Frida script
 
     // This map is for ApiLogAnalyzer to map API calls to States.
     // The Frida agent itself only needs the regex strings to hook methods.
@@ -30,10 +34,17 @@ public class FridaManager {
         this.fridaLogFilePath = logPath;
         this.configLoader = configLoader;
         this.stateToApiRegexPatterns = new HashMap<>();
-        loadRegexesFromFile(stateAndApiRegexFilePath);
-        prepareJsonRegexForAgent();
+        
+        // 尝试加载静态分析结果
+        loadStaticAnalysisResult();
+        
+        // 如果没有静态分析结果，则使用正则表达式模式
+        if (staticAnalysisResultPath == null) {
+            loadRegexesFromFile(stateAndApiRegexFilePath);
+            prepareJsonRegexForAgent();
+        }
     }
-
+    
     private void loadRegexesFromFile(String filePath) {
         System.out.println("FridaManager: Loading regex patterns from: " + filePath);
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -83,6 +94,107 @@ public class FridaManager {
         }
     }
 
+    /**
+     * Set static analysis results path
+     */
+    public void setStaticAnalysisResults(String staticAnalysisResultPath) {
+        this.staticAnalysisResultPath = staticAnalysisResultPath;
+        
+        // Load static analysis results if file exists
+        if (staticAnalysisResultPath != null && new File(staticAnalysisResultPath).exists()) {
+            loadStaticAnalysisToRegexPatterns();
+            logInfo("Static analysis results loaded from: " + staticAnalysisResultPath);
+        } else {
+            logError("Static analysis result file not found: " + staticAnalysisResultPath);
+        }
+    }
+
+    /**
+     * Load static analysis result
+     */
+    private void loadStaticAnalysisResult() {
+        try {
+            String apkPath = null;
+            
+            // Try to get APK path from config
+            try {
+                apkPath = configLoader.getApkPath();
+            } catch (Exception e) {
+                //  If cannot get, use default path
+                apkPath = "apps/org.mian.gitnex_550.apk";
+            }
+            
+            if (apkPath != null && !apkPath.isEmpty()) {
+                String apkName = new File(apkPath).getName().replace(".apk", "");
+                String staticAnalysisDir = "reports/static_analysis";
+                
+                // Find possible analysis result files
+                String[] possibleAnalysisFiles = {
+                    staticAnalysisDir + File.separator + apkName + "_analysis.json",
+                    staticAnalysisDir + File.separator + "test_analysis.json",
+                    staticAnalysisDir + File.separator + apkName + ".json"
+                };
+                
+                String analysisResultPath = null;
+                for (String filePath : possibleAnalysisFiles) {
+                    File file = new File(filePath);
+                    if (file.exists()) {
+                        analysisResultPath = filePath;
+                        break;
+                    }
+                }
+                
+                if (analysisResultPath != null) {
+                    this.staticAnalysisResultPath = analysisResultPath;
+                    
+                    // Load static analysis result to regex patterns
+                    loadStaticAnalysisToRegexPatterns();
+                    
+                    System.out.println("FridaManager: Using static analysis result: " + analysisResultPath);
+                } else {
+                    System.out.println("FridaManager: Static analysis result not found, will use regex patterns");
+                    System.out.println("FridaManager: Search path: " + staticAnalysisDir);
+                    for (String filePath : possibleAnalysisFiles) {
+                        System.out.println("FridaManager: Search path: " + filePath);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("FridaManager: Failed to load static analysis result: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Load regex patterns from static analysis result
+     */
+    private void loadStaticAnalysisToRegexPatterns() {
+        try {
+            JSONObject analysisResult = new JSONObject(new String(java.nio.file.Files.readAllBytes(
+                java.nio.file.Paths.get(staticAnalysisResultPath))));
+            
+            if (analysisResult.has("detailedMethods")) {
+                JSONObject detailedMethods = analysisResult.getJSONObject("detailedMethods");
+                
+                for (String stateName : detailedMethods.keySet()) {
+                    JSONArray methods = detailedMethods.getJSONArray(stateName);
+                    
+                    for (int i = 0; i < methods.length(); i++) {
+                        JSONObject method = methods.getJSONObject(i);
+                        String fullSignature = method.getString("fullSignature");
+                        
+                        // Create exact regex pattern for each method
+                        String regexPattern = "^" + fullSignature.replace(".", "\\.") + "$";
+                        stateToApiRegexPatterns.put(stateName, Pattern.compile(regexPattern));
+                    }
+                }
+                
+                System.out.println("FridaManager:   Loaded " + stateToApiRegexPatterns.size() + " regex patterns from static analysis result");
+            }
+        } catch (Exception e) {
+            System.err.println("FridaManager: Failed to parse static analysis result: " + e.getMessage());
+        }
+    }
+
     // Public getter for the JSON string, so LoginDetectTest can pass it if needed,
     // or this class can use it directly in startFrida.
     public String getApiRegexPatternsJsonString() {
@@ -104,12 +216,23 @@ public class FridaManager {
             // Kill any existing Frida processes
             stopFrida();
             
+            // Determine the Frida script path to use
+            String scriptPath = getFridaScriptPath();
+            logInfo("Using Frida script: " + scriptPath);
+            
             // Start Frida controller with timeout
             ProcessBuilder pb = new ProcessBuilder();
             List<String> command = new ArrayList<>();
             command.add("python3");
             command.add("scripts/frida_controller.py");
             command.add(appPackageName);
+            command.add(scriptPath); // Pass script path to controller
+            
+            // If using static analysis script, pass analysis result path
+            if (scriptPath.endsWith("static_analysis_agent.js") && staticAnalysisResultPath != null) {
+                command.add(staticAnalysisResultPath);
+                logInfo("Passing static analysis result path: " + staticAnalysisResultPath);
+            }
             
             pb.command(command);
             pb.redirectErrorStream(true);
@@ -149,6 +272,40 @@ public class FridaManager {
         } catch (Exception e) {
             logError("Failed to start Frida: " + e.getMessage());
         }
+    }
+    
+    /**
+     * Get the Frida script path to use
+     */
+    private String getFridaScriptPath() {
+        // If there is a static analysis result, use the generic script
+        if (staticAnalysisResultPath != null && new File(staticAnalysisResultPath).exists()) {
+            return "src/main/resources/static_analysis_agent.js";
+        }
+        
+        // Otherwise use the default script
+        return fridaAgentJsPath;
+    }
+    
+    /**
+     * Get static analysis result path
+     */
+    public String getStaticAnalysisResultPath() {
+        return staticAnalysisResultPath;
+    }
+    
+    /**
+     * Get generated Frida script path
+     */
+    public String getGeneratedFridaScriptPath() {
+        return generatedFridaScriptPath;
+    }
+    
+    /**
+     *  Check if using static analysis result
+     */
+    public boolean isUsingStaticAnalysis() {
+        return staticAnalysisResultPath != null && new File(staticAnalysisResultPath).exists();
     }
     
     /**

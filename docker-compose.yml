@@ -17,9 +17,6 @@ services:
       - /dev/kvm:/dev/kvm
       - /dev/vhost-net:/dev/vhost-net
       - /dev/net/tun:/dev/net/tun
-    ports:
-      - "5555:5555"  # ADB
-      - "5554:5554"  # Emulator console
     environment:
       - ANDROID_HOME=/opt/android-sdk
       - ANDROID_SDK_ROOT=/opt/android-sdk
@@ -36,7 +33,6 @@ services:
     tmpfs:
       - /tmp:exec,mode=1777
       - /var/tmp:exec,mode=1777
-      - /var/lib/docker:exec,mode=1777
       - /root/.android/avd:exec,mode=1777
     shm_size: 4g
     ipc: host
@@ -50,7 +46,7 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    restart: unless-stopped
+    restart: no
     logging:
       driver: "json-file"
       options:

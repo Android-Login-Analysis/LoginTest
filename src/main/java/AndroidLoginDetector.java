@@ -9,16 +9,17 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 /**
- * AndroidLoginDetector - Automatically detects login-related bugs in Android
- * applications
+ * AndroidLoginDetector - Automatically detects login-related bugs in Android applications
  * 
- * Strictly follows the workflow described in the paper:
- * 1. Use Monkey to generate event-driven app
- * 2. Detect login pages and credential-related UI input elements
- * 3. Randomly select credentials from the predefined pool as input
- * 4. Record API calls to log
- * 5. Reconstruct state machine transitions using regular expressions
- * 6. Use test prophecy to detect login flow errors
+ * Enhanced workflow with static analysis:
+ * 1. Perform static analysis on APK to identify target methods
+ * 2. Use Monkey to generate event-driven app
+ * 3. Detect login pages and credential-related UI input elements
+ * 4. Randomly select credentials from the predefined pool as input
+ * 5. Use Frida with static analysis results for efficient hooking
+ * 6. Record API calls to log
+ * 7. Reconstruct state machine transitions using regular expressions
+ * 8. Use test prophecy to detect login flow errors
  */
 public class AndroidLoginDetector {
 
@@ -29,12 +30,14 @@ public class AndroidLoginDetector {
     private ConfigLoader configLoader;
     private UIManager uiManager;
     private StateMachineManager stateMachineManager;
+    private StaticAnalyzer staticAnalyzer;
 
     // Application configuration
     private String appPackage;
     private String appActivity;
     private String appPath;
     private String emulatorSnapshot;
+    private String staticAnalysisResultPath;
 
     // Credential pools
     private List<String> accountPool;
@@ -108,6 +111,9 @@ public class AndroidLoginDetector {
         logInfo("ROUND " + roundNumber + " STARTED");
         logInfo("Round timestamp: " + LocalDateTime.now().format(logFormatter));
         logInfo(separator);
+        // Restore emulator snapshot if baseline exists and append Frida round marker
+        restoreBaselineSnapshotIfExists();
+        appendRoundMarker(roundNumber);
     }
 
     private void logRoundEnd(int roundNumber, long duration) {
@@ -119,6 +125,78 @@ public class AndroidLoginDetector {
         logInfo("Successful logins: " + successfulLogins);
         logInfo("Failed logins: " + failedLogins);
         logInfo(separator);
+        // Check ANR/Crash after each round and report
+        checkCrashAndAnrLogs();
+    }
+
+    // --- Round helpers ---
+
+    private static final String BASELINE_SNAPSHOT_NAME = "login_baseline";
+
+    private void appendRoundMarker(int roundNumber) {
+        try {
+            File logsDir = new File("logs");
+            if (!logsDir.exists()) logsDir.mkdirs();
+            File apiLog = new File(logsDir, "frida_api_log.txt");
+            try (FileWriter fw = new FileWriter(apiLog, true)) {
+                String marker = String.format("==== ROUND %d START | %s ====%n", roundNumber,
+                        LocalDateTime.now().format(logFormatter));
+                fw.write(marker);
+            }
+            logInfo("Appended Frida round marker for round " + roundNumber);
+        } catch (IOException e) {
+            logError("Failed to append round marker: " + e.getMessage());
+        }
+    }
+
+    private void restoreBaselineSnapshotIfExists() {
+        try {
+            // List snapshots and check existence
+            Process list = Runtime.getRuntime().exec("adb emu avd snapshot list");
+            BufferedReader br = new BufferedReader(new InputStreamReader(list.getInputStream()));
+            String line; boolean exists = false;
+            while ((line = br.readLine()) != null) {
+                if (line.contains(BASELINE_SNAPSHOT_NAME)) { exists = true; break; }
+            }
+            br.close();
+            list.waitFor();
+            if (!exists) {
+                logInfo("Baseline snapshot not found. Skipping restore.");
+                return;
+            }
+            // Restore snapshot
+            logInfo("Restoring baseline snapshot: " + BASELINE_SNAPSHOT_NAME);
+            Process load = Runtime.getRuntime().exec("adb emu avd snapshot load " + BASELINE_SNAPSHOT_NAME);
+            load.waitFor();
+            // Give emulator some time to settle
+            TimeUnit.SECONDS.sleep(2);
+        } catch (Exception e) {
+            logError("Failed to restore baseline snapshot: " + e.getMessage());
+        }
+    }
+
+    private void createBaselineSnapshotIfNeeded() {
+        try {
+            // Check if snapshot already exists
+            Process list = Runtime.getRuntime().exec("adb emu avd snapshot list");
+            BufferedReader br = new BufferedReader(new InputStreamReader(list.getInputStream()));
+            String line; boolean exists = false;
+            while ((line = br.readLine()) != null) {
+                if (line.contains(BASELINE_SNAPSHOT_NAME)) { exists = true; break; }
+            }
+            br.close();
+            list.waitFor();
+            if (exists) {
+                return; // already created
+            }
+            // Create snapshot
+            logInfo("Creating baseline snapshot: " + BASELINE_SNAPSHOT_NAME);
+            Process save = Runtime.getRuntime().exec("adb emu avd snapshot save " + BASELINE_SNAPSHOT_NAME);
+            save.waitFor();
+            TimeUnit.SECONDS.sleep(1);
+        } catch (Exception e) {
+            logError("Failed to create baseline snapshot: " + e.getMessage());
+        }
     }
 
     private void initializeComponents() {
@@ -131,16 +209,18 @@ public class AndroidLoginDetector {
         // Initialize state machine manager
         stateMachineManager = new StateMachineManager(configLoader);
 
-        // Initialize Frida manager - for recording API calls
-        String regexPath = "src/main/resources/regex_patterns.txt";
-        String agentPath = "src/main/resources/login_agent.js";
-        String logPath = "src/main/resources/frida_api_log.txt";
-        String controllerPath = "scripts/frida_controller.py";
+        // Load app config
+        loadAppConfig();
 
-        fridaManager = new FridaManager(regexPath, agentPath, logPath, controllerPath, configLoader);
+        // Initialize static analyzer
+        initializeStaticAnalyzer();
 
-        // Initialize API log analyzer - for reconstructing state machine
+        // Initialize Frida manager with static analysis results
+        initializeFridaManager();
+
+        // Initialize API log analyzer
         try {
+            String regexPath = "src/main/resources/regex_patterns.txt";
             apiLogAnalyzer = new ApiLogAnalyzer(regexPath);
         } catch (IOException e) {
             logError("Failed to initialize ApiLogAnalyzer: " + e.getMessage());
@@ -148,9 +228,6 @@ public class AndroidLoginDetector {
 
         // Initialize report manager
         reportManager = new LoginReportManager();
-
-        // Load app config
-        loadAppConfig();
     }
 
     private void loadAppConfig() {
@@ -158,18 +235,18 @@ public class AndroidLoginDetector {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
             if (input != null) {
                 config.load(input);
-                appPackage = config.getProperty("app.package", "org.mian.gitnex");
-                appActivity = config.getProperty("app.activity", "org.mian.gitnex.activities.MainActivity");
-                appPath = config.getProperty("app.path", "apps/org.mian.gitnex_550.apk");
-                emulatorSnapshot = config.getProperty("emulator.snapshot", "snap_gitnex_login");
+                appPackage = config.getProperty("app.package", "com.kickstarter.kickstarter");
+                appActivity = config.getProperty("app.activity", "com.kickstarter.ui.activities.DiscoveryActivity");
+                appPath = config.getProperty("app.path", "apps/Kickstarter_3.24.1_apkcombo.com.apk");
+                emulatorSnapshot = config.getProperty("emulator.snapshot", "snap_kickstarter_login");
             }
         } catch (Exception e) {
             logError("Failed to load config.properties: " + e.getMessage());
             // Use default values
-            appPackage = "org.mian.gitnex";
-            appActivity = "org.mian.gitnex.activities.MainActivity";
-            appPath = "apps/org.mian.gitnex_550.apk";
-            emulatorSnapshot = "snap_gitnex_login";
+            appPackage = "com.kickstarter.kickstarter";
+            appActivity = "com.kickstarter.ui.activities.DiscoveryActivity";
+            appPath = "apps/Kickstarter_3.24.1_apkcombo.com.apk";
+            emulatorSnapshot = "snap_kickstarter_login";
         }
 
         logInfo("App configuration loaded:");
@@ -179,14 +256,161 @@ public class AndroidLoginDetector {
         logInfo("  - Emulator Snapshot: " + emulatorSnapshot);
     }
 
+    private void initializeStaticAnalyzer() {
+        try {
+            logInfo("Initializing static analyzer...");
+            
+            String patternsPath = "src/main/resources/regex_patterns.txt";
+            // Use deterministic result path based on APK file name to avoid ambiguity
+            staticAnalysisResultPath = getStaticAnalysisResultPathForApk(appPath);
+            
+            // Create output directory
+            File outputDir = new File(new File(staticAnalysisResultPath).getParent());
+            if (!outputDir.exists()) {
+                outputDir.mkdirs();
+            }
+            
+            // Perform static analysis if result file doesn't exist or is outdated
+            File resultFile = new File(staticAnalysisResultPath);
+            File apkFile = new File(appPath);
+            
+            if (!resultFile.exists() || resultFile.lastModified() < apkFile.lastModified()) {
+                logInfo("Static analysis required - performing analysis...");
+                staticAnalyzer = new StaticAnalyzer(appPath, patternsPath, staticAnalysisResultPath);
+                staticAnalyzer.analyze();
+                logInfo("Static analysis completed and saved to: " + staticAnalysisResultPath);
+            } else {
+                logInfo("Static analysis result found and up-to-date: " + staticAnalysisResultPath);
+            }
+                
+        } catch (Exception e) {
+            logError("Failed to initialize static analyzer: " + e.getMessage());
+            throw new RuntimeException("Static analyzer initialization failed", e);
+        }
+    }
+
+    /**
+     * Build deterministic static analysis result path from APK path.
+     * Example: apps/foo/bar/MyApp.apk -> reports/static_analysis/MyApp.json
+     */
+    private String getStaticAnalysisResultPathForApk(String apkPath) {
+        try {
+            File apk = new File(apkPath);
+            String name = apk.getName();
+            int dot = name.lastIndexOf('.');
+            String base = (dot > 0) ? name.substring(0, dot) : name;
+            File dir = new File("reports/static_analysis");
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            return new File(dir, base + ".json").getPath();
+        } catch (Exception e) {
+            // Fallback to previous default if anything goes wrong
+            return "reports/static_analysis_result.json";
+        }
+    }
+
+    private void initializeFridaManager() {
+        try {
+            logInfo("Initializing Frida manager with static analysis results...");
+            
+            String regexPath = "src/main/resources/regex_patterns.txt";
+            String agentPath = "src/main/resources/login_agent.js";
+            String logPath = "logs/frida_api_log.txt";
+            String controllerPath = "scripts/frida_controller.py";
+
+            // Initialize Frida manager with static analysis results
+            fridaManager = new FridaManager(regexPath, agentPath, logPath, controllerPath, configLoader);
+            
+            // Pass static analysis results to Frida manager for efficient hooking
+            if (staticAnalysisResultPath != null && new File(staticAnalysisResultPath).exists()) {
+                fridaManager.setStaticAnalysisResults(staticAnalysisResultPath);
+                logInfo("Frida manager configured with static analysis results");
+            } else {
+                logError("Static analysis results not found, Frida will use default hooking");
+            }
+            
+        } catch (Exception e) {
+            logError("Failed to initialize Frida manager: " + e.getMessage());
+            throw new RuntimeException("Frida manager initialization failed", e);
+        }
+    }
+
     private void loadCredentialPools() {
-        String projectRoot = ".";
-        accountPool = readLinesFromFile(projectRoot + "/pools/accounts.txt");
-        passwordPool = readLinesFromFile(projectRoot + "/pools/passwords.txt");
-        googleEmailPool = readLinesFromFile(projectRoot + "/pools/google_accounts.txt");
-        googlePasswordPool = readLinesFromFile(projectRoot + "/pools/google_passwords.txt");
-        facebookEmailPool = readLinesFromFile(projectRoot + "/pools/facebook_accounts.txt");
-        facebookPasswordPool = readLinesFromFile(projectRoot + "/pools/facebook_passwords.txt");
+        // Determine the credential directory under pools/
+        // Priority:
+        // 1) pools/<appPackage>
+        // 2) pools/<appPackage>_*
+        // 3) fallback to global pools/ files
+        java.io.File poolsDir = new java.io.File("pools");
+        java.io.File credDir = new java.io.File(poolsDir, appPackage);
+
+        if (!credDir.isDirectory()) {
+            java.io.File[] candidates = poolsDir.listFiles(new java.io.FileFilter() {
+                @Override
+                public boolean accept(java.io.File f) {
+                    return f.isDirectory() && f.getName().startsWith(appPackage + "_");
+                }
+            });
+            if (candidates != null && candidates.length > 0) {
+                java.util.Arrays.sort(candidates, new java.util.Comparator<java.io.File>() {
+                    @Override
+                    public int compare(java.io.File a, java.io.File b) {
+                        // Prefer lexicographically larger suffix (often higher version)
+                        return b.getName().compareTo(a.getName());
+                    }
+                });
+                credDir = candidates[0];
+                logInfo("Using credential pool directory: " + credDir.getPath());
+            } else {
+                logInfo("No per-app credential directory found for '" + appPackage + "', will use global pools if available");
+            }
+        } else {
+            logInfo("Using credential pool directory: " + credDir.getPath());
+        }
+
+        // Primary paths (from selected directory)
+        String primaryAccounts = new java.io.File(credDir, "accounts.txt").getPath();
+        String primaryPasswords = new java.io.File(credDir, "passwords.txt").getPath();
+        String primaryGoogleAccounts = new java.io.File(credDir, "google_accounts.txt").getPath();
+        String primaryGooglePasswords = new java.io.File(credDir, "google_passwords.txt").getPath();
+        String primaryFacebookAccounts = new java.io.File(credDir, "facebook_accounts.txt").getPath();
+        String primaryFacebookPasswords = new java.io.File(credDir, "facebook_passwords.txt").getPath();
+
+        // Global fallbacks
+        String globalAccounts = new java.io.File(poolsDir, "accounts.txt").getPath();
+        String globalPasswords = new java.io.File(poolsDir, "passwords.txt").getPath();
+        String globalGoogleAccounts = new java.io.File(poolsDir, "google_accounts.txt").getPath();
+        String globalGooglePasswords = new java.io.File(poolsDir, "google_passwords.txt").getPath();
+        String globalFacebookAccounts = new java.io.File(poolsDir, "facebook_accounts.txt").getPath();
+        String globalFacebookPasswords = new java.io.File(poolsDir, "facebook_passwords.txt").getPath();
+
+        // Read with graceful fallback to global files
+        java.util.List<String> tmp;
+
+        tmp = readLinesFromFile(primaryAccounts);
+        if (tmp == null || tmp.isEmpty()) tmp = readLinesFromFile(globalAccounts);
+        accountPool = (tmp != null) ? tmp : new java.util.ArrayList<>();
+
+        tmp = readLinesFromFile(primaryPasswords);
+        if (tmp == null || tmp.isEmpty()) tmp = readLinesFromFile(globalPasswords);
+        passwordPool = (tmp != null) ? tmp : new java.util.ArrayList<>();
+
+        tmp = readLinesFromFile(primaryGoogleAccounts);
+        if (tmp == null || tmp.isEmpty()) tmp = readLinesFromFile(globalGoogleAccounts);
+        googleEmailPool = (tmp != null) ? tmp : new java.util.ArrayList<>();
+
+        tmp = readLinesFromFile(primaryGooglePasswords);
+        if (tmp == null || tmp.isEmpty()) tmp = readLinesFromFile(globalGooglePasswords);
+        googlePasswordPool = (tmp != null) ? tmp : new java.util.ArrayList<>();
+
+        tmp = readLinesFromFile(primaryFacebookAccounts);
+        if (tmp == null || tmp.isEmpty()) tmp = readLinesFromFile(globalFacebookAccounts);
+        facebookEmailPool = (tmp != null) ? tmp : new java.util.ArrayList<>();
+
+        tmp = readLinesFromFile(primaryFacebookPasswords);
+        if (tmp == null || tmp.isEmpty()) tmp = readLinesFromFile(globalFacebookPasswords);
+        facebookPasswordPool = (tmp != null) ? tmp : new java.util.ArrayList<>();
 
         logInfo("Loaded credential pools:");
         logInfo("  - Standard accounts: " + accountPool.size());
@@ -198,49 +422,12 @@ public class AndroidLoginDetector {
     }
 
     private void initializeStateMachine() {
-        // Pre-Login Phase
-        stateMachineManager.addStateTransition("InitialState", "CheckingToken");
-        stateMachineManager.addStateTransition("InitialState", "CredentialInput");
-        stateMachineManager.addStateTransition("CheckingToken", "LoggedIn_Via_Token");
-        stateMachineManager.addStateTransition("CheckingToken", "CredentialInput");
-        stateMachineManager.addStateTransition("CredentialInput", "EncodingCredentials");
-        stateMachineManager.addStateTransition("CredentialInput", "CredentialFormatError");
-        stateMachineManager.addStateTransition("EncodingCredentials", "Authenticating");
-        stateMachineManager.addStateTransition("CredentialFormatError", "CredentialInput");
-
-        // Login Phase
-        stateMachineManager.addStateTransition("Authenticating", "CheckingCredentials");
-        stateMachineManager.addStateTransition("CheckingCredentials", "ServiceUnavailable_Auth");
-        stateMachineManager.addStateTransition("CheckingCredentials", "InvalidCredentials");
-        stateMachineManager.addStateTransition("CheckingCredentials", "CheckingMFASettings");
-        stateMachineManager.addStateTransition("ServiceUnavailable_Auth", "CredentialInput");
-        stateMachineManager.addStateTransition("ServiceUnavailable_Auth", "InitialState");
-        stateMachineManager.addStateTransition("InvalidCredentials", "CredentialInput");
-        stateMachineManager.addStateTransition("CheckingMFASettings", "MFACodePending");
-        stateMachineManager.addStateTransition("CheckingMFASettings", "LoggedIn_NoMFA");
-
-        // MFA Phase
-        stateMachineManager.addStateTransition("MFACodePending", "SendingMFACode");
-        stateMachineManager.addStateTransition("SendingMFACode", "MFAVerification");
-        stateMachineManager.addStateTransition("SendingMFACode", "ServiceUnavailable_MFA_Send");
-        stateMachineManager.addStateTransition("ServiceUnavailable_MFA_Send", "MFACodePending");
-        stateMachineManager.addStateTransition("MFAVerification", "VerifyingMFA");
-        stateMachineManager.addStateTransition("VerifyingMFA", "ServiceUnavailable_MFA_Verify");
-        stateMachineManager.addStateTransition("VerifyingMFA", "MFAError");
-        stateMachineManager.addStateTransition("VerifyingMFA", "LoggedIn_WithMFA");
-        stateMachineManager.addStateTransition("ServiceUnavailable_MFA_Verify", "MFAVerification");
-        stateMachineManager.addStateTransition("MFAError", "MFACodePending");
-
-        // Post-Login Phase
-        stateMachineManager.addStateTransition("LoggedIn_Via_Token", "AppMainScreen");
-        stateMachineManager.addStateTransition("LoggedIn_NoMFA", "AppMainScreen");
-        stateMachineManager.addStateTransition("LoggedIn_WithMFA", "AppMainScreen");
-        stateMachineManager.addStateTransition("AppMainScreen", "UserLogout");
-        stateMachineManager.addStateTransition("AppMainScreen", "InitialState");
-        stateMachineManager.addStateTransition("UserLogout", "InitialState");
-        stateMachineManager.addStateTransition("UserLogout", "CredentialInput");
-
-        logInfo("Initialized state machine with " + stateMachineManager.getAllStates().size() + " states");
+        // State machine is now initialized automatically by StateMachineManager
+        // from regex_patterns.txt file during construction
+        logInfo("State machine initialized with " + stateMachineManager.getAllStates().size() + " states");
+        
+        // Print state machine information for debugging
+        stateMachineManager.printStateMachine();
     }
 
     /**
@@ -358,20 +545,20 @@ public class AndroidLoginDetector {
     }
 
     /**
-     * Start Frida monitoring - for recording API calls
+     * Start Frida monitoring with static analysis results
      */
     public void startFridaMonitoring() {
         if (appPackage != null && !appPackage.isEmpty()) {
+            logInfo("Starting Frida monitoring with static analysis results for package: " + appPackage);
             fridaManager.startFrida(appPackage);
-            logInfo("Frida monitoring started for package: " + appPackage);
+            logInfo("Frida monitoring started successfully");
         } else {
             logError("App package is null, Frida not started");
         }
     }
 
     /**
-     * Run login detection test - strictly follows the workflow described in the
-     * paper
+     * Run login detection test - enhanced workflow with static analysis
      */
     public void runLoginDetectionTest() {
         // Validate configuration
@@ -384,11 +571,12 @@ public class AndroidLoginDetector {
         configLoader.printConfigSummary();
 
         long testStartTime = System.currentTimeMillis();
-        int testRounds = configLoader.getTestRounds(); // Get test rounds from config
+        int testRounds = configLoader.getTestRounds();
 
-        logInfo("=== Starting AndroidLoginDetector Test ===");
+        logInfo("=== Starting AndroidLoginDetector Test with Static Analysis ===");
         logInfo("Target app: " + appPackage);
         logInfo("Test rounds: " + testRounds);
+        logInfo("Static analysis results: " + staticAnalysisResultPath);
 
         // Check Docker environment
         if (!checkDockerEnvironment()) {
@@ -419,13 +607,13 @@ public class AndroidLoginDetector {
             // Step 1: Restart emulator from snapshot
             restartEmulatorSnapshot();
 
-            // Step 2: Start Frida monitoring API calls
+            // Step 2: Start Frida monitoring with static analysis results
             startFridaMonitoring();
 
             // Step 3: Start UI automation
             // UI manager is already initialized in constructor
 
-            // Step 4: Detect login page
+            // Step 4: Detect login page using UI manager
             boolean loginPageDetected = detectLoginPageWithUI();
 
             if (loginPageDetected) {
@@ -512,8 +700,6 @@ public class AndroidLoginDetector {
      * Detect login page using UI manager
      */
     private boolean detectLoginPage() {
-        // This method has been replaced by detectLoginPageWithUI()
-        // Keep this method to avoid breaking existing calls
         return detectLoginPageWithUI();
     }
 
@@ -521,8 +707,6 @@ public class AndroidLoginDetector {
      * Input credentials using UI manager
      */
     private void inputCredentials(String username, String password) {
-        // This method has been replaced by inputCredentialsWithUI()
-        // Keep this method to avoid breaking existing calls
         inputCredentialsWithUI(username, password);
     }
 
@@ -584,8 +768,6 @@ public class AndroidLoginDetector {
      * Step 6: Analyze API logs and rebuild state machine
      */
     private void analyzeApiLogs() {
-        // This method has been replaced by analyzeApiLogsAndValidateStateMachine()
-        // Keep this method to avoid breaking existing calls
         analyzeApiLogsAndValidateStateMachine();
     }
 
@@ -720,6 +902,8 @@ public class AndroidLoginDetector {
                 logInfo("  - Facebook login: " + uiManager.isFacebookLoginDetected());
                 logInfo("  - Username field: " + uiManager.isUsernameFieldDetected());
                 logInfo("  - Password field: " + uiManager.isPasswordFieldDetected());
+                // Create baseline snapshot once when first login page is detected
+                createBaselineSnapshotIfNeeded();
             } else {
                 logInfo("UI manager did not detect login page");
             }
@@ -732,7 +916,7 @@ public class AndroidLoginDetector {
     }
 
     /**
-     * 根据检测到的登录类型选择用户名
+     * Select username based on detected login type
      */
     private String selectCredentials() {
         String username;
@@ -752,7 +936,7 @@ public class AndroidLoginDetector {
     }
 
     /**
-     * 根据检测到的登录类型选择密码
+     * Select password based on detected login type
      */
     private String selectPassword() {
         String password;
@@ -793,12 +977,12 @@ public class AndroidLoginDetector {
     }
 
     /**
-     * 检查登录超时
+     * Check login timeout
      */
     private void checkLoginTimeout() {
         try {
             long loginDuration = uiManager.getLoginDuration();
-            int timeoutThreshold = configLoader.getLoginTimeoutSeconds() * 1000; // 转换为毫秒
+            int timeoutThreshold = configLoader.getLoginTimeoutSeconds() * 1000; // Convert to milliseconds
 
             if (loginDuration > 0) {
                 logInfo("Login duration: " + loginDuration + "ms");
@@ -816,39 +1000,39 @@ public class AndroidLoginDetector {
     }
 
     /**
-     * 启动Monkey并监控UI元素
+     * Start Monkey and monitor UI elements (exploration-first, even if login not yet detected)
      */
     private void startMonkeyWithUIMonitoring() {
         try {
             logInfo("Starting Monkey and monitoring focused elements...");
 
-            // Start Monkey in background
+            // Start Monkey in background (always allow exploration)
             Process monkeyProcess = startMonkeyWithProcess();
-            
             if (monkeyProcess == null) {
                 logError("Failed to start Monkey process");
                 return;
             }
 
             // Monitor focused elements during Monkey execution
-            int monitoringInterval = configLoader.getDetectionApiInterval() * 1000; // 转换为毫秒
-            long totalMonitoringTime = configLoader.getTestDuration(); // 毫秒
+            int monitoringInterval = configLoader.getDetectionApiInterval() * 1000; // ms
+            long totalMonitoringTime = configLoader.getTestDuration(); // ms
 
             long startTime = System.currentTimeMillis();
             boolean monkeyCompleted = false;
-            
+
             while (System.currentTimeMillis() - startTime < totalMonitoringTime && !monkeyCompleted) {
-                // Check if Monkey process is still running using ADB
-                boolean monkeyStillRunning = checkMonkeyProcessRunning();
-                
-                if (!monkeyStillRunning) {
-                    logInfo("Monkey process completed");
+                // Check if Monkey process is still running
+                try {
+                    int exitCode = monkeyProcess.exitValue();
+                    logInfo("Monkey process completed with exit code: " + exitCode);
                     monkeyCompleted = true;
+                    break;
+                } catch (IllegalThreadStateException e) {
+                    // Process is still running
                 }
-                
-                // Check if current focused element is a login field
+
+                // If we reach a login-focused field, stop exploration early
                 boolean loginFieldFocused = uiManager.checkFocusedLoginField();
-                
                 if (loginFieldFocused) {
                     logInfo("Monkey focused on login field, stopping exploration");
                     stopMonkey();
@@ -868,28 +1052,12 @@ public class AndroidLoginDetector {
                 logInfo("Monkey monitoring timeout reached, stopping Monkey");
                 stopMonkey();
             }
-
         } catch (Exception e) {
             logError("Monkey UI monitoring failed: " + e.getMessage());
             stopMonkey();
         }
     }
-    
-    private boolean checkMonkeyProcessRunning() {
-        try {
-            Process process = Runtime.getRuntime().exec("adb shell ps | grep monkey");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line = reader.readLine();
-            reader.close();
-            process.waitFor();
-            
-            return line != null && line.contains("monkey");
-        } catch (Exception e) {
-            logError("Error checking Monkey process: " + e.getMessage());
-            return false;
-        }
-    }
-    
+
     private Process startMonkeyWithProcess() {
         try {
             logInfo("Starting Monkey to generate events...");
@@ -921,7 +1089,7 @@ public class AndroidLoginDetector {
             // Reset state sequence
             stateMachineManager.resetStateSequence();
 
-            String logFilePath = "src/main/resources/frida_api_log.txt";
+            String logFilePath = "logs/frida_api_log.txt";
             if (apiLogAnalyzer != null) {
                 apiLogAnalyzer.parseLogFile(logFilePath);
 

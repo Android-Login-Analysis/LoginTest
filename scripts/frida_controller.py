@@ -27,7 +27,8 @@ def setup_logging():
 
 def setup_api_logging():
     """Setup API call logging to the file expected by Java application"""
-    api_log_dir = os.path.join(os.path.dirname(__file__), '..', 'src', 'main', 'resources')
+    # Write runtime API logs under project-level logs directory
+    api_log_dir = os.path.join(os.path.dirname(__file__), '..', 'logs')
     if not os.path.exists(api_log_dir):
         os.makedirs(api_log_dir)
     
@@ -37,7 +38,7 @@ def setup_api_logging():
     if not os.path.exists(api_log_file):
         with open(api_log_file, 'w') as f:
             f.write("# Frida API Call Log\n")
-            f.write("# Format: timestamp|class|method|pattern\n")
+            f.write("# Format: TIMESTAMP ::: CLASS_NAME.METHOD_NAME\n")
     
     return api_log_file
 
@@ -48,10 +49,13 @@ def log_api_call(api_log_file, payload):
         timestamp = payload.get('timestamp', int(time.time() * 1000))
         class_name = payload.get('class', 'Unknown')
         method_name = payload.get('method', 'Unknown')
-        pattern = payload.get('pattern', 'Unknown')
+        # Use 'state' from agent payload to align with Java analyzer expectations
+        pattern = payload.get('state', 'Unknown')
         
         with open(api_log_file, 'a') as f:
-            f.write(f"{timestamp}|{class_name}|{method_name}|{pattern}\n")
+            # Java ApiLogAnalyzer expects: "([0-9]+) *::: *([^.]+).([^ ]+)"
+            # Only write the expected format to ensure parsing works
+            f.write(f"{timestamp} ::: {class_name}.{method_name}\n")
     except Exception as e:
         logging.error(f"Failed to log API call: {e}")
 
@@ -90,6 +94,23 @@ def load_config():
         })
 
     return config
+
+def get_static_analysis_result_path_from_config(config: dict) -> str:
+    """Derive deterministic static analysis result path from APK path in config.
+    apps/foo/MyApp.apk -> reports/static_analysis/MyApp.json
+    """
+    try:
+        apk_path = config.get('app.path') or config.get('apk.path')
+        if not apk_path:
+            return None
+        name = os.path.basename(apk_path)
+        base, _ = os.path.splitext(name)
+        out_dir = os.path.join(os.path.dirname(__file__), '..', 'reports', 'static_analysis')
+        if not os.path.exists(out_dir):
+            os.makedirs(out_dir)
+        return os.path.normpath(os.path.join(out_dir, base + '.json'))
+    except Exception:
+        return None
 
 
 def on_message(message, data):
@@ -134,55 +155,82 @@ def main():
     logging.info(f"API log file: {api_log_file}")
 
     if len(sys.argv) < 2:
-        logging.error("Usage: python frida_controller.py <package_name>")
+        logging.error("Usage: python frida_controller.py <package_name> [script_path]")
         sys.exit(1)
 
     package_name = sys.argv[1]
-    script_path = os.path.join(os.path.dirname(__file__), '..', 'src', 'main', 'resources', 'login_agent.js')
+    
+    # 确定要使用的脚本路径
+    if len(sys.argv) >= 3:
+        script_path = sys.argv[2]
+        logging.info(f"Using custom script: {script_path}")
+    else:
+        script_path = os.path.join(os.path.dirname(__file__), '..', 'src', 'main', 'resources', 'login_agent.js')
+        logging.info(f"Using default script: {script_path}")
 
     if not os.path.exists(script_path):
         logging.error(f"Script file not found: {script_path}")
         sys.exit(1)
     
-    # Check Frida version compatibility
+    # 检查Frida版本兼容性
     try:
         import frida
         logging.info(f"Frida client version: {frida.__version__}")
     except Exception as e:
         logging.error(f"Failed to get Frida client version: {e}")
 
-    script_dir = os.path.dirname(__file__)
-    regex_patterns_path = os.path.join(script_dir, '..', 'src', 'main', 'resources', 'regex_patterns.txt')
+    # 尝试加载静态分析结果
+    analysis_result = None
+    if script_path.endswith('_frida_script.js'):
+        # 这是生成的脚本，尝试加载对应的分析结果
+        analysis_result_path = script_path.replace('_frida_script.js', '_analysis.json')
+        if os.path.exists(analysis_result_path):
+            try:
+                with open(analysis_result_path, 'r') as f:
+                    analysis_result = json.load(f)
+                logging.info(f"Loaded static analysis result: {analysis_result_path}")
+                logging.info(f"Analysis contains {len(analysis_result.get('matches', {}))} state matches")
+            except Exception as e:
+                logging.warning(f"Failed to load static analysis result: {e}")
     
-    # Initialize patterns_dict
-    patterns_dict = {}
-    
-    try:
-        with open(regex_patterns_path, 'r') as f:
-            regex_patterns = f.read()
-        # Copy patterns to the agent script directory for access
-        agent_regex_path = os.path.join(os.path.dirname(script_path), 'regex_patterns.txt')
-        with open(agent_regex_path, 'w') as f:
-            f.write(regex_patterns)
-        logging.info(f"Regex patterns copied from: {regex_patterns_path}")
-        logging.info(f"Regex patterns copied to: {agent_regex_path}")
+    # 如果没有静态分析结果，使用正则表达式模式
+    if analysis_result is None:
+        script_dir = os.path.dirname(__file__)
+        regex_patterns_path = os.path.join(script_dir, '..', 'src', 'main', 'resources', 'regex_patterns.txt')
         
-        # Parse regex patterns into dict format
-        for line in regex_patterns.strip().split('\n'):
-            line = line.strip()
-            if line and not line.startswith('#') and ':::' in line:
-                parts = line.split(':::', 1)
-                if len(parts) == 2:
-                    state_name = parts[0].strip()
-                    pattern = parts[1].strip()
-                    patterns_dict[state_name] = pattern
-        logging.info(f"Loaded {len(patterns_dict)} patterns from file")
+        # Initialize patterns_dict
+        patterns_dict = {}
         
-    except FileNotFoundError:
-        logging.error(f"regex_patterns.txt not found at: {regex_patterns_path}")
-        logging.warning("Failed to copy regex patterns, agent will use default patterns")
-    except Exception as e:
-        logging.warning(f"Failed to load regex patterns: {e}, using default patterns")
+        try:
+            with open(regex_patterns_path, 'r') as f:
+                regex_patterns = f.read()
+            # Copy patterns to the agent script directory for access
+            agent_regex_path = os.path.join(os.path.dirname(script_path), 'regex_patterns.txt')
+            with open(agent_regex_path, 'w') as f:
+                f.write(regex_patterns)
+            logging.info(f"Regex patterns copied from: {regex_patterns_path}")
+            logging.info(f"Regex patterns copied to: {agent_regex_path}")
+            
+            # Parse regex patterns into dict format
+            for line in regex_patterns.strip().split('\n'):
+                line = line.strip()
+                if line and not line.startswith('#') and ':::' in line:
+                    parts = line.split(':::', 1)
+                    if len(parts) == 2:
+                        state_name = parts[0].strip()
+                        pattern = parts[1].strip()
+                        patterns_dict[state_name] = pattern
+            logging.info(f"Loaded {len(patterns_dict)} patterns from file")
+            
+        except FileNotFoundError:
+            logging.error(f"regex_patterns.txt not found at: {regex_patterns_path}")
+            logging.warning("Failed to copy regex patterns, agent will use default patterns")
+        except Exception as e:
+            logging.warning(f"Failed to load regex patterns: {e}, using default patterns")
+    else:
+        # 使用静态分析结果
+        patterns_dict = analysis_result.get('detailedMethods', {})
+        logging.info(f"Using static analysis result with {len(patterns_dict)} states")
 
     try:
         # Load the JavaScript code
@@ -374,21 +422,70 @@ def main():
         # Call the RPC export to initialize the agent with patterns
         try:
             # Use the modern sync method
-            script.exports_sync.init(patterns_dict)
-            logging.info("Frida agent initialized with regex patterns.")
+            if analysis_result is not None:
+                # Pass parsed static analysis JSON to agent (no file I/O in agent)
+                script.exports_sync.init(analysis_result)
+                logging.info("Frida agent initialized with static analysis result.")
+                logging.info("FRIDA_READY_STATIC")
+            elif script_path.endswith('static_analysis_agent.js'):
+                # Load analysis file here and pass the parsed object to agent
+                analysis_result_path = None
+                if len(sys.argv) >= 4:
+                    analysis_result_path = sys.argv[3]
+                else:
+                    analysis_result_path = get_static_analysis_result_path_from_config(config)
+                
+                if analysis_result_path and os.path.exists(analysis_result_path):
+                    with open(analysis_result_path, 'r') as f:
+                        analysis_obj = json.load(f)
+                    script.exports_sync.init(analysis_obj)
+                    logging.info(f"Frida agent initialized with static analysis result: {analysis_result_path}")
+                    logging.info("FRIDA_READY_STATIC")
+                else:
+                    logging.error("Static analysis result file not found")
+                    raise Exception("Static analysis result file not found")
+            else:
+                # Pass regex patterns to script
+                script.exports_sync.init(patterns_dict)
+                logging.info("Frida agent initialized with regex patterns.")
+                logging.info("FRIDA_READY")
         except Exception as e:
             logging.error(f"Failed to initialize agent: {e}")
             # Try alternative method with async
             try:
-                script.exports.init(patterns_dict)
-                logging.info("Frida agent initialized with regex patterns (async method).")
+                if analysis_result is not None:
+                    script.exports.init(analysis_result)
+                    logging.info("Frida agent initialized with static analysis result (async method).")
+                elif script_path.endswith('static_analysis_agent.js'):
+                    if analysis_result_path and os.path.exists(analysis_result_path):
+                        with open(analysis_result_path, 'r') as f:
+                            analysis_obj = json.load(f)
+                        script.exports.init(analysis_obj)
+                        logging.info(f"Frida agent initialized with static analysis result (async method): {analysis_result_path}")
+                    else:
+                        raise Exception("Static analysis result file not found")
+                else:
+                    script.exports.init(patterns_dict)
+                    logging.info("Frida agent initialized with regex patterns (async method).")
             except Exception as e2:
                 logging.error(f"Failed to initialize agent with async method: {e2}")
                 # Try one more time with a delay
                 time.sleep(1)
                 try:
-                    script.exports_sync.init(patterns_dict)
-                    logging.info("Frida agent initialized with regex patterns (retry sync method).")
+                    if analysis_result is not None:
+                        script.exports_sync.init(analysis_result)
+                        logging.info("Frida agent initialized with static analysis result (retry sync method).")
+                    elif script_path.endswith('static_analysis_agent.js'):
+                        if analysis_result_path and os.path.exists(analysis_result_path):
+                            with open(analysis_result_path, 'r') as f:
+                                analysis_obj = json.load(f)
+                            script.exports_sync.init(analysis_obj)
+                            logging.info(f"Frida agent initialized with static analysis result (retry sync method): {analysis_result_path}")
+                        else:
+                            raise Exception("Static analysis result file not found")
+                    else:
+                        script.exports_sync.init(patterns_dict)
+                        logging.info("Frida agent initialized with regex patterns (retry sync method).")
                 except Exception as e3:
                     logging.error(f"All initialization methods failed: {e3}")
                     raise e3

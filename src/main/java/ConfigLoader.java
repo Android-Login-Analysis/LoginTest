@@ -10,8 +10,9 @@ import java.util.regex.Pattern;
 public class ConfigLoader {
     private Properties config;
     private String appPackage = "org.mian.gitnex"; // Default app package
-
-    // Default timeout (seconds)
+    private String apkPath = "apps/org.mian.gitnex_550.apk"; // Default APK path
+    
+    // Test configuration
     private int loginTimeoutSeconds = 10;
 
     // Test time configuration
@@ -333,5 +334,9 @@ public class ConfigLoader {
 
     public String getAppPackage() {
         return appPackage;
+    }
+
+    public String getApkPath() {
+        return apkPath;
     }
 }

@@ -1,5 +1,6 @@
 import java.util.*;
 import java.util.regex.Pattern;
+import java.io.*;
 
 /**
  * State machine manager - responsible for state transition validation and error
@@ -14,8 +15,137 @@ public class StateMachineManager {
         this.configLoader = configLoader;
         this.observedStateSequence = new ArrayList<>();
         this.validStateTransitions = new HashMap<>(); // Initialize the map to prevent NullPointerException
-        // State machine initialization now handled by AndroidLoginDetector
-        System.out.println("StateMachineManager: initialization complete, waiting for state machine configuration");
+        
+        // Load state machine configuration from regex patterns file
+        loadStateMachineFromConfig();
+        
+        System.out.println("StateMachineManager: initialization complete with " + validStateTransitions.size() + " state transitions");
+    }
+
+    /**
+     * Load state machine configuration from regex patterns file
+     */
+    private void loadStateMachineFromConfig() {
+        try {
+            String regexPatternsPath = "src/main/resources/regex_patterns.txt";
+            File patternsFile = new File(regexPatternsPath);
+            
+            if (!patternsFile.exists()) {
+                // Try to load from classpath
+                InputStream inputStream = getClass().getClassLoader().getResourceAsStream(regexPatternsPath);
+                if (inputStream == null) {
+                    System.err.println("StateMachineManager: Cannot find regex patterns file: " + regexPatternsPath);
+                    return;
+                }
+            }
+            
+            // Read regex patterns and extract state transitions
+            List<String> states = new ArrayList<>();
+            try (BufferedReader reader = new BufferedReader(
+                    patternsFile.exists() ? new FileReader(patternsFile) : 
+                    new InputStreamReader(getClass().getClassLoader().getResourceAsStream(regexPatternsPath)))) {
+                
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    line = line.trim();
+                    
+                    // Skip comments and empty lines
+                    if (line.isEmpty() || line.startsWith("#") || line.startsWith("=")) {
+                        continue;
+                    }
+                    
+                    // Parse format: STATE_NAME:::REGEX_PATTERN
+                    if (line.contains(":::")) {
+                        String[] parts = line.split(":::", 2);
+                        if (parts.length == 2) {
+                            String stateName = parts[0].trim();
+                            if (!states.contains(stateName)) {
+                                states.add(stateName);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Generate state transitions based on logical flow
+            generateStateTransitions(states);
+            
+            System.out.println("StateMachineManager: Loaded " + states.size() + " states from regex patterns");
+            
+        } catch (Exception e) {
+            System.err.println("StateMachineManager: Failed to load state machine configuration: " + e.getMessage());
+            // Use default state transitions as fallback
+            loadDefaultStateTransitions();
+        }
+    }
+
+    /**
+     * Generate state transitions based on logical flow
+     */
+    private void generateStateTransitions(List<String> states) {
+        // Pre-Login Phase
+        addTransitionIfExists(states, "InitialState", "CheckingToken");
+        addTransitionIfExists(states, "InitialState", "CredentialInput");
+        addTransitionIfExists(states, "CheckingToken", "LoggedIn_Via_Token");
+        addTransitionIfExists(states, "CheckingToken", "CredentialInput");
+        addTransitionIfExists(states, "CredentialInput", "EncodingCredentials");
+        addTransitionIfExists(states, "CredentialInput", "CredentialFormatError");
+        addTransitionIfExists(states, "EncodingCredentials", "Authenticating");
+        addTransitionIfExists(states, "CredentialFormatError", "CredentialInput");
+
+        // Login Phase
+        addTransitionIfExists(states, "Authenticating", "CheckingCredentials");
+        addTransitionIfExists(states, "CheckingCredentials", "ServiceUnavailable_Auth");
+        addTransitionIfExists(states, "CheckingCredentials", "InvalidCredentials");
+        addTransitionIfExists(states, "CheckingCredentials", "CheckingMFASettings");
+        addTransitionIfExists(states, "ServiceUnavailable_Auth", "CredentialInput");
+        addTransitionIfExists(states, "ServiceUnavailable_Auth", "InitialState");
+        addTransitionIfExists(states, "InvalidCredentials", "CredentialInput");
+        addTransitionIfExists(states, "CheckingMFASettings", "MFACodePending");
+        addTransitionIfExists(states, "CheckingMFASettings", "LoggedIn_NoMFA");
+
+        // MFA Phase
+        addTransitionIfExists(states, "MFACodePending", "SendingMFACode");
+        addTransitionIfExists(states, "SendingMFACode", "MFAVerification");
+        addTransitionIfExists(states, "SendingMFACode", "ServiceUnavailable_MFA_Send");
+        addTransitionIfExists(states, "ServiceUnavailable_MFA_Send", "MFACodePending");
+        addTransitionIfExists(states, "MFAVerification", "VerifyingMFA");
+        addTransitionIfExists(states, "VerifyingMFA", "ServiceUnavailable_MFA_Verify");
+        addTransitionIfExists(states, "VerifyingMFA", "MFAError");
+        addTransitionIfExists(states, "VerifyingMFA", "LoggedIn_WithMFA");
+        addTransitionIfExists(states, "ServiceUnavailable_MFA_Verify", "MFAVerification");
+        addTransitionIfExists(states, "MFAError", "MFACodePending");
+
+        // Post-Login Phase
+        addTransitionIfExists(states, "LoggedIn_Via_Token", "AppMainScreen");
+        addTransitionIfExists(states, "LoggedIn_NoMFA", "AppMainScreen");
+        addTransitionIfExists(states, "LoggedIn_WithMFA", "AppMainScreen");
+        addTransitionIfExists(states, "AppMainScreen", "UserLogout");
+        addTransitionIfExists(states, "AppMainScreen", "InitialState");
+        addTransitionIfExists(states, "UserLogout", "InitialState");
+        addTransitionIfExists(states, "UserLogout", "CredentialInput");
+    }
+
+    /**
+     * Add transition if both states exist
+     */
+    private void addTransitionIfExists(List<String> states, String fromState, String toState) {
+        if (states.contains(fromState) && states.contains(toState)) {
+            addStateTransition(fromState, toState);
+        }
+    }
+
+    /**
+     * Load default state transitions as fallback
+     */
+    private void loadDefaultStateTransitions() {
+        System.out.println("StateMachineManager: Loading default state transitions");
+        // Add some basic transitions as fallback
+        addStateTransition("InitialState", "CredentialInput");
+        addStateTransition("CredentialInput", "Authenticating");
+        addStateTransition("Authenticating", "AppMainScreen");
+        addStateTransition("AppMainScreen", "UserLogout");
+        addStateTransition("UserLogout", "InitialState");
     }
 
     /**

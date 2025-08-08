@@ -13,6 +13,7 @@ public class ApiLogAnalyzer {
 
     private final Map<String, Pattern> stateRegexPatterns; // Map<StateName, RegexPatternForApi>
     private final List<ApiCallEntry> apiCallLog;
+    private final List<List<ApiCallEntry>> roundLogs; // segmented logs per round
 
     public static class ApiCallEntry {
         long timestamp;
@@ -45,6 +46,7 @@ public class ApiLogAnalyzer {
     public ApiLogAnalyzer(String regexPatternsFilePath) throws IOException {
         this.stateRegexPatterns = loadRegexPatterns(regexPatternsFilePath);
         this.apiCallLog = new ArrayList<>();
+        this.roundLogs = new ArrayList<>();
     }
 
     private Map<String, Pattern> loadRegexPatterns(String filePath) throws IOException {
@@ -77,14 +79,28 @@ public class ApiLogAnalyzer {
      */
     public void parseLogFile(String logFilePath) throws IOException {
         apiCallLog.clear();
+        roundLogs.clear();
+        List<ApiCallEntry> currentRound = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(logFilePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
+                // Round separator: ==== ROUND N START | timestamp ====
+                if (line.startsWith("==== ROUND")) {
+                    if (!currentRound.isEmpty()) {
+                        roundLogs.add(currentRound);
+                        currentRound = new ArrayList<>();
+                    }
+                    continue; // do not parse separator as entry
+                }
                 ApiCallEntry entry = parseLogLine(line);
                 if (entry != null) {
                     apiCallLog.add(entry);
+                    currentRound.add(entry);
                 }
             }
+        }
+        if (!currentRound.isEmpty()) {
+            roundLogs.add(currentRound);
         }
     }
 
@@ -104,16 +120,14 @@ public class ApiLogAnalyzer {
                 return new ApiCallEntry(timestamp, className, methodName);
             } catch (NumberFormatException e) {
                 System.err.println("Skipping log line due to timestamp parse error: " + line);
+                return null;
             } catch (Exception e) {
-                System.err.println("Skipping log line due to unexpected error: " + line + " - " + e.getMessage());
+                // Swallow and treat as unparsable line
+                return null;
             }
         } else {
-            // Optionally log lines that don't match the expected Frida output
-            if (line.contains(" ::: ")) { // Heuristic to only log potential API calls
-                System.err.println("Skipping unparsable API log line: " + line);
-            }
+            return null;
         }
-        return null;
     }
 
     /**
@@ -140,6 +154,36 @@ public class ApiLogAnalyzer {
         return apiCallLog.stream()
                 .map(entry -> entry.mappedState)
                 .collect(Collectors.toList());
+    }
+
+    // --- Round-aware helpers ---
+
+    public List<List<ApiCallEntry>> getRoundLogs() {
+        return roundLogs;
+    }
+
+    public List<List<String>> getObservedStateSequencePerRound() {
+        List<List<String>> result = new ArrayList<>();
+        for (List<ApiCallEntry> round : roundLogs) {
+            List<String> states = round.stream()
+                    .map(this::mapEntryToState)
+                    .filter(s -> !"Unknown".equals(s))
+                    .collect(Collectors.toList());
+            result.add(states);
+        }
+        return result;
+    }
+
+    private String mapEntryToState(ApiCallEntry entry) {
+        String signature = entry.getMethodSignature();
+        for (Map.Entry<String, Pattern> e : stateRegexPatterns.entrySet()) {
+            if (e.getValue().matcher(signature).find()) {
+                entry.mappedState = e.getKey();
+                return entry.mappedState;
+            }
+        }
+        entry.mappedState = "Unknown";
+        return entry.mappedState;
     }
 
     /**
