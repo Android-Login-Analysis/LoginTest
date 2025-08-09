@@ -136,30 +136,11 @@ RUN mvn clean package -DskipTests
 # Ensure dependencies are copied for runtime
 RUN mvn dependency:copy-dependencies
 
-# Download system-images directly (API 29)
-RUN mkdir -p ${ANDROID_HOME}/system-images/android-29 && cd ${ANDROID_HOME}/system-images/android-29 && \
-    wget https://dl.google.com/android/repository/sys-img/google_apis/x86_64-29_r11.zip && \
-    unzip x86_64-29_r11.zip -d google_apis && \
-    rm x86_64-29_r11.zip
-
-# Create package.xml metadata for system-images (API 29)
-RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '<ns2:repository xmlns:ns2="http://schemas.android.com/repository/android/common/01" xmlns:ns3="http://schemas.android.com/sdk/android/repo/sys-img2/03">' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '  <localPackage path="system-images;android-29;google_apis;x86_64">' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '    <type-details xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns3:sysImgDetailsType">' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '      <api-level>29</api-level>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '      <tag>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '        <id>google_apis</id>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '        <display>Google APIs</display>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '      </tag>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '      <abi>x86_64</abi>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '    </type-details>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '    <revision>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '      <major>11</major>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '    </revision>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '    <display-name>Google APIs Intel x86 Atom_64 System Image</display-name>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '  </localPackage>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml && \
-    echo '</ns2:repository>' >> ${ANDROID_HOME}/system-images/android-29/google_apis/x86_64/package.xml
+## KISS: Use sdkmanager to install system image (API 29) instead of manual wget/unzip
+RUN ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --version && \
+    yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses && \
+    ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager \
+      "system-images;android-29;google_apis;x86_64"
 
 # Make Python scripts executable
 # Frida binaries are already present in local resources directory

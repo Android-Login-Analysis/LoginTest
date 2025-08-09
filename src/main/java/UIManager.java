@@ -33,33 +33,75 @@ public class UIManager {
      */
     public boolean startUI() {
         try {
-            // Check ADB connection
-            Process process = Runtime.getRuntime().exec("adb devices");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            boolean deviceFound = false;
+            // Robust wait for ADB device to be ready
+            final int maxAttempts = 30; // ~60s with 2s interval
+            final long sleepMs = 2000;
 
-            while ((line = reader.readLine()) != null) {
-                // Skip the header line "List of devices attached"
-                if (line.contains("List of devices")) {
-                    continue;
-                }
-                // Check for any device line that ends with "device" (not "offline" or "unauthorized")
-                if (line.trim().endsWith("device")) {
-                    deviceFound = true;
-                    System.out.println("ADB device connected: " + line.trim());
-                }
-            }
-            reader.close();
-            process.waitFor();
+            for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+                Process process = Runtime.getRuntime().exec("adb devices");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                String line;
+                String readySerial = null;
 
-            if (deviceFound) {
-                System.out.println("UI manager started successfully");
-                return true;
-            } else {
-                System.err.println("No ADB device found");
-                return false;
+                while ((line = reader.readLine()) != null) {
+                    if (line.contains("List of devices")) {
+                        continue;
+                    }
+                    String trimmed = line.trim();
+                    // Only lines that end with 'device' (not 'offline', 'unauthorized')
+                    if (trimmed.endsWith("device")) {
+                        // serial is the first token before whitespace
+                        String[] parts = trimmed.split("\\s+");
+                        if (parts.length > 0) {
+                            readySerial = parts[0];
+                            break;
+                        }
+                    }
+                }
+                reader.close();
+                process.waitFor();
+
+                if (readySerial != null) {
+                    // Verify boot completed
+                    Process bootProc = Runtime.getRuntime().exec(new String[] {"bash", "-lc",
+                            "adb -s " + readySerial + " shell getprop sys.boot_completed"});
+                    BufferedReader bootReader = new BufferedReader(new InputStreamReader(bootProc.getInputStream()));
+                    String bootVal = bootReader.readLine();
+                    bootReader.close();
+                    bootProc.waitFor();
+
+                    boolean bootCompleted = bootVal != null && bootVal.trim().equals("1");
+
+                    boolean provisionedOk = true; // optional check
+                    try {
+                        Process provProc = Runtime.getRuntime().exec(new String[] {"bash", "-lc",
+                                "adb -s " + readySerial + " shell settings get global device_provisioned"});
+                        BufferedReader provReader = new BufferedReader(
+                                new InputStreamReader(provProc.getInputStream()));
+                        String provVal = provReader.readLine();
+                        provReader.close();
+                        provProc.waitFor();
+                        if (provVal != null) {
+                            provisionedOk = provVal.trim().equals("1");
+                        }
+                    } catch (Exception ignore) {
+                        // If settings service not available yet, ignore and rely on boot_completed
+                    }
+
+                    if (bootCompleted) {
+                        System.out.println("ADB device ready: " + readySerial +
+                                (provisionedOk ? " (provisioned)" : " (provisioning)"));
+                        System.out.println("UI manager started successfully");
+                        return true;
+                    }
+                }
+
+                // Not ready yet; wait and retry
+                try { Thread.sleep(sleepMs); } catch (InterruptedException ie) { /* ignore */ }
             }
+
+            System.err.println("No ADB device ready within timeout");
+            return false;
         } catch (Exception e) {
             System.err.println("UI manager startup failed: " + e.getMessage());
             return false;
