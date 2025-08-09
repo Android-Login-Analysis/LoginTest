@@ -1,0 +1,375 @@
+2025-08-09 18:35:53 - Starting AndroidLoginDetector run script
+[2025-08-09 18:35:56.534] [INFO] === AndroidLoginDetector Started ===
+[2025-08-09 18:35:56.538] [INFO] Log file: logs/android_login_detector_20250809_183556.log
+[2025-08-09 18:35:56.538] [INFO] Timestamp: 2025-08-09 18:35:56.538
+ConfigLoader: Configuration loaded successfully
+ConfigLoader: Configuration loaded successfully
+Add state transition rule: InitialState -> CheckingToken
+Add state transition rule: InitialState -> CredentialInput
+Add state transition rule: CheckingToken -> LoggedIn_Via_Token
+Add state transition rule: CheckingToken -> CredentialInput
+Add state transition rule: CredentialInput -> EncodingCredentials
+Add state transition rule: CredentialInput -> CredentialFormatError
+Add state transition rule: EncodingCredentials -> Authenticating
+Add state transition rule: CredentialFormatError -> CredentialInput
+Add state transition rule: Authenticating -> CheckingCredentials
+Add state transition rule: CheckingCredentials -> ServiceUnavailable_Auth
+Add state transition rule: CheckingCredentials -> InvalidCredentials
+Add state transition rule: CheckingCredentials -> CheckingMFASettings
+Add state transition rule: ServiceUnavailable_Auth -> CredentialInput
+Add state transition rule: ServiceUnavailable_Auth -> InitialState
+Add state transition rule: InvalidCredentials -> CredentialInput
+Add state transition rule: CheckingMFASettings -> MFACodePending
+Add state transition rule: CheckingMFASettings -> LoggedIn_NoMFA
+Add state transition rule: MFACodePending -> SendingMFACode
+Add state transition rule: SendingMFACode -> MFAVerification
+Add state transition rule: SendingMFACode -> ServiceUnavailable_MFA_Send
+Add state transition rule: ServiceUnavailable_MFA_Send -> MFACodePending
+Add state transition rule: MFAVerification -> VerifyingMFA
+Add state transition rule: VerifyingMFA -> ServiceUnavailable_MFA_Verify
+Add state transition rule: VerifyingMFA -> MFAError
+Add state transition rule: VerifyingMFA -> LoggedIn_WithMFA
+Add state transition rule: ServiceUnavailable_MFA_Verify -> MFAVerification
+Add state transition rule: MFAError -> MFACodePending
+Add state transition rule: LoggedIn_Via_Token -> AppMainScreen
+Add state transition rule: LoggedIn_NoMFA -> AppMainScreen
+Add state transition rule: LoggedIn_WithMFA -> AppMainScreen
+Add state transition rule: AppMainScreen -> UserLogout
+Add state transition rule: AppMainScreen -> InitialState
+Add state transition rule: UserLogout -> InitialState
+Add state transition rule: UserLogout -> CredentialInput
+StateMachineManager: Loaded 22 states from regex patterns
+StateMachineManager: initialization complete with 22 state transitions
+[2025-08-09 18:35:56.550] [INFO] App configuration loaded:
+[2025-08-09 18:35:56.550] [INFO]   - Package: org.mian.gitnex
+[2025-08-09 18:35:56.550] [INFO]   - Activity: org.mian.gitnex.activities.MainActivity
+[2025-08-09 18:35:56.550] [INFO]   - APK Path: apps/org.mian.gitnex_550.apk
+[2025-08-09 18:35:56.550] [INFO]   - Emulator Snapshot: snap_gitnex_login
+[2025-08-09 18:35:56.550] [INFO] Initializing static analyzer...
+[2025-08-09 18:35:56.550] [INFO] Static analysis required - performing analysis...
+Trying to load pattern file: src/main/resources/regex_patterns.txt
+File exists: true
+Absolute path: /app/src/main/resources/regex_patterns.txt
+Loaded 71 state patterns
+=== Start static analysis ===
+APK path: apps/org.mian.gitnex_550.apk
+Pattern file: src/main/resources/regex_patterns.txt
+Output file: reports/static_analysis/org.mian.gitnex_550.json
+Using SootUp to analyze APK: apps/org.mian.gitnex_550.apk
+Found 24913 classes
+Extracted 171287 methods from APK
+Matching regex patterns...
+Matched: InitialState -> org.mian.gitnex.activities.MainActivity.onCreate
+Matched: CredentialInput -> org.mian.gitnex.activities.LoginActivity.onCreate
+Matched: AppMainScreen -> org.mian.gitnex.activities.MainActivity.onCreate
+Static analysis results saved to: reports/static_analysis/org.mian.gitnex_550.json
+=== Static analysis completed ===
+Results saved to: reports/static_analysis/org.mian.gitnex_550.json
+[2025-08-09 18:36:18.427] [INFO] Static analysis completed and saved to: reports/static_analysis/org.mian.gitnex_550.json
+[2025-08-09 18:36:18.427] [INFO] Initializing Frida manager with static analysis results...
+FridaManager: Using static analysis result: reports/static_analysis/org.mian.gitnex_550.json
+FridaManager: Static analysis results loaded from: reports/static_analysis/org.mian.gitnex_550.json
+[2025-08-09 18:36:18.434] [INFO] Frida manager configured with static analysis results
+[2025-08-09 18:36:18.452] [INFO] Using credential pool directory: pools/org.mian.gitnex_550
+[2025-08-09 18:36:18.452] [INFO] Loaded credential pools:
+[2025-08-09 18:36:18.452] [INFO]   - Standard accounts: 17
+[2025-08-09 18:36:18.452] [INFO]   - Standard passwords: 15
+[2025-08-09 18:36:18.452] [INFO]   - Google accounts: 5
+[2025-08-09 18:36:18.453] [INFO]   - Google passwords: 5
+[2025-08-09 18:36:18.453] [INFO]   - Facebook accounts: 5
+[2025-08-09 18:36:18.453] [INFO]   - Facebook passwords: 5
+[2025-08-09 18:36:18.453] [INFO] State machine initialized with 22 states
+=== State machine information ===
+LoggedIn_Via_Token -> AppMainScreen
+AppMainScreen -> UserLogout, InitialState
+EncodingCredentials -> Authenticating
+CheckingMFASettings -> MFACodePending, LoggedIn_NoMFA
+InvalidCredentials -> CredentialInput
+CheckingToken -> LoggedIn_Via_Token, CredentialInput
+UserLogout -> InitialState, CredentialInput
+MFACodePending -> SendingMFACode
+InitialState -> CheckingToken, CredentialInput
+LoggedIn_NoMFA -> AppMainScreen
+SendingMFACode -> MFAVerification, ServiceUnavailable_MFA_Send
+ServiceUnavailable_MFA_Verify -> MFAVerification
+MFAVerification -> VerifyingMFA
+MFAError -> MFACodePending
+Authenticating -> CheckingCredentials
+CredentialFormatError -> CredentialInput
+LoggedIn_WithMFA -> AppMainScreen
+VerifyingMFA -> ServiceUnavailable_MFA_Verify, MFAError, LoggedIn_WithMFA
+ServiceUnavailable_MFA_Send -> MFACodePending
+ServiceUnavailable_Auth -> CredentialInput, InitialState
+CheckingCredentials -> ServiceUnavailable_Auth, InvalidCredentials, CheckingMFASettings
+CredentialInput -> EncodingCredentials, CredentialFormatError
+==================
+[2025-08-09 18:36:18.453] [INFO] Starting Frida monitoring with static analysis results for package: org.mian.gitnex
+FridaManager: Starting Frida monitoring for package: org.mian.gitnex
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/static_analysis_agent.js
+FridaManager: Passing static analysis result path: reports/static_analysis/org.mian.gitnex_550.json
+FridaManager: Executing command: python3 scripts/frida_controller.py org.mian.gitnex src/main/resources/static_analysis_agent.js reports/static_analysis/org.mian.gitnex_550.json
+FridaManager: Frida monitoring started successfully
+[2025-08-09 18:36:18.462] [INFO] Frida monitoring started successfully
+Configuration validation passed
+=== Configuration Summary ===
+Test Rounds: 5
+Duration per Round: 300000ms
+Round Interval: 3s
+Login Timeout: 15s
+Monkey Events: 100
+Monkey Delay: 200ms
+Frida Timeout: 120s
+Frida Retry Count: 5
+==================
+[2025-08-09 18:36:18.464] [INFO] === Starting AndroidLoginDetector Test with Static Analysis ===
+[2025-08-09 18:36:18.464] [INFO] Target app: org.mian.gitnex
+[2025-08-09 18:36:18.464] [INFO] Test rounds: 5
+[2025-08-09 18:36:18.464] [INFO] Static analysis results: reports/static_analysis/org.mian.gitnex_550.json
+[2025-08-09 18:36:18.464] [INFO] Checking Docker environment compatibility...
+[2025-08-09 18:36:18.467] [INFO] ADB device found: emulator-5554	device
+[2025-08-09 18:36:18.478] [INFO] Emulator Android version: 10
+[2025-08-09 18:36:18.596] [INFO] Frida version: 16.7.19
+[2025-08-09 18:36:18.597] [INFO] All required files found
+[2025-08-09 18:36:18.597] [INFO] Docker environment check passed
+ADB device connected: emulator-5554	device
+UI manager started successfully
+[2025-08-09 18:36:18.601] [INFO] ================================================================================
+[2025-08-09 18:36:18.602] [INFO] ROUND 1 STARTED
+[2025-08-09 18:36:18.602] [INFO] Round timestamp: 2025-08-09 18:36:18.602
+[2025-08-09 18:36:18.602] [INFO] ================================================================================
+[2025-08-09 18:36:18.607] [INFO] Baseline snapshot not found. Skipping restore.
+[2025-08-09 18:36:18.607] [INFO] Appended Frida round marker for round 1
+[2025-08-09 18:36:18.607] [INFO] Restarting emulator snapshot: snap_gitnex_login
+[2025-08-09 18:36:18.610] [INFO] Snapshot 'snap_gitnex_login' not found, creating new snapshot...
+[2025-08-09 18:36:25.452] [INFO] New snapshot 'snap_gitnex_login' created successfully
+[2025-08-09 18:37:10.452] [INFO] Emulator snapshot operation completed
+[2025-08-09 18:37:10.453] [INFO] Starting Frida monitoring with static analysis results for package: org.mian.gitnex
+FridaManager: Starting Frida monitoring for package: org.mian.gitnex
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/static_analysis_agent.js
+FridaManager: Passing static analysis result path: reports/static_analysis/org.mian.gitnex_550.json
+FridaManager: Executing command: python3 scripts/frida_controller.py org.mian.gitnex src/main/resources/static_analysis_agent.js reports/static_analysis/org.mian.gitnex_550.json
+FridaManager: Frida monitoring started successfully
+[2025-08-09 18:37:10.460] [INFO] Frida monitoring started successfully
+[2025-08-09 18:37:10.460] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Login page detection result: false
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+[2025-08-09 18:37:11.976] [INFO] UI manager did not detect login page
+[2025-08-09 18:37:11.976] [INFO] No login page detected, starting Monkey exploration
+[2025-08-09 18:37:11.976] [INFO] Starting Monkey and monitoring focused elements...
+[2025-08-09 18:37:11.976] [INFO] Starting Monkey to generate events...
+[2025-08-09 18:37:11.979] [INFO] Monkey command executed: adb shell monkey -p org.mian.gitnex -v --throttle 200 --pct-touch 100 --pct-motion 0 --pct-trackball 0 --pct-syskeys 0 --pct-nav 0 --pct-majornav 0 --pct-appswitch 0 --pct-anyevent 0 100
+[2025-08-09 18:37:24.302] [INFO] Monkey process completed with exit code: 0
+[2025-08-09 18:37:24.302] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2025-08-09 18:37:24.303] [INFO] No API calls captured
+[2025-08-09 18:37:24.361] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2025-08-09 18:37:24.364] [INFO] Frida monitoring stopped
+[2025-08-09 18:37:24.365] [INFO] --------------------------------------------------------------------------------
+[2025-08-09 18:37:24.365] [INFO] ROUND 1 COMPLETED
+[2025-08-09 18:37:24.365] [INFO] Round duration: 65764ms
+[2025-08-09 18:37:24.365] [INFO] Total attempts: 1
+[2025-08-09 18:37:24.366] [INFO] Successful logins: 0
+[2025-08-09 18:37:24.366] [INFO] Failed logins: 0
+[2025-08-09 18:37:24.366] [INFO] --------------------------------------------------------------------------------
+[2025-08-09 18:37:27.424] [INFO] ================================================================================
+[2025-08-09 18:37:27.425] [INFO] ROUND 2 STARTED
+[2025-08-09 18:37:27.425] [INFO] Round timestamp: 2025-08-09 18:37:27.425
+[2025-08-09 18:37:27.425] [INFO] ================================================================================
+[2025-08-09 18:37:27.431] [INFO] Baseline snapshot not found. Skipping restore.
+[2025-08-09 18:37:27.431] [INFO] Appended Frida round marker for round 2
+[2025-08-09 18:37:27.432] [INFO] Restarting emulator snapshot: snap_gitnex_login
+[2025-08-09 18:37:27.437] [INFO] Emulator snapshot restored from existing snapshot
+[2025-08-09 18:38:12.438] [INFO] Emulator snapshot operation completed
+[2025-08-09 18:38:12.438] [INFO] Starting Frida monitoring with static analysis results for package: org.mian.gitnex
+FridaManager: Starting Frida monitoring for package: org.mian.gitnex
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/static_analysis_agent.js
+FridaManager: Passing static analysis result path: reports/static_analysis/org.mian.gitnex_550.json
+FridaManager: Executing command: python3 scripts/frida_controller.py org.mian.gitnex src/main/resources/static_analysis_agent.js reports/static_analysis/org.mian.gitnex_550.json
+FridaManager: Frida monitoring started successfully
+[2025-08-09 18:38:12.441] [INFO] Frida monitoring started successfully
+[2025-08-09 18:38:12.441] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Login page detection result: false
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+[2025-08-09 18:38:13.881] [INFO] UI manager did not detect login page
+[2025-08-09 18:38:13.881] [INFO] No login page detected, starting Monkey exploration
+[2025-08-09 18:38:13.881] [INFO] Starting Monkey and monitoring focused elements...
+[2025-08-09 18:38:13.881] [INFO] Starting Monkey to generate events...
+[2025-08-09 18:38:13.882] [INFO] Monkey command executed: adb shell monkey -p org.mian.gitnex -v --throttle 200 --pct-touch 100 --pct-motion 0 --pct-trackball 0 --pct-syskeys 0 --pct-nav 0 --pct-majornav 0 --pct-appswitch 0 --pct-anyevent 0 100
+[2025-08-09 18:38:24.696] [INFO] Monkey process completed with exit code: 0
+[2025-08-09 18:38:24.696] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2025-08-09 18:38:24.697] [INFO] No API calls captured
+[2025-08-09 18:38:24.736] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2025-08-09 18:38:24.741] [INFO] Frida monitoring stopped
+[2025-08-09 18:38:24.741] [INFO] --------------------------------------------------------------------------------
+[2025-08-09 18:38:24.741] [INFO] ROUND 2 COMPLETED
+[2025-08-09 18:38:24.741] [INFO] Round duration: 57317ms
+[2025-08-09 18:38:24.741] [INFO] Total attempts: 2
+[2025-08-09 18:38:24.742] [INFO] Successful logins: 0
+[2025-08-09 18:38:24.742] [INFO] Failed logins: 0
+[2025-08-09 18:38:24.742] [INFO] --------------------------------------------------------------------------------
+[2025-08-09 18:38:27.799] [INFO] ================================================================================
+[2025-08-09 18:38:27.799] [INFO] ROUND 3 STARTED
+[2025-08-09 18:38:27.800] [INFO] Round timestamp: 2025-08-09 18:38:27.799
+[2025-08-09 18:38:27.800] [INFO] ================================================================================
+[2025-08-09 18:38:27.806] [INFO] Baseline snapshot not found. Skipping restore.
+[2025-08-09 18:38:27.806] [INFO] Appended Frida round marker for round 3
+[2025-08-09 18:38:27.806] [INFO] Restarting emulator snapshot: snap_gitnex_login
+[2025-08-09 18:38:27.812] [INFO] Emulator snapshot restored from existing snapshot
+[2025-08-09 18:39:12.812] [INFO] Emulator snapshot operation completed
+[2025-08-09 18:39:12.812] [INFO] Starting Frida monitoring with static analysis results for package: org.mian.gitnex
+FridaManager: Starting Frida monitoring for package: org.mian.gitnex
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/static_analysis_agent.js
+FridaManager: Passing static analysis result path: reports/static_analysis/org.mian.gitnex_550.json
+FridaManager: Executing command: python3 scripts/frida_controller.py org.mian.gitnex src/main/resources/static_analysis_agent.js reports/static_analysis/org.mian.gitnex_550.json
+FridaManager: Frida monitoring started successfully
+[2025-08-09 18:39:12.816] [INFO] Frida monitoring started successfully
+[2025-08-09 18:39:12.816] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Login page detection result: false
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+[2025-08-09 18:39:14.278] [INFO] UI manager did not detect login page
+[2025-08-09 18:39:14.278] [INFO] No login page detected, starting Monkey exploration
+[2025-08-09 18:39:14.278] [INFO] Starting Monkey and monitoring focused elements...
+[2025-08-09 18:39:14.278] [INFO] Starting Monkey to generate events...
+[2025-08-09 18:39:14.280] [INFO] Monkey command executed: adb shell monkey -p org.mian.gitnex -v --throttle 200 --pct-touch 100 --pct-motion 0 --pct-trackball 0 --pct-syskeys 0 --pct-nav 0 --pct-majornav 0 --pct-appswitch 0 --pct-anyevent 0 100
+[2025-08-09 18:39:27.607] [INFO] Monkey process completed with exit code: 0
+[2025-08-09 18:39:27.607] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2025-08-09 18:39:27.608] [INFO] No API calls captured
+[2025-08-09 18:39:27.660] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2025-08-09 18:39:27.665] [INFO] Frida monitoring stopped
+[2025-08-09 18:39:27.665] [INFO] --------------------------------------------------------------------------------
+[2025-08-09 18:39:27.665] [INFO] ROUND 3 COMPLETED
+[2025-08-09 18:39:27.665] [INFO] Round duration: 59866ms
+[2025-08-09 18:39:27.665] [INFO] Total attempts: 3
+[2025-08-09 18:39:27.665] [INFO] Successful logins: 0
+[2025-08-09 18:39:27.665] [INFO] Failed logins: 0
+[2025-08-09 18:39:27.665] [INFO] --------------------------------------------------------------------------------
+[2025-08-09 18:39:30.713] [INFO] ================================================================================
+[2025-08-09 18:39:30.713] [INFO] ROUND 4 STARTED
+[2025-08-09 18:39:30.714] [INFO] Round timestamp: 2025-08-09 18:39:30.713
+[2025-08-09 18:39:30.714] [INFO] ================================================================================
+[2025-08-09 18:39:30.718] [INFO] Baseline snapshot not found. Skipping restore.
+[2025-08-09 18:39:30.718] [INFO] Appended Frida round marker for round 4
+[2025-08-09 18:39:30.718] [INFO] Restarting emulator snapshot: snap_gitnex_login
+[2025-08-09 18:39:30.726] [INFO] Emulator snapshot restored from existing snapshot
+[2025-08-09 18:40:15.726] [INFO] Emulator snapshot operation completed
+[2025-08-09 18:40:15.726] [INFO] Starting Frida monitoring with static analysis results for package: org.mian.gitnex
+FridaManager: Starting Frida monitoring for package: org.mian.gitnex
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/static_analysis_agent.js
+FridaManager: Passing static analysis result path: reports/static_analysis/org.mian.gitnex_550.json
+FridaManager: Executing command: python3 scripts/frida_controller.py org.mian.gitnex src/main/resources/static_analysis_agent.js reports/static_analysis/org.mian.gitnex_550.json
+FridaManager: Frida monitoring started successfully
+[2025-08-09 18:40:15.729] [INFO] Frida monitoring started successfully
+[2025-08-09 18:40:15.729] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Login page detection result: false
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+[2025-08-09 18:40:17.184] [INFO] UI manager did not detect login page
+[2025-08-09 18:40:17.185] [INFO] No login page detected, starting Monkey exploration
+[2025-08-09 18:40:17.185] [INFO] Starting Monkey and monitoring focused elements...
+[2025-08-09 18:40:17.185] [INFO] Starting Monkey to generate events...
+[2025-08-09 18:40:17.186] [INFO] Monkey command executed: adb shell monkey -p org.mian.gitnex -v --throttle 200 --pct-touch 100 --pct-motion 0 --pct-trackball 0 --pct-syskeys 0 --pct-nav 0 --pct-majornav 0 --pct-appswitch 0 --pct-anyevent 0 100
+[2025-08-09 18:40:31.668] [INFO] Monkey process completed with exit code: 0
+[2025-08-09 18:40:31.668] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2025-08-09 18:40:31.669] [INFO] No API calls captured
+[2025-08-09 18:40:31.735] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2025-08-09 18:40:31.739] [INFO] Frida monitoring stopped
+[2025-08-09 18:40:31.740] [INFO] --------------------------------------------------------------------------------
+[2025-08-09 18:40:31.740] [INFO] ROUND 4 COMPLETED
+[2025-08-09 18:40:31.740] [INFO] Round duration: 61027ms
+[2025-08-09 18:40:31.740] [INFO] Total attempts: 4
+[2025-08-09 18:40:31.740] [INFO] Successful logins: 0
+[2025-08-09 18:40:31.740] [INFO] Failed logins: 0
+[2025-08-09 18:40:31.740] [INFO] --------------------------------------------------------------------------------
+[2025-08-09 18:40:34.777] [INFO] ================================================================================
+[2025-08-09 18:40:34.778] [INFO] ROUND 5 STARTED
+[2025-08-09 18:40:34.778] [INFO] Round timestamp: 2025-08-09 18:40:34.778
+[2025-08-09 18:40:34.778] [INFO] ================================================================================
+[2025-08-09 18:40:34.783] [INFO] Baseline snapshot not found. Skipping restore.
+[2025-08-09 18:40:34.783] [INFO] Appended Frida round marker for round 5
+[2025-08-09 18:40:34.783] [INFO] Restarting emulator snapshot: snap_gitnex_login
+[2025-08-09 18:40:34.790] [INFO] Emulator snapshot restored from existing snapshot
+[2025-08-09 18:41:19.790] [INFO] Emulator snapshot operation completed
+[2025-08-09 18:41:19.790] [INFO] Starting Frida monitoring with static analysis results for package: org.mian.gitnex
+FridaManager: Starting Frida monitoring for package: org.mian.gitnex
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/static_analysis_agent.js
+FridaManager: Passing static analysis result path: reports/static_analysis/org.mian.gitnex_550.json
+FridaManager: Executing command: python3 scripts/frida_controller.py org.mian.gitnex src/main/resources/static_analysis_agent.js reports/static_analysis/org.mian.gitnex_550.json
+FridaManager: Frida monitoring started successfully
+[2025-08-09 18:41:19.793] [INFO] Frida monitoring started successfully
+[2025-08-09 18:41:19.793] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Login page detection result: false
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+[2025-08-09 18:41:21.232] [INFO] UI manager did not detect login page
+[2025-08-09 18:41:21.233] [INFO] No login page detected, starting Monkey exploration
+[2025-08-09 18:41:21.233] [INFO] Starting Monkey and monitoring focused elements...
+[2025-08-09 18:41:21.233] [INFO] Starting Monkey to generate events...
+[2025-08-09 18:41:21.235] [INFO] Monkey command executed: adb shell monkey -p org.mian.gitnex -v --throttle 200 --pct-touch 100 --pct-motion 0 --pct-trackball 0 --pct-syskeys 0 --pct-nav 0 --pct-majornav 0 --pct-appswitch 0 --pct-anyevent 0 100
+[2025-08-09 18:41:35.449] [INFO] Monkey process completed with exit code: 0
+[2025-08-09 18:41:35.449] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2025-08-09 18:41:35.450] [INFO] No API calls captured
+[2025-08-09 18:41:35.515] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2025-08-09 18:41:35.519] [INFO] Frida monitoring stopped
+[2025-08-09 18:41:35.519] [INFO] --------------------------------------------------------------------------------
+[2025-08-09 18:41:35.519] [INFO] ROUND 5 COMPLETED
+[2025-08-09 18:41:35.519] [INFO] Round duration: 60742ms
+[2025-08-09 18:41:35.519] [INFO] Total attempts: 5
+[2025-08-09 18:41:35.519] [INFO] Successful logins: 0
+[2025-08-09 18:41:35.519] [INFO] Failed logins: 0
+[2025-08-09 18:41:35.519] [INFO] --------------------------------------------------------------------------------
+[2025-08-09 18:41:35.570] [INFO] === Test Execution Summary ===
+[2025-08-09 18:41:35.571] [INFO] Total Login Attempts: 5
+[2025-08-09 18:41:35.571] [INFO] Successful Logins: 0
+[2025-08-09 18:41:35.571] [INFO] Failed Logins: 0
+[2025-08-09 18:41:35.572] [INFO] Success Rate: 0.0%
+[2025-08-09 18:41:35.574] [INFO] Detailed report written to: reports/login_test_report_2025-08-09_18-36-18.txt
+UI manager closed
+[2025-08-09 18:41:35.577] [INFO] Monkey stopped
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+[2025-08-09 18:41:35.577] [INFO] AndroidLoginDetector cleanup completed
+2025-08-09 18:41:35 - AndroidLoginDetector run script completed

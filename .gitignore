@@ -40,3 +40,7 @@ build/
 ### Android ###
 /reports/
 
+# Ignore decompiled APKs
+kickstarter_decompiled/
+messenger_decompiled/
+*.decompiled/

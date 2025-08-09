@@ -213,3 +213,197 @@
 2025-08-08 14:52:55,424 - INFO - Loaded 22 patterns from file
 2025-08-08 14:52:55,427 - INFO - Found active emulator: emulator-5554
 2025-08-08 14:52:55,427 - INFO - Getting root access on device: emulator-5554
+2025-08-09 18:36:18,498 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-09 18:36:18,498 - INFO - API log file: /app/scripts/../logs/frida_api_log.txt
+2025-08-09 18:36:18,498 - INFO - Using custom script: src/main/resources/static_analysis_agent.js
+2025-08-09 18:36:18,498 - INFO - Frida client version: 16.7.19
+2025-08-09 18:36:18,498 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-09 18:36:18,498 - INFO - Regex patterns copied to: src/main/resources/regex_patterns.txt
+2025-08-09 18:36:18,498 - INFO - Loaded 22 patterns from file
+2025-08-09 18:36:18,500 - INFO - Found active emulator: emulator-5554
+2025-08-09 18:36:18,500 - INFO - Getting root access on device: emulator-5554
+2025-08-09 18:36:21,812 - INFO - Disabling SELinux if possible
+2025-08-09 18:36:21,830 - INFO - Stopping any existing Frida server processes
+2025-08-09 18:36:21,854 - INFO - Pushing Frida server binary to device
+2025-08-09 18:36:22,167 - INFO - Setting executable permissions on Frida server
+2025-08-09 18:36:22,185 - INFO - Starting Frida server in background
+2025-08-09 18:36:25,188 - INFO - Verifying Frida server is running
+2025-08-09 18:37:10,501 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-09 18:37:10,502 - INFO - API log file: /app/scripts/../logs/frida_api_log.txt
+2025-08-09 18:37:10,502 - INFO - Using custom script: src/main/resources/static_analysis_agent.js
+2025-08-09 18:37:10,502 - INFO - Frida client version: 16.7.19
+2025-08-09 18:37:10,502 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-09 18:37:10,502 - INFO - Regex patterns copied to: src/main/resources/regex_patterns.txt
+2025-08-09 18:37:10,502 - INFO - Loaded 22 patterns from file
+2025-08-09 18:37:10,505 - INFO - Found active emulator: emulator-5554
+2025-08-09 18:37:10,505 - INFO - Getting root access on device: emulator-5554
+2025-08-09 18:37:12,517 - INFO - Disabling SELinux if possible
+2025-08-09 18:37:12,555 - INFO - Stopping any existing Frida server processes
+2025-08-09 18:37:12,571 - INFO - Pushing Frida server binary to device
+2025-08-09 18:37:12,868 - INFO - Setting executable permissions on Frida server
+2025-08-09 18:37:12,883 - INFO - Starting Frida server in background
+2025-08-09 18:37:15,887 - INFO - Verifying Frida server is running
+2025-08-09 18:37:15,916 - INFO - Frida server started successfully
+2025-08-09 18:37:15,919 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-08-09 18:37:15,924 - INFO - Found device: Local System (type: local)
+2025-08-09 18:37:15,924 - INFO - Found device: Local Socket (type: remote)
+2025-08-09 18:37:15,924 - INFO - Connected to device: Local Socket
+2025-08-09 18:37:15,924 - INFO - Assuming org.mian.gitnex is already running
+2025-08-09 18:37:15,924 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-08-09 18:37:15,999 - INFO - Found org.mian.gitnex running with PID: 6735
+2025-08-09 18:37:16,255 - INFO - Successfully attached to PID 6735
+2025-08-09 18:37:16,273 - INFO - Script loaded successfully
+2025-08-09 18:37:18,370 - INFO - Message: {
+  "type": "error",
+  "timestamp": 1754764635794,
+  "error": "not a function"
+}
+2025-08-09 18:37:18,370 - INFO - Frida agent initialized with static analysis result: reports/static_analysis/org.mian.gitnex_550.json
+2025-08-09 18:37:18,371 - INFO - FRIDA_READY_STATIC
+2025-08-09 18:37:18,371 - INFO - Frida controller is now monitoring. Press Ctrl+C to exit.
+2025-08-09 18:37:18,373 - INFO - Agent health check: {'status': 'active', 'timestamp': 1754764635807}
+2025-08-09 18:38:12,482 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-09 18:38:12,482 - INFO - API log file: /app/scripts/../logs/frida_api_log.txt
+2025-08-09 18:38:12,482 - INFO - Using custom script: src/main/resources/static_analysis_agent.js
+2025-08-09 18:38:12,482 - INFO - Frida client version: 16.7.19
+2025-08-09 18:38:12,482 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-09 18:38:12,482 - INFO - Regex patterns copied to: src/main/resources/regex_patterns.txt
+2025-08-09 18:38:12,482 - INFO - Loaded 22 patterns from file
+2025-08-09 18:38:12,485 - INFO - Found active emulator: emulator-5554
+2025-08-09 18:38:12,486 - INFO - Getting root access on device: emulator-5554
+2025-08-09 18:38:14,493 - INFO - Disabling SELinux if possible
+2025-08-09 18:38:14,523 - INFO - Stopping any existing Frida server processes
+2025-08-09 18:38:14,550 - INFO - Pushing Frida server binary to device
+2025-08-09 18:38:14,963 - INFO - Setting executable permissions on Frida server
+2025-08-09 18:38:14,982 - INFO - Starting Frida server in background
+2025-08-09 18:38:17,985 - INFO - Verifying Frida server is running
+2025-08-09 18:38:18,010 - INFO - Frida server started successfully
+2025-08-09 18:38:18,013 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-08-09 18:38:18,017 - INFO - Found device: Local System (type: local)
+2025-08-09 18:38:18,017 - INFO - Found device: Local Socket (type: remote)
+2025-08-09 18:38:18,017 - INFO - Connected to device: Local Socket
+2025-08-09 18:38:18,017 - INFO - Assuming org.mian.gitnex is already running
+2025-08-09 18:38:18,017 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-08-09 18:38:18,091 - INFO - Found org.mian.gitnex running with PID: 6760
+2025-08-09 18:38:18,237 - INFO - Successfully attached to PID 6760
+2025-08-09 18:38:18,243 - INFO - Script loaded successfully
+2025-08-09 18:38:20,315 - INFO - Message: {
+  "type": "error",
+  "timestamp": 1754764634810,
+  "error": "not a function"
+}
+2025-08-09 18:38:20,316 - INFO - Frida agent initialized with static analysis result: reports/static_analysis/org.mian.gitnex_550.json
+2025-08-09 18:38:20,316 - INFO - FRIDA_READY_STATIC
+2025-08-09 18:38:20,316 - INFO - Frida controller is now monitoring. Press Ctrl+C to exit.
+2025-08-09 18:38:20,339 - INFO - Agent health check: {'status': 'active', 'timestamp': 1754764634832}
+2025-08-09 18:39:12,857 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-09 18:39:12,857 - INFO - API log file: /app/scripts/../logs/frida_api_log.txt
+2025-08-09 18:39:12,857 - INFO - Using custom script: src/main/resources/static_analysis_agent.js
+2025-08-09 18:39:12,857 - INFO - Frida client version: 16.7.19
+2025-08-09 18:39:12,857 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-09 18:39:12,858 - INFO - Regex patterns copied to: src/main/resources/regex_patterns.txt
+2025-08-09 18:39:12,858 - INFO - Loaded 22 patterns from file
+2025-08-09 18:39:12,862 - INFO - Found active emulator: emulator-5554
+2025-08-09 18:39:12,862 - INFO - Getting root access on device: emulator-5554
+2025-08-09 18:39:14,868 - INFO - Disabling SELinux if possible
+2025-08-09 18:39:14,917 - INFO - Stopping any existing Frida server processes
+2025-08-09 18:39:14,965 - INFO - Pushing Frida server binary to device
+2025-08-09 18:39:15,250 - INFO - Setting executable permissions on Frida server
+2025-08-09 18:39:15,262 - INFO - Starting Frida server in background
+2025-08-09 18:39:18,266 - INFO - Verifying Frida server is running
+2025-08-09 18:39:18,327 - INFO - Frida server started successfully
+2025-08-09 18:39:18,330 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-08-09 18:39:18,335 - INFO - Found device: Local System (type: local)
+2025-08-09 18:39:18,335 - INFO - Found device: Local Socket (type: remote)
+2025-08-09 18:39:18,335 - INFO - Connected to device: Local Socket
+2025-08-09 18:39:18,335 - INFO - Assuming org.mian.gitnex is already running
+2025-08-09 18:39:18,335 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-08-09 18:39:18,357 - INFO - Found org.mian.gitnex running with PID: 6751
+2025-08-09 18:39:18,496 - INFO - Successfully attached to PID 6751
+2025-08-09 18:39:18,500 - INFO - Script loaded successfully
+2025-08-09 18:39:20,559 - INFO - Message: {
+  "type": "error",
+  "timestamp": 1754764634809,
+  "error": "not a function"
+}
+2025-08-09 18:39:20,560 - INFO - Frida agent initialized with static analysis result: reports/static_analysis/org.mian.gitnex_550.json
+2025-08-09 18:39:20,560 - INFO - FRIDA_READY_STATIC
+2025-08-09 18:39:20,560 - INFO - Frida controller is now monitoring. Press Ctrl+C to exit.
+2025-08-09 18:39:20,563 - INFO - Agent health check: {'status': 'active', 'timestamp': 1754764634813}
+2025-08-09 18:40:15,770 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-09 18:40:15,770 - INFO - API log file: /app/scripts/../logs/frida_api_log.txt
+2025-08-09 18:40:15,770 - INFO - Using custom script: src/main/resources/static_analysis_agent.js
+2025-08-09 18:40:15,770 - INFO - Frida client version: 16.7.19
+2025-08-09 18:40:15,770 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-09 18:40:15,770 - INFO - Regex patterns copied to: src/main/resources/regex_patterns.txt
+2025-08-09 18:40:15,770 - INFO - Loaded 22 patterns from file
+2025-08-09 18:40:15,775 - INFO - Found active emulator: emulator-5554
+2025-08-09 18:40:15,775 - INFO - Getting root access on device: emulator-5554
+2025-08-09 18:40:17,781 - INFO - Disabling SELinux if possible
+2025-08-09 18:40:17,803 - INFO - Stopping any existing Frida server processes
+2025-08-09 18:40:17,832 - INFO - Pushing Frida server binary to device
+2025-08-09 18:40:18,173 - INFO - Setting executable permissions on Frida server
+2025-08-09 18:40:18,193 - INFO - Starting Frida server in background
+2025-08-09 18:40:21,197 - INFO - Verifying Frida server is running
+2025-08-09 18:40:21,229 - INFO - Frida server started successfully
+2025-08-09 18:40:21,232 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-08-09 18:40:21,236 - INFO - Found device: Local System (type: local)
+2025-08-09 18:40:21,236 - INFO - Found device: Local Socket (type: remote)
+2025-08-09 18:40:21,236 - INFO - Connected to device: Local Socket
+2025-08-09 18:40:21,236 - INFO - Assuming org.mian.gitnex is already running
+2025-08-09 18:40:21,236 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-08-09 18:40:21,256 - INFO - Found org.mian.gitnex running with PID: 6749
+2025-08-09 18:40:21,413 - INFO - Successfully attached to PID 6749
+2025-08-09 18:40:21,423 - INFO - Script loaded successfully
+2025-08-09 18:40:23,477 - INFO - Message: {
+  "type": "error",
+  "timestamp": 1754764634826,
+  "error": "not a function"
+}
+2025-08-09 18:40:23,477 - INFO - Frida agent initialized with static analysis result: reports/static_analysis/org.mian.gitnex_550.json
+2025-08-09 18:40:23,477 - INFO - FRIDA_READY_STATIC
+2025-08-09 18:40:23,478 - INFO - Frida controller is now monitoring. Press Ctrl+C to exit.
+2025-08-09 18:40:23,483 - INFO - Agent health check: {'status': 'active', 'timestamp': 1754764634834}
+2025-08-09 18:41:19,834 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-09 18:41:19,834 - INFO - API log file: /app/scripts/../logs/frida_api_log.txt
+2025-08-09 18:41:19,834 - INFO - Using custom script: src/main/resources/static_analysis_agent.js
+2025-08-09 18:41:19,834 - INFO - Frida client version: 16.7.19
+2025-08-09 18:41:19,834 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-09 18:41:19,835 - INFO - Regex patterns copied to: src/main/resources/regex_patterns.txt
+2025-08-09 18:41:19,835 - INFO - Loaded 22 patterns from file
+2025-08-09 18:41:19,838 - INFO - Found active emulator: emulator-5554
+2025-08-09 18:41:19,838 - INFO - Getting root access on device: emulator-5554
+2025-08-09 18:41:21,843 - INFO - Disabling SELinux if possible
+2025-08-09 18:41:21,869 - INFO - Stopping any existing Frida server processes
+2025-08-09 18:41:21,910 - INFO - Pushing Frida server binary to device
+2025-08-09 18:41:22,165 - INFO - Setting executable permissions on Frida server
+2025-08-09 18:41:22,188 - INFO - Starting Frida server in background
+2025-08-09 18:41:25,191 - INFO - Verifying Frida server is running
+2025-08-09 18:41:25,244 - INFO - Frida server started successfully
+2025-08-09 18:41:25,247 - INFO - ADB port forwarding set up successfully for device: emulator-5554
+2025-08-09 18:41:25,254 - INFO - Found device: Local System (type: local)
+2025-08-09 18:41:25,254 - INFO - Found device: Local Socket (type: remote)
+2025-08-09 18:41:25,254 - INFO - Connected to device: Local Socket
+2025-08-09 18:41:25,254 - INFO - Assuming org.mian.gitnex is already running
+2025-08-09 18:41:25,254 - INFO - Method 1: Finding org.mian.gitnex process via ADB...
+2025-08-09 18:41:25,298 - INFO - Found org.mian.gitnex running with PID: 6726
+2025-08-09 18:41:25,475 - INFO - Successfully attached to PID 6726
+2025-08-09 18:41:25,484 - INFO - Script loaded successfully
+2025-08-09 18:41:27,569 - INFO - Message: {
+  "type": "error",
+  "timestamp": 1754764634802,
+  "error": "not a function"
+}
+2025-08-09 18:41:27,569 - INFO - Frida agent initialized with static analysis result: reports/static_analysis/org.mian.gitnex_550.json
+2025-08-09 18:41:27,570 - INFO - FRIDA_READY_STATIC
+2025-08-09 18:41:27,570 - INFO - Frida controller is now monitoring. Press Ctrl+C to exit.
+2025-08-09 18:41:27,573 - INFO - Agent health check: {'status': 'active', 'timestamp': 1754764634823}
+2025-08-09 19:31:15,726 - INFO - Loaded config from: /app/scripts/../src/main/resources/config.properties
+2025-08-09 19:31:15,726 - INFO - API log file: /app/scripts/../logs/frida_api_log.txt
+2025-08-09 19:31:15,727 - INFO - Using custom script: src/main/resources/static_analysis_agent.js
+2025-08-09 19:31:15,727 - INFO - Frida client version: 16.7.19
+2025-08-09 19:31:15,727 - INFO - Regex patterns copied from: /app/scripts/../src/main/resources/regex_patterns.txt
+2025-08-09 19:31:15,727 - INFO - Regex patterns copied to: src/main/resources/regex_patterns.txt
+2025-08-09 19:31:15,727 - INFO - Loaded 22 patterns from file
+2025-08-09 19:31:15,732 - INFO - Found active emulator: emulator-5554
+2025-08-09 19:31:15,732 - INFO - Getting root access on device: emulator-5554
