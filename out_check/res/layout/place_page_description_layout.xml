@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical" android:id="@id/poi_description_container" android:visibility="visible" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView android:textAppearance="?android:textAppearance" android:textStyle="normal" android:textColor="?android:textColorPrimary" android:id="@id/poi_description" android:layout_width="fill_parent" android:layout_height="wrap_content" android:maxLength="@integer/place_page_description_max_length" android:lineSpacingExtra="@dimen/line_spacing_extra_2" android:fontFamily="@string/robotoRegular" android:layout_marginStart="@dimen/margin_base" android:layout_marginEnd="@dimen/margin_base" />
-    <TextView android:textAppearance="?android:textAppearance" android:textColor="?colorAccent" android:gravity="start|center|top" android:layout_gravity="start|bottom|center" android:id="@id/more_btn" android:background="@android:color/transparent" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/margin_base" android:text="@string/category_desc_more" android:layout_marginStart="@dimen/margin_base" android:layout_marginEnd="@dimen/margin_base" />
-    <include layout="@layout/divider_horizontal" />
-</LinearLayout>

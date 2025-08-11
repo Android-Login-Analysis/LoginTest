@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Button android:gravity="center" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_marginTop="@dimen/margin_base" android:layout_weight="1.0" android:layout_marginStart="@dimen/margin_base" style="@style/MwmWidget.Button.Accent"
-  xmlns:android="http://schemas.android.com/apk/res/android" />

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView android:id="@id/elevation_profile" android:background="?cardBackground" android:paddingTop="@dimen/margin_base" android:paddingBottom="@dimen/margin_base" android:focusable="true" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:fillViewport="true" app:layout_behavior="@string/placepage_behavior" xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <include layout="@layout/elevation_profile_internal" />
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>

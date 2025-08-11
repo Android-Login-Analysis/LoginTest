@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical" android:descendantFocusability="blocksDescendants" android:layout_width="fill_parent" android:layout_height="wrap_content"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <include android:id="@id/pp__preview" android:layout_width="fill_parent" android:layout_height="wrap_content" layout="@layout/place_page_preview" />
-    <include android:id="@id/pp__details_frame" android:layout_width="fill_parent" android:layout_height="fill_parent" layout="@layout/place_page_details" />
-</LinearLayout>

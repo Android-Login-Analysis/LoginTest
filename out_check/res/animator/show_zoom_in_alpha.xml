@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<set android:interpolator="@android:anim/decelerate_interpolator" android:duration="@integer/anim_fade_main"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <objectAnimator android:duration="@integer/anim_menu" android:valueFrom="0.3" android:valueTo="1.0" android:propertyName="scaleX" />
-    <objectAnimator android:duration="@integer/anim_menu" android:valueFrom="0.3" android:valueTo="1.0" android:propertyName="scaleY" />
-    <objectAnimator android:duration="@integer/anim_menu" android:valueFrom="0.3" android:valueTo="1.0" android:propertyName="alpha" />
-</set>

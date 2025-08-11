@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<app.organicmaps.routing.TransitStepView android:textSize="@dimen/text_size_body_1" android:textColor="@android:color/white" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="@dimen/routing_transit_step_min_height" android:paddingStart="@dimen/margin_quarter" android:paddingEnd="@dimen/margin_quarter"
-  xmlns:android="http://schemas.android.com/apk/res/android" />

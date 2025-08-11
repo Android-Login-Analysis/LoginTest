@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@id/ll__place_latlon" android:visibility="visible" style="@style/PlacePageItemFrame"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ImageView android:id="@id/iv__place_latlon" app:srcCompat="@drawable/ic_coordinates" style="@style/PlacePageMetadataIcon" />
-    <TextView android:id="@id/tv__place_latlon" android:textAlignment="viewStart" style="@style/PlacePageMetadataText" />
-</LinearLayout>

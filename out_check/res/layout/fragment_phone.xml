@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <FrameLayout android:id="@id/frameLayout" android:background="?windowBackgroundForced" android:layout_width="fill_parent" android:layout_height="fill_parent" style="@style/MwmWidget.FrameLayout.Elevation">
-        <androidx.recyclerview.widget.RecyclerView android:id="@id/phones_recycler" android:background="?cardBackground" android:scrollbars="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" />
-    </FrameLayout>
-    <TextView android:textAppearance="@style/MwmTextAppearance.Body3" android:textColor="?colorAccent" android:gravity="center_vertical" android:id="@id/tv__append_phone" android:background="?clickableBackground" android:padding="@dimen/margin_base" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/editor_add_phone" android:textAllCaps="true" app:layout_constraintBottom_toBottomOf="@id/frameLayout" />
-    <include android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_above="@id/tv__mode_switch" layout="@layout/shadow_bottom" />
-</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@id/ll__place_email" style="@style/PlacePageItemFrame"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ImageView android:id="@id/iv__place_email" app:srcCompat="@drawable/ic_email" app:tint="?colorAccent" style="@style/PlacePageMetadataIcon" />
-    <TextView android:textAppearance="@style/MwmTextAppearance.PlacePage.Accent" android:id="@id/tv__place_email" android:textAlignment="viewStart" style="@style/PlacePageMetadataText" />
-</LinearLayout>

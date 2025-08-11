@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout style="@style/PlacePageItemFrame"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ImageView android:id="@id/icon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/margin_quarter" android:layout_marginEnd="@dimen/margin_base" app:srcCompat="@drawable/ic_operating_hours" app:tint="?iconTint" />
-    <TextView android:textAppearance="@style/MwmTextAppearance.PlacePage" android:id="@id/oh_today_label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6.0dip" android:layout_marginBottom="0.0dip" android:text="@string/today" android:layout_toEndOf="@id/icon" />
-    <TextView android:textAppearance="@style/MwmTextAppearance.PlacePage" android:id="@id/oh_today_open_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6.0dip" android:text="@string/twentyfour_seven" android:textAlignment="viewEnd" android:layout_toEndOf="@id/oh_today_label" android:layout_alignParentEnd="true" />
-    <TextView android:textAppearance="@style/MwmTextAppearance.Body4" android:id="@id/oh_nonbusiness_time" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/oh_today_label" android:textAlignment="viewEnd" android:layout_alignStart="@id/oh_today_label" android:layout_alignParentEnd="true" />
-    <androidx.recyclerview.widget.RecyclerView android:id="@id/rw__full_opening_hours" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8.0dip" android:layout_below="@id/oh_nonbusiness_time" android:layout_alignStart="@id/oh_nonbusiness_time" android:layout_alignParentEnd="true" app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-</RelativeLayout>

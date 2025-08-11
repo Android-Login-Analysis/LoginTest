@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar android:theme="@style/MwmWidget.ToolbarTheme" android:id="@id/toolbar" android:layout_width="fill_parent" android:layout_height="wrap_content" style="@style/MwmWidget.ToolbarStyle"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout android:orientation="vertical" android:id="@id/toolbar_container" android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <include layout="@layout/toolbar_search_controls" />
-    </LinearLayout>
-</androidx.appcompat.widget.Toolbar>

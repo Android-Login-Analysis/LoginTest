@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <CheckBox android:textAppearance="?fontBody2" android:id="@id/chb_download_country" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/download_country_ask" android:layout_marginStart="@dimen/margin_base" />
-    <com.google.android.material.progressindicator.LinearProgressIndicator android:id="@id/progressbar" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/margin_base" android:layout_marginBottom="@dimen/margin_base" android:indeterminate="false" android:layout_marginStart="@dimen/margin_base_plus" android:layout_marginEnd="@dimen/margin_base_plus" app:indicatorColor="?android:colorAccent" app:trackColor="@color/bg_routing_progress" style="@style/Widget.MaterialComponents.LinearProgressIndicator" />
-    <Button android:textAppearance="@style/MwmTextAppearance.Body1" android:id="@id/btn_download_resources" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/margin_base_plus" android:text="@string/download" android:layout_marginStart="@dimen/margin_base_plus" android:layout_marginEnd="@dimen/margin_base_plus" style="@style/MwmWidget.Button.Primary" />
-</LinearLayout>

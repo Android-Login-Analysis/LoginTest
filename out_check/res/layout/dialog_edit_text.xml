@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical" android:padding="@dimen/margin_base_plus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="@dimen/width_dialog_base"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <TextView android:textAppearance="@style/MwmTextAppearance.Title" android:id="@id/tv__title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/margin_base" />
-    <com.google.android.material.textfield.TextInputLayout android:id="@id/et__input_layout" android:layout_width="fill_parent" android:layout_height="wrap_content" app:hintEnabled="false" style="?fontBody1">
-        <com.google.android.material.textfield.TextInputEditText android:id="@id/et__input" android:padding="@dimen/margin_half_double_plus" android:layout_width="fill_parent" android:layout_height="wrap_content" android:singleLine="true" android:maxLength="100" android:inputType="textCapSentences" style="@style/MwmWidget.Editor.CustomTextInput" />
-    </com.google.android.material.textfield.TextInputLayout>
-</LinearLayout>

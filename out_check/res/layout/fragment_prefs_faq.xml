@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1.0"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <app.organicmaps.widget.ObservableWebView android:id="@id/webview" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" />
-    <ProgressBar android:layout_gravity="center" android:id="@id/progress" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/Widget.AppCompat.ProgressBar" />
-    <include android:layout_gravity="end|bottom|center" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/margin_base" layout="@layout/feedback_fab" />
-    <include layout="@layout/shadow_top" />
-    <include layout="@layout/shadow_bottom" />
-</FrameLayout>

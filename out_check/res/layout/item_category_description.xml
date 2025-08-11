@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:background="?cardBackground" android:padding="@dimen/margin_base" android:layout_width="fill_parent" android:layout_height="wrap_content"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <TextView android:textAppearance="@style/MwmTextAppearance.Body2.Primary" android:id="@id/title" android:layout_width="fill_parent" android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="parent" />
-    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" app:layout_constraintTop_toBottomOf="@id/title">
-        <TextView android:textAppearance="@style/MwmTextAppearance.Body3" android:ellipsize="end" android:id="@id/text" android:layout_width="fill_parent" android:layout_height="wrap_content" android:maxLines="3" />
-        <TextView android:textColor="?colorAccent" android:gravity="start|center|top" android:layout_gravity="start|bottom|center" android:id="@id/more_btn" android:background="@android:color/transparent" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2.0dip" android:text="@string/category_desc_more" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>

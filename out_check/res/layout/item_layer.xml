@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="fill_parent" android:layout_marginTop="@dimen/margin_direction_big"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <FrameLayout android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content">
-        <ImageButton android:layout_gravity="center" android:id="@id/btn" android:background="@null" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="@dimen/margin_quarter" android:minWidth="@dimen/margin_double_plus" android:minHeight="@dimen/margin_double_plus" />
-        <View android:layout_gravity="end" android:id="@id/marker" android:background="@drawable/counter" android:visibility="gone" android:layout_width="@dimen/margin_half_plus_eight" android:layout_height="@dimen/margin_half_plus_eight" android:layout_marginEnd="@dimen/margin_half_plus" />
-    </FrameLayout>
-    <TextView android:textAppearance="@style/MwmTextAppearance.Body5" android:textColor="?accentColorSelector" android:ellipsize="end" android:gravity="center" android:layout_gravity="center" android:id="@id/name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/margin_quarter" android:maxLines="2" />
-</LinearLayout>

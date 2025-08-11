@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/placeholder_loading" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <ProgressBar android:background="@null" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/Widget.AppCompat.ProgressBar" />
-    <TextView android:textAppearance="@style/MwmTextAppearance.Body3" android:paddingTop="@dimen/margin_half" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/load_kmz_title" />
-</LinearLayout>

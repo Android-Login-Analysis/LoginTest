@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@id/ll__place_instagram" style="@style/PlacePageItemFrame"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ImageView android:id="@id/iv__place_instagram" app:srcCompat="@drawable/ic_instagram_white" app:tint="?colorAccent" style="@style/PlacePageMetadataIcon" />
-    <TextView android:textAppearance="@style/MwmTextAppearance.PlacePage.Accent" android:id="@id/tv__place_instagram_page" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textAlignment="viewStart" />
-</LinearLayout>

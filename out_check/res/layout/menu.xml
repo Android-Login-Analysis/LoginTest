@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:id="@id/menu_frame" android:background="?cardBackground" android:visibility="gone" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <include android:id="@id/routing_plan_frame" layout="@layout/menu_route_plan_line" />
-    <include android:id="@id/routing_action_frame" android:visibility="gone" layout="@layout/routing_action_panel" />
-</FrameLayout>

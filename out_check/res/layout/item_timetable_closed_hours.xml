@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:paddingTop="@dimen/margin_base" android:layout_width="fill_parent" android:layout_height="@dimen/editor_height_closed"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ImageView android:id="@id/iv__remove_closed" android:background="?selectableItemBackgroundBorderless" android:layout_width="@dimen/height_block_base" android:layout_height="@dimen/height_block_base" android:src="@drawable/ic_close" android:scaleType="center" android:layout_centerVertical="true" android:layout_alignParentEnd="true" app:tint="?iconTint" />
-    <TextView android:textAppearance="@style/MwmTextAppearance.Body3" android:id="@id/tv__closed_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/editor_hours_closed" android:layout_marginStart="@dimen/margin_base" android:layout_toStartOf="@id/iv__remove_closed" />
-    <TextView android:textAppearance="@style/MwmTextAppearance.Body1" android:id="@id/tv__closed" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/margin_eighth" android:layout_below="@id/tv__closed_title" android:layout_toStartOf="@id/iv__remove_closed" android:layout_alignStart="@id/tv__closed_title" />
-    <View android:background="?dividerHorizontal" android:layout_width="fill_parent" android:layout_height="1.0dip" android:layout_alignParentBottom="true" />
-</RelativeLayout>

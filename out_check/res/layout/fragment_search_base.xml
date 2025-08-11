@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent" style="@style/MwmWidget.FrameLayout"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.recyclerview.widget.RecyclerView android:id="@id/recycler" android:layout_width="fill_parent" android:layout_height="fill_parent" />
-    <app.organicmaps.widget.PlaceholderView android:gravity="center_horizontal" android:id="@id/placeholder" android:paddingTop="@dimen/placeholder_margin_top" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" android:paddingStart="@dimen/margin_double_and_half" android:paddingEnd="@dimen/margin_double_and_half" />
-</FrameLayout>

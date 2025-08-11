@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:background="?clickableBackground" android:layout_width="wrap_content" android:layout_height="wrap_content"
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <ImageView android:layout_gravity="center" android:id="@id/iv__color" android:background="@null" android:layout_width="@dimen/track_circle_size" android:layout_height="@dimen/track_circle_size" android:layout_margin="@dimen/margin_half" android:scaleType="center" android:contentDescription="@null" />
-</LinearLayout>
