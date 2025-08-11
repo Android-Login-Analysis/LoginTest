@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">Instabu %d fajls. Tista ’tarahom wara l-konverżjoni.</item>
+        <item quantity="one">Instab fajl %d. Tista’ tarah wara l-konverżjoni.</item>
+        <item quantity="two">Instabu %d fajls. Tista ’tarahom wara l-konverżjoni.</item>
+        <item quantity="few">Instabu %d fajls. Tista ’tarahom wara l-konverżjoni.</item>
+        <item quantity="many">Instabu %d fajls. Tista ’tarahom wara l-konverżjoni.</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">"bookmarks ta' %d"</item>
+        <item quantity="one">"bookmark ta' %d"</item>
+        <item quantity="two">"bookmarks ta' %d"</item>
+        <item quantity="few">"bookmarks ta' %d"</item>
+        <item quantity="many">"bookmarks ta' %d"</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d Trekks</item>
+        <item quantity="one">Trekk %d</item>
+        <item quantity="two">%d Trekks</item>
+        <item quantity="few">%d Trekks</item>
+        <item quantity="many">%d Trekks</item>
+    </plurals>
+</resources>

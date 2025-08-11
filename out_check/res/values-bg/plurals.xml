@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">Открити са %d файла. Можете да ги видите след конвертирането.</item>
+        <item quantity="one">Открит е %d файл. Можете да го видите след конвертирането.</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d нови известия</item>
+        <item quantity="one">%d ново известие</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d пътеки</item>
+        <item quantity="one">%d пътека</item>
+    </plurals>
+</resources>

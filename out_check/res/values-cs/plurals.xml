@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">Bylo nalezeno %d souborů. Uvidíte je po konverzi.</item>
+        <item quantity="one">Byl nalezen %d soubor. Uvidíte jej po konverzi.</item>
+        <item quantity="few">Byly nalezeny %d soubory. Uvidíte je po konverzi.</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d záložek</item>
+        <item quantity="one">%d záložka</item>
+        <item quantity="few">%d záložky</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d nových oznámení</item>
+        <item quantity="one">%d nové oznámení</item>
+        <item quantity="few">%d nová oznámení</item>
+        <item quantity="many">%d nového oznámení</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d stop</item>
+        <item quantity="one">%d stopa</item>
+        <item quantity="few">%d stopy</item>
+    </plurals>
+</resources>

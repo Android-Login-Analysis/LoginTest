@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">Se han encontrado %d archivos. Los verás después de la conversión.</item>
+        <item quantity="one">Se encontró %d archivo. Lo verás después de la conversión.</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d marcadores</item>
+        <item quantity="one">%d marcador</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d trayectos</item>
+        <item quantity="one">%d trayecto</item>
+        <item quantity="many">%d trayectos</item>
+    </plurals>
+</resources>

@@ -17,6 +17,7 @@ services:
       - /dev/kvm:/dev/kvm
       - /dev/vhost-net:/dev/vhost-net
       - /dev/net/tun:/dev/net/tun
+      - ./logs:/app/logs
     environment:
       - ANDROID_HOME=/opt/android-sdk
       - ANDROID_SDK_ROOT=/opt/android-sdk
@@ -52,3 +53,5 @@ services:
       options:
         max-size: "200m"
         max-file: "5"
+
+    

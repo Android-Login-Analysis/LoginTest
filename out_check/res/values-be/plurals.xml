@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">Знойдзена %d файлаў. Вы можаце ўбачыць іх пасля пераўтварэння.</item>
+        <item quantity="one">Знойдзены %d файл. Вы можаце ўбачыць яго пасля пераўтварэння.</item>
+        <item quantity="few">Знойдзена %d файлы. Вы можаце ўбачыць іх пасля пераўтварэння.</item>
+        <item quantity="many">Знойдзена %d файлаў. Вы можаце ўбачыць іх пасля пераўтварэння.</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d закладак</item>
+        <item quantity="one">%d закладка</item>
+        <item quantity="few">%d закладкі</item>
+        <item quantity="many">%d закладак</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d новага апавяшчэння</item>
+        <item quantity="one">%d новае апавяшчэнне</item>
+        <item quantity="few">%d новыя апавяшчэнні</item>
+        <item quantity="many">%d новых апавяшчэнняў</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d маршрутаў</item>
+        <item quantity="one">%d маршрут</item>
+        <item quantity="few">%d маршруты</item>
+        <item quantity="many">%d маршрутаў</item>
+    </plurals>
+</resources>

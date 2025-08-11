@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/zoom_buttons_container" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.floatingactionbutton.FloatingActionButton android:id="@id/nav_zoom_in" android:layout_marginBottom="@dimen/margin_half" android:contentDescription="@string/zoom_in" app:srcCompat="@drawable/ic_plus" style="@style/MwmWidget.MapButton.Zoom" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton android:id="@id/nav_zoom_out" android:contentDescription="@string/zoom_out" app:srcCompat="@drawable/ic_minus" style="@style/MwmWidget.MapButton.Zoom" />
+</LinearLayout>

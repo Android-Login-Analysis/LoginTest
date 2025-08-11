@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/ll__place_opening_hours_item" android:visibility="visible" style="@style/PlacePageOpeningHoursItem"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textAppearance="@style/MwmTextAppearance.Body3" android:id="@id/tv__opening_hours_weekdays" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" />
+    <TextView android:textAppearance="@style/MwmTextAppearance.Body3" android:id="@id/tv__opening_hours_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAlignment="viewEnd" android:layout_toEndOf="@id/tv__opening_hours_weekdays" android:layout_alignParentEnd="true" />
+    <TextView android:textAppearance="@style/MwmTextAppearance.Body4" android:id="@id/tv__opening_hours_nonbusiness_time" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/tv__opening_hours_weekdays" android:textAlignment="viewEnd" android:layout_alignParentEnd="true" />
+</RelativeLayout>

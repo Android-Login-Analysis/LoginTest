@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="horizontal" android:background="@drawable/onmap_downloader_background" android:padding="@dimen/margin_base" android:clipChildren="false" android:clipToPadding="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:backgroundTint="?menuBackground">
+        <LinearLayout android:gravity="center" android:orientation="vertical" android:clipChildren="false" android:clipToPadding="false" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView android:textAppearance="@style/MwmTextAppearance.Body2" android:gravity="center_horizontal" android:id="@id/downloader_parent" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/margin_eighth" />
+            <TextView android:textAppearance="?android:textAppearanceLarge" android:textStyle="normal" android:gravity="center_horizontal" android:id="@id/downloader_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@string/robotoMedium" />
+            <TextView android:textAppearance="@style/MwmTextAppearance.Body2" android:gravity="center_horizontal" android:id="@id/downloader_size" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="@dimen/margin_half" />
+            <FrameLayout android:id="@id/downloader_controls_frame" android:clipChildren="false" android:layout_width="180.0dip" android:layout_height="@dimen/downloader_status_size">
+                <Button android:layout_gravity="center" android:id="@id/downloader_button" android:visibility="gone" android:layout_width="180.0dip" style="@style/MwmWidget.Button.Primary" />
+                <app.organicmaps.widget.WheelProgressView android:layout_gravity="center" android:id="@id/wheel_downloader_progress" android:visibility="visible" android:layout_width="@dimen/downloader_status_size" android:layout_height="@dimen/downloader_status_size" app:wheelProgressColor="?colorAccent" app:wheelSecondaryColor="?dividerHorizontal" app:wheelThickness="@dimen/margin_eighth" />
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

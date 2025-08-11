@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="65.0sp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <Space android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="0.5" />
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/speed_view_container" android:background="@drawable/speed_cams_bg" android:layout_width="wrap_content" android:layout_height="fill_parent" android:minWidth="@dimen/nav_numbers_side_min_width">
+        <TextView android:textAppearance="@style/MwmTextAppearance.NavMenu.Number" android:id="@id/speed_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:includeFontPadding="false" />
+        <TextView android:textAppearance="@style/MwmTextAppearance.NavMenu.Number.Dimension" android:id="@id/speed_dimen" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:includeFontPadding="false" />
+    </LinearLayout>
+    <Space android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.25" />
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="fill_parent" android:minWidth="@dimen/nav_numbers_side_min_width">
+        <LinearLayout android:id="@id/time_values_container" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView android:textAppearance="@style/MwmTextAppearance.NavMenu.Time" android:id="@id/time_hour_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:includeFontPadding="false" />
+            <TextView android:textAppearance="@style/MwmTextAppearance.NavMenu.Time.Dimension" android:id="@id/time_hour_dimen" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:includeFontPadding="false" android:layout_marginEnd="@dimen/margin_quarter" />
+            <TextView android:textAppearance="@style/MwmTextAppearance.NavMenu.Time" android:id="@id/time_minute_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:includeFontPadding="false" android:textAlignment="center" />
+            <TextView android:textAppearance="@style/MwmTextAppearance.NavMenu.Time.Dimension" android:id="@id/time_minute_dimen" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:includeFontPadding="false" />
+        </LinearLayout>
+        <TextView android:textAppearance="@style/MwmTextAppearance.NavMenu.Number.Dimension" android:id="@id/time_estimate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:includeFontPadding="false" android:textAlignment="center" />
+    </LinearLayout>
+    <Space android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.25" />
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="fill_parent" android:minWidth="@dimen/nav_numbers_side_min_width">
+        <TextView android:textAppearance="@style/MwmTextAppearance.NavMenu.Number" android:id="@id/distance_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:includeFontPadding="false" />
+        <TextView android:textAppearance="@style/MwmTextAppearance.NavMenu.Number.Dimension" android:id="@id/distance_dimen" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:includeFontPadding="false" />
+    </LinearLayout>
+    <Space android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="0.5" />
+</LinearLayout>

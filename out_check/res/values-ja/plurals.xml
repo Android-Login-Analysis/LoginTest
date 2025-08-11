@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">%d ファイルが見つかりました。変換後にそれを見ることができます。</item>
+        <item quantity="one">%d ファイルが見つかりました。変換後にそれを見ることができます。</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d個のブックマーク</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d 件の新しい通知</item>
+        <item quantity="one">%d 件の新しい通知</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d の追跡</item>
+        <item quantity="one">%d の追跡</item>
+    </plurals>
+</resources>

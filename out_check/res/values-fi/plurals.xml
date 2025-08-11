@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">%d tiedostoa löydettiin. Näet ne muunnoksen jälkeen.</item>
+        <item quantity="one">%d tiedosto löydettiin. Näet sen muunnoksen jälkeen.</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d kirjanmerkkiä</item>
+        <item quantity="one">%d kirjanmerkki</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d uutta ilmoitusta</item>
+        <item quantity="one">%d uusi ilmoitus</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d reittiä</item>
+        <item quantity="one">%d reitti</item>
+    </plurals>
+</resources>

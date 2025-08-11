@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">找到 %d 個文件，轉換後您可以看到它們。</item>
+        <item quantity="one">找到 %d 個文件，轉換後您可以看到它。</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d 個書籤</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d 個軌跡</item>
+    </plurals>
+</resources>

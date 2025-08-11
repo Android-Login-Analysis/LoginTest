@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app.organicmaps.maplayer.LayersButton android:id="@id/layers_button" android:tint="?accentColorSelector" android:contentDescription="@string/layers_title" app:srcCompat="@drawable/ic_layers" style="@style/MwmWidget.MapButton"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" />

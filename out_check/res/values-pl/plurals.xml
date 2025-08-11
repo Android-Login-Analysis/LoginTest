@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">Znaleziono %d plików. Zobaczysz je po konwersji.</item>
+        <item quantity="one">Znaleziono %d plik. Zobaczysz go po konwersji.</item>
+        <item quantity="few">Znaleziono %d pliki. Zobaczysz je po konwersji.</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d zakładek</item>
+        <item quantity="one">%d zakładka</item>
+        <item quantity="few">%d zakładki</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d nowego powiadomienia</item>
+        <item quantity="one">%d nowe powiadomienie</item>
+        <item quantity="few">%d nowe powiadomienia</item>
+        <item quantity="many">%d nowych powiadomień</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d tras</item>
+        <item quantity="one">%d trasa</item>
+        <item quantity="few">%d trasy</item>
+    </plurals>
+</resources>

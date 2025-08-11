@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/name" android:layout_width="fill_parent" android:layout_height="wrap_content" android:paddingStart="@dimen/margin_base" android:paddingEnd="@dimen/margin_base"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textAppearance="@style/MwmTextAppearance.Body3" android:gravity="center_vertical" android:id="@id/show_additional_names" android:background="?clickableBackground" android:layout_width="fill_parent" android:layout_height="@dimen/height_block_base" android:text="@string/editor_edit_place_name_hint" android:fontFamily="@string/robotoMedium" />
+    <include layout="@layout/recycler_default" />
+    <TextView android:textAppearance="@style/MwmTextAppearance.Button" android:gravity="center" android:id="@id/more_names" android:background="?clickableBackground" android:layout_width="fill_parent" android:layout_height="@dimen/height_block_base" android:text="@string/placepage_more_button" />
+    <TextView android:textAppearance="@style/MwmTextAppearance.Button" android:gravity="center" android:id="@id/add_langs" android:background="?clickableBackground" android:layout_width="fill_parent" android:layout_height="@dimen/height_block_base" android:text="@string/add_language" />
+</LinearLayout>

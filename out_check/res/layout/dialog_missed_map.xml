@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textAppearance="@style/MwmTextAppearance.Body2" android:id="@id/tv__message" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/margin_base" android:layout_marginBottom="@dimen/margin_base" android:paddingStart="@dimen/margin_base_plus" android:paddingEnd="@dimen/margin_base_plus" />
+    <View android:background="?dividerHorizontal" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+    <FrameLayout android:id="@id/items_frame" android:background="?panel" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <include android:layout_width="fill_parent" android:layout_height="wrap_content" layout="@layout/item_missed_map" />
+    </FrameLayout>
+    <View android:background="?dividerHorizontal" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+</LinearLayout>

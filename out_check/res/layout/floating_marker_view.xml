@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="wrap_content" android:layout_height="@dimen/elevation_profile_height"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView android:id="@id/image" android:layout_width="@dimen/elevation_profile_marker_width" android:layout_height="@dimen/elevation_profile_marker_width" android:layout_centerVertical="true" app:srcCompat="@drawable/ic_graph_point" />
+    <RelativeLayout android:id="@id/info_floating_container" android:clipChildren="false" android:layout_width="wrap_content" android:layout_height="@dimen/elevation_profile_height" android:layout_marginStart="@dimen/margin_eighth" android:layout_marginEnd="@dimen/margin_eighth" android:layout_toEndOf="@id/image">
+        <ImageView android:id="@id/floating_triangle" android:layout_width="@dimen/margin_half" android:layout_height="@dimen/margin_base" android:layout_centerVertical="true" android:elevation="@dimen/margin_eighth" app:srcCompat="?elevationProfileFloatingTriangle" />
+        <RelativeLayout android:id="@id/floating_text_container" android:background="?elevationProfileSelectedPointBg" android:padding="@dimen/margin_quarter_plus" android:layout_width="wrap_content" android:layout_height="@dimen/elevation_profile_half_height" android:layout_marginTop="@dimen/margin_half" android:layout_marginBottom="@dimen/margin_half" android:maxWidth="@dimen/dialog_min_height" android:layout_alignParentBottom="true" android:layout_centerVertical="true" android:layout_toEndOf="@id/floating_triangle" android:elevation="@dimen/margin_eighth">
+            <ImageView android:id="@id/distance_icon" android:layout_width="@dimen/margin_half_plus" android:layout_height="@dimen/margin_half_plus" app:srcCompat="@drawable/ic_distance_travelled" app:tint="?ppFloatingMarkerIconColor" />
+            <TextView android:textSize="@dimen/margin_half_plus_eight" android:ellipsize="end" android:id="@id/distance_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxWidth="@dimen/dialog_min_height" android:singleLine="true" android:layout_marginStart="@dimen/margin_quarter" android:layout_toEndOf="@id/distance_icon" />
+            <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/distance_value" android:layout_alignParentBottom="true" android:layout_alignStart="@id/distance_icon">
+                <ImageView android:id="@id/triangle" android:layout_width="@dimen/margin_half_plus_eight" android:layout_height="@dimen/margin_half_plus_eight" app:srcCompat="?elevationProfileSelectedPointTriangle" />
+                <TextView android:textSize="@dimen/margin_half_plus_eight" android:ellipsize="end" android:id="@id/altitude" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:layout_marginStart="@dimen/margin_quarter" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

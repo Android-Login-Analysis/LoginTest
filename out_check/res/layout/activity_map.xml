@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:id="@id/coordinator" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:id="@id/map_container" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <FrameLayout android:id="@id/map_fragment_container" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+        <include android:id="@id/onmap_downloader" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true" layout="@layout/onmap_downloader" />
+        <androidx.fragment.app.FragmentContainerView android:id="@id/map_buttons" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+        <include android:id="@id/position_chooser" layout="@layout/position_chooser" />
+        <include android:id="@id/toolbar" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true" layout="@layout/toolbar_with_search" />
+        <include android:visibility="invisible" layout="@layout/routing_plan" />
+        <include android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true" layout="@layout/menu" />
+        <include android:paddingBottom="@dimen/margin_base" android:visibility="invisible" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_below="@id/toolbar" layout="@layout/layout_nav" />
+    </RelativeLayout>
+    <androidx.fragment.app.FragmentContainerView android:name="app.organicmaps.widget.placepage.PlacePageController" android:id="@id/place_page_container_fragment" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

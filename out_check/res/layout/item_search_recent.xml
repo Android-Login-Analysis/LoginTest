@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:textAlignment="viewStart" app:drawableStartCompat="@drawable/ic_search_recent" style="@style/MwmWidget.TextView.Search"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" />

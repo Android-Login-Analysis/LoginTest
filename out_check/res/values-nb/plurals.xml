@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">%d filer funnet. Du vil se dem etter konverteringen.</item>
+        <item quantity="one">%d fil funnet. Du vil se den etter konverteringen.</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d bokmerker</item>
+        <item quantity="one">%d bokmerke</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d nye varsler</item>
+        <item quantity="one">%d nytt varsel</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d stier</item>
+        <item quantity="one">%d sti</item>
+    </plurals>
+</resources>

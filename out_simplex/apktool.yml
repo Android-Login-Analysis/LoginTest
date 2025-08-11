@@ -1,0 +1,33 @@
+version: 2.9.3
+apkFileName: chat.simplex.app.apk
+isFrameworkApk: false
+usesFramework:
+  ids:
+  - 1
+  tag: null
+sdkInfo:
+  minSdkVersion: 23
+  targetSdkVersion: 29
+packageInfo:
+  forcedPackageId: 127
+  renameManifestPackage: null
+versionInfo:
+  versionCode: 1021051
+  versionName: 1.21.1
+resourcesAreCompressed: false
+sharedLibrary: false
+sparseResources: false
+unknownFiles:
+  DebugProbesKt.bin: 8
+  kotlin-tooling-metadata.json: 8
+  version.properties: 8
+  okhttp3/internal/publicsuffix/NOTICE: 8
+  okhttp3/internal/publicsuffix/publicsuffixes.gz: 8
+  org/bouncycastle/x509/CertPathReviewerMessages.properties: 8
+  org/bouncycastle/x509/CertPathReviewerMessages_de.properties: 8
+doNotCompress:
+- resources.arsc
+- png
+- assets/dexopt/baseline.prof
+- assets/dexopt/baseline.profm
+- ogg

@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:drawablePadding="@dimen/margin_base" android:textAlignment="viewStart" android:paddingStart="@dimen/margin_base" android:paddingEnd="@dimen/margin_base" style="@style/MwmWidget.TextView.Search"
+  xmlns:android="http://schemas.android.com/apk/res/android" />

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/black_4" />
+            <size android:height="40.0dip" android:width="40.0dip" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/ic_storage_light" android:left="@dimen/margin_half" android:top="@dimen/margin_half" android:right="@dimen/margin_half" android:bottom="@dimen/margin_half" />
+</layer-list>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@id/nav_top_frame" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout android:id="@id/street_frame" android:background="?cardBackground" android:clickable="true" android:layout_width="fill_parent" android:layout_height="wrap_content" android:elevation="@dimen/nav_elevation" app:layout_constraintTop_toTopOf="parent">
+        <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:gravity="center" android:layout_gravity="center_horizontal" android:id="@id/street" android:layout_width="fill_parent" android:layout_height="wrap_content" android:maxLines="2" android:layout_marginStart="@dimen/nav_street_left" style="@style/MwmWidget.TextView.NavStreet" />
+        </RelativeLayout>
+    </FrameLayout>
+    <RelativeLayout android:id="@id/nav_next_turn_container" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="-40.0dip" android:elevation="@dimen/nav_elevation" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@id/street_frame">
+        <LinearLayout android:orientation="vertical" android:id="@id/nav_next_turn_frame" android:background="?navNextTurnFrame" android:layout_width="@dimen/nav_next_turn_frame" android:layout_height="wrap_content" android:layout_margin="@dimen/margin_half" android:elevation="@dimen/nav_elevation">
+            <FrameLayout android:layout_gravity="center_horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/nav_next_turn_top" android:layout_marginBottom="@dimen/nav_next_turn_space">
+                <app.organicmaps.widget.ArrowView android:theme="?navigationTheme" android:id="@id/turn" android:layout_width="@dimen/nav_next_turn_sign" android:layout_height="@dimen/nav_next_turn_sign" app:tint="?iconTint" />
+                <TextView android:layout_gravity="center" android:id="@id/circle_exit" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/MwmWidget.TextView.NavNextTurn.Exit" />
+            </FrameLayout>
+            <TextView android:gravity="center_horizontal" android:layout_gravity="center_horizontal" android:id="@id/distance" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/nav_next_turn_bottom" style="@style/MwmWidget.TextView.NavNextTurn" />
+        </LinearLayout>
+        <FrameLayout android:id="@id/nav_next_next_turn_frame" android:background="?navNextNextTurnFrame" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="@dimen/nav_next_next_turn_frame" android:layout_marginBottom="@dimen/margin_base" android:layout_below="@id/nav_next_turn_frame" android:layout_alignStart="@id/nav_next_turn_frame" android:layout_alignEnd="@id/nav_next_turn_frame" android:elevation="@dimen/nav_elevation">
+            <ImageView android:layout_gravity="center" android:id="@id/turn" android:layout_width="wrap_content" android:layout_height="wrap_content" app:tint="?iconTint" />
+        </FrameLayout>
+    </RelativeLayout>
+    <app.organicmaps.widget.LanesView android:id="@id/lanes" android:padding="@dimen/margin_half" android:visibility="gone" android:layout_width="0.0dip" android:layout_height="68.0dip" android:layout_margin="@dimen/margin_half" app:lanesActiveLaneTintColor="?navLaneArrowActiveColor" app:lanesBackgroundColor="?colorAccent" app:lanesCornerRadius="@dimen/margin_quarter" app:lanesEditModeLanesCount="10" app:lanesInactiveLaneTintColor="?navLaneArrowInactiveColor" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@id/nav_speed_limit" app:layout_constraintTop_toBottomOf="@id/street_frame" />
+    <app.organicmaps.widget.SpeedLimitView android:id="@id/nav_speed_limit" android:layout_width="60.0dip" android:layout_height="60.0dip" android:layout_margin="@dimen/margin_half" app:layout_constraintStart_toEndOf="@id/nav_next_turn_container" app:layout_constraintTop_toBottomOf="@id/street_frame" style="@style/MwmWidget.SpeedLimit" />
+</androidx.constraintlayout.widget.ConstraintLayout>

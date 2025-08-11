@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">%d файлов были найдены. Вы увидите их после конвертации.</item>
+        <item quantity="one">%d файл был найден. Вы увидите его после конвертации.</item>
+        <item quantity="few">%d файла были найдены. Вы увидите их после конвертации.</item>
+        <item quantity="many">%d файлов были найдены. Вы увидите их после конвертации.</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d меток</item>
+        <item quantity="one">%d метка</item>
+        <item quantity="few">%d метки</item>
+        <item quantity="many">%d меток</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d нового уведомления</item>
+        <item quantity="one">%d новое уведомление</item>
+        <item quantity="few">%d новых уведомления</item>
+        <item quantity="many">%d новых уведомлений</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d маршрутов</item>
+        <item quantity="one">%d маршрут</item>
+        <item quantity="few">%d маршрута</item>
+        <item quantity="many">%d маршрутов</item>
+    </plurals>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@id/ll__add_organisation" android:visibility="visible" style="@style/PlacePageItemFrame"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:gravity="center" android:id="@id/tv__editor" android:text="@string/placepage_add_business_button" style="@style/PlacePageMetadataText.Button" />
+</LinearLayout>

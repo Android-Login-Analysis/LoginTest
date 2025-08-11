@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">تم العثور على %d ملفًا. يمكنك رؤيتها بعد التحويل.</item>
+        <item quantity="zero">لم يتم العثور على أي ملف.</item>
+        <item quantity="one">تم العثور على %d ملف. يمكنك رؤيته بعد التحويل.</item>
+        <item quantity="two">تم العثور على %d ملفين. يمكنك رؤيتهما بعد التحويل.</item>
+        <item quantity="few">تم العثور على %d ملفات. يمكنك رؤيتها بعد التحويل.</item>
+        <item quantity="many">تم العثور على %d ملفًا. يمكنك رؤيتها بعد التحويل.</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d إشارةً مرجعيةً</item>
+        <item quantity="zero">%d إشارة مرجعية</item>
+        <item quantity="one">%d إشارة مرجعية</item>
+        <item quantity="two">%d إشارتان مرجعيتان</item>
+        <item quantity="few">%d إشارات مرجعية</item>
+        <item quantity="many">%d إشارةً مرجعيةً</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d إشعار جديد</item>
+        <item quantity="zero">%d إشعار جديد</item>
+        <item quantity="one">إشعار جديد واحد (%d)</item>
+        <item quantity="two">إشعاران جديدان (%d)</item>
+        <item quantity="few">%d إشعارات جديدة</item>
+        <item quantity="many">%d إشعارًا جديدًا</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d مسارًا</item>
+        <item quantity="zero">%d مسار</item>
+        <item quantity="one">%d مسار</item>
+        <item quantity="two">%d مساران</item>
+        <item quantity="few">%d مسارات</item>
+        <item quantity="many">%d مسارًا</item>
+    </plurals>
+</resources>

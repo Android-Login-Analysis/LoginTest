@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal" android:id="@id/ll__place_phone" android:visibility="visible" style="@style/PlacePageItemFrame"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView android:id="@id/iv__place_phone" app:srcCompat="@drawable/ic_phone" app:tint="?colorAccent" style="@style/PlacePageMetadataIcon" />
+    <TextView android:textAppearance="@style/MwmTextAppearance.PlacePage.Accent" android:id="@id/tv__place_phone" android:textDirection="ltr" android:textAlignment="viewStart" style="@style/PlacePageMetadataText" />
+</LinearLayout>

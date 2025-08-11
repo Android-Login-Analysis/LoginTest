@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">%d фајлова је пронађено. Можете да их погледате након конверзије.</item>
+        <item quantity="one">%d фајл је пронађен. Можете да га погледате након конверзије.</item>
+        <item quantity="few">%d фајла је пронађено. Можете да их погледате након конверзије.</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d маркера</item>
+        <item quantity="one">%d маркер</item>
+        <item quantity="few">%d маркера</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d нових обавештења</item>
+        <item quantity="one">%d ново обавештење</item>
+        <item quantity="few">%d нова обавештења</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d путања</item>
+        <item quantity="one">%d путања</item>
+        <item quantity="few">%d путање</item>
+    </plurals>
+</resources>

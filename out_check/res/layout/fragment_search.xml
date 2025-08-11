@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent" style="@style/MwmWidget.Floating"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout android:orientation="vertical" android:id="@id/coordinator" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <com.google.android.material.appbar.AppBarLayout android:id="@id/app_bar" android:background="?colorPrimary" android:layout_width="fill_parent" android:layout_height="wrap_content" android:elevation="@dimen/dp_0" app:elevation="@dimen/dp_0">
+            <include android:id="@id/toolbar" android:layout_width="fill_parent" android:layout_height="wrap_content" app:layout_scrollFlags="scroll|enterAlways" layout="@layout/toolbar_with_search_no_elevation" />
+        </com.google.android.material.appbar.AppBarLayout>
+        <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent" app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <LinearLayout android:orientation="vertical" android:id="@id/tab_frame" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                <com.google.android.material.tabs.TabLayout android:id="@id/tabs" android:layout_width="fill_parent" android:layout_height="@dimen/tabs_height" android:elevation="@dimen/appbar_elevation" style="@style/MwmWidget.TabLayout" />
+                <View android:id="@id/tabs_divider" android:background="?dividerHorizontal" android:layout_width="fill_parent" android:layout_height="1.0dip" />
+                <androidx.viewpager.widget.ViewPager android:id="@id/pages" android:layout_width="fill_parent" android:layout_height="fill_parent" style="@style/MwmWidget.Floating" />
+            </LinearLayout>
+            <FrameLayout android:id="@id/results_frame" android:background="?cardBackground" android:focusable="true" android:clickable="true" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                <androidx.recyclerview.widget.RecyclerView android:id="@id/recycler" android:background="?cardBackground" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+                <app.organicmaps.widget.PlaceholderView android:gravity="center_horizontal" android:id="@id/placeholder" android:paddingTop="@dimen/placeholder_margin_top" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent" android:paddingStart="@dimen/margin_double_and_half" android:paddingEnd="@dimen/margin_double_and_half" />
+            </FrameLayout>
+            <FrameLayout android:id="@id/download_suggest_frame" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+        </FrameLayout>
+        <include android:layout_gravity="bottom|center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="@dimen/margin_base" layout="@layout/show_on_map_fab" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>

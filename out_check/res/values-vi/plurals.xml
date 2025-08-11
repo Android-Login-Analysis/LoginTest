@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d dấu trang</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d thông báo mới</item>
+        <item quantity="one">%d thông báo mới</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d các chặng đường</item>
+        <item quantity="one">%d chặng đường</item>
+    </plurals>
+</resources>

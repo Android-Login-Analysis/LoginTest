@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton android:id="@id/show_on_map_fab" android:focusable="true" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/search_show_on_map" android:contentDescription="@string/search_show_on_map" app:fabSize="mini" app:icon="@drawable/ic_show_on_map" style="@style/FAB"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" />

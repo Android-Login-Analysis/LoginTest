@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="?cardBackground" android:layout_width="fill_parent" android:layout_height="wrap_content" android:minWidth="@dimen/bookmark_purchase_img_width"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textAppearance="?android:textAppearanceLarge" android:textSize="@dimen/text_size_toolbar" android:textStyle="normal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/margin_base_plus_quarter" android:text="@string/select_list" android:lineSpacingExtra="@dimen/text_size_banner" android:fontFamily="@string/robotoMedium" android:layout_marginStart="@dimen/margin_base_plus" android:layout_marginEnd="@dimen/margin_base_plus" />
+    <include android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/margin_base" layout="@layout/recycler_default" />
+</LinearLayout>

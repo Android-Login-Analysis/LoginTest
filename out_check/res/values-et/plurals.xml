@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">Leidsime %d faili. Näed neid peale teisendamist.</item>
+        <item quantity="one">Leidsime %d faili. Näed seda peale teisendamist.</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d järjehoidjat</item>
+        <item quantity="one">%d järjehoidja</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d uut märguannet</item>
+        <item quantity="one">%d uus märguanne</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d rada</item>
+        <item quantity="one">%d rada</item>
+    </plurals>
+</resources>

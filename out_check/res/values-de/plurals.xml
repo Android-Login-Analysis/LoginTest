@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">%d Dateien wurden gefunden. Sie werden sie nach der Konvertierung sehen.</item>
+        <item quantity="one">%d Datei wurde gefunden. Sie werden sie nach der Konvertierung sehen.</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d Lesezeichen</item>
+        <item quantity="one">%d Lesezeichen</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d neue Benachrichtigungen</item>
+        <item quantity="one">%d neue Benachrichtigung</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d Tracks</item>
+        <item quantity="one">%d Track</item>
+    </plurals>
+</resources>

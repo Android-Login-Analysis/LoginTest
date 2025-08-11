@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">נמצאו %d קבצים. תוכלו לראות אותם לאחר ההמרה.</item>
+        <item quantity="one">נמצא %d קובץ. תוכלו לראות אותו לאחר ההמרה.</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d סימניות</item>
+        <item quantity="one">סימניה %d</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d התראות חדשות</item>
+        <item quantity="one">%d התראות חדשות</item>
+        <item quantity="two">%d התראות חדשות</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d מסלולים</item>
+        <item quantity="one">מסלול %d</item>
+    </plurals>
+</resources>

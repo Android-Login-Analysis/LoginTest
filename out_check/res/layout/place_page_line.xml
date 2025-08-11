@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@id/ll__place_line" style="@style/PlacePageItemFrame"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView android:id="@id/iv__place_line" app:srcCompat="@drawable/ic_line_white" app:tint="?colorAccent" style="@style/PlacePageMetadataIcon" />
+    <TextView android:textAppearance="@style/MwmTextAppearance.PlacePage.Accent" android:id="@id/tv__place_line_page" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textAlignment="viewStart" />
+</LinearLayout>

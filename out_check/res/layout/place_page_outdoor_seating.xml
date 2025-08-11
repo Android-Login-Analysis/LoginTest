@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@id/ll__place_outdoor_seating" style="@style/PlacePageItemFrame"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView android:id="@id/iv__place_outdoor_seating" app:srcCompat="@drawable/ic_outdoor_seating" style="@style/PlacePageMetadataIcon" />
+    <TextView android:id="@id/tv__place_outdoor_seating" android:text="@string/outdoor_seating" android:textAlignment="viewStart" style="@style/PlacePageMetadataText" />
+</LinearLayout>

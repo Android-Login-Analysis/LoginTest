@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">%d file ditemukan. Anda akan melihatnya setelah konversi.</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d markah</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d notifikasi baru</item>
+        <item quantity="one">%d notifikasi baru</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">trek %d</item>
+        <item quantity="one">trek %d</item>
+    </plurals>
+</resources>

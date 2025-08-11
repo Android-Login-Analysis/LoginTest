@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="bookmarks_detect_message">
+        <item quantity="other">Βρέθηκαν %d αρχεία. Θα τα δείτε μετά τη μετατροπή.</item>
+        <item quantity="one">Βρέθηκε %d αρχείο. Θα το δείτε μετά τη μετατροπή.</item>
+    </plurals>
+    <plurals name="bookmarks_places">
+        <item quantity="other">%d αγαπημένα</item>
+        <item quantity="one">%d αγαπημένο</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="other">%d νέες ειδοποιήσεις</item>
+        <item quantity="one">%d νέα ειδοποίηση</item>
+    </plurals>
+    <plurals name="tracks">
+        <item quantity="other">%d διαδρομές</item>
+        <item quantity="one">%d διαδρομή</item>
+    </plurals>
+</resources>
