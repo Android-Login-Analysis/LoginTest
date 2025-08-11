@@ -39,14 +39,22 @@ public class ConfigLoader {
     private int fridaRetryCount = 3;
     private int fridaRetryDelay = 2; // seconds
 
-    // UI element recognition configuration
-    private String loginButtonPatterns = "login,sign_in,signin,submit,enter,go,continue,authenticate,log_in";
-    private String usernameFieldPatterns = "username,user,email,login,account,user_id,login_id,email_id,user_name,login_name";
-    private String passwordFieldPatterns = "password,passwd,pass,pwd,secret,password1,pwd_field,security,password_field";
+    // UI element recognition configuration (general English-only defaults)
+    private String loginButtonPatterns = "login,log in,log-in,sign in,sign_in,sign-in,submit,enter,continue,continue with,continue_with,proceed,next,done,ok,confirm,authenticate,verify,access,start,get started,let me in,join";
+    private String usernameFieldPatterns = "username,user,email,email address,e-mail,login,account,user id,login id,account id,user_id,login_id,email_id,user_name,login_name,phone,phone number,mobile,mobile number,tel,telephone";
+    private String passwordFieldPatterns = "password,passwd,pass,pwd,secret,passcode,pin,password1,pwd_field,security,password_field";
     private String googleLoginPatterns = "google,gmail,sign in with google,google sign in,google_sign_in,google_login";
     private String facebookLoginPatterns = "facebook,fb,sign in with facebook,facebook login,facebook_login,fb_login";
     private String loginActivityPatterns = "LoginActivity,SignInActivity,AuthActivity,AuthenticationActivity,LoginFragment,SignInFragment";
     private String loginPagePatterns = "login,signin,auth,authentication,credentials,login_screen,signin_screen";
+
+    // Detection tuning
+    private int detectionLoginRetries = 3; // attempts
+    private int detectionLoginRetryIntervalMs = 800; // ms between dumps
+    private int loginVoteThreshold = 2; // of [username,password,button]
+
+    // UI class whitelist
+    private String uiClassWhitelist = "EditText,TextInputEditText,android.widget.EditText,androidx.appcompat.widget.AppCompatEditText,WebView,android.webkit.WebView";
 
     // Regular expression patterns
     private String usernamePatternStr = ".*(user|email|account).*id|.*(user|usr|login|email|account|member).*name|.*username.*";
@@ -120,6 +128,11 @@ public class ConfigLoader {
         detectionLoginTimeout = Integer.parseInt(config.getProperty("detection.login.timeout", "10"));
         detectionApiInterval = Integer.parseInt(config.getProperty("detection.api.interval", "1"));
         detectionCrashInterval = Integer.parseInt(config.getProperty("detection.crash.interval", "2"));
+        detectionLoginRetries = Integer.parseInt(config.getProperty("detection.login.retries", String.valueOf(detectionLoginRetries)));
+        detectionLoginRetryIntervalMs = Integer
+                .parseInt(config.getProperty("detection.login.retry.interval.ms", String.valueOf(detectionLoginRetryIntervalMs)));
+        loginVoteThreshold = Integer
+                .parseInt(config.getProperty("detection.login.vote.threshold", String.valueOf(loginVoteThreshold)));
     }
 
     /**
@@ -142,6 +155,7 @@ public class ConfigLoader {
         facebookLoginPatterns = config.getProperty("ui.facebook.login.patterns", facebookLoginPatterns);
         loginActivityPatterns = config.getProperty("ui.login.activity.patterns", loginActivityPatterns);
         loginPagePatterns = config.getProperty("ui.login.page.patterns", loginPagePatterns);
+        uiClassWhitelist = config.getProperty("ui.class.whitelist", uiClassWhitelist);
     }
 
     // =============================================================================
@@ -212,6 +226,18 @@ public class ConfigLoader {
         return detectionCrashInterval;
     }
 
+    public int getDetectionLoginRetries() {
+        return detectionLoginRetries;
+    }
+
+    public int getDetectionLoginRetryIntervalMs() {
+        return detectionLoginRetryIntervalMs;
+    }
+
+    public int getLoginVoteThreshold() {
+        return loginVoteThreshold;
+    }
+
     // =============================================================================
     // Frida configuration getter methods
     // =============================================================================
@@ -258,6 +284,10 @@ public class ConfigLoader {
 
     public String getLoginPagePatterns() {
         return loginPagePatterns;
+    }
+
+    public String[] getUiClassWhitelist() {
+        return uiClassWhitelist.split(",");
     }
 
     // =============================================================================

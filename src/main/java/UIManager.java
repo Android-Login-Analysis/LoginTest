@@ -28,6 +28,98 @@ public class UIManager {
         this.appPackage = configLoader.getAppPackage();
     }
 
+    // ---------------------- WebView Heuristics (UIAutomator-only) ----------------------
+    private boolean isWebViewClass(String className) {
+        if (className == null) return false;
+        String c = className.toLowerCase();
+        return c.contains("android.webkit.webview")
+                || c.contains("com.tencent.smtt.sdk.webview")
+                || c.contains("org.chromium.android_webview")
+                || c.contains("com.uc.webview.export.webview")
+                || c.endsWith("webview");
+    }
+
+    private int[] parseBoundsRect(String bounds) {
+        if (bounds == null || bounds.isEmpty()) return null;
+        Matcher matcher = Pattern.compile("\\[(\\d+),(\\d+)\\]\\[(\\d+),(\\d+)\\]").matcher(bounds);
+        if (matcher.find()) {
+            return new int[]{
+                    Integer.parseInt(matcher.group(1)),
+                    Integer.parseInt(matcher.group(2)),
+                    Integer.parseInt(matcher.group(3)),
+                    Integer.parseInt(matcher.group(4))
+            };
+        }
+        return null;
+    }
+
+    private boolean isWebViewPresent(List<UIElement> elements) {
+        for (UIElement e : elements) {
+            if (isWebViewClass(e.className)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isAnyWebViewLarge(List<UIElement> elements, double thresholdRatio) {
+        int maxX = 0, maxY = 0;
+        for (UIElement e : elements) {
+            int[] r = parseBoundsRect(e.bounds);
+            if (r != null) {
+                maxX = Math.max(maxX, r[2]);
+                maxY = Math.max(maxY, r[3]);
+            }
+        }
+        long screenArea = (long) maxX * (long) maxY;
+        if (screenArea <= 0) return false;
+        for (UIElement e : elements) {
+            if (isWebViewClass(e.className)) {
+                int[] r = parseBoundsRect(e.bounds);
+                if (r != null) {
+                    long area = (long) (r[2] - r[0]) * (long) (r[3] - r[1]);
+                    double ratio = area / (double) screenArea;
+                    if (ratio >= thresholdRatio) return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean hasLoginHintsInIdOrClass(List<UIElement> elements) {
+        String[] hints = new String[]{"user", "email", "pass", "pwd", "login", "signin"};
+        for (UIElement e : elements) {
+            String id = e.resourceId == null ? "" : e.resourceId.toLowerCase();
+            String cls = e.className == null ? "" : e.className.toLowerCase();
+            for (String h : hints) {
+                if (id.contains(h) || cls.contains(h)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isFocusedInWebView() {
+        try {
+            Process dumpProcess = Runtime.getRuntime().exec("adb shell uiautomator dump /dev/tty");
+            BufferedReader dumpReader = new BufferedReader(new InputStreamReader(dumpProcess.getInputStream()));
+            String line;
+            while ((line = dumpReader.readLine()) != null) {
+                if (line.contains("focused=\"true\"")) {
+                    UIElement focused = parseUIElement(line);
+                    dumpReader.close();
+                    dumpProcess.waitFor();
+                    return focused != null && isWebViewClass(focused.className);
+                }
+            }
+            dumpReader.close();
+            dumpProcess.waitFor();
+        } catch (Exception ignore) {
+        }
+        return false;
+    }
+
     /**
      * Start UI manager (ADB is already connected, no additional startup needed)
      */
@@ -115,50 +207,103 @@ public class UIManager {
         try {
             System.out.println("Using ADB to detect login page...");
 
-            // Reset detection flags
+            // Reset detection flags (accumulate across small retry window)
             resetDetectionFlags();
 
-            // Get UI element information for the current page
-            List<UIElement> elements = getAllUIElements();
+            int retries = Math.max(1, configLoader.getDetectionLoginRetries());
+            int intervalMs = Math.max(100, configLoader.getDetectionLoginRetryIntervalMs());
+            int voteThreshold = Math.max(1, configLoader.getLoginVoteThreshold());
 
-            // Iterate through all elements to check if they match the login element pattern
-            for (UIElement element : elements) {
-                // Check Google login
-                if (matchesGoogleLoginPattern(element.text, element.resourceId)) {
-                    googleLoginDetected = true;
-                    System.out.println("Google login element detected: " + element.text);
+            boolean loginButtonDetected = false;
+
+            for (int i = 0; i < retries; i++) {
+                // Get UI element information for the current page
+                List<UIElement> elements = getAllUIElements();
+
+                // Iterate through all elements to check if they match the login element pattern
+                for (UIElement element : elements) {
+                    // Check Google login
+                    if (!googleLoginDetected && matchesGoogleLoginPattern(element.text, element.resourceId)) {
+                        googleLoginDetected = true;
+                        System.out.println("Google login element detected: " + element.text);
+                    }
+
+                    // Check Facebook login
+                    if (!facebookLoginDetected && matchesFacebookLoginPattern(element.text, element.resourceId)) {
+                        facebookLoginDetected = true;
+                        System.out.println("Facebook login element detected: " + element.text);
+                    }
+
+                    // Check username field
+                    if (!usernameFieldDetected && matchesUsernamePattern(element.text, element.resourceId, element.className)) {
+                        usernameFieldDetected = true;
+                        System.out.println("Username field detected: " + element.text + " (ID: " + element.resourceId + ")");
+                    }
+
+                    // Check password field
+                    if (!passwordFieldDetected && matchesPasswordPattern(element.text, element.resourceId, element.className)) {
+                        passwordFieldDetected = true;
+                        System.out.println("Password field detected: " + element.text + " (ID: " + element.resourceId + ")");
+                    }
+
+                    // Check login button
+                    if (!loginButtonDetected && matchesLoginButtonPattern(element.text, element.resourceId)) {
+                        loginButtonDetected = true;
+                        System.out.println("Login button detected: " + element.text + " (ID: " + element.resourceId + ")");
+                    }
                 }
 
-                // Check Facebook login
-                if (matchesFacebookLoginPattern(element.text, element.resourceId)) {
-                    facebookLoginDetected = true;
-                    System.out.println("Facebook login element detected: " + element.text);
+                // Early stop if already meets vote
+                int votes = (usernameFieldDetected ? 1 : 0) + (passwordFieldDetected ? 1 : 0)
+                        + (loginButtonDetected ? 1 : 0);
+                if (votes >= voteThreshold) {
+                    break;
                 }
 
-                // Check username field
-                if (matchesUsernamePattern(element.text, element.resourceId, element.className)) {
-                    usernameFieldDetected = true;
-                    System.out
-                            .println("Username field detected: " + element.text + " (ID: " + element.resourceId + ")");
-                }
-
-                // Check password field
-                if (matchesPasswordPattern(element.text, element.resourceId, element.className)) {
-                    passwordFieldDetected = true;
-                    System.out
-                            .println("Password field detected: " + element.text + " (ID: " + element.resourceId + ")");
+                // Wait for possible delayed rendering
+                if (i < retries - 1) {
+                    try { Thread.sleep(intervalMs); } catch (InterruptedException ie) { /* ignore */ }
                 }
             }
 
-            // If any login-related elements are detected, consider this a login page
-            boolean isLoginPage = googleLoginDetected || facebookLoginDetected ||
-                    usernameFieldDetected || passwordFieldDetected;
+            int votes = (usernameFieldDetected ? 1 : 0) + (passwordFieldDetected ? 1 : 0)
+                    + (loginButtonDetected ? 1 : 0);
+
+            // WebView-only heuristics (weak signals)
+            List<UIElement> snapshotElements = getAllUIElements();
+            boolean webViewPresent = isWebViewPresent(snapshotElements);
+            boolean webViewLarge = false;
+            boolean focusedInWebView = false;
+            boolean hasIdClassHints = false;
+
+            if (webViewPresent) {
+                webViewLarge = isAnyWebViewLarge(snapshotElements, 0.6);
+                focusedInWebView = isFocusedInWebView();
+                hasIdClassHints = hasLoginHintsInIdOrClass(snapshotElements);
+            }
+
+            boolean isLoginByVote = votes >= voteThreshold;
+            boolean isLoginBySso = (googleLoginDetected || facebookLoginDetected) && (usernameFieldDetected || passwordFieldDetected || loginButtonDetected);
+            boolean isLoginByWebViewHeur = webViewPresent && (
+                    votes >= 1 ||
+                    (webViewLarge && hasIdClassHints) ||
+                    (focusedInWebView && hasIdClassHints)
+            );
+            boolean isLoginPage = isLoginByVote || isLoginBySso || isLoginByWebViewHeur;
 
             System.out.println("Login page detection result: " + isLoginPage);
+            System.out.println("  - Votes(username,password,button): " + votes + "/" + voteThreshold);
             System.out.println("  - Google login: " + googleLoginDetected);
             System.out.println("  - Facebook login: " + facebookLoginDetected);
             System.out.println("  - Username field: " + usernameFieldDetected);
             System.out.println("  - Password field: " + passwordFieldDetected);
+            System.out.println("  - Login button: " + loginButtonDetected);
+            if (webViewPresent) {
+                System.out.println("  - WebView present: true");
+                System.out.println("  - WebView large(>60%): " + webViewLarge);
+                System.out.println("  - Focused in WebView: " + focusedInWebView);
+                System.out.println("  - WebView id/class hints: " + hasIdClassHints);
+            }
 
             return isLoginPage;
 
@@ -521,6 +666,10 @@ public class UIManager {
                 return true;
             }
         }
+        // Class whitelist: treat editable text classes as username candidates if any hint exists
+        if (isWhitelistedClass(className) && (resourceId.length() > 0 || text.length() > 0)) {
+            return true;
+        }
         return false;
     }
 
@@ -537,6 +686,21 @@ public class UIManager {
 
         for (String pattern : patterns) {
             if (combined.contains(pattern.trim().toLowerCase())) {
+                return true;
+            }
+        }
+        // Class whitelist: common input classes sometimes lack text; use id hint
+        if (isWhitelistedClass(className) && resourceId.toLowerCase().contains("pass")) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isWhitelistedClass(String className) {
+        if (className == null) return false;
+        String lower = className.toLowerCase();
+        for (String allowed : configLoader.getUiClassWhitelist()) {
+            if (lower.contains(allowed.trim().toLowerCase())) {
                 return true;
             }
         }
