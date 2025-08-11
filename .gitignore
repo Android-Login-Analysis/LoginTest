@@ -48,5 +48,7 @@ out_check/
 out_organic/
 out_simplex/
 out_*/out_*/
-logs/
 reports/
+apps/
+*.apk
+apps/*.apk
