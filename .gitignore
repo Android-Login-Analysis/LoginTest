@@ -47,3 +47,6 @@ messenger_decompiled/
 out_check/
 out_organic/
 out_simplex/
+out_*/out_*/
+logs/
+reports/
