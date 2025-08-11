@@ -1,0 +1,43 @@
+{
+  "analysisTime": 1754949106489,
+  "apkPath": "apps/app.organicmaps_25080604.apk",
+  "matches": {
+    "InitialState": [{
+      "fullSignature": "app.organicmaps.SplashActivity.onCreate",
+      "stateName": "InitialState",
+      "methodSignature": "<app.organicmaps.SplashActivity: void onCreate(android.os.Bundle)>",
+      "activityName": "SplashActivity",
+      "methodName": "onCreate",
+      "className": "SplashActivity",
+      "isActivity": true,
+      "packageName": "app.organicmaps"
+    }],
+    "ServiceUnavailable_Auth": [
+      {
+        "fullSignature": "app.organicmaps.sdk.maplayer.traffic.TrafficManager$TrafficCallback.onNetworkError",
+        "stateName": "ServiceUnavailable_Auth",
+        "methodSignature": "<app.organicmaps.sdk.maplayer.traffic.TrafficManager$TrafficCallback: void onNetworkError()>",
+        "methodName": "onNetworkError",
+        "className": "TrafficManager$TrafficCallback",
+        "isActivity": false,
+        "packageName": "app.organicmaps.sdk.maplayer.traffic"
+      },
+      {
+        "fullSignature": "app.organicmaps.routing.NavigationController.onNetworkError",
+        "stateName": "ServiceUnavailable_Auth",
+        "methodSignature": "<app.organicmaps.routing.NavigationController: void onNetworkError()>",
+        "methodName": "onNetworkError",
+        "className": "NavigationController",
+        "isActivity": false,
+        "packageName": "app.organicmaps.routing"
+      }
+    ]
+  },
+  "patternsPath": "src/main/resources/regex_patterns.txt",
+  "totalPatterns": 71,
+  "statistics": {
+    "matchedStates": 2,
+    "matchedMethods": 3,
+    "totalMethods": 0
+  }
+}

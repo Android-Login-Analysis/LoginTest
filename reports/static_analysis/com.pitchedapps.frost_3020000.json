@@ -1,0 +1,21 @@
+{
+  "analysisTime": 1754857575517,
+  "apkPath": "apps/com.pitchedapps.frost_3020000.apk",
+  "matches": {"CredentialInput": [{
+    "fullSignature": "com.pitchedapps.frost.activities.LoginActivity.onCreate",
+    "stateName": "CredentialInput",
+    "methodSignature": "<com.pitchedapps.frost.activities.LoginActivity: void onCreate(android.os.Bundle)>",
+    "activityName": "LoginActivity",
+    "methodName": "onCreate",
+    "className": "LoginActivity",
+    "isActivity": true,
+    "packageName": "com.pitchedapps.frost.activities"
+  }]},
+  "patternsPath": "src/main/resources/regex_patterns.txt",
+  "totalPatterns": 71,
+  "statistics": {
+    "matchedStates": 1,
+    "matchedMethods": 1,
+    "totalMethods": 0
+  }
+}

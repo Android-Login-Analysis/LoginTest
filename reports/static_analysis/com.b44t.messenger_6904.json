@@ -1,0 +1,21 @@
+{
+  "analysisTime": 1754767875654,
+  "apkPath": "apps/com.b44t.messenger_6904.apk",
+  "matches": {"InitialState": [{
+    "fullSignature": "org.thoughtcrime.securesms.WelcomeActivity.onCreate",
+    "stateName": "InitialState",
+    "methodSignature": "<org.thoughtcrime.securesms.WelcomeActivity: void onCreate(android.os.Bundle)>",
+    "activityName": "WelcomeActivity",
+    "methodName": "onCreate",
+    "className": "WelcomeActivity",
+    "isActivity": true,
+    "packageName": "org.thoughtcrime.securesms"
+  }]},
+  "patternsPath": "src/main/resources/regex_patterns.txt",
+  "totalPatterns": 71,
+  "statistics": {
+    "matchedStates": 1,
+    "matchedMethods": 1,
+    "totalMethods": 0
+  }
+}

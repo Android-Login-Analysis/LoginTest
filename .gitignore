@@ -38,7 +38,7 @@ build/
 .DS_Store
 
 ### Android ###
-/reports/
+#/reports/
 
 # Ignore decompiled APKs
 kickstarter_decompiled/
@@ -48,7 +48,6 @@ out_check/
 out_organic/
 out_simplex/
 out_*/out_*/
-reports/
 apps/
 *.apk
 apps/*.apk
