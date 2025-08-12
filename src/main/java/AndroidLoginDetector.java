@@ -87,6 +87,60 @@ public class AndroidLoginDetector {
         }
     }
 
+    /**
+     * Stepwise Monkey exploration: run 1 event per command and check login after each step
+     */
+    private void exploreStepwiseWithMonkeyAndDetectLogin() {
+        int totalEvents = configLoader.getMonkeyEvents();
+        int throttle = configLoader.getMonkeyThrottle();
+        int touchPct = configLoader.getMonkeyTouchPercentage();
+        final int shotInterval = Math.max(1, configLoader.getMonkeyScreenshotInterval());
+        for (int i = 1; i <= totalEvents; i++) {
+            try {
+                String cmd = String.format(
+                        "adb shell monkey -p %s -v --throttle %d " +
+                                "--pct-touch %d --pct-motion 0 --pct-trackball 0 --pct-syskeys 0 " +
+                                "--pct-nav 0 --pct-majornav 0 --pct-appswitch 0 --pct-anyevent 0 1",
+                        appPackage, throttle, touchPct);
+                Process proc = Runtime.getRuntime().exec(cmd);
+                // Wait for this single event to complete
+                proc.waitFor();
+
+                if (i % shotInterval == 0) {
+                    captureScreenshotForStep(i);
+                }
+
+                // Optional small delay to allow UI to settle
+                try {
+                    Thread.sleep(Math.max(50, throttle));
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
+
+                // Fast path: if focus is already on a login field, we consider it a strong hint
+                boolean focusedLogin = uiManager.checkFocusedLoginField();
+                if (focusedLogin) {
+                    logInfo("Focused login field detected after step " + i);
+                    // Also run full detection for confirmation
+                    if (uiManager.detectLoginPage()) {
+                        logInfo("Login page confirmed after step " + i);
+                        createBaselineSnapshotIfNeeded();
+                        break;
+                    }
+                }
+
+                // Full detection after each step (KISS, per request)
+                if (uiManager.detectLoginPage()) {
+                    logInfo("Login page detected after step " + i);
+                    createBaselineSnapshotIfNeeded();
+                    break;
+                }
+            } catch (Exception e) {
+                logError("Stepwise Monkey error at step " + i + ": " + e.getMessage());
+            }
+        }
+    }
+
     private void logInfo(String message) {
         String timestamp = LocalDateTime.now().format(logFormatter);
         String logMessage = "[" + timestamp + "] [INFO] " + message;
@@ -632,8 +686,8 @@ public class AndroidLoginDetector {
                     failedLogins++;
                 }
             } else {
-                logInfo("No login page detected, starting Monkey exploration");
-                startMonkeyWithUIMonitoring();
+                logInfo("No login page detected, starting stepwise Monkey exploration with per-step detection");
+                exploreStepwiseWithMonkeyAndDetectLogin();
             }
 
             // Step 7: Analyze API logs and validate state machine
@@ -1072,11 +1126,102 @@ public class AndroidLoginDetector {
             
             Process process = Runtime.getRuntime().exec(monkeyCommand);
             logInfo("Monkey command executed: " + monkeyCommand);
+
+            // Start a lightweight reader to parse monkey output and take screenshots every 100 events
+            startMonkeyScreenshotWatcher(process);
             return process;
         } catch (Exception e) {
             logError("Error starting Monkey: " + e.getMessage());
             return null;
         }
+    }
+
+    // ---------------------- Screenshot on Monkey progress ----------------------
+    private void startMonkeyScreenshotWatcher(Process monkeyProcess) {
+        Thread t = new Thread(() -> {
+            try {
+                java.io.BufferedReader reader = new java.io.BufferedReader(
+                        new java.io.InputStreamReader(monkeyProcess.getInputStream()));
+                String line;
+                int events = 0;
+                int lastCapturedAt = 0;
+                final int interval = Math.max(1, configLoader.getMonkeyScreenshotInterval());
+                java.util.regex.Pattern sentPattern = java.util.regex.Pattern.compile("Sending event #\\s*(\\d+)");
+                java.util.regex.Pattern injectedPattern = java.util.regex.Pattern.compile("Events injected:\\s*(\\d+)");
+                while ((line = reader.readLine()) != null) {
+                    java.util.regex.Matcher m1 = sentPattern.matcher(line);
+                    java.util.regex.Matcher m2 = injectedPattern.matcher(line);
+                    if (m1.find()) {
+                        events = parseSafeInt(m1.group(1), events);
+                    } else if (m2.find()) {
+                        events = parseSafeInt(m2.group(1), events);
+                    }
+                    if (events >= lastCapturedAt + interval) {
+                        // capture at each interval boundary, may capture multiple if skipped
+                        while (events >= lastCapturedAt + interval) {
+                            lastCapturedAt += interval;
+                            captureScreenshotForStep(lastCapturedAt);
+                        }
+                    }
+                }
+            } catch (Exception ex) {
+                logError("Monkey screenshot watcher error: " + ex.getMessage());
+            }
+        });
+        t.setDaemon(true);
+        t.start();
+    }
+
+    private int parseSafeInt(String s, int fallback) {
+        try { return Integer.parseInt(s.trim()); } catch (Exception e) { return fallback; }
+    }
+
+    private void captureScreenshotForStep(int step) {
+        java.io.InputStream in = null;
+        java.io.FileOutputStream out = null;
+        try {
+            String dir = buildScreenshotDirFromApk();
+            ensureDirExists(dir);
+            java.io.File outFile = new java.io.File(dir, "step_" + step + ".png");
+            String abs = outFile.getAbsolutePath();
+
+            Process proc = Runtime.getRuntime().exec(new String[]{"bash","-lc","adb exec-out screencap -p"});
+            in = proc.getInputStream();
+            out = new java.io.FileOutputStream(outFile);
+            byte[] buf = new byte[8192];
+            int n;
+            while ((n = in.read(buf)) != -1) {
+                out.write(buf, 0, n);
+            }
+            int code = proc.waitFor();
+            if (code == 0 && outFile.length() > 0) {
+                logInfo("Saved screenshot: " + abs);
+            } else {
+                logError("Screenshot command exit=" + code + ", file size=" + outFile.length() + ": " + abs);
+            }
+        } catch (Exception e) {
+            logError("Failed to save screenshot at step " + step + ": " + e.getMessage());
+        } finally {
+            try { if (in != null) in.close(); } catch (Exception ignore) {}
+            try { if (out != null) out.close(); } catch (Exception ignore) {}
+        }
+    }
+
+    private String buildScreenshotDirFromApk() {
+        String apkPath = configLoader.getApkPath();
+        String base = apkPath;
+        int slash = base.lastIndexOf('/') >= 0 ? base.lastIndexOf('/') : base.lastIndexOf('\\');
+        if (slash >= 0) base = base.substring(slash + 1);
+        if (base.toLowerCase().endsWith(".apk")) {
+            base = base.substring(0, base.length() - 4);
+        }
+        return "reports/screenshot/" + base;
+    }
+
+    private void ensureDirExists(String dir) {
+        try {
+            java.nio.file.Files.createDirectories(java.nio.file.Paths.get(dir));
+        } catch (Exception ignored) {}
     }
 
     /**

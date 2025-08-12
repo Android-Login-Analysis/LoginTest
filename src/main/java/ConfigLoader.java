@@ -28,6 +28,7 @@ public class ConfigLoader {
     private int monkeyEvents = 50;
     private int monkeyThrottle = 100;
     private int monkeyTouchPercentage = 100;
+    private int monkeyScreenshotInterval = 10; // steps per screenshot
 
     // Detection configuration
     private int detectionLoginTimeout = 10; // seconds
@@ -96,6 +97,7 @@ public class ConfigLoader {
      */
     private void loadAppConfigs() {
         appPackage = config.getProperty("app.package", "org.mian.gitnex");
+        apkPath = config.getProperty("app.path", apkPath);
     }
 
     /**
@@ -119,6 +121,7 @@ public class ConfigLoader {
         monkeyEvents = Integer.parseInt(config.getProperty("monkey.events", "50"));
         monkeyThrottle = Integer.parseInt(config.getProperty("monkey.throttle", "100"));
         monkeyTouchPercentage = Integer.parseInt(config.getProperty("monkey.touch.percentage", "100"));
+        monkeyScreenshotInterval = Integer.parseInt(config.getProperty("monkey.screenshot.interval", "100"));
     }
 
     /**
@@ -208,6 +211,10 @@ public class ConfigLoader {
 
     public int getMonkeyTouchPercentage() {
         return monkeyTouchPercentage;
+    }
+
+    public int getMonkeyScreenshotInterval() {
+        return monkeyScreenshotInterval;
     }
 
     // =============================================================================
