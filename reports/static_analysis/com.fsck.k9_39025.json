@@ -1,0 +1,2324 @@
+{
+  "analysisTime": 1755097768393,
+  "apkPath": "apps/com.fsck.k9_39025.apk",
+  "matches": {
+    "AppMainScreen": [
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1: java.lang.Object invoke(java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1: void invoke(androidx.navigation.NavDeepLinkDslBuilder)>",
+        "methodName": "invoke",
+        "className": "DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1.<clinit>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1: void <init>()>",
+        "methodName": "<init>",
+        "className": "DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1: void invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1: void <init>(app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,androidx.navigation.NavHostController,kotlin.jvm.functions.Function1)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda1: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda1: void <init>(androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda0.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda0: void <init>(androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda0.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda0: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda2.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda2: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda2",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda2.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda2: void <init>(androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda2",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: void <init>(java.lang.String)>",
+        "methodName": "<init>",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: void <init>(java.lang.String,int,kotlin.jvm.internal.DefaultConstructorMarker)>",
+        "methodName": "<init>",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.equals",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: boolean equals(java.lang.Object)>",
+        "methodName": "equals",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.hashCode",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: int hashCode()>",
+        "methodName": "hashCode",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.toString",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: java.lang.String toString()>",
+        "methodName": "toString",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.getBasePath",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: java.lang.String getBasePath()>",
+        "methodName": "getBasePath",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.route",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: java.lang.String route()>",
+        "methodName": "route",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.<clinit>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: void <init>(int,java.lang.String,java.lang.String,kotlinx.serialization.internal.SerializationConstructorMarker)>",
+        "methodName": "<init>",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.getAccountId",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: java.lang.String getAccountId()>",
+        "methodName": "getAccountId",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3: java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$3",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3: void <init>(androidx.navigation.NavHostController,androidx.compose.runtime.MutableState,app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,kotlin.jvm.functions.Function1)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$3",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3: void invoke(androidx.compose.animation.AnimatedContentScope,androidx.navigation.NavBackStackEntry,androidx.compose.runtime.Composer,int)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$3",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4: java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4: void invoke(androidx.compose.animation.AnimatedContentScope,androidx.navigation.NavBackStackEntry,androidx.compose.runtime.Composer,int)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4: void <init>(app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,androidx.navigation.NavHostController,kotlin.jvm.functions.Function1)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1: void <init>(app.k9mail.feature.onboarding.migration.api.OnboardingMigrationManager,androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1: java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1: void invoke(androidx.compose.animation.AnimatedContentScope,androidx.navigation.NavBackStackEntry,androidx.compose.runtime.Composer,int)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2: void <init>(app.k9mail.feature.onboarding.migration.api.OnboardingMigrationManager,androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2: void invoke(androidx.compose.animation.AnimatedContentScope,androidx.navigation.NavBackStackEntry,androidx.compose.runtime.Composer,int)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2: java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5: java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5: void invoke(androidx.compose.animation.AnimatedContentScope,androidx.navigation.NavBackStackEntry,androidx.compose.runtime.Composer,int)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5: void <init>(app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,androidx.navigation.NavHostController,kotlin.jvm.functions.Function1,kotlinx.coroutines.CoroutineScope)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6: void <init>(kotlin.jvm.functions.Function1,androidx.compose.runtime.MutableState)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$6",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6: void invoke(androidx.compose.animation.AnimatedContentScope,androidx.navigation.NavBackStackEntry,androidx.compose.runtime.Composer,int)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$6",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6: java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$6",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation: void <init>()>",
+        "methodName": "<init>",
+        "className": "DefaultOnboardingNavigation",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation.<clinit>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "DefaultOnboardingNavigation",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation.registerRoutes",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation: void registerRoutes(androidx.navigation.NavGraphBuilder,kotlin.jvm.functions.Function0,kotlin.jvm.functions.Function1)>",
+        "methodName": "registerRoutes",
+        "className": "DefaultOnboardingNavigation",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$1$1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$1$1: void <init>(kotlin.jvm.functions.Function1)>",
+        "methodName": "<init>",
+        "className": "DefaultOnboardingNavigation$registerRoutes$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$1$1: java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "DefaultOnboardingNavigation$registerRoutes$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$1$1: void invoke(androidx.compose.animation.AnimatedContentScope,androidx.navigation.NavBackStackEntry,androidx.compose.runtime.Composer,int)>",
+        "methodName": "invoke",
+        "className": "DefaultOnboardingNavigation$registerRoutes$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.getDescriptor",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: kotlinx.serialization.descriptors.SerialDescriptor getDescriptor()>",
+        "methodName": "getDescriptor",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.deserialize",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: java.lang.Object deserialize(kotlinx.serialization.encoding.Decoder)>",
+        "methodName": "deserialize",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.typeParametersSerializers",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: kotlinx.serialization.KSerializer[] typeParametersSerializers()>",
+        "methodName": "typeParametersSerializers",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.serialize",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: void serialize(kotlinx.serialization.encoding.Encoder,java.lang.Object)>",
+        "methodName": "serialize",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.childSerializers",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: kotlinx.serialization.KSerializer[] childSerializers()>",
+        "methodName": "childSerializers",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: void <init>()>",
+        "methodName": "<init>",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.deserialize",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding deserialize(kotlinx.serialization.encoding.Decoder)>",
+        "methodName": "deserialize",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.<clinit>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.serialize",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: void serialize(kotlinx.serialization.encoding.Encoder,app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding)>",
+        "methodName": "serialize",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1: void invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1: void <init>(app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,androidx.navigation.NavHostController,kotlin.jvm.functions.Function1)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6$$ExternalSyntheticLambda0.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6$$ExternalSyntheticLambda0: void <init>(kotlin.jvm.functions.Function1,androidx.compose.runtime.MutableState)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$6$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6$$ExternalSyntheticLambda0.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6$$ExternalSyntheticLambda0: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$6$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$$ExternalSyntheticLambda0.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$$ExternalSyntheticLambda0: void <init>(androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$$ExternalSyntheticLambda0.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$$ExternalSyntheticLambda0: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$Companion.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$Companion: void <init>(kotlin.jvm.internal.DefaultConstructorMarker)>",
+        "methodName": "<init>",
+        "className": "OnboardingRoute$Onboarding$Companion",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$Companion.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$Companion: void <init>()>",
+        "methodName": "<init>",
+        "className": "OnboardingRoute$Onboarding$Companion",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$Companion.serializer",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$Companion: kotlinx.serialization.KSerializer serializer()>",
+        "methodName": "serializer",
+        "className": "OnboardingRoute$Onboarding$Companion",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda1: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda1: void <init>(androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda0.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda0: void <init>(app.k9mail.feature.onboarding.migration.api.OnboardingMigrationManager,androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda0.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda0: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda1: void <init>(app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,androidx.navigation.NavHostController,kotlin.jvm.functions.Function1,androidx.compose.runtime.MutableState)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda1: java.lang.Object invoke(java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda0.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda0: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda0.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda0: void <init>(androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt.navigateToMigration",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt: void navigateToMigration(androidx.navigation.NavController)>",
+        "methodName": "navigateToMigration",
+        "className": "OnboardingNavHostKt",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt.navigateToSettingsImport",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt: void navigateToSettingsImport(androidx.navigation.NavController)>",
+        "methodName": "navigateToSettingsImport",
+        "className": "OnboardingNavHostKt",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt.navigateToPermissions",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt: void navigateToPermissions(androidx.navigation.NavController)>",
+        "methodName": "navigateToPermissions",
+        "className": "OnboardingNavHostKt",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt.navigateToSettingsImportQrCode",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt: void navigateToSettingsImportQrCode(androidx.navigation.NavController)>",
+        "methodName": "navigateToSettingsImportQrCode",
+        "className": "OnboardingNavHostKt",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt.navigateToAccountSetup",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt: void navigateToAccountSetup(androidx.navigation.NavController)>",
+        "methodName": "navigateToAccountSetup",
+        "className": "OnboardingNavHostKt",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt.OnboardingNavHost",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt: void OnboardingNavHost(kotlin.jvm.functions.Function1,app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,app.k9mail.feature.onboarding.migration.api.OnboardingMigrationManager,kotlinx.coroutines.CoroutineScope,androidx.compose.runtime.Composer,int,int)>",
+        "methodName": "OnboardingNavHost",
+        "className": "OnboardingNavHostKt",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$$ExternalSyntheticLambda0.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$$ExternalSyntheticLambda0: void <init>(kotlinx.coroutines.CoroutineScope,androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$$ExternalSyntheticLambda0.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$$ExternalSyntheticLambda0: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda3.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda3: void <init>()>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda3",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda3.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda3: java.lang.Object invoke(java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda3",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda2.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda2: java.lang.Object invoke(java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda2",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda2.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda2: void <init>(kotlin.jvm.functions.Function1,app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,app.k9mail.feature.onboarding.migration.api.OnboardingMigrationManager,kotlinx.coroutines.CoroutineScope,int,int)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda2",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda1: java.lang.Object invoke(java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda1: void <init>(app.k9mail.feature.onboarding.migration.api.OnboardingMigrationManager,androidx.navigation.NavHostController,androidx.compose.runtime.MutableState,app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,kotlin.jvm.functions.Function1,kotlinx.coroutines.CoroutineScope)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda0.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda0: void <init>()>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda0.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda0: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda4.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda4: java.lang.Object invoke(java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda4",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda4.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda4: void <init>()>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda4",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1: void <init>(androidx.navigation.NavHostController,kotlin.coroutines.Continuation)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1.create",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1: kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation)>",
+        "methodName": "create",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1: java.lang.Object invoke(kotlinx.coroutines.CoroutineScope,kotlin.coroutines.Continuation)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1.invokeSuspend",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1: java.lang.Object invokeSuspend(java.lang.Object)>",
+        "methodName": "invokeSuspend",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1: java.lang.Object invoke(java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1: java.lang.Object invoke(java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1: void invoke(androidx.navigation.NavDeepLinkDslBuilder)>",
+        "methodName": "invoke",
+        "className": "DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1.<clinit>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1: void <init>()>",
+        "methodName": "<init>",
+        "className": "DefaultOnboardingNavigation$registerRoutes$lambda$0$$inlined$deepLinkComposable$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1: void invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1: void <init>(app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,androidx.navigation.NavHostController,kotlin.jvm.functions.Function1)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda1: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda1: void <init>(androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda0.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda0: void <init>(androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda0.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda0: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda2.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda2: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda2",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda2.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda2: void <init>(androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2$$ExternalSyntheticLambda2",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: void <init>(java.lang.String)>",
+        "methodName": "<init>",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: void <init>(java.lang.String,int,kotlin.jvm.internal.DefaultConstructorMarker)>",
+        "methodName": "<init>",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.equals",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: boolean equals(java.lang.Object)>",
+        "methodName": "equals",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.hashCode",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: int hashCode()>",
+        "methodName": "hashCode",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.toString",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: java.lang.String toString()>",
+        "methodName": "toString",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.getBasePath",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: java.lang.String getBasePath()>",
+        "methodName": "getBasePath",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.route",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: java.lang.String route()>",
+        "methodName": "route",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.<clinit>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: void <init>(int,java.lang.String,java.lang.String,kotlinx.serialization.internal.SerializationConstructorMarker)>",
+        "methodName": "<init>",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding.getAccountId",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding: java.lang.String getAccountId()>",
+        "methodName": "getAccountId",
+        "className": "OnboardingRoute$Onboarding",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3: java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$3",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3: void <init>(androidx.navigation.NavHostController,androidx.compose.runtime.MutableState,app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,kotlin.jvm.functions.Function1)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$3",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3: void invoke(androidx.compose.animation.AnimatedContentScope,androidx.navigation.NavBackStackEntry,androidx.compose.runtime.Composer,int)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$3",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4: java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4: void invoke(androidx.compose.animation.AnimatedContentScope,androidx.navigation.NavBackStackEntry,androidx.compose.runtime.Composer,int)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4: void <init>(app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,androidx.navigation.NavHostController,kotlin.jvm.functions.Function1)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1: void <init>(app.k9mail.feature.onboarding.migration.api.OnboardingMigrationManager,androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1: java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1: void invoke(androidx.compose.animation.AnimatedContentScope,androidx.navigation.NavBackStackEntry,androidx.compose.runtime.Composer,int)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2: void <init>(app.k9mail.feature.onboarding.migration.api.OnboardingMigrationManager,androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2: void invoke(androidx.compose.animation.AnimatedContentScope,androidx.navigation.NavBackStackEntry,androidx.compose.runtime.Composer,int)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$2: java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$2",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5: java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5: void invoke(androidx.compose.animation.AnimatedContentScope,androidx.navigation.NavBackStackEntry,androidx.compose.runtime.Composer,int)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5: void <init>(app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,androidx.navigation.NavHostController,kotlin.jvm.functions.Function1,kotlinx.coroutines.CoroutineScope)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6: void <init>(kotlin.jvm.functions.Function1,androidx.compose.runtime.MutableState)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$6",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6: void invoke(androidx.compose.animation.AnimatedContentScope,androidx.navigation.NavBackStackEntry,androidx.compose.runtime.Composer,int)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$6",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6: java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$6",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation: void <init>()>",
+        "methodName": "<init>",
+        "className": "DefaultOnboardingNavigation",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation.<clinit>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "DefaultOnboardingNavigation",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation.registerRoutes",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation: void registerRoutes(androidx.navigation.NavGraphBuilder,kotlin.jvm.functions.Function0,kotlin.jvm.functions.Function1)>",
+        "methodName": "registerRoutes",
+        "className": "DefaultOnboardingNavigation",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$1$1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$1$1: void <init>(kotlin.jvm.functions.Function1)>",
+        "methodName": "<init>",
+        "className": "DefaultOnboardingNavigation$registerRoutes$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$1$1: java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "DefaultOnboardingNavigation$registerRoutes$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.DefaultOnboardingNavigation$registerRoutes$1$1: void invoke(androidx.compose.animation.AnimatedContentScope,androidx.navigation.NavBackStackEntry,androidx.compose.runtime.Composer,int)>",
+        "methodName": "invoke",
+        "className": "DefaultOnboardingNavigation$registerRoutes$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.getDescriptor",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: kotlinx.serialization.descriptors.SerialDescriptor getDescriptor()>",
+        "methodName": "getDescriptor",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.deserialize",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: java.lang.Object deserialize(kotlinx.serialization.encoding.Decoder)>",
+        "methodName": "deserialize",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.typeParametersSerializers",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: kotlinx.serialization.KSerializer[] typeParametersSerializers()>",
+        "methodName": "typeParametersSerializers",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.serialize",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: void serialize(kotlinx.serialization.encoding.Encoder,java.lang.Object)>",
+        "methodName": "serialize",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.childSerializers",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: kotlinx.serialization.KSerializer[] childSerializers()>",
+        "methodName": "childSerializers",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: void <init>()>",
+        "methodName": "<init>",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.deserialize",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding deserialize(kotlinx.serialization.encoding.Decoder)>",
+        "methodName": "deserialize",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.<clinit>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer.serialize",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$$serializer: void serialize(kotlinx.serialization.encoding.Encoder,app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding)>",
+        "methodName": "serialize",
+        "className": "OnboardingRoute$Onboarding$$serializer",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1: void invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1: void <init>(app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,androidx.navigation.NavHostController,kotlin.jvm.functions.Function1)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6$$ExternalSyntheticLambda0.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6$$ExternalSyntheticLambda0: void <init>(kotlin.jvm.functions.Function1,androidx.compose.runtime.MutableState)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$6$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6$$ExternalSyntheticLambda0.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$6$$ExternalSyntheticLambda0: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$6$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$$ExternalSyntheticLambda0.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$$ExternalSyntheticLambda0: void <init>(androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$$ExternalSyntheticLambda0.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$4$$ExternalSyntheticLambda0: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$4$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$Companion.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$Companion: void <init>(kotlin.jvm.internal.DefaultConstructorMarker)>",
+        "methodName": "<init>",
+        "className": "OnboardingRoute$Onboarding$Companion",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$Companion.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$Companion: void <init>()>",
+        "methodName": "<init>",
+        "className": "OnboardingRoute$Onboarding$Companion",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$Companion.serializer",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingRoute$Onboarding$Companion: kotlinx.serialization.KSerializer serializer()>",
+        "methodName": "serializer",
+        "className": "OnboardingRoute$Onboarding$Companion",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda1: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda1: void <init>(androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda0.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda0: void <init>(app.k9mail.feature.onboarding.migration.api.OnboardingMigrationManager,androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda0.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda0: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$1$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.launcher.navigation.FeatureLauncherNavHostKt.FeatureLauncherNavHost",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.launcher.navigation.FeatureLauncherNavHostKt: void FeatureLauncherNavHost(androidx.navigation.NavHostController,kotlin.jvm.functions.Function0,androidx.compose.ui.Modifier,app.k9mail.feature.launcher.FeatureLauncherExternalContract$AccountSetupFinishedLauncher,app.k9mail.feature.account.edit.navigation.AccountEditNavigation,net.thunderbird.feature.account.settings.api.AccountSettingsNavigation,app.k9mail.feature.account.setup.navigation.AccountSetupNavigation,app.k9mail.feature.onboarding.main.navigation.OnboardingNavigation,app.k9mail.feature.funding.api.FundingNavigation,androidx.compose.runtime.Composer,int,int)>",
+        "methodName": "FeatureLauncherNavHost",
+        "className": "FeatureLauncherNavHostKt",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.launcher.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.launcher.navigation.FeatureLauncherNavHostKt$$ExternalSyntheticLambda1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.launcher.navigation.FeatureLauncherNavHostKt$$ExternalSyntheticLambda1: void <init>(androidx.navigation.NavHostController,kotlin.jvm.functions.Function0,androidx.compose.ui.Modifier,app.k9mail.feature.launcher.FeatureLauncherExternalContract$AccountSetupFinishedLauncher,app.k9mail.feature.account.edit.navigation.AccountEditNavigation,net.thunderbird.feature.account.settings.api.AccountSettingsNavigation,app.k9mail.feature.account.setup.navigation.AccountSetupNavigation,app.k9mail.feature.onboarding.main.navigation.OnboardingNavigation,app.k9mail.feature.funding.api.FundingNavigation,int,int)>",
+        "methodName": "<init>",
+        "className": "FeatureLauncherNavHostKt$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.launcher.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.launcher.navigation.FeatureLauncherNavHostKt$$ExternalSyntheticLambda0.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.launcher.navigation.FeatureLauncherNavHostKt$$ExternalSyntheticLambda0: void <init>(app.k9mail.feature.onboarding.main.navigation.OnboardingNavigation,kotlin.jvm.functions.Function0,app.k9mail.feature.account.setup.navigation.AccountSetupNavigation,app.k9mail.feature.account.edit.navigation.AccountEditNavigation,net.thunderbird.feature.account.settings.api.AccountSettingsNavigation,app.k9mail.feature.funding.api.FundingNavigation,app.k9mail.feature.launcher.FeatureLauncherExternalContract$AccountSetupFinishedLauncher,androidx.activity.ComponentActivity)>",
+        "methodName": "<init>",
+        "className": "FeatureLauncherNavHostKt$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.launcher.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda1: void <init>(app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,androidx.navigation.NavHostController,kotlin.jvm.functions.Function1,androidx.compose.runtime.MutableState)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda1: java.lang.Object invoke(java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda0.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda0: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda0.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda0: void <init>(androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$3$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt.navigateToMigration",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt: void navigateToMigration(androidx.navigation.NavController)>",
+        "methodName": "navigateToMigration",
+        "className": "OnboardingNavHostKt",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt.navigateToSettingsImport",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt: void navigateToSettingsImport(androidx.navigation.NavController)>",
+        "methodName": "navigateToSettingsImport",
+        "className": "OnboardingNavHostKt",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt.navigateToPermissions",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt: void navigateToPermissions(androidx.navigation.NavController)>",
+        "methodName": "navigateToPermissions",
+        "className": "OnboardingNavHostKt",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt.navigateToSettingsImportQrCode",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt: void navigateToSettingsImportQrCode(androidx.navigation.NavController)>",
+        "methodName": "navigateToSettingsImportQrCode",
+        "className": "OnboardingNavHostKt",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt.navigateToAccountSetup",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt: void navigateToAccountSetup(androidx.navigation.NavController)>",
+        "methodName": "navigateToAccountSetup",
+        "className": "OnboardingNavHostKt",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt.OnboardingNavHost",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt: void OnboardingNavHost(kotlin.jvm.functions.Function1,app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,app.k9mail.feature.onboarding.migration.api.OnboardingMigrationManager,kotlinx.coroutines.CoroutineScope,androidx.compose.runtime.Composer,int,int)>",
+        "methodName": "OnboardingNavHost",
+        "className": "OnboardingNavHostKt",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$$ExternalSyntheticLambda0.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$$ExternalSyntheticLambda0: void <init>(kotlinx.coroutines.CoroutineScope,androidx.navigation.NavHostController)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$$ExternalSyntheticLambda0.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$$ExternalSyntheticLambda0: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda3.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda3: void <init>()>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda3",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda3.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda3: java.lang.Object invoke(java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda3",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda2.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda2: java.lang.Object invoke(java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda2",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda2.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda2: void <init>(kotlin.jvm.functions.Function1,app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,app.k9mail.feature.onboarding.migration.api.OnboardingMigrationManager,kotlinx.coroutines.CoroutineScope,int,int)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda2",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda1: java.lang.Object invoke(java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda1: void <init>(app.k9mail.feature.onboarding.migration.api.OnboardingMigrationManager,androidx.navigation.NavHostController,androidx.compose.runtime.MutableState,app.k9mail.feature.onboarding.permissions.domain.PermissionsDomainContract$UseCase$HasRuntimePermissions,kotlin.jvm.functions.Function1,kotlinx.coroutines.CoroutineScope)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda0.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda0: void <init>()>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda0.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda0: java.lang.Object invoke()>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda0",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda4.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda4: java.lang.Object invoke(java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda4",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda4.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$$ExternalSyntheticLambda4: void <init>()>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$$ExternalSyntheticLambda4",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1.<init>",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1: void <init>(androidx.navigation.NavHostController,kotlin.coroutines.Continuation)>",
+        "methodName": "<init>",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1.create",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1: kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation)>",
+        "methodName": "create",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1: java.lang.Object invoke(kotlinx.coroutines.CoroutineScope,kotlin.coroutines.Continuation)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1.invokeSuspend",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1: java.lang.Object invokeSuspend(java.lang.Object)>",
+        "methodName": "invokeSuspend",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1.invoke",
+        "stateName": "AppMainScreen",
+        "methodSignature": "<app.k9mail.feature.onboarding.main.navigation.OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1: java.lang.Object invoke(java.lang.Object,java.lang.Object)>",
+        "methodName": "invoke",
+        "className": "OnboardingNavHostKt$OnboardingNavHost$1$1$5$2$1$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.onboarding.main.navigation"
+      }
+    ],
+    "checkAuthToken": [
+      {
+        "fullSignature": "app.k9mail.feature.settings.import.ui.AuthViewModel.<init>",
+        "stateName": "checkAuthToken",
+        "methodSignature": "<app.k9mail.feature.settings.import.ui.AuthViewModel: void <init>(android.app.Application,app.k9mail.legacy.account.AccountManager,app.k9mail.feature.account.oauth.domain.AccountOAuthDomainContract$UseCase$GetOAuthRequestIntent)>",
+        "methodName": "<init>",
+        "className": "AuthViewModel",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.settings.import.ui"
+      },
+      {
+        "fullSignature": "net.openid.appauth.AuthState.getParsedIdToken",
+        "stateName": "checkAuthToken",
+        "methodSignature": "<net.openid.appauth.AuthState: net.openid.appauth.IdToken getParsedIdToken()>",
+        "methodName": "getParsedIdToken",
+        "className": "AuthState",
+        "isActivity": false,
+        "packageName": "net.openid.appauth"
+      },
+      {
+        "fullSignature": "net.openid.appauth.AuthState.getIdToken",
+        "stateName": "checkAuthToken",
+        "methodSignature": "<net.openid.appauth.AuthState: java.lang.String getIdToken()>",
+        "methodName": "getIdToken",
+        "className": "AuthState",
+        "isActivity": false,
+        "packageName": "net.openid.appauth"
+      }
+    ],
+    "InvalidCredentials": [
+      {
+        "fullSignature": "com.fsck.k9.mail.server.ServerSettingsValidationResult$AuthenticationError.toString",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<com.fsck.k9.mail.server.ServerSettingsValidationResult$AuthenticationError: java.lang.String toString()>",
+        "methodName": "toString",
+        "className": "ServerSettingsValidationResult$AuthenticationError",
+        "isActivity": false,
+        "packageName": "com.fsck.k9.mail.server"
+      },
+      {
+        "fullSignature": "com.fsck.k9.mail.server.ServerSettingsValidationResult$AuthenticationError.<init>",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<com.fsck.k9.mail.server.ServerSettingsValidationResult$AuthenticationError: void <init>(java.lang.String)>",
+        "methodName": "<init>",
+        "className": "ServerSettingsValidationResult$AuthenticationError",
+        "isActivity": false,
+        "packageName": "com.fsck.k9.mail.server"
+      },
+      {
+        "fullSignature": "com.fsck.k9.mail.server.ServerSettingsValidationResult$AuthenticationError.getServerMessage",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<com.fsck.k9.mail.server.ServerSettingsValidationResult$AuthenticationError: java.lang.String getServerMessage()>",
+        "methodName": "getServerMessage",
+        "className": "ServerSettingsValidationResult$AuthenticationError",
+        "isActivity": false,
+        "packageName": "com.fsck.k9.mail.server"
+      },
+      {
+        "fullSignature": "com.fsck.k9.mail.server.ServerSettingsValidationResult$AuthenticationError.hashCode",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<com.fsck.k9.mail.server.ServerSettingsValidationResult$AuthenticationError: int hashCode()>",
+        "methodName": "hashCode",
+        "className": "ServerSettingsValidationResult$AuthenticationError",
+        "isActivity": false,
+        "packageName": "com.fsck.k9.mail.server"
+      },
+      {
+        "fullSignature": "com.fsck.k9.mail.server.ServerSettingsValidationResult$AuthenticationError.equals",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<com.fsck.k9.mail.server.ServerSettingsValidationResult$AuthenticationError: boolean equals(java.lang.Object)>",
+        "methodName": "equals",
+        "className": "ServerSettingsValidationResult$AuthenticationError",
+        "isActivity": false,
+        "packageName": "com.fsck.k9.mail.server"
+      },
+      {
+        "fullSignature": "androidx.core.hardware.fingerprint.FingerprintManagerCompat$AuthenticationCallback.onAuthenticationError",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<androidx.core.hardware.fingerprint.FingerprintManagerCompat$AuthenticationCallback: void onAuthenticationError()>",
+        "methodName": "onAuthenticationError",
+        "className": "FingerprintManagerCompat$AuthenticationCallback",
+        "isActivity": false,
+        "packageName": "androidx.core.hardware.fingerprint"
+      },
+      {
+        "fullSignature": "androidx.core.hardware.fingerprint.FingerprintManagerCompat$AuthenticationCallback.onAuthenticationFailed",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<androidx.core.hardware.fingerprint.FingerprintManagerCompat$AuthenticationCallback: void onAuthenticationFailed()>",
+        "methodName": "onAuthenticationFailed",
+        "className": "FingerprintManagerCompat$AuthenticationCallback",
+        "isActivity": false,
+        "packageName": "androidx.core.hardware.fingerprint"
+      },
+      {
+        "fullSignature": "androidx.biometric.AuthenticationCallbackProvider$1.onAuthenticationError",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<androidx.biometric.AuthenticationCallbackProvider$1: void onAuthenticationError(int,java.lang.CharSequence)>",
+        "methodName": "onAuthenticationError",
+        "className": "AuthenticationCallbackProvider$1",
+        "isActivity": false,
+        "packageName": "androidx.biometric"
+      },
+      {
+        "fullSignature": "androidx.biometric.AuthenticationCallbackProvider$1.onAuthenticationFailed",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<androidx.biometric.AuthenticationCallbackProvider$1: void onAuthenticationFailed()>",
+        "methodName": "onAuthenticationFailed",
+        "className": "AuthenticationCallbackProvider$1",
+        "isActivity": false,
+        "packageName": "androidx.biometric"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.account.server.validation.ui.ServerValidationContract$Error$AuthenticationError.<init>",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<app.k9mail.feature.account.server.validation.ui.ServerValidationContract$Error$AuthenticationError: void <init>(java.lang.String)>",
+        "methodName": "<init>",
+        "className": "ServerValidationContract$Error$AuthenticationError",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.account.server.validation.ui"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.account.server.validation.ui.ServerValidationContract$Error$AuthenticationError.equals",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<app.k9mail.feature.account.server.validation.ui.ServerValidationContract$Error$AuthenticationError: boolean equals(java.lang.Object)>",
+        "methodName": "equals",
+        "className": "ServerValidationContract$Error$AuthenticationError",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.account.server.validation.ui"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.account.server.validation.ui.ServerValidationContract$Error$AuthenticationError.hashCode",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<app.k9mail.feature.account.server.validation.ui.ServerValidationContract$Error$AuthenticationError: int hashCode()>",
+        "methodName": "hashCode",
+        "className": "ServerValidationContract$Error$AuthenticationError",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.account.server.validation.ui"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.account.server.validation.ui.ServerValidationContract$Error$AuthenticationError.toString",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<app.k9mail.feature.account.server.validation.ui.ServerValidationContract$Error$AuthenticationError: java.lang.String toString()>",
+        "methodName": "toString",
+        "className": "ServerValidationContract$Error$AuthenticationError",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.account.server.validation.ui"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.account.server.validation.ui.ServerValidationContract$Error$AuthenticationError.getServerMessage",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<app.k9mail.feature.account.server.validation.ui.ServerValidationContract$Error$AuthenticationError: java.lang.String getServerMessage()>",
+        "methodName": "getServerMessage",
+        "className": "ServerValidationContract$Error$AuthenticationError",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.account.server.validation.ui"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.account.server.validation.ui.ServerValidationContract$Error$AuthenticationError.<clinit>",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<app.k9mail.feature.account.server.validation.ui.ServerValidationContract$Error$AuthenticationError: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "ServerValidationContract$Error$AuthenticationError",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.account.server.validation.ui"
+      },
+      {
+        "fullSignature": "androidx.biometric.AuthenticationCallbackProvider$Listener.onError",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<androidx.biometric.AuthenticationCallbackProvider$Listener: void onError()>",
+        "methodName": "onError",
+        "className": "AuthenticationCallbackProvider$Listener",
+        "isActivity": false,
+        "packageName": "androidx.biometric"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.account.server.settings.ui.common.TextFieldOutlinedPasswordBiometricKt$showBiometricPrompt$authenticationCallback$1.onAuthenticationError",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<app.k9mail.feature.account.server.settings.ui.common.TextFieldOutlinedPasswordBiometricKt$showBiometricPrompt$authenticationCallback$1: void onAuthenticationError(int,java.lang.CharSequence)>",
+        "methodName": "onAuthenticationError",
+        "className": "TextFieldOutlinedPasswordBiometricKt$showBiometricPrompt$authenticationCallback$1",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.account.server.settings.ui.common"
+      },
+      {
+        "fullSignature": "androidx.biometric.BiometricPrompt$AuthenticationCallback.onAuthenticationFailed",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<androidx.biometric.BiometricPrompt$AuthenticationCallback: void onAuthenticationFailed()>",
+        "methodName": "onAuthenticationFailed",
+        "className": "BiometricPrompt$AuthenticationCallback",
+        "isActivity": false,
+        "packageName": "androidx.biometric"
+      },
+      {
+        "fullSignature": "androidx.biometric.BiometricPrompt$AuthenticationCallback.onAuthenticationError",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<androidx.biometric.BiometricPrompt$AuthenticationCallback: void onAuthenticationError(int,java.lang.CharSequence)>",
+        "methodName": "onAuthenticationError",
+        "className": "BiometricPrompt$AuthenticationCallback",
+        "isActivity": false,
+        "packageName": "androidx.biometric"
+      },
+      {
+        "fullSignature": "androidx.biometric.AuthenticationCallbackProvider$Api28Impl$1.onAuthenticationFailed",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<androidx.biometric.AuthenticationCallbackProvider$Api28Impl$1: void onAuthenticationFailed()>",
+        "methodName": "onAuthenticationFailed",
+        "className": "AuthenticationCallbackProvider$Api28Impl$1",
+        "isActivity": false,
+        "packageName": "androidx.biometric"
+      },
+      {
+        "fullSignature": "androidx.biometric.AuthenticationCallbackProvider$Api28Impl$1.onAuthenticationError",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<androidx.biometric.AuthenticationCallbackProvider$Api28Impl$1: void onAuthenticationError(int,java.lang.CharSequence)>",
+        "methodName": "onAuthenticationError",
+        "className": "AuthenticationCallbackProvider$Api28Impl$1",
+        "isActivity": false,
+        "packageName": "androidx.biometric"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.settings.import.ui.AuthFlowState$Failed.hashCode",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<app.k9mail.feature.settings.import.ui.AuthFlowState$Failed: int hashCode()>",
+        "methodName": "hashCode",
+        "className": "AuthFlowState$Failed",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.settings.import.ui"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.settings.import.ui.AuthFlowState$Failed.<init>",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<app.k9mail.feature.settings.import.ui.AuthFlowState$Failed: void <init>(java.lang.String,java.lang.String)>",
+        "methodName": "<init>",
+        "className": "AuthFlowState$Failed",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.settings.import.ui"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.settings.import.ui.AuthFlowState$Failed.equals",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<app.k9mail.feature.settings.import.ui.AuthFlowState$Failed: boolean equals(java.lang.Object)>",
+        "methodName": "equals",
+        "className": "AuthFlowState$Failed",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.settings.import.ui"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.settings.import.ui.AuthFlowState$Failed.toString",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<app.k9mail.feature.settings.import.ui.AuthFlowState$Failed: java.lang.String toString()>",
+        "methodName": "toString",
+        "className": "AuthFlowState$Failed",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.settings.import.ui"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.settings.import.ui.AuthFlowState$Failed.<clinit>",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<app.k9mail.feature.settings.import.ui.AuthFlowState$Failed: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "AuthFlowState$Failed",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.settings.import.ui"
+      },
+      {
+        "fullSignature": "com.bumptech.glide.load.HttpException.<init>",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<com.bumptech.glide.load.HttpException: void <init>(int)>",
+        "methodName": "<init>",
+        "className": "HttpException",
+        "isActivity": false,
+        "packageName": "com.bumptech.glide.load"
+      },
+      {
+        "fullSignature": "com.bumptech.glide.load.HttpException.<init>",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<com.bumptech.glide.load.HttpException: void <init>(java.lang.String,int)>",
+        "methodName": "<init>",
+        "className": "HttpException",
+        "isActivity": false,
+        "packageName": "com.bumptech.glide.load"
+      },
+      {
+        "fullSignature": "com.bumptech.glide.load.HttpException.<init>",
+        "stateName": "InvalidCredentials",
+        "methodSignature": "<com.bumptech.glide.load.HttpException: void <init>(java.lang.String,int,java.lang.Throwable)>",
+        "methodName": "<init>",
+        "className": "HttpException",
+        "isActivity": false,
+        "packageName": "com.bumptech.glide.load"
+      }
+    ],
+    "Authenticating": [
+      {
+        "fullSignature": "okhttp3.Authenticator.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<okhttp3.Authenticator: okhttp3.Request authenticate()>",
+        "methodName": "authenticate",
+        "className": "Authenticator",
+        "isActivity": false,
+        "packageName": "okhttp3"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.account.oauth.ui.AccountOAuthContract$Event$SignInClicked.<init>",
+        "stateName": "Authenticating",
+        "methodSignature": "<app.k9mail.feature.account.oauth.ui.AccountOAuthContract$Event$SignInClicked: void <init>()>",
+        "methodName": "<init>",
+        "className": "AccountOAuthContract$Event$SignInClicked",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.account.oauth.ui"
+      },
+      {
+        "fullSignature": "app.k9mail.feature.account.oauth.ui.AccountOAuthContract$Event$SignInClicked.<clinit>",
+        "stateName": "Authenticating",
+        "methodSignature": "<app.k9mail.feature.account.oauth.ui.AccountOAuthContract$Event$SignInClicked: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "AccountOAuthContract$Event$SignInClicked",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.account.oauth.ui"
+      },
+      {
+        "fullSignature": "okhttp3.Authenticator$Companion$AuthenticatorNone.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<okhttp3.Authenticator$Companion$AuthenticatorNone: okhttp3.Request authenticate(okhttp3.Route,okhttp3.Response)>",
+        "methodName": "authenticate",
+        "className": "Authenticator$Companion$AuthenticatorNone",
+        "isActivity": false,
+        "packageName": "okhttp3"
+      },
+      {
+        "fullSignature": "okhttp3.internal.authenticator.JavaNetAuthenticator.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<okhttp3.internal.authenticator.JavaNetAuthenticator: okhttp3.Request authenticate(okhttp3.Route,okhttp3.Response)>",
+        "methodName": "authenticate",
+        "className": "JavaNetAuthenticator",
+        "isActivity": false,
+        "packageName": "okhttp3.internal.authenticator"
+      },
+      {
+        "fullSignature": "okhttp3.Authenticator.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<okhttp3.Authenticator: okhttp3.Request authenticate()>",
+        "methodName": "authenticate",
+        "className": "Authenticator",
+        "isActivity": false,
+        "packageName": "okhttp3"
+      },
+      {
+        "fullSignature": "androidx.biometric.BiometricFragment.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<androidx.biometric.BiometricFragment: void authenticate(androidx.biometric.BiometricPrompt$PromptInfo,androidx.biometric.BiometricPrompt$CryptoObject)>",
+        "methodName": "authenticate",
+        "className": "BiometricFragment",
+        "isActivity": false,
+        "packageName": "androidx.biometric"
+      },
+      {
+        "fullSignature": "androidx.core.hardware.fingerprint.FingerprintManagerCompat.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<androidx.core.hardware.fingerprint.FingerprintManagerCompat: void authenticate(androidx.core.hardware.fingerprint.FingerprintManagerCompat$CryptoObject,int,androidx.core.os.CancellationSignal,androidx.core.hardware.fingerprint.FingerprintManagerCompat$AuthenticationCallback,android.os.Handler)>",
+        "methodName": "authenticate",
+        "className": "FingerprintManagerCompat",
+        "isActivity": false,
+        "packageName": "androidx.core.hardware.fingerprint"
+      },
+      {
+        "fullSignature": "androidx.core.hardware.fingerprint.FingerprintManagerCompat.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<androidx.core.hardware.fingerprint.FingerprintManagerCompat: void authenticate(androidx.core.hardware.fingerprint.FingerprintManagerCompat$CryptoObject,int,android.os.CancellationSignal,androidx.core.hardware.fingerprint.FingerprintManagerCompat$AuthenticationCallback,android.os.Handler)>",
+        "methodName": "authenticate",
+        "className": "FingerprintManagerCompat",
+        "isActivity": false,
+        "packageName": "androidx.core.hardware.fingerprint"
+      },
+      {
+        "fullSignature": "androidx.biometric.BiometricPrompt.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<androidx.biometric.BiometricPrompt: void authenticate(androidx.biometric.BiometricPrompt$PromptInfo)>",
+        "methodName": "authenticate",
+        "className": "BiometricPrompt",
+        "isActivity": false,
+        "packageName": "androidx.biometric"
+      },
+      {
+        "fullSignature": "androidx.biometric.BiometricFragment$Api28Impl.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<androidx.biometric.BiometricFragment$Api28Impl: void authenticate(android.hardware.biometrics.BiometricPrompt,android.hardware.biometrics.BiometricPrompt$CryptoObject,android.os.CancellationSignal,java.util.concurrent.Executor,android.hardware.biometrics.BiometricPrompt$AuthenticationCallback)>",
+        "methodName": "authenticate",
+        "className": "BiometricFragment$Api28Impl",
+        "isActivity": false,
+        "packageName": "androidx.biometric"
+      },
+      {
+        "fullSignature": "androidx.biometric.BiometricFragment$Api28Impl.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<androidx.biometric.BiometricFragment$Api28Impl: void authenticate(android.hardware.biometrics.BiometricPrompt,android.os.CancellationSignal,java.util.concurrent.Executor,android.hardware.biometrics.BiometricPrompt$AuthenticationCallback)>",
+        "methodName": "authenticate",
+        "className": "BiometricFragment$Api28Impl",
+        "isActivity": false,
+        "packageName": "androidx.biometric"
+      },
+      {
+        "fullSignature": "androidx.core.hardware.fingerprint.FingerprintManagerCompat$Api23Impl.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<androidx.core.hardware.fingerprint.FingerprintManagerCompat$Api23Impl: void authenticate(java.lang.Object,java.lang.Object,android.os.CancellationSignal,int,java.lang.Object,android.os.Handler)>",
+        "methodName": "authenticate",
+        "className": "FingerprintManagerCompat$Api23Impl",
+        "isActivity": false,
+        "packageName": "androidx.core.hardware.fingerprint"
+      },
+      {
+        "fullSignature": "okhttp3.Authenticator$Companion$AuthenticatorNone.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<okhttp3.Authenticator$Companion$AuthenticatorNone: okhttp3.Request authenticate(okhttp3.Route,okhttp3.Response)>",
+        "methodName": "authenticate",
+        "className": "Authenticator$Companion$AuthenticatorNone",
+        "isActivity": false,
+        "packageName": "okhttp3"
+      },
+      {
+        "fullSignature": "okhttp3.internal.authenticator.JavaNetAuthenticator.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<okhttp3.internal.authenticator.JavaNetAuthenticator: okhttp3.Request authenticate(okhttp3.Route,okhttp3.Response)>",
+        "methodName": "authenticate",
+        "className": "JavaNetAuthenticator",
+        "isActivity": false,
+        "packageName": "okhttp3.internal.authenticator"
+      },
+      {
+        "fullSignature": "com.fsck.k9.mail.store.imap.RealImapConnection.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<com.fsck.k9.mail.store.imap.RealImapConnection: java.util.List authenticate()>",
+        "methodName": "authenticate",
+        "className": "RealImapConnection",
+        "isActivity": false,
+        "packageName": "com.fsck.k9.mail.store.imap"
+      },
+      {
+        "fullSignature": "okhttp3.Authenticator.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<okhttp3.Authenticator: okhttp3.Request authenticate()>",
+        "methodName": "authenticate",
+        "className": "Authenticator",
+        "isActivity": false,
+        "packageName": "okhttp3"
+      },
+      {
+        "fullSignature": "okhttp3.Authenticator$Companion$AuthenticatorNone.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<okhttp3.Authenticator$Companion$AuthenticatorNone: okhttp3.Request authenticate(okhttp3.Route,okhttp3.Response)>",
+        "methodName": "authenticate",
+        "className": "Authenticator$Companion$AuthenticatorNone",
+        "isActivity": false,
+        "packageName": "okhttp3"
+      },
+      {
+        "fullSignature": "okhttp3.internal.authenticator.JavaNetAuthenticator.authenticate",
+        "stateName": "Authenticating",
+        "methodSignature": "<okhttp3.internal.authenticator.JavaNetAuthenticator: okhttp3.Request authenticate(okhttp3.Route,okhttp3.Response)>",
+        "methodName": "authenticate",
+        "className": "JavaNetAuthenticator",
+        "isActivity": false,
+        "packageName": "okhttp3.internal.authenticator"
+      }
+    ],
+    "CredentialInput": [
+      {
+        "fullSignature": "app.k9mail.feature.settings.import.ui.AuthViewModel.init",
+        "stateName": "CredentialInput",
+        "methodSignature": "<app.k9mail.feature.settings.import.ui.AuthViewModel: void init(androidx.activity.result.ActivityResultRegistry,androidx.lifecycle.Lifecycle,app.k9mail.legacy.account.LegacyAccount)>",
+        "methodName": "init",
+        "className": "AuthViewModel",
+        "isActivity": false,
+        "packageName": "app.k9mail.feature.settings.import.ui"
+      },
+      {
+        "fullSignature": "net.openid.appauth.AuthorizationManagementActivity.onCreate",
+        "stateName": "CredentialInput",
+        "methodSignature": "<net.openid.appauth.AuthorizationManagementActivity: void onCreate(android.os.Bundle)>",
+        "activityName": "AuthorizationManagementActivity",
+        "methodName": "onCreate",
+        "className": "AuthorizationManagementActivity",
+        "isActivity": true,
+        "packageName": "net.openid.appauth"
+      },
+      {
+        "fullSignature": "net.openid.appauth.AuthorizationManagementActivity.onResume",
+        "stateName": "CredentialInput",
+        "methodSignature": "<net.openid.appauth.AuthorizationManagementActivity: void onResume()>",
+        "activityName": "AuthorizationManagementActivity",
+        "methodName": "onResume",
+        "className": "AuthorizationManagementActivity",
+        "isActivity": true,
+        "packageName": "net.openid.appauth"
+      },
+      {
+        "fullSignature": "net.openid.appauth.AuthorizationManagementActivity.onCreate",
+        "stateName": "CredentialInput",
+        "methodSignature": "<net.openid.appauth.AuthorizationManagementActivity: void onCreate(android.os.Bundle)>",
+        "activityName": "AuthorizationManagementActivity",
+        "methodName": "onCreate",
+        "className": "AuthorizationManagementActivity",
+        "isActivity": true,
+        "packageName": "net.openid.appauth"
+      },
+      {
+        "fullSignature": "net.openid.appauth.AuthorizationManagementActivity.onResume",
+        "stateName": "CredentialInput",
+        "methodSignature": "<net.openid.appauth.AuthorizationManagementActivity: void onResume()>",
+        "activityName": "AuthorizationManagementActivity",
+        "methodName": "onResume",
+        "className": "AuthorizationManagementActivity",
+        "isActivity": true,
+        "packageName": "net.openid.appauth"
+      }
+    ],
+    "CheckingToken": [
+      {
+        "fullSignature": "net.openid.appauth.AuthorizationServiceDiscovery.get",
+        "stateName": "CheckingToken",
+        "methodSignature": "<net.openid.appauth.AuthorizationServiceDiscovery: java.lang.Object get(net.openid.appauth.JsonUtil$Field)>",
+        "methodName": "get",
+        "className": "AuthorizationServiceDiscovery",
+        "isActivity": false,
+        "packageName": "net.openid.appauth"
+      },
+      {
+        "fullSignature": "com.tokenautocomplete.TokenCompleteTextView.onEditorAction",
+        "stateName": "CheckingToken",
+        "methodSignature": "<com.tokenautocomplete.TokenCompleteTextView: boolean onEditorAction(android.widget.TextView,int,android.view.KeyEvent)>",
+        "methodName": "onEditorAction",
+        "className": "TokenCompleteTextView",
+        "isActivity": false,
+        "packageName": "com.tokenautocomplete"
+      }
+    ]
+  },
+  "patternsPath": "src/main/resources/regex_patterns.txt",
+  "totalPatterns": 55,
+  "statistics": {
+    "matchedStates": 6,
+    "matchedMethods": 255,
+    "totalMethods": 102111
+  }
+}

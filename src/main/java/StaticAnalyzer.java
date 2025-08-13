@@ -187,6 +187,8 @@ public class StaticAnalyzer {
             }
             
             System.out.println("Extracted " + methods.size() + " methods from APK");
+            // Record statistics
+            result.setTotalMethods(methods.size());
             
         } catch (Exception e) {
             System.err.println("SootUp analysis failed: " + e.getMessage());
@@ -243,16 +245,23 @@ public class StaticAnalyzer {
         System.out.println("Matching regex patterns...");
         
         for (StatePattern pattern : patterns) {
-            Pattern regex = Pattern.compile(pattern.getRegex());
+            // Compile with case-insensitive by default to reduce pattern fragility
+            Pattern regex = Pattern.compile(pattern.getRegex(), Pattern.CASE_INSENSITIVE);
             
             for (MethodInfo method : methods) {
-                Matcher matcher = regex.matcher(method.getFullSignature());
+                // Skip synthetic/lambda/accessor methods to avoid noisy duplicates (e.g., onCreate$lambda$0, access$xxx)
+                String mName = method.getMethodName();
+                if (mName != null && (mName.contains("$") || mName.startsWith("access$"))) {
+                    continue;
+                }
+                // Build a richer searchable string that includes both class.method and full method signature
+                String searchable = method.getFullSignature() + " " + method.getMethodSignature();
+                Matcher matcher = regex.matcher(searchable);
                 
-                if (matcher.matches()) {
-                        // Check additional conditions (if any)
-                    if (pattern.getAdditionalCondition() == null || 
-                        method.getFullSignature().contains(pattern.getAdditionalCondition())) {
-                        
+                // Use find() to allow fuzzy, substring-based patterns
+                if (matcher.find()) {
+                    // Check additional conditions (if any) against the same searchable string
+                    if (pattern.getAdditionalCondition() == null || searchable.contains(pattern.getAdditionalCondition())) {
                         result.addMatch(pattern.getStateName(), method);
                         System.out.println("Matched: " + pattern.getStateName() + " -> " + method.getFullSignature());
                     }
@@ -260,10 +269,7 @@ public class StaticAnalyzer {
             }
         }
     }
-    
-    /**
-     * 保存分析结果
-     */
+ 
     private void saveResults() throws IOException {
         JSONObject jsonResult = new JSONObject();
         

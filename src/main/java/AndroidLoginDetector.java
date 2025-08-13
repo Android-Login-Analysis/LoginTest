@@ -39,6 +39,9 @@ public class AndroidLoginDetector {
     private String emulatorSnapshot;
     private String staticAnalysisResultPath;
 
+    // Runtime round tracking for per-round artifacts (screenshots, logs, etc.)
+    private volatile int currentRound = 0;
+
     // Credential pools
     private List<String> accountPool;
     private List<String> passwordPool;
@@ -168,6 +171,10 @@ public class AndroidLoginDetector {
         // Restore emulator snapshot if baseline exists and append Frida round marker
         restoreBaselineSnapshotIfExists();
         appendRoundMarker(roundNumber);
+        // Record current round for downstream components (e.g., screenshot directory segregation)
+        this.currentRound = roundNumber;
+        // Prepare device for visual feedback and stable capture
+        ensureDeviceReadyForScreens();
     }
 
     private void logRoundEnd(int roundNumber, long duration) {
@@ -774,8 +781,7 @@ public class AndroidLoginDetector {
             // Check if snapshot exists
             Process checkProcess = Runtime.getRuntime().exec("adb emu avd snapshot list");
             BufferedReader reader = new BufferedReader(new InputStreamReader(checkProcess.getInputStream()));
-            String line;
-            boolean snapshotExists = false;
+            String line; boolean snapshotExists = false;
             
             while ((line = reader.readLine()) != null) {
                 if (line.contains(emulatorSnapshot)) {
@@ -1140,8 +1146,10 @@ public class AndroidLoginDetector {
     private void startMonkeyScreenshotWatcher(Process monkeyProcess) {
         Thread t = new Thread(() -> {
             try {
-                java.io.BufferedReader reader = new java.io.BufferedReader(
-                        new java.io.InputStreamReader(monkeyProcess.getInputStream()));
+                // Combine stdout + stderr to ensure we see all Monkey progress lines
+                java.io.InputStream combined = new java.io.SequenceInputStream(
+                        monkeyProcess.getInputStream(), monkeyProcess.getErrorStream());
+                java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(combined));
                 String line;
                 int events = 0;
                 int lastCapturedAt = 0;
@@ -1161,6 +1169,7 @@ public class AndroidLoginDetector {
                         while (events >= lastCapturedAt + interval) {
                             lastCapturedAt += interval;
                             captureScreenshotForStep(lastCapturedAt);
+                            captureUiDumpForStep(lastCapturedAt);
                         }
                     }
                 }
@@ -1177,33 +1186,77 @@ public class AndroidLoginDetector {
     }
 
     private void captureScreenshotForStep(int step) {
-        java.io.InputStream in = null;
-        java.io.FileOutputStream out = null;
         try {
             String dir = buildScreenshotDirFromApk();
             ensureDirExists(dir);
             java.io.File outFile = new java.io.File(dir, "step_" + step + ".png");
             String abs = outFile.getAbsolutePath();
 
-            Process proc = Runtime.getRuntime().exec(new String[]{"bash","-lc","adb exec-out screencap -p"});
-            in = proc.getInputStream();
-            out = new java.io.FileOutputStream(outFile);
-            byte[] buf = new byte[8192];
-            int n;
-            while ((n = in.read(buf)) != -1) {
-                out.write(buf, 0, n);
+            // More robust two-step: screencap to device, then pull to host
+            String onDevice = "/sdcard/als_snap_" + step + ".png";
+            int c1 = new ProcessBuilder("adb", "shell", "screencap", "-p", onDevice)
+                    .redirectErrorStream(true).start()
+                    .waitFor();
+            if (c1 != 0) {
+                logError("adb screencap failed with exit=" + c1 + " for step=" + step);
+                return;
             }
-            int code = proc.waitFor();
-            if (code == 0 && outFile.length() > 0) {
+            int c2 = new ProcessBuilder("adb", "pull", onDevice, abs)
+                    .redirectErrorStream(true).start()
+                    .waitFor();
+            if (c2 == 0 && outFile.exists() && outFile.length() > 0) {
                 logInfo("Saved screenshot: " + abs);
             } else {
-                logError("Screenshot command exit=" + code + ", file size=" + outFile.length() + ": " + abs);
+                logError("adb pull failed (exit=" + c2 + ") or empty file: " + abs);
             }
         } catch (Exception e) {
             logError("Failed to save screenshot at step " + step + ": " + e.getMessage());
-        } finally {
-            try { if (in != null) in.close(); } catch (Exception ignore) {}
-            try { if (out != null) out.close(); } catch (Exception ignore) {}
+        }
+    }
+
+    // Save UIAutomator XML next to screenshots for state diffing
+    private void captureUiDumpForStep(int step) {
+        try {
+            String baseDir = buildScreenshotDirFromApk();
+            String uiDir = baseDir.replace("/screenshot/", "/ui_dump/");
+            ensureDirExists(uiDir);
+            java.io.File outFile = new java.io.File(uiDir, "step_" + step + ".xml");
+            String abs = outFile.getAbsolutePath();
+
+            // Dump current window hierarchy to device and pull
+            String onDevice = "/sdcard/als_uidump_" + step + ".xml";
+            int d1 = new ProcessBuilder("adb", "shell", "uiautomator", "dump", onDevice)
+                    .redirectErrorStream(true).start().waitFor();
+            if (d1 != 0) {
+                logError("uiautomator dump failed with exit=" + d1 + " for step=" + step);
+                return;
+            }
+            int d2 = new ProcessBuilder("adb", "pull", onDevice, abs)
+                    .redirectErrorStream(true).start().waitFor();
+            if (d2 == 0 && outFile.exists() && outFile.length() > 0) {
+                logInfo("Saved UI dump: " + abs);
+            } else {
+                logError("Failed to save UI dump (exit=" + d2 + "): " + abs);
+            }
+        } catch (Exception e) {
+            logError("UI dump failed at step " + step + ": " + e.getMessage());
+        }
+    }
+
+    // Ensure the device is ready for visible interaction feedback and capturing
+    private void ensureDeviceReadyForScreens() {
+        try {
+            // Wake and unlock
+            new ProcessBuilder("adb", "shell", "input", "keyevent", "224").start().waitFor(); // WAKEUP
+            new ProcessBuilder("adb", "shell", "wm", "dismiss-keyguard").start().waitFor();
+            // Keep screen on longer (30 min)
+            new ProcessBuilder("adb", "shell", "settings", "put", "system", "screen_off_timeout", "1800000").start().waitFor();
+            // Visualize taps to confirm Monkey actions on screenshots
+            new ProcessBuilder("adb", "shell", "settings", "put", "system", "show_touches", "1").start().waitFor();
+            // Optional: pointer location is noisy; keep off by default
+            // new ProcessBuilder("adb", "shell", "settings", "put", "system", "pointer_location", "1").start().waitFor();
+        } catch (Exception e) {
+            logError("Failed to prepare device for screenshots: " + e.getMessage());
         }
     }
 
@@ -1215,7 +1268,15 @@ public class AndroidLoginDetector {
         if (base.toLowerCase().endsWith(".apk")) {
             base = base.substring(0, base.length() - 4);
         }
-        return "reports/screenshot/" + base;
+        try {
+            String projectRoot = new java.io.File(".").getCanonicalPath();
+            String roundDir = (currentRound > 0) ? ("round_" + currentRound + "/") : "";
+            return new java.io.File(projectRoot, "reports/screenshot/" + base + "/" + roundDir).getAbsolutePath();
+        } catch (Exception e) {
+            // Fallback to relative if canonical fails
+            String roundDir = (currentRound > 0) ? ("/round_" + currentRound) : "";
+            return "reports/screenshot/" + base + roundDir + "/";
+        }
     }
 
     private void ensureDirExists(String dir) {

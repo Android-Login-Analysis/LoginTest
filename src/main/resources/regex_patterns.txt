@@ -9,80 +9,152 @@
 # =============================================================================
 
 # InitialState 
-InitialState::(?i)\b(onCreate|main|performLaunchActivity|callApplicationOnCreate|coldStart|initialize|setupApplication)\b
-InitialState::(?i)\b(Splash|Main|Entry|Welcome).*\b(onCreate|onStart|onResume)\b
+# Too broad: matches any app startup lifecycle
+# InitialState:::(?i)\b(onCreate|main|performLaunchActivity|callApplicationOnCreate|coldStart|initialize|setupApplication)\b
+InitialState:::(?i)\b(Splash|Welcome|Entry|Onboarding)[A-Za-z0-9_]*\.(onCreate|onStart|onResume)\b
 
 # checkAuthToken
-CheckingToken::(?i)\b(token|session|auth).*(check|validate|verify|get|is.*valid|restore|auto\s*login|silent)\b
-CheckingToken::(?i)\b(FirebaseAuth|getLastSignedInAccount|getCurrentAccessToken|getCurrentUser)\b
+CheckingToken:::(?i)\b(token|session|auth).*(check|validate|verify|get|is.*valid|restore|auto\s*login|silent)\b
+CheckingToken:::(?i)\b(FirebaseAuth|getLastSignedInAccount|getCurrentAccessToken|getCurrentUser)\b
 
 # login
-LoggedIn_Via_Token::(?i)\b(token).*\b(success|complete|auto\s*login|navigate)\b
-LoggedIn_Via_Token::(?i)\b(loginWithToken|authenticateWithToken|token.*login|silent.*login)\b
+LoggedIn_Via_Token:::(?i)\b(token).*\b(success|complete|auto\s*login|navigate)\b
+LoggedIn_Via_Token:::(?i)\b(loginWithToken|authenticateWithToken|token.*login|silent.*login)\b
 
-CredentialInput::(?i)\b(login|sign\s*in|auth).*(screen|view|prompt|requires|fields)\b
-CredentialInput::(?i)\b(Login|SignIn|Auth).*(onCreate|onViewCreated)\b
-CredentialInput::(?i)\b(EditText|TextInput|TextInputLayout|TextWatcher|requestFocus|onTextChanged|setText|append|onFocus)\b
+# Too broad across many apps; rely on lifecycle-based rules below
+# CredentialInput:::(?i)\b(login|sign\s*in|auth).*(screen|view|prompt|requires|fields)\b
+CredentialInput:::(?i)\b(Login|SignIn|Auth)[A-Za-z0-9_]*\.(onCreate|onViewCreated|onResume|init|setup|bind)\b
+# NOTE: The following pattern was matching a very large number of UI library methods (e.g., TextInputLayout styling APIs)
+# and causing massive false positives. Temporarily disable to keep matches focused on real login contexts.
+# CredentialInput:::(?i)\b(EditText|TextInput|TextInputLayout|TextWatcher|requestFocus|onTextChanged|setText|append|onFocus)\b
 
-EncodingCredentials::(?i)\b(encrypt|encode|hash|digest|Base64|PBKDF2|bcrypt|MessageDigest|getInstance|build|payload)\b
+# Too broad for state detection; matches generic crypto usage across the app
+# EncodingCredentials:::(?i)\b(encrypt|encode|hash|digest|Base64|PBKDF2|bcrypt|MessageDigest|getInstance|build|payload)\b
 
-CredentialFormatError::(?i)\b(invalid|policy|violation|validation|format|error)\b
-CredentialFormatError::(?i)\b(Email|Password|Input).*\b(validate|check|matcher|filter)\b
+# Too broad previously; require Login/Auth/Credential context
+# Narrow: validators in login/auth modules only
+CredentialFormatError:::(?i)\b(com\.[^.]*\.(login|auth|account)[^.]*\.)[A-Za-z0-9_]*(Email|Password)[A-Za-z0-9_]*(Validator|ValidatorKt)\b
+CredentialFormatError:::(?i)\b(Login|SignIn|Auth)[A-Za-z0-9_]*\.(validate|isValid|check).*(Email|Password)\b
 
 # =============================================================================
 # Login Phase 
 # =============================================================================
 
-Authenticating::(?i)\b(LoginButton|SignInButton|SubmitCredentials|AuthenticateButton|LoginSubmitButton)\b.*\bonClick\b
-Authenticating::(?i)\b(login|sign\s*in|authenticate|submit).*(perform|initiate|attempt|start|execute|process|handle|request|clicked)\b
-Authenticating::(?i)\b(loginWithCredentials|authenticate|AuthenticationManager\.login|LoginUseCase\.execute)\b
+Authenticating:::(?i)\b(LoginButton|SignInButton|SubmitCredentials|AuthenticateButton|LoginSubmitButton)\b.*\bonClick\b
+Authenticating:::(?i)\b(login|sign\s*in|authenticate|submit).*(perform|initiate|attempt|start|execute|process|handle|request|clicked)\b
+Authenticating:::(?i)\b(loginWithCredentials|authenticate|AuthenticationManager\.login|LoginUseCase\.execute)\b
 
-CheckingCredentials::(?i)\b(check|verify|validate).*(credential|password|account|login)\b
-CheckingCredentials::(?i)\b(Call\.execute|enqueue|connect|getInputStream|execute|newCall|post|request)\b
-CheckingCredentials::(?i)\b(signInWithEmailAndPassword|getSignInIntent|logInWithReadPermissions|AuthApi|LoginApi|UserApi|ApiService\.login)\b
+## Too broad; rely on explicit APIs and endpoints below
+# CheckingCredentials:::(?i)\b(check|verify|validate).*(credential|password|account|login)\b
+# Too broad; matches almost all network calls
+# CheckingCredentials:::(?i)\b(Call\.execute|enqueue|connect|getInputStream|execute|newCall|post|request)\b
+CheckingCredentials:::(?i)\b(signInWithEmailAndPassword|getSignInIntent|logInWithReadPermissions|AuthApi|LoginApi|UserApi|ApiService\.login)\b
 
-ServiceUnavailable_Auth::(?i)\b(network|unreachable|service.*down|failure|timeout|onFailure|IOException|VolleyError|ServiceUnavailable|NetworkUnavailable|ConnectionFailed)\b
+# Too broad: network errors across the entire app
+# ServiceUnavailable_Auth:::(?i)\b(network|unreachable|service.*down|failure|timeout|onFailure|IOException|VolleyError|ServiceUnavailable|NetworkUnavailable|ConnectionFailed)\b
 
-InvalidCredentials::(?i)\b(login.*failure|incorrect.*credential|authentication.*error|invalid.*user|auth.*failed)\b
-InvalidCredentials::(?i)\b(InvalidUser|InvalidCredentials|AuthenticationException|ApiException|AuthenticationFailed|HttpException|ResponseException)\b
+InvalidCredentials:::(?i)\b(login.*failure|incorrect.*credential|authentication.*error|invalid.*user|auth.*failed)\b
+InvalidCredentials:::(?i)\b(InvalidUser|InvalidCredentials|AuthenticationException|ApiException|AuthenticationFailed|HttpException|ResponseException)\b
 
-CheckingMFASettings::(?i)\b(mfa|two\s*factor|otp|security|settings|feature|enabled|status|configuration|required)\b
-CheckingMFASettings::(?i)\b(get|fetch|check|is).*\b(settings|status|enabled|configuration)\b
+# Narrow to auth-related settings classes/methods
+# Narrow: settings under login/auth/account modules and explicit method names
+CheckingMFASettings:::(?i)\b(com\.[^.]*\.(login|auth|account|security)[^.]*\.)[A-Za-z0-9_]*(Settings|Preference|Manager)[A-Za-z0-9_]*\b.*\b(mfa|two\s*factor|otp)\b.*\b(isTwoFactorEnabled|isMfaEnabled|getMfaStatus|getTwoFactorStatus|getSettings)\b
+CheckingMFASettings:::(?i)\b(Login|Auth|Account|Security)[A-Za-z0-9_]*(Settings|Preference|Manager)\b.*\b(isTwoFactorEnabled|isMfaEnabled|getMfaStatus|getTwoFactorStatus|getSettings)\b
 
-LoggedIn_NoMFA::(?i)\b(login.*success|success.*no.*mfa|proceed.*without.*mfa|no.*two\s*factor|navigate.*after.*login)\b
-LoggedIn_NoMFA::(?i)\b(LoginSuccessHandler|AuthSuccessManager|LoginCompleteUseCase|MainNavigationManager)\b.*\b(handle|process|execute|navigate)\b
+LoggedIn_NoMFA:::(?i)\b(login.*success|success.*no.*mfa|proceed.*without.*mfa|no.*two\s*factor|navigate.*after.*login)\b
+LoggedIn_NoMFA:::(?i)\b(LoginSuccessHandler|AuthSuccessManager|LoginCompleteUseCase|MainNavigationManager)\b.*\b(handle|process|execute|navigate)\b
 
 # =============================================================================
 # MFA Phase 
 # =============================================================================
 
 
-MFACodePending::(?i)\b(mfa|otp|two\s*factor).*(prompt|input|screen|onCreate|onViewCreated|show|challenge|verification)\b
+MFACodePending:::(?i)\b(mfa|otp|two\s*factor).*(prompt|input|screen|onCreate|onViewCreated|show|challenge|verification)\b
 
-SendingMFACode::(?i)\b(mfa|otp).*(send|dispatch|request|code|sms|email|notification)\b
+SendingMFACode:::(?i)\b(mfa|otp).*(send|dispatch|request|code|sms|email|notification)\b
 
-ServiceUnavailable_MFA_Send::(?i)\b(mfa|otp).*(error|failed|timeout|unavailable|send.*failed)\b
+# Too broad: error buckets without login context
+# ServiceUnavailable_MFA_Send:::(?i)\b(mfa|otp).*(error|failed|timeout|unavailable|send.*failed)\b
 
-MFAVerification::(?i)\b(mfa|otp|two\s*factor).*(verify|submit|confirm|validate|onClick|button)\b
+MFAVerification:::(?i)\b(mfa|otp|two\s*factor).*(verify|submit|confirm|validate|onClick|button)\b
 
-VerifyingMFA::(?i)\b(verify|validate|confirm).*(mfa|otp|two\s*factor)\b
-VerifyingMFA::(?i)\b(signInWithCredential|getSignedInAccountFromIntent|logInWithReadPermissions)\b
+VerifyingMFA:::(?i)\b(verify|validate|confirm).*(mfa|otp|two\s*factor)\b
+VerifyingMFA:::(?i)\b(signInWithCredential|getSignedInAccountFromIntent|logInWithReadPermissions)\b
 
-ServiceUnavailable_MFA_Verify::(?i)\b(mfa|otp).*(verification|verify).*(error|failed|timeout|unavailable)\b
+# Too broad: error buckets without login context
+# ServiceUnavailable_MFA_Verify:::(?i)\b(mfa|otp).*(verification|verify).*(error|failed|timeout|unavailable)\b
 
-MFAError::(?i)\b(invalid|incorrect|expired|attempt.*failed).*(mfa|otp|two\s*factor)\b
+MFAError:::(?i)\b(invalid|incorrect|expired|attempt.*failed).*(mfa|otp|two\s*factor)\b
 
 # =============================================================================
 # Post-Login Phase 
 # =============================================================================
 
-LoggedIn_WithMFA::(?i)\b(mfa|two\s*factor).*(success|complete|navigate|login.*success)\b
-LoggedIn_WithMFA::(?i)\b(MfaSuccessHandler|TwoFactorSuccessManager|MfaLoginCompleteUseCase|MfaNavigationManager)\b.*\b(handle|process|execute|navigate)\b
+LoggedIn_WithMFA:::(?i)\b(mfa|two\s*factor).*(success|complete|navigate|login.*success)\b
 
-AppMainScreen::(?i)\b(navigate|show|start|launch).*(dashboard|home|main|application)\b
-AppMainScreen::(?i)\b(Main|Dashboard|Home|AppMain|MainFragment)\b.*\b(onCreate|onViewCreated)\b
-AppMainScreen::(?i)\b(MainNavigationManager|HomeNavigationManager|DashboardNavigationManager|MainScreenManager)\b.*\b(navigate|show)\b
+# Too broad: generic navigation methods
+# AppMainScreen:::(?i)\b(navigate|show|start|launch).*(dashboard|home|main|application)\b
+AppMainScreen:::(?i)\b(Login|Auth|Onboarding)[A-Za-z0-9_]*\b.*\b(NavController|Navigation|navigate)\b.*\b(Home|Main|Inbox|Dashboard|MessageList|MailList)\b
+# Too broad: generic navigation manager
+# AppMainScreen:::(?i)\b(MainNavigationManager|HomeNavigationManager|DashboardNavigationManager|MainScreenManager)\b.*\b(navigate|show)\b
 
-UserLogout::(?i)\b(logout|sign\s*out|clear.*session|destroy.*session|performLogout|logoutUser)\b
-UserLogout::(?i)\b(FirebaseAuth\.signOut|GoogleSignIn\.signOut|FacebookLoginManager\.logOut|SessionManager|TokenManager)\b
-UserLogout::(?i)\b(LogoutUseCase|LogoutRepository|LogoutService)\b.*\b(execute|logout|perform)\b
+UserLogout:::(?i)\b(logout|sign\s*out|clear.*session|destroy.*session|performLogout|logoutUser)\b
+UserLogout:::(?i)\b(FirebaseAuth\.signOut|GoogleSignIn\.signOut|FacebookLoginManager\.logOut|SessionManager|TokenManager)\b
+
+# =============================================================================
+# Additional precise login-focused patterns (narrow, API-oriented)
+# =============================================================================
+
+# InitialState: common onboarding/welcome entry points in real apps (exclude generic Main)
+InitialState:::(?i)\b(Splash|Onboarding|Welcome|Entry|Setup)[A-Za-z0-9_]*\.(onCreate|onStart|onResume)\b
+
+# checkAuthToken: token presence/refresh paths (require Auth/Login/Session context)
+# Narrow: restrict to Login/Auth/Session (exclude generic Account) and explicit token calls
+checkAuthToken:::(?i)\b(Login|Auth|Session)[A-Za-z0-9_]*\b.*\b(AccountManager|getAuthToken|invalidateAuthToken|peekAuthToken|AuthToken|TokenProvider|TokenRepository)\b
+checkAuthToken:::(?i)\b(Login|Auth|Session)[A-Za-z0-9_]*\b.*\b(FirebaseAuth|getCurrentUser|getIdToken|getIdTokenResult|IdToken)\b
+checkAuthToken:::(?i)\b(Login|Auth|Session)[A-Za-z0-9_]*\b.*\b(CredentialManager|androidx\.credentials|BeginGetCredentialRequest)\b
+
+# checkStoredCredentials: local persisted credentials
+checkStoredCredentials:::(?i)\b(SharedPreferences|EncryptedSharedPreferences|PreferenceManager)\b.*\b(getString|get|contains)\b.*\b(password|pass|credential|token|auth)\b
+checkStoredCredentials:::(?i)\b(Room|Dao|Repository)\b.*\b(Account|User|Credential|Session)\b
+
+# CredentialInput: dedicated login screens and fragments (remove generic Account*)
+CredentialInput:::(?i)\b(Login|SignIn|Auth)[A-Za-z0-9_]*Activity\.(onCreate|onResume|onStart)\b
+CredentialInput:::(?i)\b(Login|SignIn|Auth)[A-Za-z0-9_]*Fragment\.(onCreateView|onViewCreated|onResume)\b
+
+# ClickingLoginButton: explicit click handlers wired to login actions
+ClickingLoginButton:::(?i)\b(Login|SignIn)[A-Za-z0-9_]*\.(onClick|setOnClickListener|onSubmit|onLoginClick)\b
+ClickingLoginButton:::(?i)\b(View|Button|TextView)\b.*\bsetOnClickListener\b.*\b(login|sign\s*in|submit)\b
+
+# Authenticating: Firebase/Custom auth entry points
+Authenticating:::(?i)\b(FirebaseAuth\.signInWithEmailAndPassword|signInWithCredential|signInWithCustomToken)\b
+Authenticating:::(?i)\b(Authenticator|AuthenticationManager|AuthUseCase|AuthRepository)\b.*\b(login|sign\s*in|authenticate|performLogin|execute)\b
+
+# CheckingCredentials: network/API calls specifically labeled as login/auth
+CheckingCredentials:::(?i)\b(ApiService|Service|Api|Endpoint|Client|Repository)\b.*\b(login|signin|auth|token)\b
+CheckingCredentials:::(?i)\b(Retrofit|OkHttp|Call|Request|Response)\b.*\b(/login|/signin|/auth|/token)\b
+
+# InvalidCredentials: typical failure handling when creds are wrong
+InvalidCredentials:::(?i)\b(AuthenticationException|InvalidCredentials|AuthFailed|WrongPassword|UserNotFound)\b
+InvalidCredentials:::(?i)\b(onFailure|onError|handleError)\b.*\b(401|unauthorized|invalid|credential|password)\b
+
+# ServiceUnavailable_Auth: network/service issues during login path only
+ServiceUnavailable_Auth:::(?i)\b(onFailure|IOException|Timeout|SocketTimeout|ConnectException)\b.*\b(login|signin|auth)\b
+
+# MFA flows: Firebase and common phone/SMS OTP
+MFACodePending:::(?i)\b(MultiFactor|MultiFactorResolver|SecondFactor|PhoneAuthProvider|beginSignIn|startMfaEnrollment)\b
+SendingMFACode:::(?i)\b(PhoneAuthProvider\.verifyPhoneNumber|SmsRetriever|sendVerificationCode|requestOtp|dispatchOtp)\b
+MFAVerification:::(?i)\b(PhoneAuthCredential|PhoneMultiFactorAssertion|resolveSignIn|verifyOtp|confirmCode)\b
+VerifyingMFA:::(?i)\b(signInWithCredential|finalizeSignIn|resolveSignIn|verifyPhoneNumber)\b
+MFAError:::(?i)\b(InvalidCode|CodeExpired|TooManyRequests|QuotaExceeded|mfa|otp)\b
+
+# LoggedIn: success handlers and session persistence after auth
+LoggedIn:::(?i)\b(onLoginSuccess|onAuthenticated|handleLoginSuccess|handleAuthSuccess)\b
+LoggedIn:::(?i)\b(SessionManager|TokenManager|CredentialRepository)\b.*\b(save|store|persist|set)\b.*\b(token|session|credential)\b
+
+# LoggedIn_WithMFA: success with explicit MFA mention
+LoggedIn_WithMFA:::(?i)\b(MultiFactor|SecondFactor)\b.*\b(success|complete|enrolled|resolved)\b
+
+# AppMainScreen: navigation right after successful auth (kept narrow)
+AppMainScreen:::(?i)\b(NavController|Navigation|navigate)\b.*\b(Home|Main|Inbox|Dashboard|Timeline|Feed|MailList|MessageList)\b
+UserLogout:::(?i)\b(LogoutUseCase|LogoutRepository|LogoutService)\b.*\b(execute|logout|perform)\b

@@ -53,4 +53,5 @@ apps/
 apps/*.apk
 known_login_apks/*.apk
 reports/*.txt
+reports/screenshot/*
 
