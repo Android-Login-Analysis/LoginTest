@@ -28,6 +28,15 @@ public class UIManager {
         this.appPackage = configLoader.getAppPackage();
     }
 
+    // Public enum for focused element classification
+    public enum FocusType {
+        USERNAME,
+        PASSWORD,
+        LOGIN_BUTTON,
+        OTHER,
+        NONE
+    }
+
     // ---------------------- WebView Heuristics (UIAutomator-only) ----------------------
     private boolean isWebViewClass(String className) {
         if (className == null) return false;
@@ -51,6 +60,59 @@ public class UIManager {
             };
         }
         return null;
+    }
+
+    /**
+     * Parse ALL UI elements from a full XML string. UIAutomator frequently emits a single-line
+     * hierarchy; reading line-by-line only returns the first match, causing massive misses.
+     */
+    private List<UIElement> parseAllUIElements(String xml) {
+        List<UIElement> out = new ArrayList<>();
+        if (xml == null) return out;
+
+        // Match three forms: self-closing, paired-with-inner-text, and open-tag without inner text
+        Pattern elementPattern = Pattern.compile(
+                "<([^/>\\s]+)\\s+([^>]*?)\\s*/>" +
+                "|<([^/>\\s]+)\\s+([^>]*?)\\s*>([^<]*)</\\3>" +
+                "|<([^/>\\s]+)\\s+([^>]*?)\\s*>"
+        );
+        Matcher matcher = elementPattern.matcher(xml);
+        while (matcher.find()) {
+            String tagName = matcher.group(1) != null ? matcher.group(1)
+                    : (matcher.group(3) != null ? matcher.group(3) : matcher.group(6));
+            String attributes = matcher.group(2) != null ? matcher.group(2)
+                    : (matcher.group(4) != null ? matcher.group(4) : matcher.group(7));
+            String text = matcher.group(5); // only present for paired nodes
+            if (text == null) text = "";
+
+            String resourceId = extractAttribute(attributes, "resource-id");
+            String className = extractAttribute(attributes, "class");
+            String bounds = extractAttribute(attributes, "bounds");
+            String textAttr = extractAttribute(attributes, "text");
+            String contentDesc = extractAttribute(attributes, "content-desc");
+            String visibleAttr = extractAttribute(attributes, "visible");
+            String visibleToUser = extractAttribute(attributes, "visible-to-user");
+            String enabledAttr = extractAttribute(attributes, "enabled");
+            boolean hasBounds = bounds != null && !bounds.isEmpty();
+
+            boolean visible;
+            if (!visibleToUser.isEmpty()) {
+                visible = "true".equalsIgnoreCase(visibleToUser);
+            } else if (!visibleAttr.isEmpty()) {
+                visible = "true".equalsIgnoreCase(visibleAttr);
+            } else if (!enabledAttr.isEmpty()) {
+                visible = "true".equalsIgnoreCase(enabledAttr) && hasBounds;
+            } else {
+                visible = hasBounds;
+            }
+
+            String finalText = (textAttr != null && !textAttr.isEmpty()) ? textAttr : text;
+            if (contentDesc != null && !contentDesc.isEmpty()) {
+                finalText = (finalText == null || finalText.isEmpty()) ? contentDesc : (finalText + " " + contentDesc);
+            }
+            out.add(new UIElement(tagName, finalText, resourceId, className, bounds, visible));
+        }
+        return out;
     }
 
     private boolean isWebViewPresent(List<UIElement> elements) {
@@ -463,26 +525,54 @@ public class UIManager {
      * Get all UI elements
      */
     private List<UIElement> getAllUIElements() throws Exception {
-        List<UIElement> elements = new ArrayList<>();
-
         // Use uiautomator dump to get UI hierarchy
         Process dumpProcess = Runtime.getRuntime().exec("adb shell uiautomator dump");
         dumpProcess.waitFor();
 
-        // Read dump file
+        // Read the entire dump file content (uiautomator often writes a single very long line)
         Process catProcess = Runtime.getRuntime().exec("adb shell cat /sdcard/window_dump.xml");
         BufferedReader reader = new BufferedReader(new InputStreamReader(catProcess.getInputStream()));
-
+        StringBuilder xml = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
-            UIElement element = parseUIElement(line);
-            if (element != null) {
-                elements.add(element);
-            }
+            xml.append(line);
+            xml.append('\n');
         }
         reader.close();
         catProcess.waitFor();
 
+        List<UIElement> elements = parseAllUIElements(xml.toString());
+        // If parsed too few elements, retry once after a short delay
+        if (elements.size() < 15) {
+            try { Thread.sleep(400); } catch (InterruptedException ie) { /* ignore */ }
+            Process dumpProcess2 = Runtime.getRuntime().exec("adb shell uiautomator dump");
+            dumpProcess2.waitFor();
+            Process catProcess2 = Runtime.getRuntime().exec("adb shell cat /sdcard/window_dump.xml");
+            BufferedReader reader2 = new BufferedReader(new InputStreamReader(catProcess2.getInputStream()));
+            StringBuilder xml2 = new StringBuilder();
+            String line2;
+            while ((line2 = reader2.readLine()) != null) {
+                xml2.append(line2);
+                xml2.append('\n');
+            }
+            reader2.close();
+            catProcess2.waitFor();
+            List<UIElement> retry = parseAllUIElements(xml2.toString());
+            if (!retry.isEmpty()) {
+                elements = retry;
+            }
+        }
+        if (elements.isEmpty()) {
+            System.out.println("UIManager: Parsed 0 elements from UI dump; detector may miss screens");
+        } else {
+            System.out.println("UIManager: Parsed UI elements count: " + elements.size());
+            // Print a few samples for quick diagnosis
+            int limit = Math.min(5, elements.size());
+            for (int i = 0; i < limit; i++) {
+                UIElement e = elements.get(i);
+                System.out.println("  sample[" + i + "]: text='" + e.text + "' id='" + e.resourceId + "' class='" + e.className + "'");
+            }
+        }
         return elements;
     }
 
@@ -498,6 +588,12 @@ public class UIManager {
                 visibleElements.add(element);
             }
         }
+        // Fallback: if parser couldn't determine visibility but there are elements,
+        // use all elements to avoid missing detections.
+        if (visibleElements.isEmpty() && !allElements.isEmpty()) {
+            System.out.println("UIManager: No visible elements parsed; falling back to all elements (" + allElements.size() + ")");
+            return allElements;
+        }
 
         return visibleElements;
     }
@@ -508,24 +604,53 @@ public class UIManager {
     private UIElement parseUIElement(String xmlLine) {
         // Match UI element XML tag
         Pattern elementPattern = Pattern.compile(
-                "<([^>]+)\\s+([^>]*?)\\s*/>|<([^>]+)\\s+([^>]*?)\\s*>([^<]*)</\\3>");
+                "<([^/>\\s]+)\\s+([^>]*?)\\s*/>" +
+                "|<([^/>\\s]+)\\s+([^>]*?)\\s*>([^<]*)</\\3>" +
+                "|<([^/>\\s]+)\\s+([^>]*?)\\s*>"
+        );
         Matcher matcher = elementPattern.matcher(xmlLine);
 
         if (matcher.find()) {
-            String tagName = matcher.group(1) != null ? matcher.group(1) : matcher.group(3);
-            String attributes = matcher.group(2) != null ? matcher.group(2) : matcher.group(4);
+            String tagName = matcher.group(1) != null ? matcher.group(1)
+                    : (matcher.group(3) != null ? matcher.group(3) : matcher.group(6));
+            String attributes = matcher.group(2) != null ? matcher.group(2)
+                    : (matcher.group(4) != null ? matcher.group(4) : matcher.group(7));
             String text = matcher.group(5);
-
-            if (text == null)
-                text = "";
+            if (text == null) text = "";
 
             // Parse attributes
             String resourceId = extractAttribute(attributes, "resource-id");
             String className = extractAttribute(attributes, "class");
             String bounds = extractAttribute(attributes, "bounds");
-            boolean visible = "true".equals(extractAttribute(attributes, "visible"));
+            // UIAutomator keeps visible labels in a 'text' ATTRIBUTE, not innerText
+            String textAttr = extractAttribute(attributes, "text");
+            String contentDesc = extractAttribute(attributes, "content-desc");
+            // UIAutomator dump often lacks a direct "visible" attribute. Prefer
+            // "visible-to-user" if present; otherwise infer from enabled/bounds.
+            String visibleAttr = extractAttribute(attributes, "visible");
+            String visibleToUser = extractAttribute(attributes, "visible-to-user");
+            String enabledAttr = extractAttribute(attributes, "enabled");
+            boolean hasBounds = bounds != null && !bounds.isEmpty();
 
-            return new UIElement(tagName, text, resourceId, className, bounds, visible);
+            boolean visible;
+            if (!visibleToUser.isEmpty()) {
+                visible = "true".equalsIgnoreCase(visibleToUser);
+            } else if (!visibleAttr.isEmpty()) {
+                visible = "true".equalsIgnoreCase(visibleAttr);
+            } else if (!enabledAttr.isEmpty()) {
+                visible = "true".equalsIgnoreCase(enabledAttr) && hasBounds;
+            } else {
+                // Last-resort fallback: if it has bounds, treat as visible
+                visible = hasBounds;
+            }
+
+            // Prefer attribute text if present, then merge content-desc
+            String finalText = (textAttr != null && !textAttr.isEmpty()) ? textAttr : text;
+            if (contentDesc != null && !contentDesc.isEmpty()) {
+                finalText = (finalText == null || finalText.isEmpty()) ? contentDesc : (finalText + " " + contentDesc);
+            }
+
+            return new UIElement(tagName, finalText, resourceId, className, bounds, visible);
         }
 
         return null;
@@ -789,6 +914,89 @@ public class UIManager {
             System.err.println("Error checking focused login field: " + e.getMessage());
             return false;
         }
+    }
+
+    /**
+     * Classify the currently focused element (username/password/login button/other/none)
+     */
+    public FocusType getFocusedElementType() {
+        try {
+            Process dumpProc = Runtime.getRuntime().exec("adb shell uiautomator dump");
+            dumpProc.waitFor();
+
+            Process cat = Runtime.getRuntime().exec("adb shell cat /sdcard/window_dump.xml");
+            BufferedReader br = new BufferedReader(new InputStreamReader(cat.getInputStream()));
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (!line.contains("focused=\"true\"")) continue;
+                UIElement focused = parseUIElement(line);
+                if (focused == null) continue;
+                String text = focused.text;
+                String id = focused.resourceId;
+                String cls = focused.className;
+                if (matchesUsernamePattern(text, id, cls)) return FocusType.USERNAME;
+                if (matchesPasswordPattern(text, id, cls)) return FocusType.PASSWORD;
+                if (matchesLoginButtonPattern(text, id)) return FocusType.LOGIN_BUTTON;
+                return FocusType.OTHER;
+            }
+            br.close();
+            cat.waitFor();
+        } catch (Exception e) {
+            System.err.println("Error getting focused element type: " + e.getMessage());
+        }
+        return FocusType.NONE;
+    }
+
+    /**
+     * Send text to the currently focused input field. Returns true if sent.
+     */
+    public boolean inputTextToFocusedField(String text) {
+        try {
+            // Ensure something is focused
+            FocusType t = getFocusedElementType();
+            if (t != FocusType.USERNAME && t != FocusType.PASSWORD) {
+                return false;
+            }
+            // Clear existing content then input
+            Runtime.getRuntime().exec("adb shell input keyevent 123"); // move to end
+            Runtime.getRuntime().exec("adb shell input keyevent --longpress 67"); // long backspace
+            Thread.sleep(150);
+            Runtime.getRuntime().exec("adb shell input text '" + text + "'");
+            return true;
+        } catch (Exception e) {
+            System.err.println("Failed to input text to focused field: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Click the login button if it is visible on screen. Returns true if clicked.
+     */
+    public boolean clickLoginButtonIfVisible() {
+        try {
+            UIElement btn = findLoginButton();
+            if (btn == null) return false;
+            // inline click by bounds
+            if (btn.bounds != null && !btn.bounds.isEmpty()) {
+                java.util.regex.Matcher m = java.util.regex.Pattern
+                        .compile("\\[(\\d+),(\\d+)\\]\\[(\\d+),(\\d+)\\]")
+                        .matcher(btn.bounds);
+                if (m.find()) {
+                    int x1 = Integer.parseInt(m.group(1));
+                    int y1 = Integer.parseInt(m.group(2));
+                    int x2 = Integer.parseInt(m.group(3));
+                    int y2 = Integer.parseInt(m.group(4));
+                    int cx = (x1 + x2) / 2;
+                    int cy = (y1 + y2) / 2;
+                    Runtime.getRuntime().exec("adb shell input tap " + cx + " " + cy);
+                    System.out.println("Clicked login button at (" + cx + ", " + cy + ")");
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Failed to click login button: " + e.getMessage());
+        }
+        return false;
     }
 
     // Getter methods

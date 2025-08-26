@@ -9,6 +9,8 @@ rpc.exports = {
             let apiCallCount = 0;
             let matchedApiCallCount = 0;
             let patternMatchCounts = {};
+            let matchedClasses = 0;
+            let hookedMethods = 0;
 
             // Extract methods from static analysis result
             let methodsToHook = [];
@@ -28,7 +30,7 @@ rpc.exports = {
                 if (analysisResult.detailedMethods) {
                     console.log('[*] Processing detailed methods...');
 
-                    // 初始化状态统计
+                    
                     Object.keys(analysisResult.detailedMethods).forEach(stateName => {
                         patternMatchCounts[stateName] = 0;
                     });
@@ -54,17 +56,42 @@ rpc.exports = {
                         Object.keys(analysisResult.matches).forEach(stateName => {
                             patternMatchCounts[stateName] = 0;
                             const methods = analysisResult.matches[stateName];
-                            methods.forEach(method => {
-                                const parts = method.split('.');
-                                if (parts.length >= 2) {
-                                    const methodName = parts[parts.length - 1];
-                                    const className = method.substring(0, method.lastIndexOf('.'));
-                                    methodsToHook.push({
-                                        stateName: stateName,
-                                        className: className,
-                                        methodName: methodName,
-                                        fullSignature: method
-                                    });
+                            methods.forEach(entry => {
+                                try {
+                                    // Support both string entries like "com.foo.Bar.baz" and object entries
+                                    if (typeof entry === 'string') {
+                                        const method = entry;
+                                        const parts = method.split('.');
+                                        if (parts.length >= 2) {
+                                            const methodName = parts[parts.length - 1];
+                                            const className = method.substring(0, method.lastIndexOf('.'));
+                                            methodsToHook.push({
+                                                stateName: stateName,
+                                                className: className,
+                                                methodName: methodName,
+                                                fullSignature: method
+                                            });
+                                        }
+                                    } else if (entry && typeof entry === 'object') {
+                                        // Expected keys from analyzer: packageName, className, methodName
+                                        let clsName = entry.className || '';
+                                        const pkg = entry.packageName || '';
+                                        const methodName = entry.methodName || '';
+                                        // Build fully-qualified class name if package is present and className is not already qualified
+                                        if (pkg && clsName && clsName.indexOf('.') === -1) {
+                                            clsName = pkg + '.' + clsName;
+                                        }
+                                        if (clsName && methodName) {
+                                            methodsToHook.push({
+                                                stateName: stateName,
+                                                className: clsName,
+                                                methodName: methodName,
+                                                fullSignature: entry.fullSignature || (clsName + '.' + methodName)
+                                            });
+                                        }
+                                    }
+                                } catch (convErr) {
+                                    console.log(`[WARNING] Failed to parse match entry for state ${stateName}: ${convErr.message}`);
                                 }
                             });
                         });
@@ -76,24 +103,39 @@ rpc.exports = {
                 // Create hooks for each method (hook ALL overloads)
                 methodsToHook.forEach(methodInfo => {
                     try {
+                        // Skip constructors and static initializers which cannot be hooked as methods
+                        if (methodInfo.methodName === '<init>' || methodInfo.methodName === '<clinit>') {
+                            console.log(`[INFO] Skipping special method ${methodInfo.className}.${methodInfo.methodName}`);
+                            return;
+                        }
+
                         const targetClass = Java.use(methodInfo.className);
+                        if (!targetClass) {
+                            console.log(`[WARNING] Class not found: ${methodInfo.className}`);
+                            return;
+                        }
+
                         const method = targetClass[methodInfo.methodName];
                         if (!method || !method.overloads || method.overloads.length === 0) {
                             console.log(`[WARNING] No overloads found for ${methodInfo.className}.${methodInfo.methodName}`);
                             return;
                         }
+                        matchedClasses++;
                         console.log(`[+] Hooking: ${methodInfo.className}.${methodInfo.methodName} (all overloads: ${method.overloads.length})`);
 
                         method.overloads.forEach(function (ovl) {
                             const sig = `${methodInfo.className}.${methodInfo.methodName}(${ovl.argumentTypes.map(t => t.className || t.name).join(', ')})`;
                             try {
                                 ovl.implementation = function () {
+                                    hookedMethods++;
                                     apiCallCount++;
                                     matchedApiCallCount++;
                                     patternMatchCounts[methodInfo.stateName]++;
 
                                     try {
-                                        const result = ovl.apply(this, arguments);
+                                        // Call original implementation for this overload using ovl.call
+                                        const args = Array.prototype.slice.call(arguments);
+                                        const result = ovl.call(this, ...args);
 
                                         console.log(`[API] ${sig} (State: ${methodInfo.stateName})`);
 
@@ -104,7 +146,7 @@ rpc.exports = {
                                             class: methodInfo.className,
                                             method: methodInfo.methodName,
                                             fullSignature: sig,
-                                            args: Array.from(arguments).map(String),
+                                            args: args.map(String),
                                             result: String(result),
                                             callId: apiCallCount
                                         });
@@ -112,7 +154,13 @@ rpc.exports = {
                                         return result;
                                     } catch (e) {
                                         console.log(`[ERROR] In ${sig}: ${e.message}`);
-                                        return ovl.apply(this, arguments);
+                                        try {
+                                            const args2 = Array.prototype.slice.call(arguments);
+                                            return ovl.call(this, ...args2);
+                                        } catch (inner) {
+                                            console.log(`[ERROR] Failed to invoke original for ${sig}: ${inner.message}`);
+                                            return null;
+                                        }
                                     }
                                 };
                             } catch (err) {
@@ -132,7 +180,9 @@ rpc.exports = {
                     apiCallCount: apiCallCount,
                     matchedApiCallCount: matchedApiCallCount,
                     patternMatchCounts: patternMatchCounts,
-                    totalMethods: methodsToHook.length
+                    totalMethods: methodsToHook.length,
+                    matchedClasses: matchedClasses,
+                    hookedMethods: hookedMethods
                 });
 
                 console.log('[+] Static analysis based hooking completed');

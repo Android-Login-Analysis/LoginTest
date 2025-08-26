@@ -21,6 +21,12 @@ import java.util.regex.Pattern;
  * 7. Reconstruct state machine transitions using regular expressions
  * 8. Use test prophecy to detect login flow errors
  */
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+
 public class AndroidLoginDetector {
 
     // Core components
@@ -31,6 +37,10 @@ public class AndroidLoginDetector {
     private UIManager uiManager;
     private StateMachineManager stateMachineManager;
     private StaticAnalyzer staticAnalyzer;
+
+    // Last Monkey touch coordinates (parsed from Monkey verbose output)
+    private volatile Integer lastTouchX = null;
+    private volatile Integer lastTouchY = null;
 
     // Application configuration
     private String appPackage;
@@ -87,6 +97,91 @@ public class AndroidLoginDetector {
         } catch (IOException e) {
             System.err.println("Failed to initialize logging: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Stepwise Monkey loop that feeds credentials only when the corresponding field is focused,
+     * and clicks login after both username and password were entered. Frida remains running outside.
+     */
+    private void exploreStepwiseMonkeyFeedCredentials(String username, String password) {
+        int totalEvents = configLoader.getMonkeyEvents();
+        int throttle = configLoader.getMonkeyThrottle();
+        int touchPct = configLoader.getMonkeyTouchPercentage();
+        final int shotInterval = Math.max(1, configLoader.getMonkeyScreenshotInterval());
+
+        boolean usernameDone = false;
+        boolean passwordDone = false;
+        boolean loginClicked = false;
+        boolean baselineMarked = false;
+
+        for (int i = 1; i <= totalEvents; i++) {
+            try {
+                String cmd = String.format(
+                        "adb shell monkey -p %s -v --throttle %d " +
+                                "--pct-touch %d --pct-motion 0 --pct-trackball 0 --pct-syskeys 0 " +
+                                "--pct-nav 0 --pct-majornav 0 --pct-appswitch 0 --pct-anyevent 0 1",
+                        appPackage, throttle, touchPct);
+                Process proc = Runtime.getRuntime().exec(cmd);
+                proc.waitFor();
+
+                if (i % shotInterval == 0) {
+                    captureScreenshotForStep(i);
+                }
+
+                try { Thread.sleep(Math.max(40, throttle)); } catch (InterruptedException ie) { Thread.currentThread().interrupt(); }
+
+                // Create baseline snapshot once when we detect the login page during exploration
+                if (!baselineMarked) {
+                    try {
+                        if (uiManager.detectLoginPage()) {
+                            createBaselineSnapshotIfNeeded();
+                            baselineMarked = true;
+                            logInfo("Baseline snapshot ensured at step " + i);
+                        }
+                    } catch (Exception ignore) { }
+                }
+
+                // After each event, check focus and act
+                UIManager.FocusType focusType = uiManager.getFocusedElementType();
+                if (!usernameDone && focusType == UIManager.FocusType.USERNAME) {
+                    boolean ok = uiManager.inputTextToFocusedField(username);
+                    if (ok) {
+                        usernameDone = true;
+                        logInfo("Inserted username after step " + i);
+                    }
+                } else if (!passwordDone && focusType == UIManager.FocusType.PASSWORD) {
+                    boolean ok = uiManager.inputTextToFocusedField(password);
+                    if (ok) {
+                        passwordDone = true;
+                        logInfo("Inserted password after step " + i);
+                    }
+                }
+
+                // Once both are done, try to click login when possible
+                if (!loginClicked && usernameDone && passwordDone) {
+                    // Prefer clicking a visible login button
+                    boolean clicked = uiManager.clickLoginButtonIfVisible();
+                    if (clicked) {
+                        loginClicked = true;
+                        logInfo("Clicked login button after step " + i);
+                        // Optionally wait a short time to observe transition
+                        try { Thread.sleep(10000); } catch (InterruptedException ie) { Thread.currentThread().interrupt(); }
+                        // After waiting 10s, restore the first-login snapshot if present
+                        restoreBaselineSnapshotIfExists();
+                        break;
+                    }
+                }
+
+            } catch (Exception e) {
+                logError("Credential-feeding Monkey error at step " + i + ": " + e.getMessage());
+            }
+        }
+
+        // If we finished all operations without clicking successfully, also restore
+        if (!loginClicked) {
+            logInfo("Monkey operations exhausted without successful click; restoring baseline snapshot");
+            restoreBaselineSnapshotIfExists();
         }
     }
 
@@ -678,6 +773,8 @@ public class AndroidLoginDetector {
             boolean loginPageDetected = detectLoginPageWithUI();
 
             if (loginPageDetected) {
+                // Ensure baseline snapshot is created at first login detection
+                createBaselineSnapshotIfNeeded();
                 // Step 5: Select appropriate credentials based on login type
                 String username = selectCredentials();
                 String password = selectPassword();
@@ -693,8 +790,10 @@ public class AndroidLoginDetector {
                     failedLogins++;
                 }
             } else {
-                logInfo("No login page detected, starting stepwise Monkey exploration with per-step detection");
-                exploreStepwiseWithMonkeyAndDetectLogin();
+                logInfo("No login page detected, starting stepwise Monkey exploration with focused credential feeding");
+                String username = selectCredentials();
+                String password = selectPassword();
+                exploreStepwiseMonkeyFeedCredentials(username, password);
             }
 
             // Step 7: Analyze API logs and validate state machine
@@ -1129,11 +1228,11 @@ public class AndroidLoginDetector {
                     configLoader.getMonkeyThrottle(),
                     configLoader.getMonkeyTouchPercentage(),
                     configLoader.getMonkeyEvents());
-            
+
             Process process = Runtime.getRuntime().exec(monkeyCommand);
             logInfo("Monkey command executed: " + monkeyCommand);
 
-            // Start a lightweight reader to parse monkey output and take screenshots every 100 events
+            // Parse Monkey verbose output to track last touch coordinates
             startMonkeyScreenshotWatcher(process);
             return process;
         } catch (Exception e) {
@@ -1142,35 +1241,24 @@ public class AndroidLoginDetector {
         }
     }
 
-    // ---------------------- Screenshot on Monkey progress ----------------------
+    // Lightweight watcher: updates lastTouchX/lastTouchY from Monkey output
     private void startMonkeyScreenshotWatcher(Process monkeyProcess) {
         Thread t = new Thread(() -> {
-            try {
-                // Combine stdout + stderr to ensure we see all Monkey progress lines
-                java.io.InputStream combined = new java.io.SequenceInputStream(
-                        monkeyProcess.getInputStream(), monkeyProcess.getErrorStream());
-                java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(combined));
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(monkeyProcess.getInputStream()))) {
                 String line;
-                int events = 0;
-                int lastCapturedAt = 0;
-                final int interval = Math.max(1, configLoader.getMonkeyScreenshotInterval());
-                java.util.regex.Pattern sentPattern = java.util.regex.Pattern.compile("Sending event #\\s*(\\d+)");
-                java.util.regex.Pattern injectedPattern = java.util.regex.Pattern.compile("Events injected:\\s*(\\d+)");
-                while ((line = reader.readLine()) != null) {
-                    java.util.regex.Matcher m1 = sentPattern.matcher(line);
-                    java.util.regex.Matcher m2 = injectedPattern.matcher(line);
-                    if (m1.find()) {
-                        events = parseSafeInt(m1.group(1), events);
-                    } else if (m2.find()) {
-                        events = parseSafeInt(m2.group(1), events);
-                    }
-                    if (events >= lastCapturedAt + interval) {
-                        // capture at each interval boundary, may capture multiple if skipped
-                        while (events >= lastCapturedAt + interval) {
-                            lastCapturedAt += interval;
-                            captureScreenshotForStep(lastCapturedAt);
-                            captureUiDumpForStep(lastCapturedAt);
-                        }
+                // Example lines:
+                //   Sending Touch (ACTION_DOWN): 540,960
+                //   Sending Touch (ACTION_UP): 540,960
+                java.util.regex.Pattern p = java.util.regex.Pattern.compile(
+                        ".*Sending\\s+Touch.*?:\\s*(\\d+),(\\d+).*"
+                );
+                while ((line = br.readLine()) != null) {
+                    java.util.regex.Matcher m = p.matcher(line);
+                    if (m.matches()) {
+                        try {
+                            lastTouchX = Integer.parseInt(m.group(1));
+                            lastTouchY = Integer.parseInt(m.group(2));
+                        } catch (NumberFormatException ignore) { /* ignore malformed */ }
                     }
                 }
             } catch (Exception ex) {
@@ -1181,65 +1269,77 @@ public class AndroidLoginDetector {
         t.start();
     }
 
-    private int parseSafeInt(String s, int fallback) {
-        try { return Integer.parseInt(s.trim()); } catch (Exception e) { return fallback; }
-    }
-
+    // Capture screenshot and UI dump for a specific step, toggling show_touches only around capture
     private void captureScreenshotForStep(int step) {
         try {
-            String dir = buildScreenshotDirFromApk();
-            ensureDirExists(dir);
-            java.io.File outFile = new java.io.File(dir, "step_" + step + ".png");
-            String abs = outFile.getAbsolutePath();
-
-            // More robust two-step: screencap to device, then pull to host
-            String onDevice = "/sdcard/als_snap_" + step + ".png";
-            int c1 = new ProcessBuilder("adb", "shell", "screencap", "-p", onDevice)
-                    .redirectErrorStream(true).start()
-                    .waitFor();
-            if (c1 != 0) {
-                logError("adb screencap failed with exit=" + c1 + " for step=" + step);
-                return;
-            }
-            int c2 = new ProcessBuilder("adb", "pull", onDevice, abs)
-                    .redirectErrorStream(true).start()
-                    .waitFor();
-            if (c2 == 0 && outFile.exists() && outFile.length() > 0) {
-                logInfo("Saved screenshot: " + abs);
-            } else {
-                logError("adb pull failed (exit=" + c2 + ") or empty file: " + abs);
-            }
-        } catch (Exception e) {
-            logError("Failed to save screenshot at step " + step + ": " + e.getMessage());
-        }
-    }
-
-    // Save UIAutomator XML next to screenshots for state diffing
-    private void captureUiDumpForStep(int step) {
-        try {
             String baseDir = buildScreenshotDirFromApk();
+            ensureDirExists(baseDir);
+
+            // Enable show_touches just before capture
+            new ProcessBuilder("adb", "shell", "settings", "put", "system", "show_touches", "1")
+                    .redirectErrorStream(true).start().waitFor();
+
+            String onDevicePng = "/sdcard/als_step_" + step + ".png";
+            int s1 = new ProcessBuilder("adb", "shell", "screencap", "-p", onDevicePng)
+                    .redirectErrorStream(true).start().waitFor();
+            if (s1 != 0) {
+                logError("screencap failed with exit=" + s1 + " for step=" + step);
+            } else {
+                File out = new File(baseDir, String.format("step_%d.png", step));
+                int s2 = new ProcessBuilder("adb", "pull", onDevicePng, out.getAbsolutePath())
+                        .redirectErrorStream(true).start().waitFor();
+                if (s2 == 0 && out.exists() && out.length() > 0) {
+                    logInfo("Saved screenshot: " + out.getAbsolutePath());
+                    // Overlay red crosshair if we have last touch coords
+                    if (lastTouchX != null && lastTouchY != null) {
+                        try {
+                            BufferedImage img = ImageIO.read(out);
+                            if (img != null) {
+                                Graphics2D g2d = img.createGraphics();
+                                g2d.setColor(Color.RED);
+                                g2d.setStroke(new BasicStroke(3f));
+                                int x = Math.max(0, Math.min(lastTouchX, img.getWidth() - 1));
+                                int y = Math.max(0, Math.min(lastTouchY, img.getHeight() - 1));
+                                int size = 20;
+                                g2d.drawLine(x - size, y, x + size, y);
+                                g2d.drawLine(x, y - size, x, y + size);
+                                g2d.dispose();
+                                ImageIO.write(img, "png", out);
+                            }
+                        } catch (Exception ig) {
+                            logError("Failed to annotate screenshot with crosshair: " + ig.getMessage());
+                        }
+                    }
+                } else {
+                    logError("Failed to pull screenshot (exit=" + s2 + "): " + out.getAbsolutePath());
+                }
+            }
+
+            // Disable show_touches immediately after capture
+            new ProcessBuilder("adb", "shell", "settings", "put", "system", "show_touches", "0")
+                    .redirectErrorStream(true).start().waitFor();
+
+            // Also dump current UI hierarchy for correlation
             String uiDir = baseDir.replace("/screenshot/", "/ui_dump/");
             ensureDirExists(uiDir);
-            java.io.File outFile = new java.io.File(uiDir, "step_" + step + ".xml");
-            String abs = outFile.getAbsolutePath();
-
-            // Dump current window hierarchy to device and pull
-            String onDevice = "/sdcard/als_uidump_" + step + ".xml";
-            int d1 = new ProcessBuilder("adb", "shell", "uiautomator", "dump", onDevice)
+            File uiOut = new File(uiDir, "step_" + step + ".xml");
+            String abs = uiOut.getAbsolutePath();
+            String onDeviceXml = "/sdcard/als_uidump_" + step + ".xml";
+            int d1 = new ProcessBuilder("adb", "shell", "uiautomator", "dump", onDeviceXml)
                     .redirectErrorStream(true).start().waitFor();
             if (d1 != 0) {
                 logError("uiautomator dump failed with exit=" + d1 + " for step=" + step);
                 return;
             }
-            int d2 = new ProcessBuilder("adb", "pull", onDevice, abs)
+            int d2 = new ProcessBuilder("adb", "pull", onDeviceXml, abs)
                     .redirectErrorStream(true).start().waitFor();
-            if (d2 == 0 && outFile.exists() && outFile.length() > 0) {
+            if (d2 == 0 && uiOut.exists() && uiOut.length() > 0) {
                 logInfo("Saved UI dump: " + abs);
             } else {
                 logError("Failed to save UI dump (exit=" + d2 + "): " + abs);
             }
         } catch (Exception e) {
-            logError("UI dump failed at step " + step + ": " + e.getMessage());
+            logError("Capture failed at step " + step + ": " + e.getMessage());
         }
     }
 
@@ -1251,8 +1351,7 @@ public class AndroidLoginDetector {
             new ProcessBuilder("adb", "shell", "wm", "dismiss-keyguard").start().waitFor();
             // Keep screen on longer (30 min)
             new ProcessBuilder("adb", "shell", "settings", "put", "system", "screen_off_timeout", "1800000").start().waitFor();
-            // Visualize taps to confirm Monkey actions on screenshots
-            new ProcessBuilder("adb", "shell", "settings", "put", "system", "show_touches", "1").start().waitFor();
+            // Do NOT enable show_touches globally; it will be toggled only around screenshots
             // Optional: pointer location is noisy; keep off by default
             // new ProcessBuilder("adb", "shell", "settings", "put", "system", "pointer_location", "1").start().waitFor();
         } catch (Exception e) {

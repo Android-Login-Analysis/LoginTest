@@ -54,7 +54,7 @@ public class StaticAnalyzer {
             // 1. Use SootUp to analyze APK
             List<MethodInfo> methods = extractMethodsWithSootup();
             
-            // 2. Match regex patterns
+            // 2. Match regex patterns and add heuristic detections (WebView + IR/Jimple via reflection)
             matchPatterns(methods);
             
             // 3. Save results
@@ -179,7 +179,9 @@ public class StaticAnalyzer {
                         method.getName(),
                         methodSignature,
                         isActivityClass(className),
-                        getActivityName(className)
+                        getActivityName(className),
+                        /* store original SootMethod for optional reflective IR scanning */
+                        method
                     );
                     
                     methods.add(methodInfo);
@@ -268,6 +270,51 @@ public class StaticAnalyzer {
                 }
             }
         }
+
+        // KISS extra detections (do not depend on SootUp internals):
+        // 1) WebView heuristics based on signatures
+        // 2) Lightweight IR/Jimple scan via reflection (best-effort)
+        for (MethodInfo method : methods) {
+            String searchable = (method.getFullSignature() + " " + method.getMethodSignature()).toLowerCase(Locale.ROOT);
+
+            boolean hasWebViewHint = containsAny(searchable,
+                "webview", "android.webkit.webview", "org.chromium.android_webview",
+                "evaluatejavascript", "loadurl");
+
+            boolean hasLoginStrings = containsAny(searchable,
+                "/login", "/signin", "/auth", "authorization", "token", "idtoken", "401", "credentialmanager");
+
+            if (hasWebViewHint) {
+                result.addMatch("WebViewUsage", method);
+            }
+            if (hasWebViewHint && hasLoginStrings) {
+                result.addMatch("WebViewLoginCandidate", method);
+            }
+
+            // Try reflective body scan (no compile-time dependency on Body/Unit APIs)
+            try {
+                String bodyText = tryGetMethodBodyText(method.getMethodRef());
+                if (bodyText != null && !bodyText.isEmpty()) {
+                    String bt = bodyText.toLowerCase(Locale.ROOT);
+                    boolean bodyHasAuth = containsAny(bt,
+                        "firebaseauth.signin", "signinwithemailandpassword", "signwithcredential",
+                        "retrofit", "okhttp", "/login", "/signin", "/auth", "authorization", "token", "401");
+                    boolean bodyHasWebView = containsAny(bt,
+                        "android.webkit.webview", "evaluatejavascript", "loadurl");
+                    if (bodyHasAuth) {
+                        result.addMatch("IR_LoginEvidence", method);
+                    }
+                    if (bodyHasWebView) {
+                        result.addMatch("IR_WebViewEvidence", method);
+                    }
+                    if (bodyHasWebView && bodyHasAuth) {
+                        result.addMatch("WebViewLoginCandidate", method);
+                    }
+                }
+            } catch (Throwable t) {
+                // Best effort only; never fail matching due to IR scan issues.
+            }
+        }
     }
  
     private void saveResults() throws IOException {
@@ -344,9 +391,12 @@ public class StaticAnalyzer {
         private final String methodSignature;
         private final boolean isActivity;
         private final String activityName;
+        // transient reference to original SootMethod for optional IR scan (not serialized)
+        private final transient Object methodRef;
         
         public MethodInfo(String fullSignature, String packageName, String className, 
-                        String methodName, String methodSignature, boolean isActivity, String activityName) {
+                        String methodName, String methodSignature, boolean isActivity, String activityName,
+                        Object methodRef) {
             this.fullSignature = fullSignature;
             this.packageName = packageName;
             this.className = className;
@@ -354,6 +404,7 @@ public class StaticAnalyzer {
             this.methodSignature = methodSignature;
             this.isActivity = isActivity;
             this.activityName = activityName;
+            this.methodRef = methodRef;
         }
         
         public String getFullSignature() { return fullSignature; }
@@ -363,6 +414,7 @@ public class StaticAnalyzer {
         public String getMethodSignature() { return methodSignature; }
         public boolean isActivity() { return isActivity; }
         public String getActivityName() { return activityName; }
+        public Object getMethodRef() { return methodRef; }
     }
     
     /**
@@ -388,6 +440,32 @@ public class StaticAnalyzer {
         
         public int getTotalMethods() { return totalMethods; }
         public int getMatchedMethods() { return matchedMethods; }
+    }
+    
+    // ---------------------
+    // KISS helpers
+    // ---------------------
+    private static boolean containsAny(String haystack, String... needles) {
+        if (haystack == null) return false;
+        for (String n : needles) {
+            if (n == null) continue;
+            if (haystack.contains(n)) return true;
+        }
+        return false;
+    }
+
+    // Best-effort: obtain a textual form of a method's body via reflection.
+    // If SootUp exposes getBody(), we call it and use toString(); otherwise return null.
+    private static String tryGetMethodBodyText(Object sootMethod) {
+        if (sootMethod == null) return null;
+        try {
+            java.lang.reflect.Method getBody = sootMethod.getClass().getMethod("getBody");
+            Object body = getBody.invoke(sootMethod);
+            if (body == null) return null;
+            return String.valueOf(body);
+        } catch (Throwable t) {
+            return null; // No body available or API differs; silently skip.
+        }
     }
     
     /**

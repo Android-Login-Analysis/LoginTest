@@ -45,79 +45,11 @@ RUN mkdir -p ${ANDROID_HOME}/cmdline-tools && \
 RUN ls -l ${ANDROID_HOME}/cmdline-tools/latest/bin && \
     ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --version
 
-# Accept SDK licenses and setup
-RUN mkdir -p ${ANDROID_HOME}/licenses && \
-    echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > ${ANDROID_HOME}/licenses/android-sdk-license && \
-    echo "84831b9409646a918e30573bab4c9c91346d8abd" > ${ANDROID_HOME}/licenses/android-sdk-preview-license && \
-    mkdir -p ~/.android && touch ~/.android/repositories.cfg
-
-# Download platform-tools directly
-RUN cd ${ANDROID_HOME} && \
-    wget https://dl.google.com/android/repository/platform-tools_r34.0.5-linux.zip && \
-    unzip platform-tools_r34.0.5-linux.zip && \
-    rm platform-tools_r34.0.5-linux.zip
-
-# Download emulator directly
-RUN cd ${ANDROID_HOME} && \
-    wget https://dl.google.com/android/repository/emulator-linux_x64-10511200.zip && \
-    unzip emulator-linux_x64-10511200.zip && \
-    rm emulator-linux_x64-10511200.zip
-
-# Create package.xml metadata for emulator
-RUN mkdir -p ${ANDROID_HOME}/emulator && \
-    echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_HOME}/emulator/package.xml && \
-    echo '<ns2:repository xmlns:ns2="http://schemas.android.com/repository/android/common/01" xmlns:ns3="http://schemas.android.com/repository/android/generic/01">' >> ${ANDROID_HOME}/emulator/package.xml && \
-    echo '  <localPackage path="emulator">' >> ${ANDROID_HOME}/emulator/package.xml && \
-    echo '    <type-details xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns3:genericDetailsType"/>' >> ${ANDROID_HOME}/emulator/package.xml && \
-    echo '    <revision>' >> ${ANDROID_HOME}/emulator/package.xml && \
-    echo '      <major>32</major>' >> ${ANDROID_HOME}/emulator/package.xml && \
-    echo '      <minor>1</minor>' >> ${ANDROID_HOME}/emulator/package.xml && \
-    echo '      <micro>15</micro>' >> ${ANDROID_HOME}/emulator/package.xml && \
-    echo '    </revision>' >> ${ANDROID_HOME}/emulator/package.xml && \
-    echo '    <display-name>Android Emulator</display-name>' >> ${ANDROID_HOME}/emulator/package.xml && \
-    echo '  </localPackage>' >> ${ANDROID_HOME}/emulator/package.xml && \
-    echo '</ns2:repository>' >> ${ANDROID_HOME}/emulator/package.xml
-
-# Download build-tools directly
-RUN mkdir -p ${ANDROID_HOME}/build-tools && cd ${ANDROID_HOME}/build-tools && \
-    wget https://dl.google.com/android/repository/build-tools_r32-linux.zip && \
-    unzip build-tools_r32-linux.zip -d 32.0.0 && \
-    rm build-tools_r32-linux.zip
-
-# Create package.xml metadata for build-tools (FIXED format)
-RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
-    echo '<ns2:repository xmlns:ns2="http://schemas.android.com/repository/android/common/01">' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
-    echo '  <localPackage path="build-tools;32.0.0">' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
-    echo '    <type-details xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns2:genericDetailsType"/>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
-    echo '    <revision>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
-    echo '      <major>32</major>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
-    echo '      <minor>0</minor>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
-    echo '      <micro>0</micro>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
-    echo '    </revision>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
-    echo '    <display-name>Android SDK Build-Tools 32</display-name>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
-    echo '  </localPackage>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml && \
-    echo '</ns2:repository>' >> ${ANDROID_HOME}/build-tools/32.0.0/package.xml
-
-# Download platforms directly
-RUN mkdir -p ${ANDROID_HOME}/platforms && cd ${ANDROID_HOME}/platforms && \
-    wget https://dl.google.com/android/repository/platform-31_r01.zip && \
-    unzip platform-31_r01.zip && \
-    mv android-12 android-31 && \
-    rm platform-31_r01.zip
-
-# Create package.xml metadata for platforms
-RUN echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' > ${ANDROID_HOME}/platforms/android-31/package.xml && \
-    echo '<ns2:repository xmlns:ns2="http://schemas.android.com/repository/android/common/01" xmlns:ns3="http://schemas.android.com/sdk/android/repo/repository2/03">' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
-    echo '  <localPackage path="platforms;android-31">' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
-    echo '    <type-details xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns3:platformDetailsType">' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
-    echo '      <api-level>31</api-level>' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
-    echo '    </type-details>' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
-    echo '    <revision>' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
-    echo '      <major>1</major>' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
-    echo '    </revision>' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
-    echo '    <display-name>Android SDK Platform 31</display-name>' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
-    echo '  </localPackage>' >> ${ANDROID_HOME}/platforms/android-31/package.xml && \
-    echo '</ns2:repository>' >> ${ANDROID_HOME}/platforms/android-31/package.xml
+# Accept licenses and install core components via sdkmanager (KISS)
+RUN yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses && \
+    ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --update && \
+    ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager \
+      "platform-tools" "emulator" "platforms;android-29"
 
 # --- Application Build and Setup ---
 WORKDIR /app
