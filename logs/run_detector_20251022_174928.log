@@ -1,0 +1,2078 @@
+2025-10-22 17:49:28 - Starting AndroidLoginDetector run script
+[2025-10-22 17:49:31.756] [INFO] === AndroidLoginDetector Started ===
+[2025-10-22 17:49:31.761] [INFO] Log file: logs/android_login_detector_20251022_174931.log
+[2025-10-22 17:49:31.761] [INFO] Timestamp: 2025-10-22 17:49:31.761
+Add state transition rule: InitialState -> InitialState
+Add state transition rule: CheckingToken -> CheckingToken
+Add state transition rule: LoggedIn_Via_Token -> LoggedIn_Via_Token
+Add state transition rule: CredentialInput -> CredentialInput
+Add state transition rule: CredentialFormatError -> CredentialFormatError
+Add state transition rule: PreparingAuth -> PreparingAuth
+Add state transition rule: SendingCredentials -> SendingCredentials
+Add state transition rule: AwaitingResponse -> AwaitingResponse
+Add state transition rule: ParsingResponse -> ParsingResponse
+Add state transition rule: ValidatingCredentials -> ValidatingCredentials
+Add state transition rule: LoadingProfile -> LoadingProfile
+Add state transition rule: RetrievingFeeds -> RetrievingFeeds
+Add state transition rule: InitializingSync -> InitializingSync
+Add state transition rule: ShowingError -> ShowingError
+Add state transition rule: ReturnToLogin -> ReturnToLogin
+Add state transition rule: LoggedIn -> LoggedIn
+Add state transition rule: Authenticating -> Authenticating
+Add state transition rule: CheckingCredentials -> CheckingCredentials
+Add state transition rule: InvalidCredentials -> InvalidCredentials
+Add state transition rule: CheckingMFASettings -> CheckingMFASettings
+Add state transition rule: LoggedIn_NoMFA -> LoggedIn_NoMFA
+Add state transition rule: MFACodePending -> MFACodePending
+Add state transition rule: SendingMFACode -> SendingMFACode
+Add state transition rule: MFAVerification -> MFAVerification
+Add state transition rule: VerifyingMFA -> VerifyingMFA
+Add state transition rule: MFAError -> MFAError
+Add state transition rule: LoggedIn_WithMFA -> LoggedIn_WithMFA
+Add state transition rule: AppMainScreen -> AppMainScreen
+Add state transition rule: UserLogout -> UserLogout
+Add state transition rule: checkAuthToken -> checkAuthToken
+Add state transition rule: checkStoredCredentials -> checkStoredCredentials
+Add state transition rule: ClickingLoginButton -> ClickingLoginButton
+Add state transition rule: ServiceUnavailable_Auth -> ServiceUnavailable_Auth
+Add state transition rule: OAuth_BeginAuth -> OAuth_BeginAuth
+Add state transition rule: OAuth_TokenExchange -> OAuth_TokenExchange
+Add state transition rule: AuthHeader_Bearer -> AuthHeader_Bearer
+Add state transition rule: Provider_GoogleSignIn -> Provider_GoogleSignIn
+Add state transition rule: Provider_FacebookLogin -> Provider_FacebookLogin
+Add state transition rule: Provider_Auth0 -> Provider_Auth0
+Add state transition rule: Provider_Okta -> Provider_Okta
+Add state transition rule: Provider_MSAL -> Provider_MSAL
+Add state transition rule: Provider_Cognito -> Provider_Cognito
+Add state transition rule: LoginFailure -> LoginFailure
+Add state transition rule: NetworkError -> NetworkError
+Add state transition rule: Unknown -> Unknown
+Add state transition rule: InitialState -> CheckingToken
+Add state transition rule: InitialState -> CredentialInput
+Add state transition rule: CheckingToken -> LoggedIn_Via_Token
+Add state transition rule: CheckingToken -> CredentialInput
+Add state transition rule: CredentialInput -> CredentialFormatError
+Add state transition rule: CredentialInput -> Authenticating
+Add state transition rule: CredentialInput -> LoginFailure
+Add state transition rule: CredentialFormatError -> CredentialInput
+Add state transition rule: Authenticating -> CheckingCredentials
+Add state transition rule: Authenticating -> LoginFailure
+Add state transition rule: Authenticating -> NetworkError
+Add state transition rule: Authenticating -> CredentialInput
+Add state transition rule: Authenticating -> CredentialFormatError
+Add state transition rule: CheckingCredentials -> ServiceUnavailable_Auth
+Add state transition rule: CheckingCredentials -> InvalidCredentials
+Add state transition rule: CheckingCredentials -> CheckingMFASettings
+Add state transition rule: ServiceUnavailable_Auth -> CredentialInput
+Add state transition rule: ServiceUnavailable_Auth -> InitialState
+Add state transition rule: InvalidCredentials -> CredentialInput
+Add state transition rule: CheckingMFASettings -> MFACodePending
+Add state transition rule: CheckingMFASettings -> LoggedIn_NoMFA
+Add state transition rule: LoginFailure -> CredentialInput
+Add state transition rule: LoginFailure -> NetworkError
+Add state transition rule: NetworkError -> CredentialInput
+Add state transition rule: NetworkError -> LoginFailure
+Add state transition rule: NetworkError -> Authenticating
+Add state transition rule: MFACodePending -> SendingMFACode
+Add state transition rule: SendingMFACode -> MFAVerification
+Add state transition rule: MFAVerification -> VerifyingMFA
+Add state transition rule: VerifyingMFA -> MFAError
+Add state transition rule: VerifyingMFA -> LoggedIn_WithMFA
+Add state transition rule: MFAError -> MFACodePending
+Add state transition rule: LoggedIn_Via_Token -> AppMainScreen
+Add state transition rule: LoggedIn_NoMFA -> AppMainScreen
+Add state transition rule: LoggedIn_WithMFA -> AppMainScreen
+Add state transition rule: AppMainScreen -> UserLogout
+Add state transition rule: AppMainScreen -> InitialState
+Add state transition rule: UserLogout -> InitialState
+Add state transition rule: UserLogout -> CredentialInput
+StateMachineManager: Loaded 45 states from regex patterns
+[BUG_DETECTION] Initialized 5 symptom-based bug detectors
+[BUG_DETECTION]   1. ErrorMessageMismatchDetector (Symptom 7)
+[BUG_DETECTION]   2. LifecycleDataLossDetector (Lifecycle)
+[BUG_DETECTION]   3. CrashDetector (Symptom 1)
+[BUG_DETECTION]   4. LoginTimeoutDetector (Symptom 2)
+[BUG_DETECTION]   5. NavigationFlowDetector (Symptom 3)
+StateMachineManager: Bug detection initialized
+StateMachineManager: initialization complete with 45 state transitions
+[2025-10-22 17:49:31.776] [INFO] App configuration loaded:
+[2025-10-22 17:49:31.776] [INFO]   - Package: com.newsblur
+[2025-10-22 17:49:31.776] [INFO]   - Activity: com.newsblur.activity.Main        
+[2025-10-22 17:49:31.776] [INFO]   - APK Path: apps/com.newsblur_240.apk
+[2025-10-22 17:49:31.776] [INFO]   - Emulator Snapshot (auto-generated): snap_com_newsblur_login
+[2025-10-22 17:49:31.776] [INFO] Initializing static analyzer...
+[2025-10-22 17:49:31.777] [INFO] Static analysis result found and up-to-date: reports/static_analysis/com.newsblur_240_1.json
+[2025-10-22 17:49:31.777] [INFO] Initializing Frida manager with static analysis results...
+FridaManager: State WebViewUsage has 15 method signatures
+FridaManager: State IR_LoginEvidence has 42 method signatures
+FridaManager: State IR_WebViewEvidence has 15 method signatures
+FridaManager: State CredentialInput has 2 method signatures
+FridaManager: Loaded 4 states from static analysis result
+FridaManager: Using static analysis result: reports/static_analysis/com.newsblur_240.json
+FridaManager: State IR_LoginEvidence has 42 method signatures
+FridaManager: State IR_WebViewEvidence has 15 method signatures
+FridaManager: State Authenticating has 1 method signatures
+FridaManager: State CredentialInput has 4 method signatures
+FridaManager: Loaded 5 states from static analysis result
+FridaManager: Static analysis results loaded from: reports/static_analysis/com.newsblur_240_1.json
+[2025-10-22 17:49:31.808] [INFO] Frida manager configured with static analysis results
+[2025-10-22 17:49:31.809] [INFO] ApiLogAnalyzer initialized with 5 patterns from static analysis
+[2025-10-22 17:49:31.828] [INFO] Using credential pool directory: pools/com.newsblur_240
+[2025-10-22 17:49:31.829] [INFO] Loaded credential pools:
+[2025-10-22 17:49:31.829] [INFO]   - Standard accounts: 15
+[2025-10-22 17:49:31.829] [INFO]   - Standard passwords: 16
+[2025-10-22 17:49:31.829] [INFO]   - Google accounts: 5
+[2025-10-22 17:49:31.829] [INFO]   - Google passwords: 5
+[2025-10-22 17:49:31.829] [INFO]   - Facebook accounts: 5
+[2025-10-22 17:49:31.829] [INFO]   - Facebook passwords: 5
+[2025-10-22 17:49:31.830] [INFO] State machine initialized with 45 states
+=== State machine information ===
+Provider_Okta -> Provider_Okta
+Provider_Auth0 -> Provider_Auth0
+AppMainScreen -> AppMainScreen, UserLogout, InitialState
+ParsingResponse -> ParsingResponse
+CheckingMFASettings -> CheckingMFASettings, MFACodePending, LoggedIn_NoMFA
+AwaitingResponse -> AwaitingResponse
+CheckingToken -> CheckingToken, LoggedIn_Via_Token, CredentialInput
+OAuth_TokenExchange -> OAuth_TokenExchange
+ValidatingCredentials -> ValidatingCredentials
+Unknown -> Unknown
+ShowingError -> ShowingError
+SendingMFACode -> SendingMFACode, MFAVerification
+RetrievingFeeds -> RetrievingFeeds
+LoadingProfile -> LoadingProfile
+Authenticating -> Authenticating, CheckingCredentials, LoginFailure, NetworkError, CredentialInput, CredentialFormatError
+ServiceUnavailable_Auth -> ServiceUnavailable_Auth, CredentialInput, InitialState
+VerifyingMFA -> VerifyingMFA, MFAError, LoggedIn_WithMFA
+LoggedIn_Via_Token -> LoggedIn_Via_Token, AppMainScreen
+ClickingLoginButton -> ClickingLoginButton
+InitializingSync -> InitializingSync
+AuthHeader_Bearer -> AuthHeader_Bearer
+PreparingAuth -> PreparingAuth
+checkAuthToken -> checkAuthToken
+NetworkError -> NetworkError, CredentialInput, LoginFailure, Authenticating
+InvalidCredentials -> InvalidCredentials, CredentialInput
+Provider_MSAL -> Provider_MSAL
+checkStoredCredentials -> checkStoredCredentials
+LoggedIn -> LoggedIn
+ReturnToLogin -> ReturnToLogin
+OAuth_BeginAuth -> OAuth_BeginAuth
+UserLogout -> UserLogout, InitialState, CredentialInput
+MFACodePending -> MFACodePending, SendingMFACode
+InitialState -> InitialState, CheckingToken, CredentialInput
+SendingCredentials -> SendingCredentials
+LoggedIn_NoMFA -> LoggedIn_NoMFA, AppMainScreen
+Provider_FacebookLogin -> Provider_FacebookLogin
+Provider_Cognito -> Provider_Cognito
+MFAVerification -> MFAVerification, VerifyingMFA
+LoginFailure -> LoginFailure, CredentialInput, NetworkError
+MFAError -> MFAError, MFACodePending
+Provider_GoogleSignIn -> Provider_GoogleSignIn
+CredentialFormatError -> CredentialFormatError, CredentialInput
+LoggedIn_WithMFA -> LoggedIn_WithMFA, AppMainScreen
+CheckingCredentials -> CheckingCredentials, ServiceUnavailable_Auth, InvalidCredentials, CheckingMFASettings
+CredentialInput -> CredentialInput, CredentialFormatError, Authenticating, LoginFailure
+==================
+[TaintAnalyzer] Configuration loaded from: src/main/resources/taint_config.json
+[2025-10-22 17:49:31.832] [INFO] Taint analyzer initialized
+[2025-10-22 17:49:31.832] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+FridaManager: Starting Frida monitoring for package: com.newsblur
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.newsblur src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2025-10-22 17:49:31.841] [INFO] Frida monitoring started successfully
+Configuration validation passed
+=== Configuration Summary ===
+Test Rounds: 100
+Duration per Round: 300000ms
+Round Interval: 3s
+Login Timeout: 120s
+Monkey Events: 1000
+Monkey Delay: 500ms
+Frida Timeout: 120s
+Frida Retry Count: 5
+==================
+[2025-10-22 17:49:31.844] [INFO] === Starting AndroidLoginDetector Test with Static Analysis ===
+[2025-10-22 17:49:31.844] [INFO] Target app: com.newsblur
+[2025-10-22 17:49:31.844] [INFO] Test rounds: 100
+[2025-10-22 17:49:31.844] [INFO] Static analysis results: reports/static_analysis/com.newsblur_240_1.json
+[2025-10-22 17:49:31.844] [INFO] Unified error report: reports/errors/test_errors_20251022_174931.txt
+[2025-10-22 17:49:31.844] [INFO] Starting global taint tracking...
+[TaintAnalyzer] Taint tracking prepared for: com.newsblur
+[TaintAnalyzer] Note: Taint analysis requires custom Frida integration
+[2025-10-22 17:49:31.844] [INFO] ? Taint tracking active for all rounds
+[2025-10-22 17:49:31.845] [INFO] Checking Docker environment compatibility...
+[2025-10-22 17:49:31.848] [INFO] ADB device found: emulator-5554	device
+[2025-10-22 17:49:31.857] [INFO] Emulator Android version: 10
+[2025-10-22 17:49:31.981] [INFO] Frida version: 16.7.19
+[2025-10-22 17:49:31.981] [INFO] All required files found
+[2025-10-22 17:49:31.981] [INFO] Docker environment check passed
+ADB device ready: emulator-5554 (provisioned)
+UI manager started successfully
+[2025-10-22 17:49:34.097] [INFO] Starting network chaos testing (emulator is ready)...
+[2025-10-22 17:49:34.098] [INFO] === Starting Network Chaos Testing ===
+[2025-10-22 17:49:34.098] [INFO] Mode: random
+[2025-10-22 17:49:34.101] [INFO] Good:Bad Ratio: 40:60
+[2025-10-22 17:49:34.101] [INFO] Switch Interval: 60 seconds
+[2025-10-22 17:49:34.101] [INFO] Disruption Methods: disable_data, slow_network
+[2025-10-22 17:49:34.101] [INFO] ? Restoring GOOD network state
+[2025-10-22 17:49:34.533] [INFO] Network chaos scheduler started in random mode
+[2025-10-22 17:49:34.535] [INFO] ================================================================================
+[2025-10-22 17:49:34.535] [INFO] ROUND 1 STARTED
+[2025-10-22 17:49:34.535] [INFO] Round timestamp: 2025-10-22 17:49:34.535
+[2025-10-22 17:49:34.536] [INFO] ================================================================================
+[2025-10-22 17:49:34.536] [INFO] Round 1: Starting fresh without snapshot restore
+[2025-10-22 17:49:34.537] [INFO] Appended Frida round marker for round 1
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_174934/round_1/screenshot_001_round_1_start.png
+[2025-10-22 17:49:40.134] [INFO] No baseline snapshot found - will create one when login page is detected
+[2025-10-22 17:49:42.168] [INFO] Target app started: com.newsblur
+[2025-10-22 17:50:27.169] [INFO] Emulator snapshot operation completed
+[2025-10-22 17:50:27.169] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+FridaManager: Starting Frida monitoring for package: com.newsblur
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.newsblur src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2025-10-22 17:50:27.175] [INFO] Frida monitoring started successfully
+[2025-10-22 17:50:27.175] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Cache] New login method discovered: normal
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login button detected:  (ID: com.newsblur:id/login_viewswitcher)
+Username field detected: username (ID: com.newsblur:id/login_username)
+Password field detected: password (ID: com.newsblur:id/login_password)
+Activity hint not matched: com.newsblur/.activity.Login
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.newsblur/.activity.Login (match: false)
+[2025-10-22 17:50:29.853] [INFO] UI manager detected login page
+[2025-10-22 17:50:29.854] [INFO]   - Google login: false
+[2025-10-22 17:50:29.854] [INFO]   - Facebook login: false
+[2025-10-22 17:50:29.854] [INFO]   - Username field: true
+[2025-10-22 17:50:29.854] [INFO]   - Password field: true
+[SNAPSHOT] Created: com_newsblur_baseline_20251022_175029 (Login page detected via UI manager)
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_174934/round_1/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Skipping creation - already exists: baseline
+[2025-10-22 17:50:34.184] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_174934/round_1/screenshot_003_baseline_login_page.png
+[2025-10-22 17:50:34.373] [INFO] Using standard account: 1q2fe41am
+[2025-10-22 17:50:34.373] [INFO] Using standard password: u'owbC&Z#((0
+[2025-10-22 17:50:34.373] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 17:50:34.373] [INFO] Selected username: 1q2fe41am
+[2025-10-22 17:50:34.374] [INFO] Selected password: [12 chars]
+[2025-10-22 17:50:34.374] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 17:50:34.374] [INFO] Username to input: 1q2fe41am
+[2025-10-22 17:50:34.374] [INFO] Password length: 12 characters
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_174934/round_1/screenshot_004_before_credential_input.png
+[2025-10-22 17:50:34.534] [INFO] ? Inducing BAD network state: SLOW_NETWORK for 14 seconds
+Using ADB to input credentials (without clicking button)...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[CREDENTIAL_INPUT] Found username field at (160,170)
+[CREDENTIAL_INPUT] Input username: 1q2fe41am
+[INPUT] Clicking at (160, 170) to focus field
+[INPUT] Inputting text char-by-char (length: 9)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: 1q2fe41am (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[CREDENTIAL_INPUT] Found password field at (160,251)
+[CREDENTIAL_INPUT] Input password: [12 chars]
+[INPUT] Clicking at (160, 251) to focus field
+[INPUT] Inputting text char-by-char (length: 12)
+[INPUT] Failed to input char ''' at position 1 (exit code: 1)
+[CREDENTIAL_INPUT] Failed to input password!
+[2025-10-22 17:50:43.261] [ERROR] Failed to input credentials
+[2025-10-22 17:50:43.262] [INFO] ? Credential input phase failed
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_174934/round_1/screenshot_005_credentials_input_failed.png
+[2025-10-22 17:50:43.487] [ERROR] Login process failed
+[2025-10-22 17:50:43.487] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2025-10-22 17:50:44.974] [INFO] Captured 12 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[2025-10-22 17:50:44.977] [INFO] API call: i2.b.p -> State: Authenticating
+[2025-10-22 17:50:44.977] [INFO] API call: m2.e.b -> State: Authenticating
+[2025-10-22 17:50:44.977] [INFO] API call: m2.a.a -> State: Authenticating
+[2025-10-22 17:50:44.977] [INFO] API call: m2.a.b -> State: Authenticating
+[BUG_DETECTOR] Recorded error state: CredentialFormatError
+[BUG_DETECTOR] Recorded error state: CredentialFormatError
+Add observed state: CredentialFormatError (total: 5, compressed: 2)
+[2025-10-22 17:50:44.977] [INFO] API call: com.google.gson.internal.bind.JsonElementTypeAdapter.d -> State: CredentialFormatError
+Add observed state: Authenticating (total: 6, compressed: 3)
+[2025-10-22 17:50:44.977] [INFO] API call: n1.b.h -> State: Authenticating
+[2025-10-22 17:50:44.977] [INFO] API call: com.newsblur.service.NBSyncService.u -> State: Authenticating
+[2025-10-22 17:50:44.977] [INFO] Known states from Frida: 7/12
+State machine: Stopped analysis at error state: CredentialFormatError
+State machine validation passed (stopped at error)
+  Compressed sequence: Authenticating (?4, 0.0s) -> CredentialFormatError [ERROR - STOPPED]
+  Original states: 7, Compressed: 3
+[2025-10-22 17:50:44.978] [INFO] State machine validation passed
+[2025-10-22 17:50:45.066] [INFO] [TAINT] Extracting taint flows for Round 1
+[2025-10-22 17:50:45.066] [INFO] Extracting taint analysis results for Round 1
+[2025-10-22 17:50:45.066] [INFO] [TAINT] Round 1: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_1_taint.txt
+[2025-10-22 17:50:45.067] [INFO] [TAINT] Round report saved to: reports/taint/round_1_taint.txt
+[2025-10-22 17:50:45.067] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2025-10-22 17:50:45.071] [INFO] Frida monitoring stopped
+[2025-10-22 17:50:45.071] [INFO] [BUG_DETECTION] Running bug detectors for Round 1
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 0
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Total navigation events: 0
+[BUG_DETECTION] Total bugs detected: 0
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2025-10-22 17:50:45.072] [INFO] ? No bugs detected in Round 1
+[2025-10-22 17:50:45.072] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:50:45.072] [INFO] ROUND 1 COMPLETED
+[2025-10-22 17:50:45.072] [INFO] Round duration: 70537ms
+[2025-10-22 17:50:45.072] [INFO] Total attempts: 1
+[2025-10-22 17:50:45.072] [INFO] Successful logins: 0
+[2025-10-22 17:50:45.072] [INFO] Failed logins: 1
+[2025-10-22 17:50:45.072] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_174934/round_1/screenshot_006_round_1_end.png
+[2025-10-22 17:50:48.440] [INFO] ================================================================================
+[2025-10-22 17:50:48.441] [INFO] ROUND 2 STARTED
+[2025-10-22 17:50:48.441] [INFO] Round timestamp: 2025-10-22 17:50:48.441
+[2025-10-22 17:50:48.441] [INFO] ================================================================================
+[2025-10-22 17:50:48.441] [INFO] Round 2: Restoring baseline snapshot to clean state
+[SNAPSHOT] Restoring: com_newsblur_baseline_20251022_175029
+[2025-10-22 17:50:48.567] [INFO] ? Restoring GOOD network state
+[2025-10-22 17:50:55.329] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login button detected:  (ID: com.newsblur:id/login_viewswitcher)
+Username field detected: username (ID: com.newsblur:id/login_username)
+Password field detected: password (ID: com.newsblur:id/login_password)
+Activity hint not matched: com.newsblur/.activity.Login
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.newsblur/.activity.Login (match: false)
+[2025-10-22 17:50:59.720] [INFO] Verified: App restored to login page
+[2025-10-22 17:50:59.720] [INFO] Appended Frida round marker for round 2
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175059/round_2/screenshot_001_round_2_start.png
+[SNAPSHOT] Restoring: com_newsblur_baseline_20251022_175029
+[2025-10-22 17:51:06.929] [INFO] Baseline snapshot restored successfully
+[2025-10-22 17:51:34.533] [INFO] ? Inducing BAD network state: SLOW_NETWORK for 22 seconds
+[2025-10-22 17:51:56.559] [INFO] ? Restoring GOOD network state
+[2025-10-22 17:51:56.929] [INFO] Emulator snapshot operation completed
+[2025-10-22 17:51:56.929] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+FridaManager: Starting Frida monitoring for package: com.newsblur
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.newsblur src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2025-10-22 17:51:56.932] [INFO] Frida monitoring started successfully
+[2025-10-22 17:51:56.932] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login button detected:  (ID: com.newsblur:id/login_viewswitcher)
+Username field detected: username (ID: com.newsblur:id/login_username)
+Password field detected: password (ID: com.newsblur:id/login_password)
+Activity hint not matched: com.newsblur/.activity.Login
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.newsblur/.activity.Login (match: false)
+[2025-10-22 17:51:59.296] [INFO] UI manager detected login page
+[2025-10-22 17:51:59.296] [INFO]   - Google login: false
+[2025-10-22 17:51:59.296] [INFO]   - Facebook login: false
+[2025-10-22 17:51:59.296] [INFO]   - Username field: true
+[2025-10-22 17:51:59.296] [INFO]   - Password field: true
+[SNAPSHOT] Skipping creation - already exists: baseline
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175059/round_2/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Skipping creation - already exists: baseline
+[2025-10-22 17:51:59.670] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175059/round_2/screenshot_003_baseline_login_page.png
+[2025-10-22 17:51:59.826] [INFO] Using standard account: tefafm6fp
+[2025-10-22 17:51:59.826] [INFO] Using standard password: `7!'!]mqsF#.
+[2025-10-22 17:51:59.826] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 17:51:59.826] [INFO] Selected username: tefafm6fp
+[2025-10-22 17:51:59.826] [INFO] Selected password: [12 chars]
+[2025-10-22 17:51:59.826] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 17:51:59.827] [INFO] Username to input: tefafm6fp
+[2025-10-22 17:51:59.827] [INFO] Password length: 12 characters
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175059/round_2/screenshot_004_before_credential_input.png
+Using ADB to input credentials (without clicking button)...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[CREDENTIAL_INPUT] Found username field at (160,170)
+[CREDENTIAL_INPUT] Input username: tefafm6fp
+[INPUT] Clicking at (160, 170) to focus field
+[INPUT] Inputting text char-by-char (length: 9)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: tefafm6fp (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[CREDENTIAL_INPUT] Found password field at (160,251)
+[CREDENTIAL_INPUT] Input password: [12 chars]
+[INPUT] Clicking at (160, 251) to focus field
+[INPUT] Inputting text char-by-char (length: 12)
+[INPUT] Failed to input char ''' at position 3 (exit code: 1)
+[CREDENTIAL_INPUT] Failed to input password!
+[2025-10-22 17:52:08.983] [ERROR] Failed to input credentials
+[2025-10-22 17:52:08.984] [INFO] ? Credential input phase failed
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175059/round_2/screenshot_005_credentials_input_failed.png
+[2025-10-22 17:52:09.184] [ERROR] Login process failed
+[2025-10-22 17:52:09.184] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2025-10-22 17:52:10.538] [INFO] Captured 3 API calls in current round
+[2025-10-22 17:52:10.538] [INFO] Known states from Frida: 0/3
+[2025-10-22 17:52:10.538] [INFO] State machine validation passed
+[2025-10-22 17:52:10.696] [INFO] [TAINT] Extracting taint flows for Round 2
+[2025-10-22 17:52:10.696] [INFO] Extracting taint analysis results for Round 2
+[2025-10-22 17:52:10.696] [INFO] [TAINT] Round 2: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_2_taint.txt
+[2025-10-22 17:52:10.697] [INFO] [TAINT] Round report saved to: reports/taint/round_2_taint.txt
+[2025-10-22 17:52:10.697] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2025-10-22 17:52:10.700] [INFO] Frida monitoring stopped
+[2025-10-22 17:52:10.700] [INFO] [BUG_DETECTION] Running bug detectors for Round 2
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 0
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Total navigation events: 0
+[BUG_DETECTION] Total bugs detected: 0
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2025-10-22 17:52:10.700] [INFO] ? No bugs detected in Round 2
+[2025-10-22 17:52:10.700] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:52:10.700] [INFO] ROUND 2 COMPLETED
+[2025-10-22 17:52:10.700] [INFO] Round duration: 82260ms
+[2025-10-22 17:52:10.701] [INFO] Total attempts: 2
+[2025-10-22 17:52:10.701] [INFO] Successful logins: 0
+[2025-10-22 17:52:10.701] [INFO] Failed logins: 2
+[2025-10-22 17:52:10.701] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175059/round_2/screenshot_006_round_2_end.png
+[2025-10-22 17:52:14.095] [INFO] ================================================================================
+[2025-10-22 17:52:14.095] [INFO] ROUND 3 STARTED
+[2025-10-22 17:52:14.095] [INFO] Round timestamp: 2025-10-22 17:52:14.095
+[2025-10-22 17:52:14.095] [INFO] ================================================================================
+[2025-10-22 17:52:14.095] [INFO] Round 3: Restoring baseline snapshot to clean state
+[SNAPSHOT] Restoring: com_newsblur_baseline_20251022_175029
+[2025-10-22 17:52:20.927] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login button detected:  (ID: com.newsblur:id/login_viewswitcher)
+Username field detected: username (ID: com.newsblur:id/login_username)
+Password field detected: password (ID: com.newsblur:id/login_password)
+Activity hint not matched: com.newsblur/.activity.Login
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.newsblur/.activity.Login (match: false)
+[2025-10-22 17:52:25.296] [INFO] Verified: App restored to login page
+[2025-10-22 17:52:25.297] [INFO] Appended Frida round marker for round 3
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175225/round_3/screenshot_001_round_3_start.png
+[SNAPSHOT] Restoring: com_newsblur_baseline_20251022_175029
+[2025-10-22 17:52:32.618] [INFO] Baseline snapshot restored successfully
+[2025-10-22 17:53:22.618] [INFO] Emulator snapshot operation completed
+[2025-10-22 17:53:22.619] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+FridaManager: Starting Frida monitoring for package: com.newsblur
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.newsblur src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2025-10-22 17:53:22.621] [INFO] Frida monitoring started successfully
+[2025-10-22 17:53:22.621] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login button detected:  (ID: com.newsblur:id/login_viewswitcher)
+Username field detected: username (ID: com.newsblur:id/login_username)
+Password field detected: password (ID: com.newsblur:id/login_password)
+Activity hint not matched: com.newsblur/.activity.Login
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.newsblur/.activity.Login (match: false)
+[2025-10-22 17:53:25.095] [INFO] UI manager detected login page
+[2025-10-22 17:53:25.095] [INFO]   - Google login: false
+[2025-10-22 17:53:25.095] [INFO]   - Facebook login: false
+[2025-10-22 17:53:25.095] [INFO]   - Username field: true
+[2025-10-22 17:53:25.095] [INFO]   - Password field: true
+[SNAPSHOT] Skipping creation - already exists: baseline
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175225/round_3/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Skipping creation - already exists: baseline
+[2025-10-22 17:53:25.420] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175225/round_3/screenshot_003_baseline_login_page.png
+[2025-10-22 17:53:25.624] [INFO] Using standard account: 9srgai
+[2025-10-22 17:53:25.624] [INFO] Using standard password: +fb#+y%>ay$+
+[2025-10-22 17:53:25.624] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 17:53:25.625] [INFO] Selected username: 9srgai
+[2025-10-22 17:53:25.625] [INFO] Selected password: [12 chars]
+[2025-10-22 17:53:25.625] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 17:53:25.625] [INFO] Username to input: 9srgai
+[2025-10-22 17:53:25.625] [INFO] Password length: 12 characters
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175225/round_3/screenshot_004_before_credential_input.png
+Using ADB to input credentials (without clicking button)...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[CREDENTIAL_INPUT] Found username field at (160,170)
+[CREDENTIAL_INPUT] Input username: 9srgai
+[INPUT] Clicking at (160, 170) to focus field
+[INPUT] Inputting text char-by-char (length: 6)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: 9srgai (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[CREDENTIAL_INPUT] Found password field at (160,251)
+[CREDENTIAL_INPUT] Input password: [12 chars]
+[INPUT] Clicking at (160, 251) to focus field
+[INPUT] Inputting text char-by-char (length: 12)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[CREDENTIAL_INPUT] Credentials inputted successfully (button NOT clicked)
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175225/round_3/screenshot_005_after_credential_input.png
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: 9srgai (id: com.newsblur:id/login_username)
+[Match] Username field: ???????????????????????????????????? (id: com.newsblur:id/login_password)
+[Match] Password field: ???????????????????????????????????? (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Click element: LOGIN Press to log in position: (252, 311)
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1761155618047
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[2025-10-22 17:53:51.310] [INFO] === Verifying Credential Input ===
+[2025-10-22 17:53:51.310] [INFO] UI changed after input: false
+[2025-10-22 17:53:51.310] [INFO] Username visible in UI: false
+[2025-10-22 17:53:51.311] [INFO] Password field appears filled: true
+[2025-10-22 17:53:51.311] [INFO] Input focus changed: false
+[2025-10-22 17:53:51.311] [INFO] Has input indicators: true
+[2025-10-22 17:53:51.311] [INFO] === Input Verification Result: VERIFIED ===
+[2025-10-22 17:53:51.311] [INFO] ? UI manager credentials input successful and verified
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175225/round_3/screenshot_006_credentials_input_complete.png
+[2025-10-22 17:53:52.507] [INFO] ? Credential input phase completed successfully
+[2025-10-22 17:53:52.507] [INFO] Login process completed successfully
+[2025-10-22 17:53:52.507] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2025-10-22 17:53:53.866] [INFO] Captured 16 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[2025-10-22 17:53:53.866] [INFO] API call: l1.Y.a0 -> State: Authenticating
+[2025-10-22 17:53:53.866] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+Add observed state: CredentialInput (total: 2, compressed: 2)
+[2025-10-22 17:53:53.866] [INFO] API call: com.newsblur.activity.LoginProgress.onCreate -> State: CredentialInput
+Add observed state: Authenticating (total: 3, compressed: 3)
+[2025-10-22 17:53:53.866] [INFO] API call: i2.b.p -> State: Authenticating
+[2025-10-22 17:53:53.866] [INFO] API call: m2.e.b -> State: Authenticating
+[2025-10-22 17:53:53.866] [INFO] API call: m2.a.a -> State: Authenticating
+[2025-10-22 17:53:53.866] [INFO] API call: m2.a.b -> State: Authenticating
+[2025-10-22 17:53:53.866] [INFO] API call: h1.C.a -> State: Authenticating
+[BUG_DETECTOR] Recorded error state: NetworkError
+[BUG_DETECTOR] Recorded error state: NetworkError
+Add observed state: NetworkError (total: 8, compressed: 4)
+[2025-10-22 17:53:53.866] [INFO] API call: E1.a.h -> State: NetworkError
+Add observed state: CredentialInput (total: 9, compressed: 5)
+[2025-10-22 17:53:53.866] [INFO] API call: com.newsblur.activity.Login.onCreate -> State: CredentialInput
+[2025-10-22 17:53:53.866] [INFO] Known states from Frida: 9/16
+State machine: Stopped analysis at error state: NetworkError
+State machine validation passed (stopped at error)
+  Compressed sequence: Authenticating -> CredentialInput -> Authenticating (?5) -> NetworkError [ERROR - STOPPED]
+  Original states: 9, Compressed: 5
+[2025-10-22 17:53:53.867] [INFO] State machine validation passed
+[2025-10-22 17:53:53.996] [INFO] [TAINT] Extracting taint flows for Round 3
+[2025-10-22 17:53:53.996] [INFO] Extracting taint analysis results for Round 3
+[2025-10-22 17:53:53.996] [INFO] [TAINT] Round 3: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_3_taint.txt
+[2025-10-22 17:53:53.996] [INFO] [TAINT] Round report saved to: reports/taint/round_3_taint.txt
+[2025-10-22 17:53:53.996] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2025-10-22 17:53:54.000] [INFO] Frida monitoring stopped
+[2025-10-22 17:53:54.000] [INFO] [BUG_DETECTION] Running bug detectors for Round 3
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 0
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Total navigation events: 0
+[BUG_DETECTION] Total bugs detected: 0
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2025-10-22 17:53:54.000] [INFO] ? No bugs detected in Round 3
+[2025-10-22 17:53:54.000] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:53:54.000] [INFO] ROUND 3 COMPLETED
+[2025-10-22 17:53:54.000] [INFO] Round duration: 99905ms
+[2025-10-22 17:53:54.000] [INFO] Total attempts: 3
+[2025-10-22 17:53:54.000] [INFO] Successful logins: 1
+[2025-10-22 17:53:54.000] [INFO] Failed logins: 2
+[2025-10-22 17:53:54.000] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175225/round_3/screenshot_007_round_3_end.png
+[2025-10-22 17:53:57.456] [INFO] ================================================================================
+[2025-10-22 17:53:57.457] [INFO] ROUND 4 STARTED
+[2025-10-22 17:53:57.457] [INFO] Round timestamp: 2025-10-22 17:53:57.457
+[2025-10-22 17:53:57.457] [INFO] ================================================================================
+[2025-10-22 17:53:57.457] [INFO] Round 4: Restoring baseline snapshot to clean state
+[SNAPSHOT] Restoring: com_newsblur_baseline_20251022_175029
+[2025-10-22 17:54:04.302] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login button detected:  (ID: com.newsblur:id/login_viewswitcher)
+Username field detected: username (ID: com.newsblur:id/login_username)
+Password field detected: password (ID: com.newsblur:id/login_password)
+Activity hint not matched: com.newsblur/.activity.Login
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.newsblur/.activity.Login (match: false)
+[2025-10-22 17:54:08.694] [INFO] Verified: App restored to login page
+[2025-10-22 17:54:08.694] [INFO] Appended Frida round marker for round 4
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175408/round_4/screenshot_001_round_4_start.png
+[SNAPSHOT] Restoring: com_newsblur_baseline_20251022_175029
+[2025-10-22 17:54:15.922] [INFO] Baseline snapshot restored successfully
+[2025-10-22 17:54:34.533] [INFO] ? Inducing BAD network state: SLOW_NETWORK for 19 seconds
+[2025-10-22 17:54:53.556] [INFO] ? Restoring GOOD network state
+[2025-10-22 17:55:05.922] [INFO] Emulator snapshot operation completed
+[2025-10-22 17:55:05.923] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+FridaManager: Starting Frida monitoring for package: com.newsblur
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.newsblur src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2025-10-22 17:55:05.925] [INFO] Frida monitoring started successfully
+[2025-10-22 17:55:05.925] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login button detected:  (ID: com.newsblur:id/login_viewswitcher)
+Username field detected: username (ID: com.newsblur:id/login_username)
+Password field detected: password (ID: com.newsblur:id/login_password)
+Activity hint not matched: com.newsblur/.activity.Login
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.newsblur/.activity.Login (match: false)
+[2025-10-22 17:55:08.305] [INFO] UI manager detected login page
+[2025-10-22 17:55:08.305] [INFO]   - Google login: false
+[2025-10-22 17:55:08.305] [INFO]   - Facebook login: false
+[2025-10-22 17:55:08.305] [INFO]   - Username field: true
+[2025-10-22 17:55:08.305] [INFO]   - Password field: true
+[SNAPSHOT] Skipping creation - already exists: baseline
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175408/round_4/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Skipping creation - already exists: baseline
+[2025-10-22 17:55:08.628] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175408/round_4/screenshot_003_baseline_login_page.png
+[2025-10-22 17:55:08.776] [INFO] Using standard account: wemvkljf
+[2025-10-22 17:55:08.776] [INFO] Using standard password: Messenger12345!
+[2025-10-22 17:55:08.777] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 17:55:08.777] [INFO] Selected username: wemvkljf
+[2025-10-22 17:55:08.777] [INFO] Selected password: [15 chars]
+[2025-10-22 17:55:08.777] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 17:55:08.777] [INFO] Username to input: wemvkljf
+[2025-10-22 17:55:08.777] [INFO] Password length: 15 characters
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175408/round_4/screenshot_004_before_credential_input.png
+Using ADB to input credentials (without clicking button)...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[CREDENTIAL_INPUT] Found username field at (160,170)
+[CREDENTIAL_INPUT] Input username: wemvkljf
+[INPUT] Clicking at (160, 170) to focus field
+[INPUT] Inputting text char-by-char (length: 8)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: wemvkljf (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[CREDENTIAL_INPUT] Found password field at (160,251)
+[CREDENTIAL_INPUT] Input password: [15 chars]
+[INPUT] Clicking at (160, 251) to focus field
+[INPUT] Inputting text char-by-char (length: 15)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[CREDENTIAL_INPUT] Credentials inputted successfully (button NOT clicked)
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175408/round_4/screenshot_005_after_credential_input.png
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: wemvkljf (id: com.newsblur:id/login_username)
+[Match] Username field: ???????????????????????????????????????????????? (id: com.newsblur:id/login_password)
+[Match] Password field: ???????????????????????????????????????????????? (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Click element: LOGIN Press to log in position: (252, 311)
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1761155722086
+[Match] Normal login button:  (id: com.newsblur:id/login_progress_container)
+[Match] Normal login button:  (id: com.newsblur:id/login_logging_in_progress)
+[Match] Normal login button: Logging in??? (id: com.newsblur:id/login_logging_in)
+[Match] Username field: Logging in??? (id: com.newsblur:id/login_logging_in)
+[Match] Normal login button: Retrieving feeds??? (id: com.newsblur:id/login_retrieving_feeds)
+[Match] Username field: Retrieving feeds??? (id: com.newsblur:id/login_retrieving_feeds)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_progress_container)
+[Match] Normal login button:  (id: com.newsblur:id/login_logging_in_progress)
+[Match] Normal login button: Logging in??? (id: com.newsblur:id/login_logging_in)
+[Match] Username field: Logging in??? (id: com.newsblur:id/login_logging_in)
+[Match] Normal login button: Retrieving feeds??? (id: com.newsblur:id/login_retrieving_feeds)
+[Match] Username field: Retrieving feeds??? (id: com.newsblur:id/login_retrieving_feeds)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[2025-10-22 17:55:35.065] [INFO] === Verifying Credential Input ===
+[2025-10-22 17:55:35.066] [INFO] UI changed after input: false
+[2025-10-22 17:55:35.066] [INFO] Username visible in UI: false
+[2025-10-22 17:55:35.066] [INFO] Password field appears filled: true
+[2025-10-22 17:55:35.066] [INFO] Input focus changed: false
+[2025-10-22 17:55:35.066] [INFO] Has input indicators: true
+[2025-10-22 17:55:35.066] [INFO] === Input Verification Result: VERIFIED ===
+[2025-10-22 17:55:35.066] [INFO] ? UI manager credentials input successful and verified
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175408/round_4/screenshot_006_credentials_input_complete.png
+[2025-10-22 17:55:36.259] [INFO] ? Credential input phase completed successfully
+[2025-10-22 17:55:36.259] [INFO] Login process completed successfully
+[2025-10-22 17:55:36.259] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2025-10-22 17:55:37.598] [INFO] Captured 19 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[2025-10-22 17:55:37.599] [INFO] API call: l1.Y.a0 -> State: Authenticating
+[2025-10-22 17:55:37.599] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+Add observed state: CredentialInput (total: 2, compressed: 2)
+[2025-10-22 17:55:37.599] [INFO] API call: com.newsblur.activity.LoginProgress.onCreate -> State: CredentialInput
+Add observed state: Authenticating (total: 3, compressed: 3)
+[2025-10-22 17:55:37.599] [INFO] API call: i2.b.p -> State: Authenticating
+[2025-10-22 17:55:37.599] [INFO] API call: m2.e.b -> State: Authenticating
+[2025-10-22 17:55:37.599] [INFO] API call: m2.a.a -> State: Authenticating
+[2025-10-22 17:55:37.599] [INFO] API call: m2.a.b -> State: Authenticating
+[2025-10-22 17:55:37.599] [INFO] API call: h1.C.a -> State: Authenticating
+[BUG_DETECTOR] Recorded error state: NetworkError
+[BUG_DETECTOR] Recorded error state: NetworkError
+Add observed state: NetworkError (total: 8, compressed: 4)
+[2025-10-22 17:55:37.599] [INFO] API call: E1.a.h -> State: NetworkError
+[2025-10-22 17:55:37.599] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+Add observed state: CredentialInput (total: 9, compressed: 5)
+[2025-10-22 17:55:37.599] [INFO] API call: com.newsblur.activity.Login.onCreate -> State: CredentialInput
+[2025-10-22 17:55:37.599] [INFO] Known states from Frida: 9/19
+State machine: Stopped analysis at error state: NetworkError
+State machine validation passed (stopped at error)
+  Compressed sequence: Authenticating -> CredentialInput -> Authenticating (?5) -> NetworkError [ERROR - STOPPED]
+  Original states: 9, Compressed: 5
+[2025-10-22 17:55:37.599] [INFO] State machine validation passed
+[2025-10-22 17:55:37.690] [INFO] [TAINT] Extracting taint flows for Round 4
+[2025-10-22 17:55:37.690] [INFO] Extracting taint analysis results for Round 4
+[2025-10-22 17:55:37.690] [INFO] [TAINT] Round 4: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_4_taint.txt
+[2025-10-22 17:55:37.690] [INFO] [TAINT] Round report saved to: reports/taint/round_4_taint.txt
+[2025-10-22 17:55:37.690] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2025-10-22 17:55:37.694] [INFO] Frida monitoring stopped
+[2025-10-22 17:55:37.694] [INFO] [BUG_DETECTION] Running bug detectors for Round 4
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 0
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Total navigation events: 0
+[BUG_DETECTION] Total bugs detected: 0
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2025-10-22 17:55:37.694] [INFO] ? No bugs detected in Round 4
+[2025-10-22 17:55:37.694] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:55:37.694] [INFO] ROUND 4 COMPLETED
+[2025-10-22 17:55:37.694] [INFO] Round duration: 100238ms
+[2025-10-22 17:55:37.695] [INFO] Total attempts: 4
+[2025-10-22 17:55:37.695] [INFO] Successful logins: 2
+[2025-10-22 17:55:37.695] [INFO] Failed logins: 2
+[2025-10-22 17:55:37.695] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175408/round_4/screenshot_007_round_4_end.png
+[2025-10-22 17:55:41.063] [INFO] ================================================================================
+[2025-10-22 17:55:41.063] [INFO] ROUND 5 STARTED
+[2025-10-22 17:55:41.063] [INFO] Round timestamp: 2025-10-22 17:55:41.063
+[2025-10-22 17:55:41.064] [INFO] ================================================================================
+[2025-10-22 17:55:41.064] [INFO] Round 5: Restoring baseline snapshot to clean state
+[SNAPSHOT] Restoring: com_newsblur_baseline_20251022_175029
+[2025-10-22 17:55:47.877] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login button detected:  (ID: com.newsblur:id/login_viewswitcher)
+Username field detected: username (ID: com.newsblur:id/login_username)
+Password field detected: password (ID: com.newsblur:id/login_password)
+Activity hint not matched: com.newsblur/.activity.Login
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.newsblur/.activity.Login (match: false)
+[2025-10-22 17:55:52.261] [INFO] Verified: App restored to login page
+[2025-10-22 17:55:52.261] [INFO] Appended Frida round marker for round 5
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175552/round_5/screenshot_001_round_5_start.png
+[SNAPSHOT] Restoring: com_newsblur_baseline_20251022_175029
+[2025-10-22 17:55:59.540] [INFO] Baseline snapshot restored successfully
+[2025-10-22 17:56:49.541] [INFO] Emulator snapshot operation completed
+[2025-10-22 17:56:49.541] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+FridaManager: Starting Frida monitoring for package: com.newsblur
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.newsblur src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2025-10-22 17:56:49.543] [INFO] Frida monitoring started successfully
+[2025-10-22 17:56:49.543] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login button detected:  (ID: com.newsblur:id/login_viewswitcher)
+Username field detected: username (ID: com.newsblur:id/login_username)
+Password field detected: password (ID: com.newsblur:id/login_password)
+Activity hint not matched: com.newsblur/.activity.Login
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.newsblur/.activity.Login (match: false)
+[2025-10-22 17:56:52.066] [INFO] UI manager detected login page
+[2025-10-22 17:56:52.066] [INFO]   - Google login: false
+[2025-10-22 17:56:52.066] [INFO]   - Facebook login: false
+[2025-10-22 17:56:52.066] [INFO]   - Username field: true
+[2025-10-22 17:56:52.066] [INFO]   - Password field: true
+[SNAPSHOT] Skipping creation - already exists: baseline
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175552/round_5/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Skipping creation - already exists: baseline
+[2025-10-22 17:56:52.412] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175552/round_5/screenshot_003_baseline_login_page.png
+[2025-10-22 17:56:52.554] [INFO] Using standard account: 1q2fe41am
+[2025-10-22 17:56:52.554] [INFO] Using standard password: $0`(X{M,]8@@
+[2025-10-22 17:56:52.554] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 17:56:52.554] [INFO] Selected username: 1q2fe41am
+[2025-10-22 17:56:52.554] [INFO] Selected password: [12 chars]
+[2025-10-22 17:56:52.554] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 17:56:52.554] [INFO] Username to input: 1q2fe41am
+[2025-10-22 17:56:52.554] [INFO] Password length: 12 characters
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175552/round_5/screenshot_004_before_credential_input.png
+Using ADB to input credentials (without clicking button)...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[CREDENTIAL_INPUT] Found username field at (160,170)
+[CREDENTIAL_INPUT] Input username: 1q2fe41am
+[INPUT] Clicking at (160, 170) to focus field
+[INPUT] Inputting text char-by-char (length: 9)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: 1q2fe41am (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[CREDENTIAL_INPUT] Found password field at (160,251)
+[CREDENTIAL_INPUT] Input password: [12 chars]
+[INPUT] Clicking at (160, 251) to focus field
+[INPUT] Inputting text char-by-char (length: 12)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[CREDENTIAL_INPUT] Credentials inputted successfully (button NOT clicked)
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175552/round_5/screenshot_005_after_credential_input.png
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: 1q2fe41am (id: com.newsblur:id/login_username)
+[Match] Username field: ???????????????????????????????????? (id: com.newsblur:id/login_password)
+[Match] Password field: ???????????????????????????????????? (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Click element: LOGIN Press to log in position: (252, 311)
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1761155825127
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[2025-10-22 17:57:18.429] [INFO] === Verifying Credential Input ===
+[2025-10-22 17:57:18.429] [INFO] UI changed after input: false
+[2025-10-22 17:57:18.429] [INFO] Username visible in UI: false
+[2025-10-22 17:57:18.429] [INFO] Password field appears filled: true
+[2025-10-22 17:57:18.429] [INFO] Input focus changed: false
+[2025-10-22 17:57:18.429] [INFO] Has input indicators: true
+[2025-10-22 17:57:18.429] [INFO] === Input Verification Result: VERIFIED ===
+[2025-10-22 17:57:18.429] [INFO] ? UI manager credentials input successful and verified
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175552/round_5/screenshot_006_credentials_input_complete.png
+[2025-10-22 17:57:19.627] [INFO] ? Credential input phase completed successfully
+[2025-10-22 17:57:19.627] [INFO] Login process completed successfully
+[2025-10-22 17:57:19.627] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2025-10-22 17:57:20.975] [INFO] Captured 16 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[2025-10-22 17:57:20.975] [INFO] API call: l1.Y.a0 -> State: Authenticating
+[2025-10-22 17:57:20.975] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+Add observed state: CredentialInput (total: 2, compressed: 2)
+[2025-10-22 17:57:20.975] [INFO] API call: com.newsblur.activity.LoginProgress.onCreate -> State: CredentialInput
+Add observed state: Authenticating (total: 3, compressed: 3)
+[2025-10-22 17:57:20.975] [INFO] API call: i2.b.p -> State: Authenticating
+[2025-10-22 17:57:20.975] [INFO] API call: m2.e.b -> State: Authenticating
+[2025-10-22 17:57:20.975] [INFO] API call: m2.a.a -> State: Authenticating
+[2025-10-22 17:57:20.975] [INFO] API call: m2.a.b -> State: Authenticating
+[2025-10-22 17:57:20.975] [INFO] API call: h1.C.a -> State: Authenticating
+[BUG_DETECTOR] Recorded error state: NetworkError
+[BUG_DETECTOR] Recorded error state: NetworkError
+Add observed state: NetworkError (total: 8, compressed: 4)
+[2025-10-22 17:57:20.976] [INFO] API call: E1.a.h -> State: NetworkError
+Add observed state: CredentialInput (total: 9, compressed: 5)
+[2025-10-22 17:57:20.976] [INFO] API call: com.newsblur.activity.Login.onCreate -> State: CredentialInput
+[2025-10-22 17:57:20.976] [INFO] Known states from Frida: 9/16
+State machine: Stopped analysis at error state: NetworkError
+State machine validation passed (stopped at error)
+  Compressed sequence: Authenticating -> CredentialInput -> Authenticating (?5) -> NetworkError [ERROR - STOPPED]
+  Original states: 9, Compressed: 5
+[2025-10-22 17:57:20.976] [INFO] State machine validation passed
+[2025-10-22 17:57:21.101] [INFO] [TAINT] Extracting taint flows for Round 5
+[2025-10-22 17:57:21.101] [INFO] Extracting taint analysis results for Round 5
+[2025-10-22 17:57:21.102] [INFO] [TAINT] Round 5: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_5_taint.txt
+[2025-10-22 17:57:21.102] [INFO] [TAINT] Round report saved to: reports/taint/round_5_taint.txt
+[2025-10-22 17:57:21.102] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2025-10-22 17:57:21.106] [INFO] Frida monitoring stopped
+[2025-10-22 17:57:21.106] [INFO] [BUG_DETECTION] Running bug detectors for Round 5
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 0
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Total navigation events: 0
+[BUG_DETECTION] Total bugs detected: 0
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2025-10-22 17:57:21.106] [INFO] ? No bugs detected in Round 5
+[2025-10-22 17:57:21.106] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:57:21.106] [INFO] ROUND 5 COMPLETED
+[2025-10-22 17:57:21.106] [INFO] Round duration: 100043ms
+[2025-10-22 17:57:21.106] [INFO] Total attempts: 5
+[2025-10-22 17:57:21.106] [INFO] Successful logins: 3
+[2025-10-22 17:57:21.106] [INFO] Failed logins: 2
+[2025-10-22 17:57:21.106] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175552/round_5/screenshot_007_round_5_end.png
+[2025-10-22 17:57:24.487] [INFO] ================================================================================
+[2025-10-22 17:57:24.487] [INFO] ROUND 6 STARTED
+[2025-10-22 17:57:24.488] [INFO] Round timestamp: 2025-10-22 17:57:24.488
+[2025-10-22 17:57:24.488] [INFO] ================================================================================
+[2025-10-22 17:57:24.488] [INFO] Round 6: Restoring baseline snapshot to clean state
+[SNAPSHOT] Restoring: com_newsblur_baseline_20251022_175029
+[2025-10-22 17:57:31.283] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login button detected:  (ID: com.newsblur:id/login_viewswitcher)
+Username field detected: username (ID: com.newsblur:id/login_username)
+Password field detected: password (ID: com.newsblur:id/login_password)
+Activity hint not matched: com.newsblur/.activity.Login
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.newsblur/.activity.Login (match: false)
+[2025-10-22 17:57:35.614] [INFO] Verified: App restored to login page
+[2025-10-22 17:57:35.614] [INFO] Appended Frida round marker for round 6
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175735/round_6/screenshot_001_round_6_start.png
+[SNAPSHOT] Restoring: com_newsblur_baseline_20251022_175029
+[2025-10-22 17:57:42.898] [INFO] Baseline snapshot restored successfully
+[2025-10-22 17:58:32.898] [INFO] Emulator snapshot operation completed
+[2025-10-22 17:58:32.898] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+FridaManager: Starting Frida monitoring for package: com.newsblur
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.newsblur src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2025-10-22 17:58:32.901] [INFO] Frida monitoring started successfully
+[2025-10-22 17:58:32.901] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login button detected:  (ID: com.newsblur:id/login_viewswitcher)
+Username field detected: username (ID: com.newsblur:id/login_username)
+Password field detected: password (ID: com.newsblur:id/login_password)
+Activity hint not matched: com.newsblur/.activity.Login
+[2025-10-22 17:58:34.533] [INFO] ? Inducing BAD network state: SLOW_NETWORK for 15 seconds
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.newsblur/.activity.Login (match: false)
+[2025-10-22 17:58:35.351] [INFO] UI manager detected login page
+[2025-10-22 17:58:35.351] [INFO]   - Google login: false
+[2025-10-22 17:58:35.351] [INFO]   - Facebook login: false
+[2025-10-22 17:58:35.351] [INFO]   - Username field: true
+[2025-10-22 17:58:35.351] [INFO]   - Password field: true
+[SNAPSHOT] Skipping creation - already exists: baseline
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175735/round_6/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Skipping creation - already exists: baseline
+[2025-10-22 17:58:35.658] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175735/round_6/screenshot_003_baseline_login_page.png
+[2025-10-22 17:58:35.824] [INFO] Using standard account: 9srgai
+[2025-10-22 17:58:35.824] [INFO] Using standard password: /{S!`#z,<&.l
+[2025-10-22 17:58:35.824] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 17:58:35.824] [INFO] Selected username: 9srgai
+[2025-10-22 17:58:35.824] [INFO] Selected password: [12 chars]
+[2025-10-22 17:58:35.824] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 17:58:35.824] [INFO] Username to input: 9srgai
+[2025-10-22 17:58:35.824] [INFO] Password length: 12 characters
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175735/round_6/screenshot_004_before_credential_input.png
+Using ADB to input credentials (without clicking button)...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[CREDENTIAL_INPUT] Found username field at (160,170)
+[CREDENTIAL_INPUT] Input username: 9srgai
+[INPUT] Clicking at (160, 170) to focus field
+[INPUT] Inputting text char-by-char (length: 6)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: 9srgai (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[CREDENTIAL_INPUT] Found password field at (160,251)
+[CREDENTIAL_INPUT] Input password: [12 chars]
+[INPUT] Clicking at (160, 251) to focus field
+[INPUT] Inputting text char-by-char (length: 12)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[CREDENTIAL_INPUT] Credentials inputted successfully (button NOT clicked)
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175735/round_6/screenshot_005_after_credential_input.png
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: 9srgai (id: com.newsblur:id/login_username)
+[Match] Username field: ??????????????????????????????????????? (id: com.newsblur:id/login_password)
+[Match] Password field: ??????????????????????????????????????? (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Click element: LOGIN Press to log in position: (252, 311)
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1761155928108
+[Match] Normal login button:  (id: com.newsblur:id/login_progress_container)
+[Match] Normal login button:  (id: com.newsblur:id/login_logging_in_progress)
+[Match] Normal login button: Logging in??? (id: com.newsblur:id/login_logging_in)
+[Match] Username field: Logging in??? (id: com.newsblur:id/login_logging_in)
+[Match] Normal login button: Retrieving feeds??? (id: com.newsblur:id/login_retrieving_feeds)
+[Match] Username field: Retrieving feeds??? (id: com.newsblur:id/login_retrieving_feeds)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[2025-10-22 17:58:49.546] [INFO] ? Restoring GOOD network state
+[Match] Normal login button:  (id: com.newsblur:id/login_progress_container)
+[Match] Normal login button:  (id: com.newsblur:id/login_logging_in_progress)
+[Match] Normal login button: Logging in??? (id: com.newsblur:id/login_logging_in)
+[Match] Username field: Logging in??? (id: com.newsblur:id/login_logging_in)
+[Match] Normal login button: Retrieving feeds??? (id: com.newsblur:id/login_retrieving_feeds)
+[Match] Username field: Retrieving feeds??? (id: com.newsblur:id/login_retrieving_feeds)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[2025-10-22 17:59:01.195] [INFO] === Verifying Credential Input ===
+[2025-10-22 17:59:01.195] [INFO] UI changed after input: false
+[2025-10-22 17:59:01.195] [INFO] Username visible in UI: false
+[2025-10-22 17:59:01.195] [INFO] Password field appears filled: true
+[2025-10-22 17:59:01.195] [INFO] Input focus changed: false
+[2025-10-22 17:59:01.195] [INFO] Has input indicators: true
+[2025-10-22 17:59:01.195] [INFO] === Input Verification Result: VERIFIED ===
+[2025-10-22 17:59:01.195] [INFO] ? UI manager credentials input successful and verified
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175735/round_6/screenshot_006_credentials_input_complete.png
+[2025-10-22 17:59:02.386] [INFO] ? Credential input phase completed successfully
+[2025-10-22 17:59:02.386] [INFO] Login process completed successfully
+[2025-10-22 17:59:02.386] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2025-10-22 17:59:03.716] [INFO] Captured 18 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[2025-10-22 17:59:03.716] [INFO] API call: l1.Y.a0 -> State: Authenticating
+[2025-10-22 17:59:03.716] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+Add observed state: CredentialInput (total: 2, compressed: 2)
+[2025-10-22 17:59:03.716] [INFO] API call: com.newsblur.activity.LoginProgress.onCreate -> State: CredentialInput
+Add observed state: Authenticating (total: 3, compressed: 3)
+[2025-10-22 17:59:03.716] [INFO] API call: i2.b.p -> State: Authenticating
+[2025-10-22 17:59:03.716] [INFO] API call: m2.e.b -> State: Authenticating
+[2025-10-22 17:59:03.716] [INFO] API call: m2.a.a -> State: Authenticating
+[2025-10-22 17:59:03.716] [INFO] API call: m2.a.b -> State: Authenticating
+[2025-10-22 17:59:03.716] [INFO] API call: h1.C.a -> State: Authenticating
+[BUG_DETECTOR] Recorded error state: NetworkError
+[BUG_DETECTOR] Recorded error state: NetworkError
+Add observed state: NetworkError (total: 8, compressed: 4)
+[2025-10-22 17:59:03.716] [INFO] API call: E1.a.h -> State: NetworkError
+[2025-10-22 17:59:03.716] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+Add observed state: CredentialInput (total: 9, compressed: 5)
+[2025-10-22 17:59:03.716] [INFO] API call: com.newsblur.activity.Login.onCreate -> State: CredentialInput
+[2025-10-22 17:59:03.716] [INFO] Known states from Frida: 9/18
+State machine: Stopped analysis at error state: NetworkError
+State machine validation passed (stopped at error)
+  Compressed sequence: Authenticating -> CredentialInput -> Authenticating (?5) -> NetworkError [ERROR - STOPPED]
+  Original states: 9, Compressed: 5
+[2025-10-22 17:59:03.716] [INFO] State machine validation passed
+[2025-10-22 17:59:03.849] [INFO] [TAINT] Extracting taint flows for Round 6
+[2025-10-22 17:59:03.850] [INFO] Extracting taint analysis results for Round 6
+[2025-10-22 17:59:03.850] [INFO] [TAINT] Round 6: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_6_taint.txt
+[2025-10-22 17:59:03.850] [INFO] [TAINT] Round report saved to: reports/taint/round_6_taint.txt
+[2025-10-22 17:59:03.850] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2025-10-22 17:59:03.854] [INFO] Frida monitoring stopped
+[2025-10-22 17:59:03.854] [INFO] [BUG_DETECTION] Running bug detectors for Round 6
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 0
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Total navigation events: 0
+[BUG_DETECTION] Total bugs detected: 0
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2025-10-22 17:59:03.854] [INFO] ? No bugs detected in Round 6
+[2025-10-22 17:59:03.854] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:59:03.854] [INFO] ROUND 6 COMPLETED
+[2025-10-22 17:59:03.854] [INFO] Round duration: 99367ms
+[2025-10-22 17:59:03.854] [INFO] Total attempts: 6
+[2025-10-22 17:59:03.854] [INFO] Successful logins: 4
+[2025-10-22 17:59:03.855] [INFO] Failed logins: 2
+[2025-10-22 17:59:03.855] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175735/round_6/screenshot_007_round_6_end.png
+[2025-10-22 17:59:07.201] [INFO] ================================================================================
+[2025-10-22 17:59:07.201] [INFO] ROUND 7 STARTED
+[2025-10-22 17:59:07.201] [INFO] Round timestamp: 2025-10-22 17:59:07.201
+[2025-10-22 17:59:07.201] [INFO] ================================================================================
+[2025-10-22 17:59:07.201] [INFO] Round 7: Restoring baseline snapshot to clean state
+[SNAPSHOT] Restoring: com_newsblur_baseline_20251022_175029
+[2025-10-22 17:59:13.994] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login button detected:  (ID: com.newsblur:id/login_viewswitcher)
+Username field detected: username (ID: com.newsblur:id/login_username)
+Password field detected: password (ID: com.newsblur:id/login_password)
+Activity hint not matched: com.newsblur/.activity.Login
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.newsblur/.activity.Login (match: false)
+[2025-10-22 17:59:18.406] [INFO] Verified: App restored to login page
+[2025-10-22 17:59:18.406] [INFO] Appended Frida round marker for round 7
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175918/round_7/screenshot_001_round_7_start.png
+[SNAPSHOT] Restoring: com_newsblur_baseline_20251022_175029
+[2025-10-22 17:59:25.615] [INFO] Baseline snapshot restored successfully
+[2025-10-22 18:00:15.615] [INFO] Emulator snapshot operation completed
+[2025-10-22 18:00:15.615] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+FridaManager: Starting Frida monitoring for package: com.newsblur
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.newsblur src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2025-10-22 18:00:15.618] [INFO] Frida monitoring started successfully
+[2025-10-22 18:00:15.618] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login button detected:  (ID: com.newsblur:id/login_viewswitcher)
+Username field detected: username (ID: com.newsblur:id/login_username)
+Password field detected: password (ID: com.newsblur:id/login_password)
+Activity hint not matched: com.newsblur/.activity.Login
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.newsblur/.activity.Login (match: false)
+[2025-10-22 18:00:18.118] [INFO] UI manager detected login page
+[2025-10-22 18:00:18.118] [INFO]   - Google login: false
+[2025-10-22 18:00:18.118] [INFO]   - Facebook login: false
+[2025-10-22 18:00:18.118] [INFO]   - Username field: true
+[2025-10-22 18:00:18.118] [INFO]   - Password field: true
+[SNAPSHOT] Skipping creation - already exists: baseline
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175918/round_7/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Skipping creation - already exists: baseline
+[2025-10-22 18:00:18.378] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175918/round_7/screenshot_003_baseline_login_page.png
+[2025-10-22 18:00:18.538] [INFO] Using standard account: jijafj1gt4
+[2025-10-22 18:00:18.538] [INFO] Using standard password: (_g~H$f~Us%{
+[2025-10-22 18:00:18.538] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 18:00:18.538] [INFO] Selected username: jijafj1gt4
+[2025-10-22 18:00:18.538] [INFO] Selected password: [12 chars]
+[2025-10-22 18:00:18.538] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 18:00:18.538] [INFO] Username to input: jijafj1gt4
+[2025-10-22 18:00:18.538] [INFO] Password length: 12 characters
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175918/round_7/screenshot_004_before_credential_input.png
+Using ADB to input credentials (without clicking button)...
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[CREDENTIAL_INPUT] Found username field at (160,170)
+[CREDENTIAL_INPUT] Input username: jijafj1gt4
+[INPUT] Clicking at (160, 170) to focus field
+[INPUT] Inputting text char-by-char (length: 10)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: jijafj1gt4 (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[CREDENTIAL_INPUT] Found password field at (160,251)
+[CREDENTIAL_INPUT] Input password: [12 chars]
+[INPUT] Clicking at (160, 251) to focus field
+[INPUT] Inputting text char-by-char (length: 12)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[CREDENTIAL_INPUT] Credentials inputted successfully (button NOT clicked)
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175918/round_7/screenshot_005_after_credential_input.png
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: jijafj1gt4 (id: com.newsblur:id/login_username)
+[Match] Username field: ???????????????????????????????????? (id: com.newsblur:id/login_password)
+[Match] Password field: ???????????????????????????????????? (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+Click element: LOGIN Press to log in position: (252, 311)
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1761156031411
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[Match] Normal login button:  (id: com.newsblur:id/login_viewswitcher)
+[Match] Normal login button:  (id: com.newsblur:id/login_fields_container)
+[Match] Username field: username (id: com.newsblur:id/login_username)
+[Match] Username field: password (id: com.newsblur:id/login_password)
+[Match] Password field: password (id: com.newsblur:id/login_password)
+[Match] Normal login button: LOGIN Press to log in (id: com.newsblur:id/login_button)
+[Match] Normal login button: I need to register (id: com.newsblur:id/login_change_to_register)
+[Match] Normal login button: Self-hosted custom server (id: com.newsblur:id/login_custom_server)
+[Cache Status] Normal: ? Google: ? Facebook: ? Username: ? Password: ?
+[2025-10-22 18:00:44.626] [INFO] === Verifying Credential Input ===
+[2025-10-22 18:00:44.626] [INFO] UI changed after input: false
+[2025-10-22 18:00:44.626] [INFO] Username visible in UI: false
+[2025-10-22 18:00:44.626] [INFO] Password field appears filled: true
+[2025-10-22 18:00:44.626] [INFO] Input focus changed: false
+[2025-10-22 18:00:44.626] [INFO] Has input indicators: true
+[2025-10-22 18:00:44.626] [INFO] === Input Verification Result: VERIFIED ===
+[2025-10-22 18:00:44.626] [INFO] ? UI manager credentials input successful and verified
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175918/round_7/screenshot_006_credentials_input_complete.png
+[2025-10-22 18:00:45.816] [INFO] ? Credential input phase completed successfully
+[2025-10-22 18:00:45.816] [INFO] Login process completed successfully
+[2025-10-22 18:00:45.816] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2025-10-22 18:00:47.144] [INFO] Captured 16 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[2025-10-22 18:00:47.144] [INFO] API call: l1.Y.a0 -> State: Authenticating
+[2025-10-22 18:00:47.144] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+Add observed state: CredentialInput (total: 2, compressed: 2)
+[2025-10-22 18:00:47.144] [INFO] API call: com.newsblur.activity.LoginProgress.onCreate -> State: CredentialInput
+Add observed state: Authenticating (total: 3, compressed: 3)
+[2025-10-22 18:00:47.144] [INFO] API call: i2.b.p -> State: Authenticating
+[2025-10-22 18:00:47.144] [INFO] API call: m2.e.b -> State: Authenticating
+[2025-10-22 18:00:47.144] [INFO] API call: m2.a.a -> State: Authenticating
+[2025-10-22 18:00:47.144] [INFO] API call: m2.a.b -> State: Authenticating
+[2025-10-22 18:00:47.144] [INFO] API call: h1.C.a -> State: Authenticating
+[BUG_DETECTOR] Recorded error state: NetworkError
+[BUG_DETECTOR] Recorded error state: NetworkError
+Add observed state: NetworkError (total: 8, compressed: 4)
+[2025-10-22 18:00:47.144] [INFO] API call: E1.a.h -> State: NetworkError
+Add observed state: CredentialInput (total: 9, compressed: 5)
+[2025-10-22 18:00:47.144] [INFO] API call: com.newsblur.activity.Login.onCreate -> State: CredentialInput
+[2025-10-22 18:00:47.144] [INFO] Known states from Frida: 9/16
+State machine: Stopped analysis at error state: NetworkError
+State machine validation passed (stopped at error)
+  Compressed sequence: Authenticating -> CredentialInput -> Authenticating (?5) -> NetworkError [ERROR - STOPPED]
+  Original states: 9, Compressed: 5
+[2025-10-22 18:00:47.144] [INFO] State machine validation passed
+[2025-10-22 18:00:47.231] [INFO] [TAINT] Extracting taint flows for Round 7
+[2025-10-22 18:00:47.231] [INFO] Extracting taint analysis results for Round 7
+[2025-10-22 18:00:47.232] [INFO] [TAINT] Round 7: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_7_taint.txt
+[2025-10-22 18:00:47.232] [INFO] [TAINT] Round report saved to: reports/taint/round_7_taint.txt
+[2025-10-22 18:00:47.232] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2025-10-22 18:00:47.236] [INFO] Frida monitoring stopped
+[2025-10-22 18:00:47.236] [INFO] [BUG_DETECTION] Running bug detectors for Round 7
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 0
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Total navigation events: 0
+[BUG_DETECTION] Total bugs detected: 0
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2025-10-22 18:00:47.236] [INFO] ? No bugs detected in Round 7
+[2025-10-22 18:00:47.236] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 18:00:47.236] [INFO] ROUND 7 COMPLETED
+[2025-10-22 18:00:47.236] [INFO] Round duration: 100035ms
+[2025-10-22 18:00:47.236] [INFO] Total attempts: 7
+[2025-10-22 18:00:47.236] [INFO] Successful logins: 5
+[2025-10-22 18:00:47.236] [INFO] Failed logins: 2
+[2025-10-22 18:00:47.236] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /app/reports/screenshots/com.newsblur/20251022_175918/round_7/screenshot_007_round_7_end.png
+[2025-10-22 18:00:50.604] [INFO] ================================================================================
+[2025-10-22 18:00:50.604] [INFO] ROUND 8 STARTED
+[2025-10-22 18:00:50.604] [INFO] Round timestamp: 2025-10-22 18:00:50.604
+[2025-10-22 18:00:50.604] [INFO] ================================================================================
+[2025-10-22 18:00:50.604] [INFO] Round 8: Restoring baseline snapshot to clean state
+[SNAPSHOT] Restoring: com_newsblur_baseline_20251022_175029
+[2025-10-22 18:00:57.385] [INFO] Successfully restored baseline snapshot

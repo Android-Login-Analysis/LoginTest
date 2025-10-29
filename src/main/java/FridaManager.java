@@ -172,26 +172,59 @@ public class FridaManager {
             JSONObject analysisResult = new JSONObject(new String(java.nio.file.Files.readAllBytes(
                 java.nio.file.Paths.get(staticAnalysisResultPath))));
             
-            if (analysisResult.has("detailedMethods")) {
-                JSONObject detailedMethods = analysisResult.getJSONObject("detailedMethods");
+            // Check for 'matches' field (current format)
+            if (analysisResult.has("matches")) {
+                JSONObject matches = analysisResult.getJSONObject("matches");
                 
-                for (String stateName : detailedMethods.keySet()) {
-                    JSONArray methods = detailedMethods.getJSONArray(stateName);
+                // First, collect all method signatures per state
+                Map<String, List<String>> stateToSignatures = new HashMap<>();
+                
+                for (String stateName : matches.keySet()) {
+                    JSONArray methods = matches.getJSONArray(stateName);
+                    List<String> signatures = new ArrayList<>();
                     
                     for (int i = 0; i < methods.length(); i++) {
                         JSONObject method = methods.getJSONObject(i);
-                        String fullSignature = method.getString("fullSignature");
+                        String className = method.getString("className");
+                        String methodName = method.getString("methodName");
+                        String packageName = method.optString("packageName", "");
                         
-                        // Create exact regex pattern for each method
-                        String regexPattern = "^" + fullSignature.replace(".", "\\.") + "$";
-                        stateToApiRegexPatterns.put(stateName, Pattern.compile(regexPattern));
+                        // Build full class name: packageName.className
+                        String fullClassName = packageName.isEmpty() ? className : packageName + "." + className;
+                        
+                        // Create pattern: fullClassName.methodName
+                        String signature = fullClassName + "." + methodName;
+                        
+                        // Escape special regex characters
+                        String escapedSignature = signature.replace(".", "\\.")
+                                                           .replace("$", "\\$");
+                        signatures.add(escapedSignature);
+                    }
+                    
+                    stateToSignatures.put(stateName, signatures);
+                }
+                
+                // Now create combined regex patterns for each state
+                for (Map.Entry<String, List<String>> entry : stateToSignatures.entrySet()) {
+                    String stateName = entry.getKey();
+                    List<String> signatures = entry.getValue();
+                    
+                    if (!signatures.isEmpty()) {
+                        // Combine all signatures with | (OR) operator
+                        String combinedPattern = "(" + String.join("|", signatures) + ")";
+                        stateToApiRegexPatterns.put(stateName, Pattern.compile(combinedPattern));
+                        
+                        System.out.println("FridaManager: State " + stateName + " has " + signatures.size() + " method signatures");
                     }
                 }
                 
-                System.out.println("FridaManager:   Loaded " + stateToApiRegexPatterns.size() + " regex patterns from static analysis result");
+                System.out.println("FridaManager: Loaded " + stateToApiRegexPatterns.size() + " states from static analysis result");
+            } else {
+                System.err.println("FridaManager: Static analysis result missing 'matches' field");
             }
         } catch (Exception e) {
             System.err.println("FridaManager: Failed to parse static analysis result: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -228,11 +261,8 @@ public class FridaManager {
             command.add(appPackageName);
             command.add(scriptPath); // Pass script path to controller
             
-            // If using static analysis script, pass analysis result path
-            if (scriptPath.endsWith("static_analysis_agent.js") && staticAnalysisResultPath != null) {
-                command.add(staticAnalysisResultPath);
-                logInfo("Passing static analysis result path: " + staticAnalysisResultPath);
-            }
+            // frida_controller.py will automatically load static analysis result from config
+            // No need to pass it explicitly
             
             pb.command(command);
             pb.redirectErrorStream(true);
@@ -278,12 +308,8 @@ public class FridaManager {
      * Get the Frida script path to use
      */
     private String getFridaScriptPath() {
-        // If there is a static analysis result, use the generic script
-        if (staticAnalysisResultPath != null && new File(staticAnalysisResultPath).exists()) {
-            return "src/main/resources/static_analysis_agent.js";
-        }
-        
-        // Otherwise use the default script
+        // Always use login_agent.js - it supports both regex patterns and static analysis
+        // The static analysis result will be passed via frida_controller.py
         return fridaAgentJsPath;
     }
     

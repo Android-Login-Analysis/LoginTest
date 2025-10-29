@@ -48,6 +48,12 @@ public class ApiLogAnalyzer {
         this.apiCallLog = new ArrayList<>();
         this.roundLogs = new ArrayList<>();
     }
+    
+    public ApiLogAnalyzer(Map<String, Pattern> patterns) {
+        this.stateRegexPatterns = new HashMap<>(patterns);
+        this.apiCallLog = new ArrayList<>();
+        this.roundLogs = new ArrayList<>();
+    }
 
     private Map<String, Pattern> loadRegexPatterns(String filePath) throws IOException {
         Map<String, Pattern> patterns = new HashMap<>();
@@ -108,8 +114,32 @@ public class ApiLogAnalyzer {
      * Parse a single log line
      */
     private ApiCallEntry parseLogLine(String line) {
-        // Frida log format: TIMESTAMP ::: CLASS_NAME.METHOD_NAME
-        Pattern logEntryPattern = Pattern.compile("([0-9]+)[ ]*:::[ ]*([^.]+).([^ ]+)");
+        // Frida log format: TIMESTAMP ::: CLASS_NAME.METHOD_NAME ::: STATE
+        // Try new format with state first
+        // Use greedy match for className to capture full package.class path
+        Pattern logEntryPatternWithState = Pattern.compile("([0-9]+)[ ]*:::[ ]*(.+)\\.([^ ]+)[ ]*:::[ ]*(.+)");
+        Matcher matcherWithState = logEntryPatternWithState.matcher(line);
+        
+        if (matcherWithState.find()) {
+            try {
+                long timestamp = Long.parseLong(matcherWithState.group(1));
+                String className = matcherWithState.group(2);
+                String methodName = matcherWithState.group(3);
+                String state = matcherWithState.group(4).trim();
+                ApiCallEntry entry = new ApiCallEntry(timestamp, className, methodName);
+                entry.mappedState = state;
+                return entry;
+            } catch (NumberFormatException e) {
+                System.err.println("Skipping log line due to timestamp parse error: " + line);
+                return null;
+            } catch (Exception e) {
+                // Swallow and treat as unparsable line
+                return null;
+            }
+        }
+        
+        // Fall back to old format without state
+        Pattern logEntryPattern = Pattern.compile("([0-9]+)[ ]*:::[ ]*(.+)\\.([^ ]+)");
         Matcher matcher = logEntryPattern.matcher(line);
 
         if (matcher.find()) {

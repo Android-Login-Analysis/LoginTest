@@ -1,0 +1,577 @@
+{
+  "analysisTime": 1759955192019,
+  "apkPath": "apps/com.newsblur_240.apk",
+  "matches": {
+    "IR_LoginEvidence": [
+      {
+        "fullSignature": "g1.f.get",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<g1.f: java.lang.Object get()>",
+        "methodName": "get",
+        "className": "f",
+        "isActivity": false,
+        "packageName": "g1"
+      },
+      {
+        "fullSignature": "com.google.gson.internal.bind.ObjectTypeAdapter.e",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<com.google.gson.internal.bind.ObjectTypeAdapter: java.io.Serializable e(f1.a,int)>",
+        "methodName": "e",
+        "className": "ObjectTypeAdapter",
+        "isActivity": false,
+        "packageName": "com.google.gson.internal.bind"
+      },
+      {
+        "fullSignature": "j2.a.b",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<j2.a: boolean b(java.lang.String)>",
+        "methodName": "b",
+        "className": "a",
+        "isActivity": false,
+        "packageName": "j2"
+      },
+      {
+        "fullSignature": "C.g.<clinit>",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<C.g: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "g",
+        "isActivity": false,
+        "packageName": "C"
+      },
+      {
+        "fullSignature": "C.u.a",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<C.u: void a(b.c)>",
+        "methodName": "a",
+        "className": "u",
+        "isActivity": false,
+        "packageName": "C"
+      },
+      {
+        "fullSignature": "l0.l.a",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<l0.l: java.lang.String a(byte[],byte[][],int)>",
+        "methodName": "a",
+        "className": "l",
+        "isActivity": false,
+        "packageName": "l0"
+      },
+      {
+        "fullSignature": "androidx.viewpager.widget.ViewPager.q",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<androidx.viewpager.widget.ViewPager: void q(int)>",
+        "methodName": "q",
+        "className": "ViewPager",
+        "isActivity": false,
+        "packageName": "androidx.viewpager.widget"
+      },
+      {
+        "fullSignature": "h1.C.a",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<h1.C: java.lang.Object a()>",
+        "methodName": "a",
+        "className": "C",
+        "isActivity": false,
+        "packageName": "h1"
+      },
+      {
+        "fullSignature": "h1.w.i",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<h1.w: java.lang.Object i(java.lang.Object)>",
+        "methodName": "i",
+        "className": "w",
+        "isActivity": false,
+        "packageName": "h1"
+      },
+      {
+        "fullSignature": "h1.k.a",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<h1.k: java.lang.Object a()>",
+        "methodName": "a",
+        "className": "k",
+        "isActivity": false,
+        "packageName": "h1"
+      },
+      {
+        "fullSignature": "l1.Y.a0",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<l1.Y: void a0()>",
+        "methodName": "a0",
+        "className": "Y",
+        "isActivity": false,
+        "packageName": "l1"
+      },
+      {
+        "fullSignature": "l1.J.E",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<l1.J: android.view.View E(android.view.LayoutInflater,android.view.ViewGroup)>",
+        "methodName": "E",
+        "className": "J",
+        "isActivity": false,
+        "packageName": "l1"
+      },
+      {
+        "fullSignature": "com.newsblur.service.NBSyncService.u",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<com.newsblur.service.NBSyncService: void u()>",
+        "methodName": "u",
+        "className": "NBSyncService",
+        "isActivity": false,
+        "packageName": "com.newsblur.service"
+      },
+      {
+        "fullSignature": "o.h.run",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<o.h: void run()>",
+        "methodName": "run",
+        "className": "h",
+        "isActivity": false,
+        "packageName": "o"
+      },
+      {
+        "fullSignature": "o2.e.<clinit>",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<o2.e: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "e",
+        "isActivity": false,
+        "packageName": "o2"
+      },
+      {
+        "fullSignature": "p1.L.O",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<p1.L: void O(android.content.ContextWrapper,com.newsblur.database.b)>",
+        "methodName": "O",
+        "className": "L",
+        "isActivity": false,
+        "packageName": "p1"
+      },
+      {
+        "fullSignature": "e1.a.<init>",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<e1.a: void <init>()>",
+        "methodName": "<init>",
+        "className": "a",
+        "isActivity": false,
+        "packageName": "e1"
+      },
+      {
+        "fullSignature": "e1.a.a",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<e1.a: void a(java.lang.reflect.Type)>",
+        "methodName": "a",
+        "className": "a",
+        "isActivity": false,
+        "packageName": "e1"
+      },
+      {
+        "fullSignature": "h2.t.<init>",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<h2.t: void <init>(h2.s)>",
+        "methodName": "<init>",
+        "className": "t",
+        "isActivity": false,
+        "packageName": "h2"
+      },
+      {
+        "fullSignature": "com.google.gson.internal.bind.JsonElementTypeAdapter.d",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<com.google.gson.internal.bind.JsonElementTypeAdapter: com.google.gson.n d(f1.a,int)>",
+        "methodName": "d",
+        "className": "JsonElementTypeAdapter",
+        "isActivity": false,
+        "packageName": "com.google.gson.internal.bind"
+      },
+      {
+        "fullSignature": "E.b.<clinit>",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<E.b: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "b",
+        "isActivity": false,
+        "packageName": "E"
+      },
+      {
+        "fullSignature": "l2.l.f",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<l2.l: void f(int,int,int,l2.i)>",
+        "methodName": "f",
+        "className": "l",
+        "isActivity": false,
+        "packageName": "l2"
+      },
+      {
+        "fullSignature": "androidx.appcompat.widget.SwitchCompat.setChecked",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<androidx.appcompat.widget.SwitchCompat: void setChecked(boolean)>",
+        "methodName": "setChecked",
+        "className": "SwitchCompat",
+        "isActivity": false,
+        "packageName": "androidx.appcompat.widget"
+      },
+      {
+        "fullSignature": "p2.j.f",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<p2.j: java.lang.String f(javax.net.ssl.SSLSocket)>",
+        "methodName": "f",
+        "className": "j",
+        "isActivity": false,
+        "packageName": "p2"
+      },
+      {
+        "fullSignature": "E1.a.h",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<E1.a: java.lang.Object h(java.lang.Object)>",
+        "methodName": "h",
+        "className": "a",
+        "isActivity": false,
+        "packageName": "E1"
+      },
+      {
+        "fullSignature": "p2.o.j",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<p2.o: void j(java.lang.Object,java.lang.String)>",
+        "methodName": "j",
+        "className": "o",
+        "isActivity": false,
+        "packageName": "p2"
+      },
+      {
+        "fullSignature": "i2.b.p",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<i2.b: boolean p(java.lang.String)>",
+        "methodName": "p",
+        "className": "b",
+        "isActivity": false,
+        "packageName": "i2"
+      },
+      {
+        "fullSignature": "i2.b.<clinit>",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<i2.b: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "b",
+        "isActivity": false,
+        "packageName": "i2"
+      },
+      {
+        "fullSignature": "com.google.gson.internal.bind.TypeAdapters$27.b",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<com.google.gson.internal.bind.TypeAdapters$27: java.lang.Object b(f1.a)>",
+        "methodName": "b",
+        "className": "TypeAdapters$27",
+        "isActivity": false,
+        "packageName": "com.google.gson.internal.bind"
+      },
+      {
+        "fullSignature": "androidx.appcompat.widget.SearchView$SearchAutoComplete.setImeVisibility",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<androidx.appcompat.widget.SearchView$SearchAutoComplete: void setImeVisibility(boolean)>",
+        "methodName": "setImeVisibility",
+        "className": "SearchView$SearchAutoComplete",
+        "isActivity": false,
+        "packageName": "androidx.appcompat.widget"
+      },
+      {
+        "fullSignature": "okhttp3.internal.publicsuffix.PublicSuffixDatabase.<clinit>",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<okhttp3.internal.publicsuffix.PublicSuffixDatabase: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "PublicSuffixDatabase",
+        "isActivity": false,
+        "packageName": "okhttp3.internal.publicsuffix"
+      },
+      {
+        "fullSignature": "okhttp3.internal.publicsuffix.PublicSuffixDatabase.a",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<okhttp3.internal.publicsuffix.PublicSuffixDatabase: java.lang.String a(java.lang.String)>",
+        "methodName": "a",
+        "className": "PublicSuffixDatabase",
+        "isActivity": false,
+        "packageName": "okhttp3.internal.publicsuffix"
+      },
+      {
+        "fullSignature": "okhttp3.internal.publicsuffix.PublicSuffixDatabase.b",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<okhttp3.internal.publicsuffix.PublicSuffixDatabase: void b()>",
+        "methodName": "b",
+        "className": "PublicSuffixDatabase",
+        "isActivity": false,
+        "packageName": "okhttp3.internal.publicsuffix"
+      },
+      {
+        "fullSignature": "okhttp3.internal.publicsuffix.PublicSuffixDatabase.<init>",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<okhttp3.internal.publicsuffix.PublicSuffixDatabase: void <init>()>",
+        "methodName": "<init>",
+        "className": "PublicSuffixDatabase",
+        "isActivity": false,
+        "packageName": "okhttp3.internal.publicsuffix"
+      },
+      {
+        "fullSignature": "androidx.appcompat.widget.ActionBarOverlayLayout.setActionBarVisibilityCallback",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<androidx.appcompat.widget.ActionBarOverlayLayout: void setActionBarVisibilityCallback(o.d)>",
+        "methodName": "setActionBarVisibilityCallback",
+        "className": "ActionBarOverlayLayout",
+        "isActivity": false,
+        "packageName": "androidx.appcompat.widget"
+      },
+      {
+        "fullSignature": "m2.a.b",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<m2.a: h2.v b(h2.y,l2.e)>",
+        "methodName": "b",
+        "className": "a",
+        "isActivity": false,
+        "packageName": "m2"
+      },
+      {
+        "fullSignature": "m2.a.a",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<m2.a: h2.y a(m2.f)>",
+        "methodName": "a",
+        "className": "a",
+        "isActivity": false,
+        "packageName": "m2"
+      },
+      {
+        "fullSignature": "m2.e.b",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<m2.e: void b(h2.b,h2.n,h2.l)>",
+        "methodName": "b",
+        "className": "e",
+        "isActivity": false,
+        "packageName": "m2"
+      },
+      {
+        "fullSignature": "n1.b.h",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<n1.b: com.newsblur.network.domain.FeedFolderResponse h()>",
+        "methodName": "h",
+        "className": "b",
+        "isActivity": false,
+        "packageName": "n1"
+      },
+      {
+        "fullSignature": "X1.x.<clinit>",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<X1.x: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "x",
+        "isActivity": false,
+        "packageName": "X1"
+      },
+      {
+        "fullSignature": "l1.d0.b0",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<l1.d0: android.app.Dialog b0(android.os.Bundle)>",
+        "methodName": "b0",
+        "className": "d0",
+        "isActivity": false,
+        "packageName": "l1"
+      },
+      {
+        "fullSignature": "q2.c.<clinit>",
+        "stateName": "IR_LoginEvidence",
+        "methodSignature": "<q2.c: void <clinit>()>",
+        "methodName": "<clinit>",
+        "className": "c",
+        "isActivity": false,
+        "packageName": "q2"
+      }
+    ],
+    "IR_WebViewEvidence": [
+      {
+        "fullSignature": "com.newsblur.view.ReadingScrollView.requestChildFocus",
+        "stateName": "IR_WebViewEvidence",
+        "methodSignature": "<com.newsblur.view.ReadingScrollView: void requestChildFocus(android.view.View,android.view.View)>",
+        "methodName": "requestChildFocus",
+        "className": "ReadingScrollView",
+        "isActivity": false,
+        "packageName": "com.newsblur.view"
+      },
+      {
+        "fullSignature": "p1.F.x",
+        "stateName": "IR_WebViewEvidence",
+        "methodSignature": "<p1.F: long x(h2.t,java.net.URL,java.io.File)>",
+        "methodName": "x",
+        "className": "F",
+        "isActivity": false,
+        "packageName": "p1"
+      },
+      {
+        "fullSignature": "E.n.run",
+        "stateName": "IR_WebViewEvidence",
+        "methodSignature": "<E.n: void run()>",
+        "methodName": "run",
+        "className": "n",
+        "isActivity": false,
+        "packageName": "E"
+      },
+      {
+        "fullSignature": "com.newsblur.view.NewsblurWebview.onKeyDown",
+        "stateName": "IR_WebViewEvidence",
+        "methodSignature": "<com.newsblur.view.NewsblurWebview: boolean onKeyDown(int,android.view.KeyEvent)>",
+        "methodName": "onKeyDown",
+        "className": "NewsblurWebview",
+        "isActivity": false,
+        "packageName": "com.newsblur.view"
+      },
+      {
+        "fullSignature": "com.newsblur.view.NewsblurWebview.setTextSize",
+        "stateName": "IR_WebViewEvidence",
+        "methodSignature": "<com.newsblur.view.NewsblurWebview: void setTextSize(float)>",
+        "methodName": "setTextSize",
+        "className": "NewsblurWebview",
+        "isActivity": false,
+        "packageName": "com.newsblur.view"
+      },
+      {
+        "fullSignature": "com.newsblur.view.NewsblurWebview.<init>",
+        "stateName": "IR_WebViewEvidence",
+        "methodSignature": "<com.newsblur.view.NewsblurWebview: void <init>(android.content.Context,android.util.AttributeSet)>",
+        "methodName": "<init>",
+        "className": "NewsblurWebview",
+        "isActivity": false,
+        "packageName": "com.newsblur.view"
+      },
+      {
+        "fullSignature": "l1.y0.onCreateContextMenu",
+        "stateName": "IR_WebViewEvidence",
+        "methodSignature": "<l1.y0: void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo)>",
+        "methodName": "onCreateContextMenu",
+        "className": "y0",
+        "isActivity": false,
+        "packageName": "l1"
+      },
+      {
+        "fullSignature": "l1.y0.I",
+        "stateName": "IR_WebViewEvidence",
+        "methodSignature": "<l1.y0: void I()>",
+        "methodName": "I",
+        "className": "y0",
+        "isActivity": false,
+        "packageName": "l1"
+      },
+      {
+        "fullSignature": "l1.y0.J",
+        "stateName": "IR_WebViewEvidence",
+        "methodSignature": "<l1.y0: void J()>",
+        "methodName": "J",
+        "className": "y0",
+        "isActivity": false,
+        "packageName": "l1"
+      },
+      {
+        "fullSignature": "q1.d.onMenuItemClick",
+        "stateName": "IR_WebViewEvidence",
+        "methodSignature": "<q1.d: boolean onMenuItemClick(android.view.MenuItem)>",
+        "methodName": "onMenuItemClick",
+        "className": "d",
+        "isActivity": false,
+        "packageName": "q1"
+      },
+      {
+        "fullSignature": "q1.f.onProgressChanged",
+        "stateName": "IR_WebViewEvidence",
+        "methodSignature": "<q1.f: void onProgressChanged(android.webkit.WebView,int)>",
+        "methodName": "onProgressChanged",
+        "className": "f",
+        "isActivity": false,
+        "packageName": "q1"
+      },
+      {
+        "fullSignature": "q1.g.shouldOverrideUrlLoading",
+        "stateName": "IR_WebViewEvidence",
+        "methodSignature": "<q1.g: boolean shouldOverrideUrlLoading(android.webkit.WebView,android.webkit.WebResourceRequest)>",
+        "methodName": "shouldOverrideUrlLoading",
+        "className": "g",
+        "isActivity": false,
+        "packageName": "q1"
+      },
+      {
+        "fullSignature": "q1.g.onReceivedError",
+        "stateName": "IR_WebViewEvidence",
+        "methodSignature": "<q1.g: void onReceivedError(android.webkit.WebView,android.webkit.WebResourceRequest,android.webkit.WebResourceError)>",
+        "methodName": "onReceivedError",
+        "className": "g",
+        "isActivity": false,
+        "packageName": "q1"
+      },
+      {
+        "fullSignature": "q1.g.shouldOverrideUrlLoading",
+        "stateName": "IR_WebViewEvidence",
+        "methodSignature": "<q1.g: boolean shouldOverrideUrlLoading(android.webkit.WebView,java.lang.String)>",
+        "methodName": "shouldOverrideUrlLoading",
+        "className": "g",
+        "isActivity": false,
+        "packageName": "q1"
+      },
+      {
+        "fullSignature": "q1.g.<init>",
+        "stateName": "IR_WebViewEvidence",
+        "methodSignature": "<q1.g: void <init>(com.newsblur.view.NewsblurWebview)>",
+        "methodName": "<init>",
+        "className": "g",
+        "isActivity": false,
+        "packageName": "q1"
+      }
+    ],
+    "Authenticating": [{
+      "fullSignature": "com.newsblur.activity.LoginProgress.onCreate",
+      "stateName": "Authenticating",
+      "methodSignature": "<com.newsblur.activity.LoginProgress: void onCreate(android.os.Bundle)>",
+      "methodName": "onCreate",
+      "className": "LoginProgress",
+      "isActivity": false,
+      "packageName": "com.newsblur.activity"
+    }],
+    "CredentialInput": [
+      {
+        "fullSignature": "com.newsblur.activity.Login.onCreate",
+        "stateName": "CredentialInput",
+        "methodSignature": "<com.newsblur.activity.Login: void onCreate(android.os.Bundle)>",
+        "methodName": "onCreate",
+        "className": "Login",
+        "isActivity": false,
+        "packageName": "com.newsblur.activity"
+      },
+      {
+        "fullSignature": "com.newsblur.activity.LoginProgress.onCreate",
+        "stateName": "CredentialInput",
+        "methodSignature": "<com.newsblur.activity.LoginProgress: void onCreate(android.os.Bundle)>",
+        "methodName": "onCreate",
+        "className": "LoginProgress",
+        "isActivity": false,
+        "packageName": "com.newsblur.activity"
+      },
+      {
+        "fullSignature": "com.newsblur.activity.Login.onCreate",
+        "stateName": "CredentialInput",
+        "methodSignature": "<com.newsblur.activity.Login: void onCreate(android.os.Bundle)>",
+        "methodName": "onCreate",
+        "className": "Login",
+        "isActivity": false,
+        "packageName": "com.newsblur.activity"
+      },
+      {
+        "fullSignature": "com.newsblur.activity.LoginProgress.onCreate",
+        "stateName": "CredentialInput",
+        "methodSignature": "<com.newsblur.activity.LoginProgress: void onCreate(android.os.Bundle)>",
+        "methodName": "onCreate",
+        "className": "LoginProgress",
+        "isActivity": false,
+        "packageName": "com.newsblur.activity"
+      }
+    ]
+  },
+  "patternsPath": "src/main/resources/regex_patterns.txt",
+  "totalPatterns": 70,
+  "statistics": {
+    "matchedStates": 4,
+    "matchedMethods": 62,
+    "totalMethods": 12815
+  }
+}

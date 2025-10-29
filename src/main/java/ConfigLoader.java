@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -23,6 +24,9 @@ public class ConfigLoader {
     private int testInputInterval = 500; // milliseconds
     private int testLoginWait = 5; // seconds
     private int testSnapshotWait = 30; // seconds
+    // Post-login handling
+    private int postLoginWaitSeconds = 10; // seconds
+    private boolean restoreOnMonkeyExhausted = true;
 
     // Monkey configuration
     private int monkeyEvents = 50;
@@ -34,11 +38,20 @@ public class ConfigLoader {
     private int detectionLoginTimeout = 10; // seconds
     private int detectionApiInterval = 1; // seconds
     private int detectionCrashInterval = 2; // seconds
+    // Credential selection configuration
+    private double credentialsUseValidPairProbability = 0.5; // default 50%
 
     // Frida configuration
     private int fridaTimeout = 30; // seconds
     private int fridaRetryCount = 3;
     private int fridaRetryDelay = 2; // seconds
+    private String fridaScriptPath = "src/main/resources/login_agent.js"; // seconds
+    
+    // Static analysis configuration
+    private String staticAnalysisOutputDir = "reports/static_analysis";
+    private String staticAnalysisOutputPattern = "{apk_name}.json";
+    private String staticAnalysisPatternsPath = "src/main/resources/regex_patterns.txt";
+    private int staticAnalysisVersion = 1;
 
     // UI element recognition configuration (general English-only defaults)
     private String loginButtonPatterns = "login,log in,log-in,sign in,sign_in,sign-in,submit,enter,continue,continue with,continue_with,proceed,next,done,ok,confirm,authenticate,verify,access,start,get started,let me in,join";
@@ -48,6 +61,22 @@ public class ConfigLoader {
     private String facebookLoginPatterns = "facebook,fb,sign in with facebook,facebook login,facebook_login,fb_login";
     private String loginActivityPatterns = "LoginActivity,SignInActivity,AuthActivity,AuthenticationActivity,LoginFragment,SignInFragment";
     private String loginPagePatterns = "login,signin,auth,authentication,credentials,login_screen,signin_screen";
+
+    // SSO source exclusion (to avoid false positives from IME/launcher etc.)
+    private String ssoExcludeSubstrings = "inputmethod,keyboard,ime,launcher";
+
+    // Static analysis IR keywords (comma-separated). Keep empty by default; configurable via properties.
+    private String staticIrKeywords = "";
+    
+    // Network chaos testing configuration
+    private boolean networkChaosEnabled = false;
+    private int networkGoodRatio = 40;
+    private int networkBadRatio = 60;
+    private int networkSwitchInterval = 60; // seconds
+    private String networkChaosMode = "random";
+    private String networkDisruptionMethodsStr = "disable_data,slow_network";
+    private int networkDisruptionMinDuration = 10; // seconds
+    private int networkDisruptionMaxDuration = 30; // seconds
 
     // Detection tuning
     private int detectionLoginRetries = 3; // attempts
@@ -66,7 +95,7 @@ public class ConfigLoader {
 
     public ConfigLoader() {
         loadConfigFromProperties();
-        System.out.println("ConfigLoader: Configuration loaded successfully");
+        // Only log once during initialization
     }
 
     /**
@@ -83,9 +112,11 @@ public class ConfigLoader {
                 loadDetectionConfigs();
                 loadFridaConfigs();
                 loadUIElementConfigs();
-                System.out.println("ConfigLoader: Configuration loaded successfully");
+                loadStaticAnalysisConfigs();
+                loadNetworkChaosConfigs();
+                // Configuration loaded - avoid excessive logging
             } else {
-                System.out.println("ConfigLoader: config.properties not found, using default configuration");
+                System.err.println("ConfigLoader: config.properties not found, using default configuration");
             }
         } catch (IOException e) {
             System.err.println("ConfigLoader: Failed to load config.properties: " + e.getMessage());
@@ -112,6 +143,8 @@ public class ConfigLoader {
         testLoginWait = Integer.parseInt(config.getProperty("test.login.wait", "5"));
         testSnapshotWait = Integer.parseInt(config.getProperty("test.snapshot.wait", "30"));
         loginTimeoutSeconds = Integer.parseInt(config.getProperty("detection.login.timeout", "10"));
+        postLoginWaitSeconds = Integer.parseInt(config.getProperty("post.login.wait.seconds", "10"));
+        restoreOnMonkeyExhausted = Boolean.parseBoolean(config.getProperty("monkey.restore.on.exhausted", "true"));
     }
 
     /**
@@ -136,6 +169,18 @@ public class ConfigLoader {
                 .parseInt(config.getProperty("detection.login.retry.interval.ms", String.valueOf(detectionLoginRetryIntervalMs)));
         loginVoteThreshold = Integer
                 .parseInt(config.getProperty("detection.login.vote.threshold", String.valueOf(loginVoteThreshold)));
+        try {
+            String p = config.getProperty("credentials.use_valid_pair_probability", String.valueOf(credentialsUseValidPairProbability));
+            if (p != null) {
+                double v = Double.parseDouble(p);
+                // clamp to [0,1]
+                if (v < 0.0) v = 0.0;
+                if (v > 1.0) v = 1.0;
+                credentialsUseValidPairProbability = v;
+            }
+        } catch (Exception ignore) {
+            // keep default
+        }
     }
 
     /**
@@ -145,6 +190,7 @@ public class ConfigLoader {
         fridaTimeout = Integer.parseInt(config.getProperty("frida.timeout", "30"));
         fridaRetryCount = Integer.parseInt(config.getProperty("frida.retry.count", "3"));
         fridaRetryDelay = Integer.parseInt(config.getProperty("frida.retry.delay", "2"));
+        fridaScriptPath = config.getProperty("frida.script.path", "src/main/resources/login_agent.js");
     }
 
     /**
@@ -159,6 +205,32 @@ public class ConfigLoader {
         loginActivityPatterns = config.getProperty("ui.login.activity.patterns", loginActivityPatterns);
         loginPagePatterns = config.getProperty("ui.login.page.patterns", loginPagePatterns);
         uiClassWhitelist = config.getProperty("ui.class.whitelist", uiClassWhitelist);
+        ssoExcludeSubstrings = config.getProperty("ui.sso.exclude.substrings", ssoExcludeSubstrings);
+    }
+
+    /**
+     * Load static analysis configurations
+     */
+    private void loadStaticAnalysisConfigs() {
+        staticIrKeywords = config.getProperty("static.ir.keywords", staticIrKeywords);
+        staticAnalysisOutputDir = config.getProperty("static.analysis.output.dir", staticAnalysisOutputDir);
+        staticAnalysisOutputPattern = config.getProperty("static.analysis.output.pattern", staticAnalysisOutputPattern);
+        staticAnalysisPatternsPath = config.getProperty("static.analysis.patterns.path", staticAnalysisPatternsPath);
+        staticAnalysisVersion = Integer.parseInt(config.getProperty("static.analysis.version", String.valueOf(staticAnalysisVersion)));
+    }
+    
+    /**
+     * Load network chaos testing configurations
+     */
+    private void loadNetworkChaosConfigs() {
+        networkChaosEnabled = Boolean.parseBoolean(config.getProperty("network.chaos.enabled", "false"));
+        networkGoodRatio = Integer.parseInt(config.getProperty("network.good.ratio", "40"));
+        networkBadRatio = Integer.parseInt(config.getProperty("network.bad.ratio", "60"));
+        networkSwitchInterval = Integer.parseInt(config.getProperty("network.switch.interval", "60"));
+        networkChaosMode = config.getProperty("network.chaos.mode", "random");
+        networkDisruptionMethodsStr = config.getProperty("network.disruption.methods", "disable_data,slow_network");
+        networkDisruptionMinDuration = Integer.parseInt(config.getProperty("network.disruption.min.duration", "10"));
+        networkDisruptionMaxDuration = Integer.parseInt(config.getProperty("network.disruption.max.duration", "30"));
     }
 
     // =============================================================================
@@ -195,6 +267,14 @@ public class ConfigLoader {
 
     public int getTestSnapshotWait() {
         return testSnapshotWait;
+    }
+
+    public int getPostLoginWaitSeconds() {
+        return postLoginWaitSeconds;
+    }
+
+    public boolean isRestoreOnMonkeyExhausted() {
+        return restoreOnMonkeyExhausted;
     }
 
     // =============================================================================
@@ -245,6 +325,13 @@ public class ConfigLoader {
         return loginVoteThreshold;
     }
 
+    /**
+     * Probability [0,1] of using a known valid (username,password) pair when available.
+     */
+    public double getCredentialsUseValidPairProbability() {
+        return credentialsUseValidPairProbability;
+    }
+
     // =============================================================================
     // Frida configuration getter methods
     // =============================================================================
@@ -259,6 +346,10 @@ public class ConfigLoader {
 
     public int getFridaRetryDelay() {
         return fridaRetryDelay;
+    }
+    
+    public String getFridaScriptPath() {
+        return fridaScriptPath;
     }
 
     // =============================================================================
@@ -285,21 +376,27 @@ public class ConfigLoader {
         return facebookLoginPatterns;
     }
 
-    public String getLoginActivityPatterns() {
-        return loginActivityPatterns;
-    }
+public String getLoginActivityPatterns() {
+    return loginActivityPatterns;
+}
 
-    public String getLoginPagePatterns() {
-        return loginPagePatterns;
-    }
+public String getLoginPagePatterns() {
+    return loginPagePatterns;
+}
 
-    public String[] getUiClassWhitelist() {
-        return uiClassWhitelist.split(",");
+public String[] getUiClassWhitelist() {
+    if (uiClassWhitelist == null || uiClassWhitelist.trim().isEmpty()) {
+        return new String[0];
     }
+    return uiClassWhitelist.split(",");
+}
 
-    // =============================================================================
-    // Regular expression pattern getter methods
-    // =============================================================================
+public String[] getSsoExcludeSubstrings() {
+    if (ssoExcludeSubstrings == null || ssoExcludeSubstrings.trim().isEmpty()) {
+        return new String[0];
+    }
+    return ssoExcludeSubstrings.split(",");
+}
 
     public Pattern getUsernamePattern() {
         return Pattern.compile(usernamePatternStr, Pattern.CASE_INSENSITIVE);
@@ -375,5 +472,93 @@ public class ConfigLoader {
 
     public String getApkPath() {
         return apkPath;
+    }
+    
+    // Static analysis configuration getters
+    public String getStaticAnalysisOutputDir() {
+        return staticAnalysisOutputDir;
+    }
+    
+    public String getStaticAnalysisOutputPattern() {
+        return staticAnalysisOutputPattern;
+    }
+    
+    public String getStaticAnalysisPatternsPath() {
+        return staticAnalysisPatternsPath;
+    }
+    
+    public String[] getStaticIrKeywords() {
+        if (staticIrKeywords == null || staticIrKeywords.trim().isEmpty()) {
+            return new String[0];
+        }
+        return staticIrKeywords.split(",");
+    }
+    
+    /**
+     * Generate static analysis result path based on APK path and configuration
+     */
+    public String getStaticAnalysisResultPath(String apkPath) {
+        try {
+            File apk = new File(apkPath);
+            String name = apk.getName();
+            int dot = name.lastIndexOf('.');
+            String apkName = (dot > 0) ? name.substring(0, dot) : name;
+            
+            // Replace placeholders in pattern
+            String fileName = staticAnalysisOutputPattern
+                .replace("{apk_name}", apkName)
+                .replace("{version}", String.valueOf(staticAnalysisVersion));
+            
+            // Create output directory
+            File dir = new File(staticAnalysisOutputDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            
+            return new File(dir, fileName).getPath();
+        } catch (Exception e) {
+            // Fallback to default
+            return "reports/static_analysis/analysis_result.json";
+        }
+    }
+    
+    public int getStaticAnalysisVersion() {
+        return staticAnalysisVersion;
+    }
+    
+    // =============================================================================
+    // Network chaos configuration getter methods
+    // =============================================================================
+    
+    public boolean isNetworkChaosEnabled() {
+        return networkChaosEnabled;
+    }
+    
+    public int getNetworkGoodRatio() {
+        return networkGoodRatio;
+    }
+    
+    public int getNetworkBadRatio() {
+        return networkBadRatio;
+    }
+    
+    public int getNetworkSwitchInterval() {
+        return networkSwitchInterval;
+    }
+    
+    public String getNetworkChaosMode() {
+        return networkChaosMode;
+    }
+    
+    public java.util.List<String> getNetworkDisruptionMethods() {
+        return java.util.Arrays.asList(networkDisruptionMethodsStr.split(","));
+    }
+    
+    public int getNetworkDisruptionMinDuration() {
+        return networkDisruptionMinDuration;
+    }
+    
+    public int getNetworkDisruptionMaxDuration() {
+        return networkDisruptionMaxDuration;
     }
 }

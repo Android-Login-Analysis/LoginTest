@@ -1,0 +1,104 @@
+================================================================================
+                    BUG DETECTION REPORT - Round 61
+================================================================================
+Timestamp: Wed Oct 22 20:02:04 GMT 2025
+Total Bugs Detected: 2
+
+
+================================================================================
+Category: LOGIN_TIMEOUT
+Count: 1
+================================================================================
+
+========================================
+? BUG DETECTED
+========================================
+Category: LOGIN_TIMEOUT
+Type: EXCESSIVE_LOGIN_DELAY
+Severity: MEDIUM
+
+Description:
+  Login consistently takes longer than expected
+
+Location:
+  Login authentication or network layer
+
+Evidence:
+  Delayed Logins: 1 out of 1 (100%)
+Average Duration: >10.0 seconds
+Expected: <10.0 seconds
+
+Recommendation:
+  Profile and optimize login performance:
+- Use network profiling tools
+- Reduce number of sequential network calls
+- Implement caching for non-sensitive data
+- Use connection pooling
+========================================
+
+
+================================================================================
+Category: INCORRECT_NAVIGATION
+Count: 1
+================================================================================
+
+========================================
+? BUG DETECTED
+========================================
+Category: INCORRECT_NAVIGATION
+Type: NO_NAVIGATION_AFTER_LOGIN
+Severity: HIGH
+
+Description:
+  No navigation occurred after successful login
+
+Location:
+  Login success callback
+
+Evidence:
+  Login succeeded: Yes
+Navigation events: 0
+Current activity: Unknown
+
+Recommendation:
+  Ensure navigation happens after login:
+- Check if navigation intent is created
+- Verify startActivity() is called
+- Check for exceptions in navigation code
+========================================
+
+
+================================================================================
+STATISTICS
+================================================================================
+
+Error Message Mismatch Detector:
+  toast_messages: 0
+  bugs_detected: 0
+  error_events: 0
+
+Lifecycle Data Loss Detector:
+  activities_analyzed: 0
+  with_input_fields: 0
+  without_save_state: 0
+  with_save_state: 0
+  bugs_detected: 0
+
+Crash Detector:
+  by_type: {}
+  total_crashes: 0
+
+Login Timeout Detector:
+  total_attempts: 0
+  normal: 0
+  delays: 0
+  timeouts: 0
+
+Navigation Flow Detector:
+  current_activity: Unknown
+  navigation_events: 0
+  login_succeeded: false
+
+================================================================================
+END OF REPORT
+================================================================================

@@ -1,0 +1,430 @@
+{
+    "version": "1.0",
+    "description": "Universal Android Login Detection Hook Configuration",
+    "hookCategories": {
+        "activity_lifecycle": {
+            "enabled": true,
+            "description": "Android Activity lifecycle methods",
+            "hooks": [
+                {
+                    "className": "android.app.Activity",
+                    "methodName": "onCreate",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": false
+                },
+                {
+                    "className": "android.app.Activity",
+                    "methodName": "onResume",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": false
+                },
+                {
+                    "className": "android.app.Activity",
+                    "methodName": "onStart",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": false
+                }
+            ]
+        },
+        "network_requests": {
+            "enabled": true,
+            "description": "Network communication hooks",
+            "hooks": [
+                {
+                    "className": "java.net.HttpURLConnection",
+                    "methodName": "connect",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true,
+                    "argFilters": [
+                        "url"
+                    ]
+                },
+                {
+                    "className": "java.net.HttpURLConnection",
+                    "methodName": "getOutputStream",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true,
+                    "argFilters": [
+                        "url"
+                    ]
+                },
+                {
+                    "className": "java.net.HttpURLConnection",
+                    "methodName": "getInputStream",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true,
+                    "argFilters": [
+                        "url"
+                    ]
+                }
+            ]
+        },
+        "okhttp": {
+            "enabled": true,
+            "description": "OkHttp library hooks",
+            "optional": true,
+            "hooks": [
+                {
+                    "className": "okhttp3.Call",
+                    "methodName": "execute",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true,
+                    "argFilters": [
+                        "url"
+                    ]
+                },
+                {
+                    "className": "okhttp3.Call",
+                    "methodName": "enqueue",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true,
+                    "argFilters": [
+                        "url"
+                    ]
+                }
+            ]
+        },
+        "retrofit": {
+            "enabled": true,
+            "description": "Retrofit library hooks",
+            "optional": true,
+            "hooks": [
+                {
+                    "className": "retrofit2.Call",
+                    "methodName": "execute",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": false
+                }
+            ]
+        },
+        "data_storage": {
+            "enabled": true,
+            "description": "Data storage and preferences",
+            "hooks": [
+                {
+                    "className": "android.content.SharedPreferences$Editor",
+                    "methodName": "putString",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true,
+                    "keywordFilters": [
+                        "user",
+                        "pass",
+                        "token",
+                        "auth",
+                        "login",
+                        "session"
+                    ],
+                    "maskValues": true
+                },
+                {
+                    "className": "android.content.SharedPreferences",
+                    "methodName": "getString",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true,
+                    "keywordFilters": [
+                        "user",
+                        "pass",
+                        "token",
+                        "auth",
+                        "login",
+                        "session"
+                    ]
+                }
+            ]
+        },
+        "webview": {
+            "enabled": true,
+            "description": "WebView-based authentication",
+            "hooks": [
+                {
+                    "className": "android.webkit.WebView",
+                    "methodName": "loadUrl",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true
+                },
+                {
+                    "className": "android.webkit.WebView",
+                    "methodName": "postUrl",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true
+                },
+                {
+                    "className": "android.webkit.WebView",
+                    "methodName": "evaluateJavascript",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true,
+                    "keywordFilters": [
+                        "login",
+                        "auth",
+                        "password"
+                    ]
+                }
+            ]
+        },
+        "ui_interaction": {
+            "enabled": true,
+            "description": "User interface interactions",
+            "hooks": [
+                {
+                    "className": "android.widget.EditText",
+                    "methodName": "setText",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true,
+                    "keywordFilters": [
+                        "user",
+                        "pass",
+                        "email",
+                        "login"
+                    ],
+                    "checkHint": true
+                },
+                {
+                    "className": "android.widget.EditText",
+                    "methodName": "getText",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": false,
+                    "checkHint": false,
+                    "keywordFilters": []
+                },
+                {
+                    "className": "android.view.View",
+                    "methodName": "performClick",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true,
+                    "keywordFilters": [
+                        "login",
+                        "sign",
+                        "submit"
+                    ],
+                    "checkText": true
+                }
+            ]
+        },
+        "intent_navigation": {
+            "enabled": true,
+            "description": "Intent-based navigation and OAuth",
+            "hooks": [
+                {
+                    "className": "android.content.Context",
+                    "methodName": "startActivity",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true
+                },
+                {
+                    "className": "android.content.Context",
+                    "methodName": "startActivityForResult",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true
+                }
+            ]
+        },
+        "crypto_security": {
+            "enabled": true,
+            "description": "Cryptographic operations",
+            "hooks": [
+                {
+                    "className": "javax.crypto.Cipher",
+                    "methodName": "doFinal",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": false
+                },
+                {
+                    "className": "java.security.MessageDigest",
+                    "methodName": "digest",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true,
+                    "argFilters": [
+                        "algorithm"
+                    ]
+                }
+            ]
+        },
+        "database": {
+            "enabled": true,
+            "description": "Database operations",
+            "hooks": [
+                {
+                    "className": "android.database.sqlite.SQLiteDatabase",
+                    "methodName": "execSQL",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true,
+                    "keywordFilters": [
+                        "user",
+                        "auth",
+                        "login",
+                        "password"
+                    ]
+                }
+            ]
+        },
+        "json_parsing": {
+            "enabled": true,
+            "description": "JSON data parsing",
+            "hooks": [
+                {
+                    "className": "org.json.JSONObject",
+                    "methodName": "<init>",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": true,
+                    "keywordFilters": [
+                        "token",
+                        "auth",
+                        "login"
+                    ]
+                }
+            ]
+        },
+        "error_handling": {
+            "enabled": true,
+            "description": "Error and exception handling for login flows",
+            "hooks": [
+                {
+                    "className": "android.widget.Toast",
+                    "methodName": "show",
+                    "enabled": true,
+                    "logLevel": "warning",
+                    "captureArgs": true,
+                    "stateName": "LoginFailure",
+                    "description": "Capture error messages shown to user"
+                },
+                {
+                    "className": "com.google.android.material.snackbar.Snackbar",
+                    "methodName": "show",
+                    "enabled": true,
+                    "logLevel": "warning",
+                    "captureArgs": true,
+                    "optional": true,
+                    "stateName": "LoginFailure",
+                    "description": "Capture Snackbar error messages"
+                },
+                {
+                    "className": "android.app.AlertDialog",
+                    "methodName": "show",
+                    "enabled": true,
+                    "logLevel": "warning",
+                    "captureArgs": true,
+                    "stateName": "LoginFailure",
+                    "keywordFilters": [
+                        "error",
+                        "fail",
+                        "invalid",
+                        "incorrect",
+                        "wrong"
+                    ],
+                    "description": "Capture error dialogs"
+                },
+                {
+                    "className": "java.io.IOException",
+                    "methodName": "<init>",
+                    "enabled": true,
+                    "logLevel": "error",
+                    "captureArgs": true,
+                    "stateName": "NetworkError",
+                    "description": "Network errors during login"
+                },
+                {
+                    "className": "java.net.SocketTimeoutException",
+                    "methodName": "<init>",
+                    "enabled": true,
+                    "logLevel": "error",
+                    "captureArgs": true,
+                    "stateName": "NetworkError",
+                    "description": "Network timeout errors"
+                },
+                {
+                    "className": "javax.net.ssl.SSLException",
+                    "methodName": "<init>",
+                    "enabled": true,
+                    "logLevel": "error",
+                    "captureArgs": true,
+                    "stateName": "NetworkError",
+                    "description": "SSL/TLS errors"
+                }
+            ]
+        },
+        "http_response": {
+            "enabled": true,
+            "description": "HTTP response status codes to detect errors",
+            "hooks": [
+                {
+                    "className": "java.net.HttpURLConnection",
+                    "methodName": "getResponseCode",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": false,
+                    "captureReturnValue": true,
+                    "description": "Detect HTTP error codes (401, 403, 500, etc.)"
+                },
+                {
+                    "className": "okhttp3.Response",
+                    "methodName": "code",
+                    "enabled": true,
+                    "logLevel": "info",
+                    "captureArgs": false,
+                    "captureReturnValue": true,
+                    "optional": true,
+                    "description": "OkHttp response codes"
+                }
+            ]
+        }
+    },
+    "globalSettings": {
+        "logLevel": "info",
+        "maxLogEntries": 10000,
+        "enableStaticAnalysisHooks": true,
+        "staticAnalysisSource": "static_analysis",
+        "errorStateDetection": {
+            "enabled": true,
+            "httpErrorCodes": {
+                "401": "InvalidCredentials",
+                "403": "InvalidCredentials",
+                "422": "CredentialFormatError",
+                "429": "ServiceUnavailable_Auth",
+                "500": "ServiceUnavailable_Auth",
+                "502": "ServiceUnavailable_Auth",
+                "503": "ServiceUnavailable_Auth",
+                "504": "ServiceUnavailable_Auth"
+            },
+            "errorKeywords": {
+                "invalid": "InvalidCredentials",
+                "incorrect": "InvalidCredentials",
+                "wrong password": "InvalidCredentials",
+                "wrong username": "InvalidCredentials",
+                "authentication failed": "InvalidCredentials",
+                "unauthorized": "InvalidCredentials",
+                "forbidden": "InvalidCredentials",
+                "format": "CredentialFormatError",
+                "validation": "CredentialFormatError",
+                "network": "NetworkError",
+                "timeout": "NetworkError",
+                "connection": "NetworkError",
+                "unavailable": "ServiceUnavailable_Auth",
+                "server error": "ServiceUnavailable_Auth",
+                "maintenance": "ServiceUnavailable_Auth"
+            }
+        }
+    }
+}

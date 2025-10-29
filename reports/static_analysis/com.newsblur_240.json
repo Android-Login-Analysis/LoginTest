@@ -1,5 +1,5 @@
 {
-  "analysisTime": 1756179913364,
+  "analysisTime": 1758210119591,
   "apkPath": "apps/com.newsblur_240.apk",
   "matches": {
     "WebViewUsage": [
@@ -678,7 +678,7 @@
     ]
   },
   "patternsPath": "src/main/resources/regex_patterns.txt",
-  "totalPatterns": 55,
+  "totalPatterns": 64,
   "statistics": {
     "matchedStates": 4,
     "matchedMethods": 74,

@@ -49,13 +49,13 @@ def log_api_call(api_log_file, payload):
         timestamp = payload.get('timestamp', int(time.time() * 1000))
         class_name = payload.get('class', 'Unknown')
         method_name = payload.get('method', 'Unknown')
-        # Use 'state' from agent payload to align with Java analyzer expectations
-        pattern = payload.get('state', 'Unknown')
+        # Get state from agent payload
+        state = payload.get('state', 'Unknown')
         
         with open(api_log_file, 'a') as f:
-            # Java ApiLogAnalyzer expects: "([0-9]+) *::: *([^.]+).([^ ]+)"
-            # Only write the expected format to ensure parsing works
-            f.write(f"{timestamp} ::: {class_name}.{method_name}\n")
+            # Format: TIMESTAMP ::: CLASS.METHOD ::: STATE
+            # This allows ApiLogAnalyzer to extract state directly
+            f.write(f"{timestamp} ::: {class_name}.{method_name} ::: {state}\n")
     except Exception as e:
         logging.error(f"Failed to log API call: {e}")
 
@@ -113,6 +113,10 @@ def get_static_analysis_result_path_from_config(config: dict) -> str:
         return None
 
 
+# Message deduplication
+last_api_call_log = {}
+API_LOG_INTERVAL = 5  # Only log same API call every 5 seconds
+
 def on_message(message, data):
     if message['type'] == 'send':
         try:
@@ -124,9 +128,27 @@ def on_message(message, data):
                 payload = json.loads(message['payload'])
             
             if payload.get('type') == 'api_call':
-                logging.info(f"API Call #{payload.get('callId', 'N/A')}: {payload.get('class', 'Unknown')}.{payload.get('method', 'Unknown')} (Pattern: {payload.get('pattern', 'Unknown')})")
-                # Log to API log file
+                tainted = payload.get('tainted', False)
+                taint_marker = ' [TAINTED]' if tainted else ''
+                state = payload.get('state', 'Unknown')
+                
+                # Log to API log file (always for analysis)
                 log_api_call(api_log_file, payload)
+                
+                # Deduplicate console logging
+                log_key = f"{payload.get('class')}.{payload.get('method')}:{state}"
+                current_time = time.time()
+                last_time = last_api_call_log.get(log_key, 0)
+                
+                # Only log to console if tainted, has known state, or not seen recently
+                if tainted or (state != 'Unknown') or (current_time - last_time) >= API_LOG_INTERVAL:
+                    logging.info(f"API Call: {payload.get('class', 'Unknown')}.{payload.get('method', 'Unknown')}{taint_marker} (State: {state})")
+                    last_api_call_log[log_key] = current_time
+                    
+            elif payload.get('type') == 'taint_marked':
+                logging.info(f"[TAINT] Marked {payload.get('taint_type')}: hint={payload.get('hint', 'N/A')}, len={payload.get('length', 0)}")
+            elif payload.get('type') == 'taint_flow':
+                logging.warning(f"[TAINT FLOW] {payload.get('taint_type')} -> {payload.get('sink')}")
             elif payload.get('type') == 'statistics':
                 logging.info(f"Statistics: {payload.get('matchedClasses', 0)} classes, {payload.get('hookedMethods', 0)} methods, {payload.get('apiCallCount', 0)} API calls")
             elif payload.get('type') == 'periodic_stats':
@@ -179,23 +201,27 @@ def main():
     except Exception as e:
         logging.error(f"Failed to get Frida client version: {e}")
 
-    # 尝试加载静态分析结果
-    analysis_result = None
-    if script_path.endswith('_frida_script.js'):
-        # 这是生成的脚本，尝试加载对应的分析结果
-        analysis_result_path = script_path.replace('_frida_script.js', '_analysis.json')
-        if os.path.exists(analysis_result_path):
-            try:
-                with open(analysis_result_path, 'r') as f:
-                    analysis_result = json.load(f)
-                logging.info(f"Loaded static analysis result: {analysis_result_path}")
-                logging.info(f"Analysis contains {len(analysis_result.get('matches', {}))} state matches")
-            except Exception as e:
-                logging.warning(f"Failed to load static analysis result: {e}")
+    # Get script directory (needed for various paths)
+    script_dir = os.path.dirname(__file__)
     
-    # 如果没有静态分析结果，使用正则表达式模式
+    # Try to load static analysis result from config
+    analysis_result = None
+    static_analysis_path = get_static_analysis_result_path_from_config(config)
+    
+    if static_analysis_path and os.path.exists(static_analysis_path):
+        try:
+            with open(static_analysis_path, 'r') as f:
+                analysis_result = json.load(f)
+            logging.info(f"Loaded static analysis result: {static_analysis_path}")
+            logging.info(f"Analysis contains {len(analysis_result.get('matches', {}))} state matches")
+            logging.info(f"Matched methods: {analysis_result.get('statistics', {}).get('matchedMethods', 0)}")
+        except Exception as e:
+            logging.warning(f"Failed to load static analysis result: {e}")
+    else:
+        logging.info(f"Static analysis result not found at: {static_analysis_path}")
+    
+    # If no static analysis result, use regex patterns
     if analysis_result is None:
-        script_dir = os.path.dirname(__file__)
         regex_patterns_path = os.path.join(script_dir, '..', 'src', 'main', 'resources', 'regex_patterns.txt')
         
         # Initialize patterns_dict
@@ -228,9 +254,10 @@ def main():
         except Exception as e:
             logging.warning(f"Failed to load regex patterns: {e}, using default patterns")
     else:
-        # 使用静态分析结果
-        patterns_dict = analysis_result.get('detailedMethods', {})
-        logging.info(f"Using static analysis result with {len(patterns_dict)} states")
+        # Note: We pass the entire analysis_result to init(), not just patterns
+        # The JS agent will check for analysis_result.matches
+        matches_count = len(analysis_result.get('matches', {}))
+        logging.info(f"Using static analysis result with {matches_count} states")
 
     try:
         # Load the JavaScript code
@@ -419,35 +446,31 @@ def main():
         # Wait a moment for script to initialize
         time.sleep(2)
 
+        # Load hook configuration
+        hook_config_json = None
+        try:
+            hook_config_path = os.path.join(script_dir, '..', 'src', 'main', 'resources', 'hook_config.json')
+            if os.path.exists(hook_config_path):
+                with open(hook_config_path, 'r') as f:
+                    hook_config_json = f.read()
+                logging.info(f"Loaded hook configuration from: {hook_config_path}")
+            else:
+                logging.warning(f"Hook config not found at: {hook_config_path}")
+        except Exception as e:
+            logging.warning(f"Failed to load hook config: {e}")
+        
         # Call the RPC export to initialize the agent with patterns
         try:
             # Use the modern sync method
             if analysis_result is not None:
-                # Pass parsed static analysis JSON to agent (no file I/O in agent)
-                script.exports_sync.init(analysis_result)
-                logging.info("Frida agent initialized with static analysis result.")
+                # Pass parsed static analysis JSON + hook config to agent
+                script.exports_sync.init(analysis_result, hook_config_json)
+                logging.info("Frida agent initialized with static analysis result + hook config.")
                 logging.info("FRIDA_READY_STATIC")
-            elif script_path.endswith('static_analysis_agent.js'):
-                # Load analysis file here and pass the parsed object to agent
-                analysis_result_path = None
-                if len(sys.argv) >= 4:
-                    analysis_result_path = sys.argv[3]
-                else:
-                    analysis_result_path = get_static_analysis_result_path_from_config(config)
-                
-                if analysis_result_path and os.path.exists(analysis_result_path):
-                    with open(analysis_result_path, 'r') as f:
-                        analysis_obj = json.load(f)
-                    script.exports_sync.init(analysis_obj)
-                    logging.info(f"Frida agent initialized with static analysis result: {analysis_result_path}")
-                    logging.info("FRIDA_READY_STATIC")
-                else:
-                    logging.error("Static analysis result file not found")
-                    raise Exception("Static analysis result file not found")
             else:
-                # Pass regex patterns to script
-                script.exports_sync.init(patterns_dict)
-                logging.info("Frida agent initialized with regex patterns.")
+                # Use regex patterns + hook config
+                script.exports_sync.init(patterns_dict, hook_config_json)
+                logging.info("Frida agent initialized with regex patterns + hook config.")
                 logging.info("FRIDA_READY")
         except Exception as e:
             logging.error(f"Failed to initialize agent: {e}")
@@ -456,14 +479,6 @@ def main():
                 if analysis_result is not None:
                     script.exports.init(analysis_result)
                     logging.info("Frida agent initialized with static analysis result (async method).")
-                elif script_path.endswith('static_analysis_agent.js'):
-                    if analysis_result_path and os.path.exists(analysis_result_path):
-                        with open(analysis_result_path, 'r') as f:
-                            analysis_obj = json.load(f)
-                        script.exports.init(analysis_obj)
-                        logging.info(f"Frida agent initialized with static analysis result (async method): {analysis_result_path}")
-                    else:
-                        raise Exception("Static analysis result file not found")
                 else:
                     script.exports.init(patterns_dict)
                     logging.info("Frida agent initialized with regex patterns (async method).")
@@ -475,14 +490,6 @@ def main():
                     if analysis_result is not None:
                         script.exports_sync.init(analysis_result)
                         logging.info("Frida agent initialized with static analysis result (retry sync method).")
-                    elif script_path.endswith('static_analysis_agent.js'):
-                        if analysis_result_path and os.path.exists(analysis_result_path):
-                            with open(analysis_result_path, 'r') as f:
-                                analysis_obj = json.load(f)
-                            script.exports_sync.init(analysis_obj)
-                            logging.info(f"Frida agent initialized with static analysis result (retry sync method): {analysis_result_path}")
-                        else:
-                            raise Exception("Static analysis result file not found")
                     else:
                         script.exports_sync.init(patterns_dict)
                         logging.info("Frida agent initialized with regex patterns (retry sync method).")
@@ -493,20 +500,48 @@ def main():
         # Keep the script running to receive messages
         logging.info("Frida controller is now monitoring. Press Ctrl+C to exit.")
         
-        # Set up periodic health checks
+        # Set up periodic health checks and taint report saving
         last_stats_time = time.time()
+        last_taint_report_time = time.time()
         consecutive_failures = 0
         max_consecutive_failures = 5
+        taint_report_interval = 3  # Save taint report every 3 seconds (reduced for faster capture)
+        
+        # Ensure taint report directory exists
+        taint_report_dir = os.path.join(os.path.dirname(__file__), '..', 'reports', 'taint')
+        os.makedirs(taint_report_dir, exist_ok=True)
+        taint_report_path = os.path.join(taint_report_dir, 'live_taint.json')
         
         while True:
             try:
-                # Check if script is still alive
-                stats = script.exports_sync.getstats()
-                logging.info(f"Agent health check: {stats}")
-                consecutive_failures = 0  # Reset failure counter on success
+                # Periodically save taint report to file (check every 3 seconds)
+                current_time = time.time()
+                if current_time - last_taint_report_time >= taint_report_interval:
+                    try:
+                        # Note: Frida RPC methods must be lowercase
+                        taint_report_json = script.exports_sync.gettaintreport()
+                        with open(taint_report_path, 'w') as f:
+                            f.write(taint_report_json)
+                        last_taint_report_time = current_time
+                        
+                        # Parse to get counts for logging
+                        report_data = json.loads(taint_report_json)
+                        if len(report_data.get('taints', [])) > 0 or len(report_data.get('flows', [])) > 0:
+                            logging.info(f"[TAINT] Report: {len(report_data.get('taints', []))} taints, "
+                                       f"{len(report_data.get('flows', []))} flows, "
+                                       f"{len(report_data.get('violations', []))} violations")
+                    except Exception as taint_error:
+                        logging.warning(f"Failed to save taint report: {taint_error}")
                 
-                # Sleep for a while
-                time.sleep(30)
+                # Check if script is still alive every 30 seconds
+                if current_time - last_stats_time >= 30:
+                    stats = script.exports_sync.getstats()
+                    logging.info(f"Agent health check: {stats}")
+                    consecutive_failures = 0  # Reset failure counter on success
+                    last_stats_time = current_time
+                
+                # Sleep for a short while before next check
+                time.sleep(3)
                 
             except KeyboardInterrupt:
                 logging.info("Monitoring stopped by user.")

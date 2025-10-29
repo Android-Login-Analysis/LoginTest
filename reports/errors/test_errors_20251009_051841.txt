@@ -1,0 +1,1319 @@
+================================================================================
+Error Report - All Test Rounds
+Started at: Thu Oct 09 05:20:04 GMT 2025
+================================================================================
+
+--------------------------------------------------------------------------------
+ROUND 1 - Thu Oct 09 05:20:04 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 2 - Thu Oct 09 05:21:48 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 3 - Thu Oct 09 05:23:15 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 4 - Thu Oct 09 05:24:58 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 5 - Thu Oct 09 05:26:43 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 6 - Thu Oct 09 05:28:26 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 7 - Thu Oct 09 05:30:10 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 8 - Thu Oct 09 05:31:56 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 9 - Thu Oct 09 05:33:23 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 10 - Thu Oct 09 05:34:51 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 11 - Thu Oct 09 05:36:35 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 12 - Thu Oct 09 05:38:19 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 13 - Thu Oct 09 05:39:46 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 14 - Thu Oct 09 05:41:29 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 15 - Thu Oct 09 05:43:12 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 16 - Thu Oct 09 05:44:39 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 17 - Thu Oct 09 05:46:23 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 18 - Thu Oct 09 05:48:06 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 19 - Thu Oct 09 05:49:48 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 20 - Thu Oct 09 05:51:31 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 21 - Thu Oct 09 05:52:58 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 22 - Thu Oct 09 05:54:40 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 23 - Thu Oct 09 05:56:15 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 24 - Thu Oct 09 05:57:42 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 25 - Thu Oct 09 05:59:17 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 26 - Thu Oct 09 06:00:59 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 27 - Thu Oct 09 06:02:42 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 28 - Thu Oct 09 06:04:26 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 29 - Thu Oct 09 06:06:08 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 30 - Thu Oct 09 06:07:51 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 31 - Thu Oct 09 06:09:35 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 32 - Thu Oct 09 06:11:02 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 33 - Thu Oct 09 06:12:45 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 34 - Thu Oct 09 06:14:28 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 35 - Thu Oct 09 06:15:55 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 36 - Thu Oct 09 06:17:22 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 37 - Thu Oct 09 06:19:05 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 38 - Thu Oct 09 06:20:39 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 39 - Thu Oct 09 06:22:23 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 40 - Thu Oct 09 06:24:06 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 41 - Thu Oct 09 06:25:48 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 42 - Thu Oct 09 06:27:15 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 43 - Thu Oct 09 06:28:49 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 44 - Thu Oct 09 06:30:32 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 45 - Thu Oct 09 06:31:59 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 46 - Thu Oct 09 06:33:42 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 47 - Thu Oct 09 06:35:26 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 48 - Thu Oct 09 06:37:09 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 49 - Thu Oct 09 06:38:51 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 50 - Thu Oct 09 06:40:35 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 51 - Thu Oct 09 06:42:18 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 52 - Thu Oct 09 06:44:01 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 53 - Thu Oct 09 06:45:45 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 54 - Thu Oct 09 06:47:20 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 55 - Thu Oct 09 06:49:02 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 56 - Thu Oct 09 06:50:45 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 57 - Thu Oct 09 06:52:28 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 58 - Thu Oct 09 06:54:10 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 59 - Thu Oct 09 06:55:53 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 60 - Thu Oct 09 06:57:36 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 61 - Thu Oct 09 06:59:19 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 62 - Thu Oct 09 07:01:01 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 63 - Thu Oct 09 07:02:44 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 64 - Thu Oct 09 07:04:27 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 65 - Thu Oct 09 07:06:10 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 66 - Thu Oct 09 07:07:52 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 67 - Thu Oct 09 07:09:35 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 68 - Thu Oct 09 07:11:18 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 69 - Thu Oct 09 07:12:53 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 70 - Thu Oct 09 07:14:36 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 71 - Thu Oct 09 07:16:19 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 72 - Thu Oct 09 07:17:46 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 73 - Thu Oct 09 07:19:21 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 74 - Thu Oct 09 07:20:55 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 75 - Thu Oct 09 07:22:38 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 76 - Thu Oct 09 07:24:21 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 77 - Thu Oct 09 07:25:48 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 78 - Thu Oct 09 07:27:31 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 79 - Thu Oct 09 07:29:14 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 80 - Thu Oct 09 07:30:56 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 81 - Thu Oct 09 07:32:23 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 82 - Thu Oct 09 07:34:06 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 83 - Thu Oct 09 07:35:50 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 84 - Thu Oct 09 07:37:33 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 85 - Thu Oct 09 07:39:16 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 86 - Thu Oct 09 07:40:43 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 87 - Thu Oct 09 07:42:27 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 88 - Thu Oct 09 07:44:10 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 89 - Thu Oct 09 07:45:53 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 90 - Thu Oct 09 07:47:36 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 91 - Thu Oct 09 07:49:19 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 92 - Thu Oct 09 07:51:02 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 93 - Thu Oct 09 07:52:44 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 94 - Thu Oct 09 07:54:27 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 95 - Thu Oct 09 07:56:10 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 96 - Thu Oct 09 07:57:53 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 97 - Thu Oct 09 07:59:20 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 98 - Thu Oct 09 08:01:03 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 99 - Thu Oct 09 08:02:46 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+--------------------------------------------------------------------------------
+ROUND 100 - Thu Oct 09 08:04:29 GMT 2025
+--------------------------------------------------------------------------------
+
+=== ANR Records (0) ===
+  No ANR detected
+
+=== Crash Records (0) ===
+  No crashes detected
+
+=== Error Summary ===
+  No errors detected
+
+
+================================================================================
+FINAL TEST SUMMARY
+================================================================================
+Completed at: 2025-10-09 08:04:29.214
+
+Test Statistics:
+  - Total Login Attempts: 100
+  - Successful Logins: 83
+  - Failed Logins: 17
+  - Success Rate: 83.00%
+
+Error Report Location: reports/errors/test_errors_20251009_051841.txt
+================================================================================

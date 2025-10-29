@@ -1,6 +1,7 @@
 import java.util.*;
 import java.util.regex.Pattern;
 import java.io.*;
+import bugdetectors.BugDetectionManager;
 
 /**
  * State machine manager - responsible for state transition validation and error
@@ -10,14 +11,64 @@ public class StateMachineManager {
     private Map<String, List<String>> validStateTransitions;
     private List<String> observedStateSequence;
     private ConfigLoader configLoader;
+    
+    // State compression support
+    private List<StateTransition> compressedSequence;
+    
+    // Bug detection support
+    private BugDetectionManager bugDetectionManager;
+    private String previousState = null;
+    
+    /**
+     * Internal class to track state transitions with timing and repetition count
+     */
+    private static class StateTransition {
+        String state;
+        long timestamp;
+        int count;
+        
+        StateTransition(String state, long timestamp) {
+            this.state = state;
+            this.timestamp = timestamp;
+            this.count = 1;
+        }
+        
+        void incrementCount() {
+            this.count++;
+        }
+        
+        @Override
+        public String toString() {
+            if (count > 1) {
+                return String.format("%s (×%d)", state, count);
+            }
+            return state;
+        }
+        
+        String toStringWithDuration(long nextTimestamp) {
+            if (count > 1 && nextTimestamp > timestamp) {
+                double duration = (nextTimestamp - timestamp) / 1000.0;
+                return String.format("%s (×%d, %.1fs)", state, count, duration);
+            } else if (count > 1) {
+                return String.format("%s (×%d)", state, count);
+            }
+            return state;
+        }
+    }
 
     public StateMachineManager(ConfigLoader configLoader) {
         this.configLoader = configLoader;
         this.observedStateSequence = new ArrayList<>();
+        this.compressedSequence = new ArrayList<>();
         this.validStateTransitions = new HashMap<>(); // Initialize the map to prevent NullPointerException
         
         // Load state machine configuration from regex patterns file
         loadStateMachineFromConfig();
+        
+        // Initialize bug detection manager
+        String reportDir = "reports/bugs";
+        this.bugDetectionManager = new BugDetectionManager(reportDir);
+        System.out.println("StateMachineManager: Bug detection initialized");
         
         System.out.println("StateMachineManager: initialization complete with " + validStateTransitions.size() + " state transitions");
     }
@@ -83,6 +134,21 @@ public class StateMachineManager {
      * Generate state transitions based on logical flow
      */
     private void generateStateTransitions(List<String> states) {
+        // Ensure common runtime states are in the list (even if not in regex patterns)
+        // Note: IR_ states from static analysis should be mapped by Frida agent, not added here
+        String[] runtimeStates = {"LoginFailure", "NetworkError", "InvalidCredentials", 
+                                   "CredentialFormatError", "Unknown"};
+        for (String runtimeState : runtimeStates) {
+            if (!states.contains(runtimeState)) {
+                states.add(runtimeState);
+            }
+        }
+        
+        // Allow self-transitions for all states (to handle repeated API calls in same state)
+        for (String state : states) {
+            addStateTransition(state, state);
+        }
+        
         // Pre-Login Phase
         addTransitionIfExists(states, "InitialState", "CheckingToken");
         addTransitionIfExists(states, "InitialState", "CredentialInput");
@@ -90,11 +156,17 @@ public class StateMachineManager {
         addTransitionIfExists(states, "CheckingToken", "CredentialInput");
         addTransitionIfExists(states, "CredentialInput", "EncodingCredentials");
         addTransitionIfExists(states, "CredentialInput", "CredentialFormatError");
+        addTransitionIfExists(states, "CredentialInput", "Authenticating");  // Direct transition
+        addStateTransition("CredentialInput", "LoginFailure");    // Can fail directly
         addTransitionIfExists(states, "EncodingCredentials", "Authenticating");
         addTransitionIfExists(states, "CredentialFormatError", "CredentialInput");
 
         // Login Phase
         addTransitionIfExists(states, "Authenticating", "CheckingCredentials");
+        addStateTransition("Authenticating", "LoginFailure");          // Can fail during auth
+        addStateTransition("Authenticating", "NetworkError");          // Network issues
+        addStateTransition("Authenticating", "CredentialInput");       // Back to input on failure
+        addStateTransition("Authenticating", "CredentialFormatError"); // Bad credential format detected
         addTransitionIfExists(states, "CheckingCredentials", "ServiceUnavailable_Auth");
         addTransitionIfExists(states, "CheckingCredentials", "InvalidCredentials");
         addTransitionIfExists(states, "CheckingCredentials", "CheckingMFASettings");
@@ -103,6 +175,13 @@ public class StateMachineManager {
         addTransitionIfExists(states, "InvalidCredentials", "CredentialInput");
         addTransitionIfExists(states, "CheckingMFASettings", "MFACodePending");
         addTransitionIfExists(states, "CheckingMFASettings", "LoggedIn_NoMFA");
+
+        // Error state transitions (always add these regardless of states list)
+        addStateTransition("LoginFailure", "CredentialInput");    // Retry after failure
+        addStateTransition("LoginFailure", "NetworkError");       // Failure can reveal network error
+        addStateTransition("NetworkError", "CredentialInput");    // Retry after network error
+        addStateTransition("NetworkError", "LoginFailure");       // Network error shown as failure
+        addStateTransition("NetworkError", "Authenticating");     // Retry authentication after network error
 
         // MFA Phase
         addTransitionIfExists(states, "MFACodePending", "SendingMFACode");
@@ -354,38 +433,130 @@ public class StateMachineManager {
     }
 
     /**
-     * Add observed state
+     * Add observed state with compression support
      */
     public void addObservedState(String state) {
         if (state != null && !state.equals("Unknown")) {
+            long timestamp = System.currentTimeMillis();
             observedStateSequence.add(state);
-            System.out.println(
-                    "Add observed state: " + state + " (sequence: " + String.join(" -> ", observedStateSequence) + ")");
+            
+            // Feed to bug detectors (symptom-based)
+            if (bugDetectionManager != null) {
+                // Record error states for inaccurate error message detection
+                if (isErrorState(state)) {
+                    bugDetectionManager.getErrorMismatchDetector()
+                        .recordErrorState(state, timestamp);
+                    System.out.println("[BUG_DETECTOR] Recorded error state: " + state);
+                }
+            }
+            
+            // Compress consecutive identical states
+            if (!compressedSequence.isEmpty()) {
+                StateTransition last = compressedSequence.get(compressedSequence.size() - 1);
+                if (last.state.equals(state)) {
+                    last.incrementCount();
+                    previousState = state;
+                    return;
+                }
+            }
+            
+            compressedSequence.add(new StateTransition(state, timestamp));
+            previousState = state;
+            System.out.println("Add observed state: " + state + " (total: " + observedStateSequence.size() + ", compressed: " + compressedSequence.size() + ")");
         }
     }
 
     /**
-     * Validate state transitions
+     * Validate state transitions and check for errors
      */
     public List<String> validateStateTransitions() {
         List<String> errors = new ArrayList<>();
 
-        if (observedStateSequence.size() < 2) {
+        if (compressedSequence.size() < 2) {
+            if (!compressedSequence.isEmpty()) {
+                System.out.println("State machine validation passed (single state): " + compressedSequence.get(0).state);
+            }
             return errors; // At least two states are needed to validate transitions
         }
 
-        for (int i = 0; i < observedStateSequence.size() - 1; i++) {
-            String currentState = observedStateSequence.get(i);
-            String nextState = observedStateSequence.get(i + 1);
-
-            if (!isValidTransition(currentState, nextState)) {
-                String error = String.format("Invalid state transition: %s -> %s", currentState, nextState);
-                errors.add(error);
-                System.err.println("State machine error: " + error);
+        StringBuilder sequenceLog = new StringBuilder();
+        boolean hasInvalidTransition = false;
+        String invalidTransition = null;
+        int errorPosition = -1;
+        boolean stoppedAtError = false;
+        
+        // Validate each transition in compressed sequence
+        for (int i = 0; i < compressedSequence.size(); i++) {
+            StateTransition current = compressedSequence.get(i);
+            
+            // Build sequence string with duration if available
+            if (i < compressedSequence.size() - 1) {
+                sequenceLog.append(current.toStringWithDuration(compressedSequence.get(i + 1).timestamp));
+            } else {
+                sequenceLog.append(current.toString());
             }
+            
+            // Check if we reached an error state - STOP HERE
+            if (isErrorState(current.state)) {
+                sequenceLog.append(" [ERROR - STOPPED]");
+                stoppedAtError = true;
+                System.out.println("State machine: Stopped analysis at error state: " + current.state);
+                break;
+            }
+            
+            // Check transition to next state
+            if (i < compressedSequence.size() - 1) {
+                StateTransition next = compressedSequence.get(i + 1);
+                
+                if (!isValidTransition(current.state, next.state)) {
+                    hasInvalidTransition = true;
+                    invalidTransition = current.state + " -> " + next.state;
+                    errorPosition = i;
+                    sequenceLog.append(" -> ").append(next.toString()).append(" [INVALID]");
+                    break;  // Stop at invalid transition
+                }
+                
+                sequenceLog.append(" -> ");
+            }
+        }
+        
+        // Generate validation report
+        if (hasInvalidTransition) {
+            String error = String.format(
+                "NAVIGATION_FLOW_ERROR: Invalid state transition detected\n" +
+                "  Details: Invalid transition: %s\n" +
+                "  Position: Transition %d\n" +
+                "  Compressed sequence (up to error): %s\n" +
+                "  Original states: %d, Compressed: %d",
+                invalidTransition, errorPosition, sequenceLog.toString(),
+                observedStateSequence.size(), compressedSequence.size()
+            );
+            errors.add(error);
+            System.err.println(error);
+        } else {
+            String status = stoppedAtError ? "(stopped at error)" : "(complete)";
+            System.out.println("State machine validation passed " + status);
+            System.out.println("  Compressed sequence: " + sequenceLog.toString());
+            System.out.println("  Original states: " + observedStateSequence.size() + ", Compressed: " + compressedSequence.size());
         }
 
         return errors;
+    }
+    
+    /**
+     * Check if a state is an error state (terminal)
+     */
+    private boolean isErrorState(String state) {
+        if (state == null) return false;
+        
+        return state.endsWith("Error") ||
+               state.endsWith("Failure") ||
+               state.equals("ServiceUnavailable_Auth") ||
+               state.equals("ServiceUnavailable_MFA_Send") ||
+               state.equals("ServiceUnavailable_MFA_Verify") ||
+               state.equals("InvalidCredentials") ||
+               state.equals("CredentialFormatError") ||
+               state.equals("MFAError");
     }
 
     /**
@@ -400,11 +571,22 @@ public class StateMachineManager {
     }
 
     /**
-     * Reset state sequence
+     * Reset state sequence for new round
+     * Note: BugDetectionManager resets itself after detection, not here
      */
     public void resetStateSequence() {
         observedStateSequence.clear();
+        compressedSequence.clear();
+        previousState = null;
+        // Don't reset bugDetectionManager here! It resets after detectAllBugs()
         System.out.println("State sequence reset");
+    }
+    
+    /**
+     * Get bug detection manager
+     */
+    public BugDetectionManager getBugDetectionManager() {
+        return bugDetectionManager;
     }
 
     /**

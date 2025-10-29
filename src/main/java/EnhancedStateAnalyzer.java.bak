@@ -1,0 +1,678 @@
+import java.util.*;
+import java.io.*;
+
+/**
+ * Enhanced State Analyzer with improved bug detection capabilities
+ * 
+ * Key improvements:
+ * 1. State sequence compression - merge consecutive duplicate states
+ * 2. Early error detection - stop at first invalid transition
+ * 3. Login flow bug detection - detect 4 bug categories from paper
+ * 4. Context-aware state analysis
+ */
+public class EnhancedStateAnalyzer {
+    
+    private final CustomLogger logger;
+    private final StateMachineManager stateMachine;
+    
+    // Bug detection trackers
+    private final Map<String, String> errorMessages = new HashMap<>();
+    private final Map<String, Bundle> lifecycleStates = new HashMap<>();
+    private final Set<String> observedStates = new HashSet<>();
+    
+    public EnhancedStateAnalyzer(CustomLogger logger, StateMachineManager stateMachine) {
+        this.logger = logger;
+        this.stateMachine = stateMachine;
+    }
+    
+    /**
+     * Main analysis entry point
+     */
+    public AnalysisResult analyzeLoginFlow(List<APICall> apiCalls) {
+        logger.logInfo("=== Starting Enhanced State Analysis ===");
+        
+        // Build state sequence
+        List<StateTransition> transitions = buildStateSequence(apiCalls);
+        
+        // Compress consecutive duplicate states
+        List<StateTransition> compressed = compressStateSequence(transitions);
+        logger.logInfo(String.format("Compressed %d transitions to %d unique transitions",
+                                    transitions.size(), compressed.size()));
+        
+        // Validate state machine (stop at first error)
+        ValidationResult validation = validateStateMachine(compressed);
+        
+        // Detect login flow bugs
+        List<LoginFlowBug> bugs = detectLoginFlowBugs(compressed, apiCalls);
+        
+        // Generate comprehensive report
+        AnalysisResult result = new AnalysisResult(
+            compressed,
+            validation,
+            bugs,
+            observedStates
+        );
+        
+        generateReport(result);
+        
+        return result;
+    }
+    
+    /**
+     * Build state transition sequence from API calls
+     */
+    private List<StateTransition> buildStateSequence(List<APICall> apiCalls) {
+        List<StateTransition> transitions = new ArrayList<>();
+        String previousState = "InitialState";
+        
+        for (APICall call : apiCalls) {
+            String currentState = call.getState();
+            
+            // Track for completeness check
+            observedStates.add(currentState);
+            
+            // Create transition
+            StateTransition transition = new StateTransition(
+                previousState,
+                currentState,
+                call.getClassName() + "." + call.getMethodName(),
+                call.getTimestamp(),
+                call.getContext()
+            );
+            
+            transitions.add(transition);
+            previousState = currentState;
+        }
+        
+        return transitions;
+    }
+    
+    /**
+     * Compress consecutive duplicate states
+     */
+    private List<StateTransition> compressStateSequence(List<StateTransition> transitions) {
+        if (transitions.isEmpty()) {
+            return transitions;
+        }
+        
+        List<StateTransition> compressed = new ArrayList<>();
+        CompressedStateTransition current = null;
+        
+        for (StateTransition t : transitions) {
+            if (current == null || !current.toState.equals(t.toState)) {
+                // Different state - save previous and start new
+                if (current != null) {
+                    compressed.add(current);
+                }
+                current = new CompressedStateTransition(t);
+            } else {
+                // Same state - accumulate
+                current.addOccurrence(t.apiCall, t.context);
+            }
+        }
+        
+        // Add last one
+        if (current != null) {
+            compressed.add(current);
+        }
+        
+        return compressed;
+    }
+    
+    /**
+     * Validate state machine - stop at first invalid transition
+     */
+    private ValidationResult validateStateMachine(List<StateTransition> transitions) {
+        for (int i = 0; i < transitions.size() - 1; i++) {
+            StateTransition current = transitions.get(i);
+            StateTransition next = transitions.get(i + 1);
+            
+            if (!stateMachine.isValidTransition(current.toState, next.toState)) {
+                // Invalid transition found - stop here
+                return new ValidationResult(
+                    false,
+                    i + 1,  // Position of invalid transition
+                    current.toState,
+                    next.toState,
+                    transitions.subList(0, i + 2),  // Only sequence up to error
+                    detectTransitionErrorType(current, next)
+                );
+            }
+        }
+        
+        return new ValidationResult(true);
+    }
+    
+    /**
+     * Detect login flow bugs across 4 categories
+     */
+    private List<LoginFlowBug> detectLoginFlowBugs(
+            List<StateTransition> transitions, 
+            List<APICall> apiCalls) {
+        
+        List<LoginFlowBug> bugs = new ArrayList<>();
+        
+        // A. Improper Error State Handling
+        bugs.addAll(detectImproperErrorHandling(transitions, apiCalls));
+        
+        // B. Lifecycle Interference
+        bugs.addAll(detectLifecycleInterference(apiCalls));
+        
+        // C. Missing Login Flow
+        bugs.addAll(detectMissingLoginFlow(transitions));
+        
+        // D. Incorrect Login Flow
+        bugs.addAll(detectIncorrectLoginFlow(transitions, apiCalls));
+        
+        return bugs;
+    }
+    
+    /**
+     * A. Detect improper error state handling
+     * Example: Network error shown as "email not registered"
+     */
+    private List<LoginFlowBug> detectImproperErrorHandling(
+            List<StateTransition> transitions,
+            List<APICall> apiCalls) {
+        
+        List<LoginFlowBug> bugs = new ArrayList<>();
+        
+        for (int i = 0; i < transitions.size(); i++) {
+            StateTransition t = transitions.get(i);
+            
+            // Check if error state has associated error message
+            if (isErrorState(t.toState)) {
+                String errorMsg = getErrorMessageAfterState(apiCalls, t.timestamp);
+                
+                if (errorMsg != null) {
+                    // Check if message matches state
+                    if (t.toState.equals("NetworkError")) {
+                        if (errorMsg.toLowerCase().contains("not registered") ||
+                            errorMsg.toLowerCase().contains("invalid") ||
+                            errorMsg.toLowerCase().contains("password")) {
+                            
+                            bugs.add(new LoginFlowBug(
+                                "IMPROPER_ERROR_HANDLING",
+                                "Network error showing wrong error message",
+                                String.format("State: %s, Message: \"%s\"", 
+                                            t.toState, errorMsg),
+                                i,
+                                "Expected generic network error message, got credential error"
+                            ));
+                        }
+                    } else if (t.toState.equals("InvalidCredentials")) {
+                        if (errorMsg.toLowerCase().contains("network") ||
+                            errorMsg.toLowerCase().contains("timeout") ||
+                            errorMsg.toLowerCase().contains("connection")) {
+                            
+                            bugs.add(new LoginFlowBug(
+                                "IMPROPER_ERROR_HANDLING",
+                                "Credential error showing network message",
+                                String.format("State: %s, Message: \"%s\"", 
+                                            t.toState, errorMsg),
+                                i,
+                                "Network error incorrectly shown as credential problem"
+                            ));
+                        }
+                    }
+                }
+            }
+        }
+        
+        return bugs;
+    }
+    
+    /**
+     * B. Detect lifecycle interference
+     * Example: Data loss on device rotation
+     */
+    private List<LoginFlowBug> detectLifecycleInterference(List<APICall> apiCalls) {
+        List<LoginFlowBug> bugs = new ArrayList<>();
+        
+        Map<String, Boolean> savedStateMap = new HashMap<>();
+        Map<String, Boolean> restoredStateMap = new HashMap<>();
+        
+        for (APICall call : apiCalls) {
+            String methodName = call.getMethodName();
+            String className = call.getClassName();
+            
+            // Track onSaveInstanceState calls
+            if (methodName.equals("onSaveInstanceState") && isLoginActivity(className)) {
+                savedStateMap.put(className, true);
+                
+                // Check if credentials are actually saved
+                boolean hasCredentials = call.getContext() != null &&
+                    (call.getContext().containsKey("username") || 
+                     call.getContext().containsKey("password"));
+                
+                if (!hasCredentials && observedStates.contains("CredentialInput")) {
+                    bugs.add(new LoginFlowBug(
+                        "LIFECYCLE_INTERFERENCE",
+                        "Credentials not saved during lifecycle transition",
+                        className + ".onSaveInstanceState() called without saving user input",
+                        0,
+                        "User data will be lost on device rotation or app background"
+                    ));
+                }
+            }
+            
+            // Track onCreate with savedInstanceState
+            if (methodName.equals("onCreate") && isLoginActivity(className)) {
+                boolean hasSavedState = call.getContext() != null &&
+                    call.getContext().containsKey("savedInstanceState") &&
+                    call.getContext().get("savedInstanceState") != null;
+                
+                if (hasSavedState) {
+                    restoredStateMap.put(className, true);
+                }
+            }
+            
+            // Track onDestroy
+            if (methodName.equals("onDestroy") && isLoginActivity(className)) {
+                // Check if state was saved before destruction
+                if (!savedStateMap.getOrDefault(className, false)) {
+                    bugs.add(new LoginFlowBug(
+                        "LIFECYCLE_INTERFERENCE",
+                        "Activity destroyed without saving state",
+                        className + " destroyed but onSaveInstanceState not called",
+                        0,
+                        "Potential data loss on configuration change"
+                    ));
+                }
+            }
+        }
+        
+        return bugs;
+    }
+    
+    /**
+     * C. Detect missing login flow
+     * Example: Missing essential states or steps
+     */
+    private List<LoginFlowBug> detectMissingLoginFlow(List<StateTransition> transitions) {
+        List<LoginFlowBug> bugs = new ArrayList<>();
+        
+        // Define required states for complete login flow
+        Set<String> requiredStates = new HashSet<>(Arrays.asList(
+            "CredentialInput",
+            "Authenticating"
+        ));
+        
+        // Must end in either success or failure
+        boolean hasEnding = observedStates.contains("LoggedIn") || 
+                           observedStates.contains("LoginFailure") ||
+                           observedStates.contains("InvalidCredentials");
+        
+        // Check for missing required states
+        Set<String> missing = new HashSet<>(requiredStates);
+        missing.removeAll(observedStates);
+        
+        if (!missing.isEmpty()) {
+            bugs.add(new LoginFlowBug(
+                "MISSING_LOGIN_FLOW",
+                "Essential login states not observed",
+                "Missing states: " + missing,
+                0,
+                "Login flow may be incomplete or bypassed"
+            ));
+        }
+        
+        if (!hasEnding) {
+            bugs.add(new LoginFlowBug(
+                "MISSING_LOGIN_FLOW",
+                "Login flow has no conclusion",
+                "Neither LoggedIn nor LoginFailure state reached",
+                transitions.size() - 1,
+                "Login process did not complete properly"
+            ));
+        }
+        
+        // Check for missing flag updates (multi-account scenario)
+        boolean hasMultiAccountSupport = checkForMultiAccountSupport(transitions);
+        if (hasMultiAccountSupport) {
+            boolean flagUpdated = checkBooleanFlagUpdate(transitions, "isFirstRun");
+            if (!flagUpdated) {
+                bugs.add(new LoginFlowBug(
+                    "MISSING_LOGIN_FLOW",
+                    "Multi-account flag not updated",
+                    "isFirstRun or similar flag not set after login",
+                    0,
+                    "New account may overwrite previous account (NextCloud #4462 pattern)"
+                ));
+            }
+        }
+        
+        return bugs;
+    }
+    
+    /**
+     * D. Detect incorrect login flow
+     * Example: Wrong branch taken based on server response
+     */
+    private List<LoginFlowBug> detectIncorrectLoginFlow(
+            List<StateTransition> transitions,
+            List<APICall> apiCalls) {
+        
+        List<LoginFlowBug> bugs = new ArrayList<>();
+        
+        for (int i = 0; i < transitions.size() - 1; i++) {
+            StateTransition current = transitions.get(i);
+            StateTransition next = transitions.get(i + 1);
+            Map<String, Object> context = current.context;
+            
+            if (context == null) continue;
+            
+            // Check MFA flow
+            if (current.toState.equals("Authenticating")) {
+                Boolean mfaRequired = (Boolean) context.get("mfa_required");
+                Integer httpStatus = (Integer) context.get("http_status");
+                
+                if (Boolean.TRUE.equals(mfaRequired) && 
+                    !next.toState.equals("MFACodePending") &&
+                    !next.toState.equals("CheckingMFASettings")) {
+                    
+                    bugs.add(new LoginFlowBug(
+                        "INCORRECT_LOGIN_FLOW",
+                        "MFA required but flow bypassed MFA states",
+                        String.format("After Authenticating with mfa_required=true, " +
+                                    "transitioned to %s instead of MFACodePending",
+                                    next.toState),
+                        i + 1,
+                        "App may have security vulnerability by skipping MFA"
+                    ));
+                }
+                
+                // Check success response treated as failure
+                if (httpStatus != null && httpStatus == 200 &&
+                    (next.toState.equals("LoginFailure") || 
+                     next.toState.equals("InvalidCredentials"))) {
+                    
+                    bugs.add(new LoginFlowBug(
+                        "INCORRECT_LOGIN_FLOW",
+                        "Successful authentication treated as failure",
+                        String.format("HTTP 200 OK but transitioned to %s", next.toState),
+                        i + 1,
+                        "Response parsing logic may be incorrect"
+                    ));
+                }
+                
+                // Check failure response treated as success
+                if (httpStatus != null && (httpStatus >= 400) &&
+                    (next.toState.equals("LoggedIn") || 
+                     next.toState.equals("CheckingMFASettings"))) {
+                    
+                    bugs.add(new LoginFlowBug(
+                        "INCORRECT_LOGIN_FLOW",
+                        "Failed authentication treated as success",
+                        String.format("HTTP %d but transitioned to %s", httpStatus, next.toState),
+                        i + 1,
+                        "Critical security issue: auth bypass possible"
+                    ));
+                }
+            }
+        }
+        
+        return bugs;
+    }
+    
+    /**
+     * Generate comprehensive analysis report
+     */
+    private void generateReport(AnalysisResult result) {
+        logger.logInfo("=== Enhanced State Analysis Report ===");
+        
+        // State sequence
+        logger.logInfo(String.format("\n--- Compressed State Sequence (%d transitions) ---",
+                                    result.transitions.size()));
+        for (int i = 0; i < result.transitions.size(); i++) {
+            StateTransition t = result.transitions.get(i);
+            if (t instanceof CompressedStateTransition) {
+                CompressedStateTransition ct = (CompressedStateTransition) t;
+                logger.logInfo(String.format("%d. %s → %s (%d occurrences)",
+                    i + 1, ct.fromState, ct.toState, ct.count));
+                if (ct.count > 1) {
+                    logger.logInfo("   API calls: " + String.join(", ", 
+                        ct.apiCalls.subList(0, Math.min(3, ct.apiCalls.size()))));
+                    if (ct.count > 3) {
+                        logger.logInfo("   ... and " + (ct.count - 3) + " more");
+                    }
+                }
+            } else {
+                logger.logInfo(String.format("%d. %s → %s",
+                    i + 1, t.fromState, t.toState));
+            }
+        }
+        
+        // Validation result
+        logger.logInfo("\n--- State Machine Validation ---");
+        if (result.validation.isValid) {
+            logger.logInfo("✓ State machine validation passed");
+        } else {
+            logger.logError(String.format(
+                "✗ Invalid transition at position %d: %s → %s",
+                result.validation.errorPosition,
+                result.validation.fromState,
+                result.validation.toState
+            ));
+            logger.logError("Reason: " + result.validation.errorType);
+            logger.logError("Sequence up to error:");
+            for (StateTransition t : result.validation.sequenceUpToError) {
+                logger.logError(String.format("  %s → %s", t.fromState, t.toState));
+            }
+        }
+        
+        // Login flow bugs
+        logger.logInfo("\n--- Login Flow Bug Detection ---");
+        if (result.bugs.isEmpty()) {
+            logger.logInfo("✓ No login flow bugs detected");
+        } else {
+            logger.logWarn(String.format("Found %d potential login flow bugs:", 
+                                        result.bugs.size()));
+            for (LoginFlowBug bug : result.bugs) {
+                logger.logError(String.format("\n[%s] %s", bug.category, bug.title));
+                logger.logError("  Details: " + bug.details);
+                logger.logError("  Impact: " + bug.impact);
+                if (bug.position > 0) {
+                    logger.logError(String.format("  Position: Transition #%d", bug.position));
+                }
+            }
+        }
+        
+        // Summary
+        logger.logInfo("\n--- Summary ---");
+        logger.logInfo(String.format("Total states observed: %d", result.observedStates.size()));
+        logger.logInfo(String.format("Unique transitions: %d", result.transitions.size()));
+        logger.logInfo(String.format("Validation: %s", 
+                                    result.validation.isValid ? "PASSED" : "FAILED"));
+        logger.logInfo(String.format("Bugs detected: %d", result.bugs.size()));
+    }
+    
+    // Helper methods
+    
+    private boolean isErrorState(String state) {
+        return state.contains("Error") || 
+               state.contains("Failure") || 
+               state.contains("Invalid") ||
+               state.contains("Unavailable");
+    }
+    
+    private boolean isLoginActivity(String className) {
+        return className.toLowerCase().contains("login") ||
+               className.toLowerCase().contains("auth");
+    }
+    
+    private String getErrorMessageAfterState(List<APICall> apiCalls, long timestamp) {
+        // Find Toast.show() or TextView.setText() calls after timestamp
+        for (APICall call : apiCalls) {
+            if (call.getTimestamp() > timestamp && 
+                call.getTimestamp() < timestamp + 5000) { // Within 5 seconds
+                
+                if (call.getMethodName().equals("show") && 
+                    call.getClassName().contains("Toast")) {
+                    return (String) call.getContext().get("message");
+                }
+                
+                if (call.getMethodName().equals("setText") && 
+                    call.getClassName().contains("TextView")) {
+                    return (String) call.getContext().get("text");
+                }
+            }
+        }
+        return null;
+    }
+    
+    private boolean checkForMultiAccountSupport(List<StateTransition> transitions) {
+        // Heuristic: If we see multiple login attempts or account switching
+        return transitions.stream()
+            .filter(t -> t.apiCall.contains("AccountManager") || 
+                        t.apiCall.contains("addAccount"))
+            .count() > 0;
+    }
+    
+    private boolean checkBooleanFlagUpdate(List<StateTransition> transitions, String flagName) {
+        return transitions.stream()
+            .anyMatch(t -> t.context != null && 
+                          t.context.containsKey(flagName));
+    }
+    
+    private String detectTransitionErrorType(StateTransition from, StateTransition to) {
+        // Classify the type of transition error
+        if (from.toState.contains("Error") && !to.toState.equals("CredentialInput") &&
+            !to.toState.equals("LoginFailure")) {
+            return "Error state should return to CredentialInput or LoginFailure";
+        }
+        if (from.toState.equals("LoggedIn")) {
+            return "LoggedIn is a terminal state, no transitions should occur after";
+        }
+        return "Invalid state transition per state machine definition";
+    }
+    
+    // Inner classes
+    
+    static class StateTransition {
+        String fromState;
+        String toState;
+        String apiCall;
+        long timestamp;
+        Map<String, Object> context;
+        
+        StateTransition(String from, String to, String api, long ts, Map<String, Object> ctx) {
+            this.fromState = from;
+            this.toState = to;
+            this.apiCall = api;
+            this.timestamp = ts;
+            this.context = ctx;
+        }
+    }
+    
+    static class CompressedStateTransition extends StateTransition {
+        int count = 1;
+        List<String> apiCalls = new ArrayList<>();
+        List<Map<String, Object>> contexts = new ArrayList<>();
+        
+        CompressedStateTransition(StateTransition t) {
+            super(t.fromState, t.toState, t.apiCall, t.timestamp, t.context);
+            this.apiCalls.add(t.apiCall);
+            this.contexts.add(t.context);
+        }
+        
+        void addOccurrence(String api, Map<String, Object> ctx) {
+            this.count++;
+            this.apiCalls.add(api);
+            this.contexts.add(ctx);
+        }
+    }
+    
+    static class ValidationResult {
+        boolean isValid;
+        int errorPosition;
+        String fromState;
+        String toState;
+        List<StateTransition> sequenceUpToError;
+        String errorType;
+        
+        ValidationResult(boolean valid) {
+            this.isValid = valid;
+        }
+        
+        ValidationResult(boolean valid, int pos, String from, String to,
+                        List<StateTransition> seq, String type) {
+            this.isValid = valid;
+            this.errorPosition = pos;
+            this.fromState = from;
+            this.toState = to;
+            this.sequenceUpToError = seq;
+            this.errorType = type;
+        }
+    }
+    
+    static class LoginFlowBug {
+        String category;  // IMPROPER_ERROR_HANDLING, LIFECYCLE_INTERFERENCE, etc.
+        String title;
+        String details;
+        int position;
+        String impact;
+        
+        LoginFlowBug(String cat, String title, String details, int pos, String impact) {
+            this.category = cat;
+            this.title = title;
+            this.details = details;
+            this.position = pos;
+            this.impact = impact;
+        }
+    }
+    
+    static class AnalysisResult {
+        List<StateTransition> transitions;
+        ValidationResult validation;
+        List<LoginFlowBug> bugs;
+        Set<String> observedStates;
+        
+        AnalysisResult(List<StateTransition> trans, ValidationResult val,
+                      List<LoginFlowBug> bugs, Set<String> states) {
+            this.transitions = trans;
+            this.validation = val;
+            this.bugs = bugs;
+            this.observedStates = states;
+        }
+    }
+    
+    static class APICall {
+        private String className;
+        private String methodName;
+        private String state;
+        private long timestamp;
+        private Map<String, Object> context;
+        
+        public String getClassName() { return className; }
+        public String getMethodName() { return methodName; }
+        public String getState() { return state; }
+        public long getTimestamp() { return timestamp; }
+        public Map<String, Object> getContext() { return context; }
+        
+        public APICall(String className, String methodName, String state, 
+                      long timestamp, Map<String, Object> context) {
+            this.className = className;
+            this.methodName = methodName;
+            this.state = state;
+            this.timestamp = timestamp;
+            this.context = context;
+        }
+    }
+    
+    static class Bundle {
+        private Map<String, Object> data = new HashMap<>();
+        
+        public boolean containsKey(String key) {
+            return data.containsKey(key);
+        }
+        
+        public Object get(String key) {
+            return data.get(key);
+        }
+        
+        public void put(String key, Object value) {
+            data.put(key, value);
+        }
+    }
+}

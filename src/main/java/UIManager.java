@@ -37,6 +37,39 @@ public class UIManager {
         NONE
     }
 
+    /**
+     * Get current UI dump as a string for comparison and analysis
+     */
+    public String getCurrentUIDump() {
+        try {
+            // Dump UI to a temporary file on device
+            Process dumpProcess = Runtime.getRuntime().exec(
+                "adb shell uiautomator dump /sdcard/ui_dump_temp.xml");
+            dumpProcess.waitFor();
+            
+            // Read the dump file
+            Process catProcess = Runtime.getRuntime().exec(
+                "adb shell cat /sdcard/ui_dump_temp.xml");
+            
+            BufferedReader reader = new BufferedReader(
+                new InputStreamReader(catProcess.getInputStream()));
+            StringBuilder result = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.append(line).append("\n");
+            }
+            reader.close();
+            
+            // Clean up temp file
+            Runtime.getRuntime().exec("adb shell rm /sdcard/ui_dump_temp.xml");
+            
+            return result.toString();
+        } catch (Exception e) {
+            System.err.println("Failed to get UI dump: " + e.getMessage());
+            return "";
+        }
+    }
+    
     // ---------------------- WebView Heuristics (UIAutomator-only) ----------------------
     private boolean isWebViewClass(String className) {
         if (className == null) return false;
@@ -183,6 +216,46 @@ public class UIManager {
     }
 
     /**
+     * Get current foreground Activity name via dumpsys (best-effort)
+     */
+    private String getCurrentActivityName() {
+        try {
+            // Try dumpsys activity (newer Androids)
+            Process p1 = Runtime.getRuntime().exec(new String[]{"bash", "-lc",
+                    "adb shell dumpsys activity activities | grep -i mResumedActivity | tail -n 1"});
+            BufferedReader r1 = new BufferedReader(new InputStreamReader(p1.getInputStream()));
+            String l1 = r1.readLine();
+            r1.close();
+            p1.waitFor();
+            if (l1 != null && !l1.trim().isEmpty()) {
+                // Extract component like com.pkg/.ui.LoginActivity
+                Matcher m = Pattern.compile("(\\S+)/(\\S+)").matcher(l1);
+                if (m.find()) {
+                    String component = m.group(1) + "/" + m.group(2);
+                    return component;
+                }
+            }
+
+            // Fallback to dumpsys window
+            Process p2 = Runtime.getRuntime().exec(new String[]{"bash", "-lc",
+                    "adb shell dumpsys window | grep -iE 'mCurrentFocus|mFocusedApp' | tail -n 1"});
+            BufferedReader r2 = new BufferedReader(new InputStreamReader(p2.getInputStream()));
+            String l2 = r2.readLine();
+            r2.close();
+            p2.waitFor();
+            if (l2 != null && !l2.trim().isEmpty()) {
+                Matcher m2 = Pattern.compile("(\\S+)/(\\S+)").matcher(l2);
+                if (m2.find()) {
+                    String component = m2.group(1) + "/" + m2.group(2);
+                    return component;
+                }
+            }
+        } catch (Exception ignore) {
+        }
+        return null;
+    }
+
+    /**
      * Start UI manager (ADB is already connected, no additional startup needed)
      */
     public boolean startUI() {
@@ -287,13 +360,13 @@ public class UIManager {
                     // Check Google login
                     if (!googleLoginDetected && matchesGoogleLoginPattern(element.text, element.resourceId)) {
                         googleLoginDetected = true;
-                        System.out.println("Google login element detected: " + element.text);
+                        System.out.println("Google login element detected: text='" + element.text + "' id='" + element.resourceId + "' class='" + element.className + "'");
                     }
 
                     // Check Facebook login
                     if (!facebookLoginDetected && matchesFacebookLoginPattern(element.text, element.resourceId)) {
                         facebookLoginDetected = true;
-                        System.out.println("Facebook login element detected: " + element.text);
+                        System.out.println("Facebook login element detected: text='" + element.text + "' id='" + element.resourceId + "' class='" + element.className + "'");
                     }
 
                     // Check username field
@@ -315,9 +388,27 @@ public class UIManager {
                     }
                 }
 
+                // Activity name based vote (hint)
+                boolean activityMatches = false;
+                String currentActivity = getCurrentActivityName();
+                if (currentActivity != null) {
+                    try {
+                        activityMatches = matchesLoginActivityPattern(currentActivity);
+                        if (activityMatches) {
+                            System.out.println("Activity hint matched for login: " + currentActivity);
+                        } else {
+                            System.out.println("Activity hint not matched: " + currentActivity);
+                        }
+                    } catch (Exception e) {
+                        // pattern may be invalid; ignore
+                    }
+                } else {
+                    System.out.println("Current activity unknown (dumpsys parse failed)");
+                }
+
                 // Early stop if already meets vote
                 int votes = (usernameFieldDetected ? 1 : 0) + (passwordFieldDetected ? 1 : 0)
-                        + (loginButtonDetected ? 1 : 0);
+                        + (loginButtonDetected ? 1 : 0) + (activityMatches ? 1 : 0);
                 if (votes >= voteThreshold) {
                     break;
                 }
@@ -328,8 +419,18 @@ public class UIManager {
                 }
             }
 
+            // Final recompute with latest activity state
+            boolean finalActivityMatches = false;
+            String finalActivity = getCurrentActivityName();
+            if (finalActivity != null) {
+                try {
+                    finalActivityMatches = matchesLoginActivityPattern(finalActivity);
+                } catch (Exception e) {
+                    // ignore
+                }
+            }
             int votes = (usernameFieldDetected ? 1 : 0) + (passwordFieldDetected ? 1 : 0)
-                    + (loginButtonDetected ? 1 : 0);
+                    + (loginButtonDetected ? 1 : 0) + (finalActivityMatches ? 1 : 0);
 
             // WebView-only heuristics (weak signals)
             List<UIElement> snapshotElements = getAllUIElements();
@@ -360,6 +461,11 @@ public class UIManager {
             System.out.println("  - Username field: " + usernameFieldDetected);
             System.out.println("  - Password field: " + passwordFieldDetected);
             System.out.println("  - Login button: " + loginButtonDetected);
+            if (finalActivity != null) {
+                System.out.println("  - Current activity: " + finalActivity + " (match: " + finalActivityMatches + ")");
+            } else {
+                System.out.println("  - Current activity: unknown");
+            }
             if (webViewPresent) {
                 System.out.println("  - WebView present: true");
                 System.out.println("  - WebView large(>60%): " + webViewLarge);
@@ -414,64 +520,248 @@ public class UIManager {
     }
 
     /**
+     * Click at coordinates and input text (KISS principle - keep it simple)
+     */
+    public boolean clickAndInputText(int x, int y, String text) {
+        try {
+            System.out.println(String.format("[INPUT] Clicking at (%d, %d) to focus field", x, y));
+            
+            // Click to focus the field
+            Process clickProcess = Runtime.getRuntime().exec(
+                String.format("adb shell input tap %d %d", x, y)
+            );
+            int clickExitCode = clickProcess.waitFor();
+            if (clickExitCode != 0) {
+                System.err.println("[INPUT] Click command failed with exit code: " + clickExitCode);
+                return false;
+            }
+            
+            // Wait for field to focus and keyboard to appear (increased from 800ms)
+            Thread.sleep(1200);
+            
+            // Use char-by-char input for reliability with special characters
+            System.out.println(String.format("[INPUT] Inputting text char-by-char (length: %d)", text.length()));
+            for (int i = 0; i < text.length(); i++) {
+                char c = text.charAt(i);
+                String charStr = String.valueOf(c);
+                
+                // For special characters, use keyevent codes
+                if (c == ' ') {
+                    // Space keyevent
+                    Process spaceProcess = Runtime.getRuntime().exec("adb shell input keyevent 62");
+                    spaceProcess.waitFor();
+                } else if (c == '\'') {
+                    // Single quote - cannot be escaped in single-quoted strings
+                    // Use double quotes instead
+                    Process charProcess = Runtime.getRuntime().exec(
+                        new String[]{"adb", "shell", "input", "text", charStr}
+                    );
+                    int exitCode = charProcess.waitFor();
+                    if (exitCode != 0) {
+                        System.err.println(String.format("[INPUT] Failed to input char '%s' at position %d (exit code: %d)", 
+                                                         c, i, exitCode));
+                        return false;
+                    }
+                } else {
+                    // Escape necessary characters for shell
+                    String escaped = charStr
+                        .replace("\\", "\\\\")
+                        .replace("\"", "\\\"")
+                        .replace("`", "\\`")
+                        .replace("$", "\\$")
+                        .replace("!", "\\!");
+                    
+                    // Use double quotes to avoid single quote issues
+                    Process charProcess = Runtime.getRuntime().exec(
+                        String.format("adb shell input text \"%s\"", escaped)
+                    );
+                    int exitCode = charProcess.waitFor();
+                    if (exitCode != 0) {
+                        System.err.println(String.format("[INPUT] Failed to input char '%s' at position %d (exit code: %d)", 
+                                                         c, i, exitCode));
+                        return false;
+                    }
+                }
+                
+                // Small delay between characters for stability
+                if (i % 5 == 0 && i > 0) {
+                    Thread.sleep(50);
+                }
+            }
+            
+            System.out.println("[INPUT] All characters inputted successfully");
+            
+            // Wait a bit for input to be processed
+            Thread.sleep(300);
+            
+            // Update cache with last click coordinates
+            UIElementCache.getInstance().setLastClickCoordinates(x, y);
+            
+            System.out.println("[INPUT] Text input completed successfully");
+            return true;
+        } catch (Exception e) {
+            System.err.println("Failed to click and input text at (" + x + "," + y + "): " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * Input credentials
      */
     public boolean inputCredentials(String username, String password) {
+        return inputCredentials(username, password, true);
+    }
+    
+    /**
+     * Input credentials WITHOUT clicking login button (for screenshot purposes)
+     */
+    public boolean inputCredentialsOnly(String username, String password) {
+        try {
+            System.out.println("Using ADB to input credentials (without clicking button)...");
+
+            // Find username input field
+            UIElement usernameField = findUsernameField();
+            if (usernameField == null) {
+                System.err.println("[CREDENTIAL_INPUT] Username field not found!");
+                return false;
+            }
+            
+            // Extract coordinates from bounds and click
+            int[] coords = extractCoordinates(usernameField.bounds);
+            System.out.println("[CREDENTIAL_INPUT] Found username field at (" + coords[0] + "," + coords[1] + ")");
+            System.out.println("[CREDENTIAL_INPUT] Input username: " + username);
+            boolean usernameInputted = clickAndInputText(coords[0], coords[1], username);
+            if (!usernameInputted) {
+                System.err.println("[CREDENTIAL_INPUT] Failed to input username!");
+                return false;
+            }
+            Thread.sleep(500);
+
+            // Find password input field
+            UIElement passwordField = findPasswordField();
+            if (passwordField == null) {
+                System.err.println("[CREDENTIAL_INPUT] Password field not found!");
+                return false;
+            }
+            
+            // Extract coordinates and input password
+            coords = extractCoordinates(passwordField.bounds);
+            System.out.println("[CREDENTIAL_INPUT] Found password field at (" + coords[0] + "," + coords[1] + ")");
+            System.out.println("[CREDENTIAL_INPUT] Input password: [" + password.length() + " chars]");
+            boolean passwordInputted = clickAndInputText(coords[0], coords[1], password);
+            if (!passwordInputted) {
+                System.err.println("[CREDENTIAL_INPUT] Failed to input password!");
+                return false;
+            }
+            Thread.sleep(500);
+            
+            System.out.println("[CREDENTIAL_INPUT] Credentials inputted successfully (button NOT clicked)");
+            return true;
+
+        } catch (Exception e) {
+            System.err.println("[CREDENTIAL_INPUT] Input credentials failed: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    /**
+     * Click login button (separate from input for screenshot purposes)
+     */
+    public boolean clickLoginButton() {
+        try {
+            // Find and click login button
+            UIElement loginButton = findLoginButton();
+            if (loginButton == null) {
+                System.err.println("[CREDENTIAL_INPUT] Login button not found!");
+                return false;
+            }
+            
+            loginButtonClickTime = System.currentTimeMillis();
+            clickElement(loginButton);
+            System.out.println("[CREDENTIAL_INPUT] Clicked login button, timestamp: " + loginButtonClickTime);
+
+            // Wait for login button to disappear
+            waitForLoginButtonDisappear();
+            
+            return true;
+        } catch (Exception e) {
+            System.err.println("[CREDENTIAL_INPUT] Click login button failed: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    /**
+     * Input credentials with option to wait for login button
+     */
+    public boolean inputCredentials(String username, String password, boolean waitForButtonDisappear) {
         try {
             System.out.println("Using ADB to input credentials...");
 
             // Find username input field
             UIElement usernameField = findUsernameField();
-            if (usernameField != null) {
-                // Click username input field
-                clickElement(usernameField);
-                Thread.sleep(500);
-
-                // Clear input field
-                Runtime.getRuntime().exec("adb shell input keyevent 123"); // Move to end
-                Runtime.getRuntime().exec("adb shell input keyevent 67"); // Delete key
-                Thread.sleep(200);
-
-                // Input username
-                Runtime.getRuntime().exec("adb shell input text '" + username + "'");
-                System.out.println("Input username: " + username);
-                Thread.sleep(500);
+            if (usernameField == null) {
+                System.err.println("[CREDENTIAL_INPUT] Username field not found!");
+                return false;
             }
+            
+            // Extract coordinates from bounds and click
+            int[] coords = extractCoordinates(usernameField.bounds);
+            System.out.println("[CREDENTIAL_INPUT] Found username field at (" + coords[0] + "," + coords[1] + ")");
+            System.out.println("[CREDENTIAL_INPUT] Input username: " + username);
+            boolean usernameInputted = clickAndInputText(coords[0], coords[1], username);
+            if (!usernameInputted) {
+                System.err.println("[CREDENTIAL_INPUT] Failed to input username!");
+                return false;
+            }
+            Thread.sleep(500);
 
             // Find password input field
             UIElement passwordField = findPasswordField();
-            if (passwordField != null) {
-                // Click password input field
-                clickElement(passwordField);
-                Thread.sleep(500);
-
-                // Clear input field
-                Runtime.getRuntime().exec("adb shell input keyevent 123"); // Move to end
-                Runtime.getRuntime().exec("adb shell input keyevent 67"); // Delete key
-                Thread.sleep(200);
-
-                // Input password
-                Runtime.getRuntime().exec("adb shell input text '" + password + "'");
-                System.out.println("Input password: " + password);
-                Thread.sleep(500);
+            if (passwordField == null) {
+                System.err.println("[CREDENTIAL_INPUT] Password field not found!");
+                return false;
             }
+            
+            // Extract coordinates and input password
+            coords = extractCoordinates(passwordField.bounds);
+            System.out.println("[CREDENTIAL_INPUT] Found password field at (" + coords[0] + "," + coords[1] + ")");
+            System.out.println("[CREDENTIAL_INPUT] Input password: [" + password.length() + " chars]");
+            boolean passwordInputted = clickAndInputText(coords[0], coords[1], password);
+            if (!passwordInputted) {
+                System.err.println("[CREDENTIAL_INPUT] Failed to input password!");
+                return false;
+            }
+            Thread.sleep(500);
+            
+            // Wait a moment for input to settle before clicking button
+            Thread.sleep(1000);  // Give time for screenshot before button click
 
             // Find and click login button
             UIElement loginButton = findLoginButton();
-            if (loginButton != null) {
-                loginButtonClickTime = System.currentTimeMillis();
-                clickElement(loginButton);
-                System.out.println("Click login button, timestamp: " + loginButtonClickTime);
-
-                // Wait for login button to disappear
-                waitForLoginButtonDisappear();
-                return true;
+            if (loginButton == null) {
+                System.err.println("[CREDENTIAL_INPUT] Login button not found!");
+                return false;
             }
+            
+            System.out.println("[CREDENTIAL_INPUT] About to click login button - input fields should be visible now");
+            loginButtonClickTime = System.currentTimeMillis();
+            clickElement(loginButton);
+            System.out.println("[CREDENTIAL_INPUT] Clicked login button, timestamp: " + loginButtonClickTime);
 
-            return false;
+            // Optionally wait for login button to disappear
+            if (waitForButtonDisappear) {
+                waitForLoginButtonDisappear();
+            }
+            
+            System.out.println("[CREDENTIAL_INPUT] Credential input completed successfully");
+            return true;
 
         } catch (Exception e) {
-            System.err.println("Input credentials failed: " + e.getMessage());
+            System.err.println("[CREDENTIAL_INPUT] Input credentials failed: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -529,73 +819,110 @@ public class UIManager {
         Process dumpProcess = Runtime.getRuntime().exec("adb shell uiautomator dump");
         dumpProcess.waitFor();
 
-        // Read the entire dump file content (uiautomator often writes a single very long line)
+        // Read the entire dump file content
         Process catProcess = Runtime.getRuntime().exec("adb shell cat /sdcard/window_dump.xml");
         BufferedReader reader = new BufferedReader(new InputStreamReader(catProcess.getInputStream()));
         StringBuilder xml = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
             xml.append(line);
-            xml.append('\n');
         }
         reader.close();
         catProcess.waitFor();
 
+        // Parse all UI elements
         List<UIElement> elements = parseAllUIElements(xml.toString());
-        // If parsed too few elements, retry once after a short delay
-        if (elements.size() < 15) {
-            try { Thread.sleep(400); } catch (InterruptedException ie) { /* ignore */ }
-            Process dumpProcess2 = Runtime.getRuntime().exec("adb shell uiautomator dump");
-            dumpProcess2.waitFor();
-            Process catProcess2 = Runtime.getRuntime().exec("adb shell cat /sdcard/window_dump.xml");
-            BufferedReader reader2 = new BufferedReader(new InputStreamReader(catProcess2.getInputStream()));
-            StringBuilder xml2 = new StringBuilder();
-            String line2;
-            while ((line2 = reader2.readLine()) != null) {
-                xml2.append(line2);
-                xml2.append('\n');
+        if (elements == null) {
+            elements = new ArrayList<>();
+        }
+        
+        // Cache and log only relevant elements
+        UIElementCache cache = UIElementCache.getInstance();
+        int matchedCount = 0;
+        
+        for (UIElement e : elements) {
+            boolean matched = false;
+            
+            // Check for Google login first (more specific)
+            if (matchesGoogleLoginPattern(e.text, e.resourceId)) {
+                cache.setGoogleLoginButton(convertToCache(e));
+                System.out.println("[Match] Google login button: " + e.text + " (id: " + e.resourceId + ")");
+                matched = true;
             }
-            reader2.close();
-            catProcess2.waitFor();
-            List<UIElement> retry = parseAllUIElements(xml2.toString());
-            if (!retry.isEmpty()) {
-                elements = retry;
+            // Check for Facebook login
+            else if (matchesFacebookLoginPattern(e.text, e.resourceId)) {
+                cache.setFacebookLoginButton(convertToCache(e));
+                System.out.println("[Match] Facebook login button: " + e.text + " (id: " + e.resourceId + ")");
+                matched = true;
+            }
+            // Check for normal login button
+            else if (matchesLoginButtonPattern(e.text, e.resourceId)) {
+                cache.setNormalLoginButton(convertToCache(e));
+                System.out.println("[Match] Normal login button: " + e.text + " (id: " + e.resourceId + ")");
+                matched = true;
+            }
+            
+            // Check and cache username field
+            if (matchesUsernamePattern(e.text, e.resourceId, e.className)) {
+                cache.setUsernameField(convertToCache(e));
+                System.out.println("[Match] Username field: " + e.text + " (id: " + e.resourceId + ")");
+                matched = true;
+            }
+            
+            // Check and cache password field
+            if (matchesPasswordPattern(e.text, e.resourceId, e.className)) {
+                cache.setPasswordField(convertToCache(e));
+                System.out.println("[Match] Password field: " + e.text + " (id: " + e.resourceId + ")");
+                matched = true;
+            }
+            
+            if (matched) {
+                matchedCount++;
             }
         }
-        if (elements.isEmpty()) {
-            System.out.println("UIManager: Parsed 0 elements from UI dump; detector may miss screens");
-        } else {
-            System.out.println("UIManager: Parsed UI elements count: " + elements.size());
-            // Print a few samples for quick diagnosis
-            int limit = Math.min(5, elements.size());
-            for (int i = 0; i < limit; i++) {
-                UIElement e = elements.get(i);
-                System.out.println("  sample[" + i + "]: text='" + e.text + "' id='" + e.resourceId + "' class='" + e.className + "'");
-            }
+        
+        if (matchedCount > 0) {
+            System.out.println(cache.getCacheStatus());
         }
+        
         return elements;
     }
-
+    
     /**
-     * Get visible UI elements
+     * Convert internal UIElement to cache UIElement
      */
-    private List<UIElement> getVisibleUIElements() throws Exception {
-        List<UIElement> allElements = getAllUIElements();
-        List<UIElement> visibleElements = new ArrayList<>();
-
-        for (UIElement element : allElements) {
-            if (element.visible) {
-                visibleElements.add(element);
-            }
+    private UIElementCache.UIElement convertToCache(UIElement element) {
+        int[] coords = extractCoordinates(element.bounds);
+        return new UIElementCache.UIElement(
+            element.text,
+            element.resourceId,
+            element.className,
+            element.bounds,
+            coords[0],
+            coords[1]
+        );
+    }
+    
+    /**
+     * Extract center coordinates from bounds string
+     */
+    private int[] extractCoordinates(String bounds) {
+        if (bounds == null || bounds.isEmpty()) {
+            return new int[]{0, 0};
         }
-        // Fallback: if parser couldn't determine visibility but there are elements,
-        // use all elements to avoid missing detections.
-        if (visibleElements.isEmpty() && !allElements.isEmpty()) {
-            System.out.println("UIManager: No visible elements parsed; falling back to all elements (" + allElements.size() + ")");
-            return allElements;
+        
+        Pattern boundsPattern = Pattern.compile("\\[(\\d+),(\\d+)\\]\\[(\\d+),(\\d+)\\]");
+        Matcher matcher = boundsPattern.matcher(bounds);
+        
+        if (matcher.find()) {
+            int x1 = Integer.parseInt(matcher.group(1));
+            int y1 = Integer.parseInt(matcher.group(2));
+            int x2 = Integer.parseInt(matcher.group(3));
+            int y2 = Integer.parseInt(matcher.group(4));
+            return new int[]{(x1 + x2) / 2, (y1 + y2) / 2};
         }
-
-        return visibleElements;
+        
+        return new int[]{0, 0};
     }
 
     /**
@@ -684,8 +1011,9 @@ public class UIManager {
                 int centerX = (x1 + x2) / 2;
                 int centerY = (y1 + y2) / 2;
 
-                // Click center point
-                Runtime.getRuntime().exec("adb shell input tap " + centerX + " " + centerY);
+                // Click center point - MUST wait for completion
+                Process clickProc = Runtime.getRuntime().exec("adb shell input tap " + centerX + " " + centerY);
+                clickProc.waitFor();
                 System.out.println("Click element: " + element.text + " position: (" + centerX + ", " + centerY + ")");
             }
         }
@@ -718,16 +1046,53 @@ public class UIManager {
     }
 
     /**
-     * Find login button
+     * Find login button - prioritize buttons with text or exact ID match
      */
     private UIElement findLoginButton() throws Exception {
         List<UIElement> elements = getAllUIElements();
+        UIElement fallbackButton = null;
+        
+        // Pass 1: Find button with explicit text or exact "login_button" ID
         for (UIElement element : elements) {
             if (matchesLoginButtonPattern(element.text, element.resourceId)) {
-                return element;
+                // Priority 1: Exact resource ID match
+                if (element.resourceId != null && element.resourceId.contains("login_button")) {
+                    return element;
+                }
+                // Priority 2: Has meaningful text (not just container)
+                if (element.text != null && !element.text.trim().isEmpty()) {
+                    return element;
+                }
+                // Store as fallback (might be container like login_viewswitcher)
+                if (fallbackButton == null) {
+                    fallbackButton = element;
+                }
             }
         }
-        return null;
+        
+        // Return fallback if no better match found
+        return fallbackButton;
+    }
+
+    /**
+     * Get visible UI elements
+     */
+    private List<UIElement> getVisibleUIElements() throws Exception {
+        List<UIElement> allElements = getAllUIElements();
+        List<UIElement> visibleElements = new ArrayList<>();
+
+        for (UIElement element : allElements) {
+            if (element.visible) {
+                visibleElements.add(element);
+            }
+        }
+        // Fallback: if parser couldn't determine visibility but there are elements,
+        // use all elements to avoid missing detections.
+        if (visibleElements.isEmpty() && !allElements.isEmpty()) {
+            return allElements;
+        }
+
+        return visibleElements;
     }
 
     /**
@@ -740,37 +1105,13 @@ public class UIManager {
         passwordFieldDetected = false;
     }
 
-    // Pattern matching method
-    private boolean matchesGoogleLoginPattern(String text, String resourceId) {
-        if (text == null)
-            text = "";
-        if (resourceId == null)
-            resourceId = "";
-
-        String combined = (text + " " + resourceId).toLowerCase();
-        String[] patterns = configLoader.getGoogleLoginPatterns().split(",");
-
-        for (String pattern : patterns) {
-            if (combined.contains(pattern.trim().toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean matchesFacebookLoginPattern(String text, String resourceId) {
-        if (text == null)
-            text = "";
-        if (resourceId == null)
-            resourceId = "";
-
-        String combined = (text + " " + resourceId).toLowerCase();
-        String[] patterns = configLoader.getFacebookLoginPatterns().split(",");
-
-        for (String pattern : patterns) {
-            if (combined.contains(pattern.trim().toLowerCase())) {
-                return true;
-            }
+    // Simple helper for SSO exclusion based on resource-id substrings
+    private boolean isSsoExcluded(String resourceId) {
+        if (resourceId == null) return false;
+        String lower = resourceId.toLowerCase();
+        for (String ex : configLoader.getSsoExcludeSubstrings()) {
+            String e = ex.trim().toLowerCase();
+            if (!e.isEmpty() && lower.contains(e)) return true;
         }
         return false;
     }
@@ -783,18 +1124,36 @@ public class UIManager {
         if (className == null)
             className = "";
 
+        // Exclude non-input elements
+        if (resourceId.contains("toolbar") ||
+            resourceId.contains("button") ||
+            resourceId.contains("viewswitcher") ||
+            resourceId.contains("container") ||
+            text.toLowerCase().contains("press to") ||
+            text.toLowerCase().contains("forgot") ||
+            text.toLowerCase().contains("register") ||
+            text.toLowerCase().contains("server")) {
+            return false;
+        }
+        
+        // Must be an input-capable element
+        if (!isWhitelistedClass(className) && 
+            !className.toLowerCase().contains("edit") &&
+            !className.toLowerCase().contains("input") &&
+            !className.toLowerCase().contains("text")) {
+            return false;
+        }
+
         String combined = (text + " " + resourceId + " " + className).toLowerCase();
         String[] patterns = configLoader.getUsernameFieldPatterns().split(",");
 
         for (String pattern : patterns) {
-            if (combined.contains(pattern.trim().toLowerCase())) {
+            String p = pattern.trim().toLowerCase();
+            if (!p.isEmpty() && combined.contains(p)) {
                 return true;
             }
         }
-        // Class whitelist: treat editable text classes as username candidates if any hint exists
-        if (isWhitelistedClass(className) && (resourceId.length() > 0 || text.length() > 0)) {
-            return true;
-        }
+        
         return false;
     }
 
@@ -806,14 +1165,32 @@ public class UIManager {
         if (className == null)
             className = "";
 
+        // Exclude non-password elements
+        if (text.toLowerCase().contains("forgot") ||
+            text.toLowerCase().contains("reset") ||
+            resourceId.contains("forgot") ||
+            resourceId.contains("reset")) {
+            return false;
+        }
+        
+        // Must be an input-capable element for password
+        if (!isWhitelistedClass(className) && 
+            !className.toLowerCase().contains("edit") &&
+            !className.toLowerCase().contains("input") &&
+            !className.toLowerCase().contains("text")) {
+            return false;
+        }
+
         String combined = (text + " " + resourceId + " " + className).toLowerCase();
         String[] patterns = configLoader.getPasswordFieldPatterns().split(",");
 
         for (String pattern : patterns) {
-            if (combined.contains(pattern.trim().toLowerCase())) {
+            String p = pattern.trim().toLowerCase();
+            if (!p.isEmpty() && combined.contains(p)) {
                 return true;
             }
         }
+        
         // Class whitelist: common input classes sometimes lack text; use id hint
         if (isWhitelistedClass(className) && resourceId.toLowerCase().contains("pass")) {
             return true;
@@ -838,11 +1215,116 @@ public class UIManager {
         if (resourceId == null)
             resourceId = "";
 
+        // CRITICAL: Exclude username and password input fields
+        String lowerResourceId = resourceId.toLowerCase();
+        if (lowerResourceId.contains("username") || 
+            lowerResourceId.contains("user_name") ||
+            lowerResourceId.contains("email") ||
+            lowerResourceId.contains("password") ||
+            lowerResourceId.contains("pass")) {
+            return false;
+        }
+
+        // Exclude launcher and system UI elements
+        if (resourceId.contains("nexuslauncher") || 
+            resourceId.contains("launcher") ||
+            resourceId.contains("systemui") ||
+            resourceId.contains("page_indicator") ||
+            resourceId.contains("hotseat") ||
+            resourceId.contains("apps_view") ||
+            resourceId.contains("all_apps_header") ||
+            resourceId.contains("search_container") ||
+            resourceId.contains("mic_icon") ||
+            resourceId.contains("g_icon")) {
+            return false;
+        }
+        
+        // Exclude toolbar and navigation elements
+        if (resourceId.contains("toolbar") ||
+            resourceId.contains("actionbar") ||
+            resourceId.contains("navigation") ||
+            text.toLowerCase().contains("logo")) {
+            return false;
+        }
+        
+        // Require meaningful text or specific login-related resource IDs
+        if (text.trim().isEmpty() && !resourceId.toLowerCase().contains("login") && 
+            !resourceId.toLowerCase().contains("signin") && !resourceId.toLowerCase().contains("sign_in")) {
+            return false;
+        }
+
         String combined = (text + " " + resourceId).toLowerCase();
         String[] patterns = configLoader.getLoginButtonPatterns().split(",");
 
         for (String pattern : patterns) {
-            if (combined.contains(pattern.trim().toLowerCase())) {
+            String p = pattern.trim().toLowerCase();
+            if (!p.isEmpty() && combined.contains(p)) {
+                // Additional validation: ensure it's not just a substring match
+                if (text.toLowerCase().equals(p) || 
+                    text.toLowerCase().contains(p + " ") ||
+                    text.toLowerCase().contains(" " + p) ||
+                    resourceId.toLowerCase().contains(p)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean matchesFacebookLoginPattern(String text, String resourceId) {
+        if (text == null) text = "";
+        if (resourceId == null) resourceId = "";
+
+        if (isSsoExcluded(resourceId)) return false;
+
+        String combined = (text + " " + resourceId).toLowerCase();
+        String[] patterns = configLoader.getFacebookLoginPatterns().split(",");
+        for (String pattern : patterns) {
+            String p = pattern.trim().toLowerCase();
+            if (!p.isEmpty() && combined.contains(p)) return true;
+        }
+        return false;
+    }
+
+    private boolean matchesGoogleLoginPattern(String text, String resourceId) {
+        if (text == null) text = "";
+        if (resourceId == null) resourceId = "";
+
+        if (isSsoExcluded(resourceId)) return false;
+
+        String textOnly = text.toLowerCase();
+        String idLower = resourceId.toLowerCase();
+        String[] patterns = configLoader.getGoogleLoginPatterns().split(",");
+
+        // 1) Strong signal: explicit phrases present in visible text/content-desc
+        for (String pattern : patterns) {
+            String p = pattern.trim().toLowerCase();
+            if (!p.isEmpty() && textOnly.contains(p)) return true;
+        }
+
+        // 2) Weak signal: resource-id contains 'google' PLUS any of signin/login/auth keywords,
+        //    and exclude common material namespaces to avoid misfires on generic components.
+        if (idLower.contains("google") &&
+                (idLower.contains("signin") || idLower.contains("sign_in") || idLower.contains("sign-in")
+                        || idLower.contains("login") || idLower.contains("auth") || idLower.contains("oauth"))) {
+            if (!(idLower.contains("material") || idLower.contains("android.material")
+                    || idLower.contains("gms.maps") || idLower.contains("recyclerview"))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean matchesLoginActivityPattern(String activityName) {
+        if (activityName == null || activityName.trim().isEmpty()) return false;
+        
+        String activityLower = activityName.toLowerCase();
+        String[] patterns = configLoader.getLoginActivityPatterns().split(",");
+        
+        for (String pattern : patterns) {
+            String p = pattern.trim().toLowerCase();
+            if (!p.isEmpty() && activityLower.contains(p)) {
                 return true;
             }
         }
@@ -988,7 +1470,9 @@ public class UIManager {
                     int y2 = Integer.parseInt(m.group(4));
                     int cx = (x1 + x2) / 2;
                     int cy = (y1 + y2) / 2;
-                    Runtime.getRuntime().exec("adb shell input tap " + cx + " " + cy);
+                    Process tapProcess = Runtime.getRuntime().exec("adb shell input tap " + cx + " " + cy);
+                    tapProcess.waitFor();
+                    Thread.sleep(300);
                     System.out.println("Clicked login button at (" + cx + ", " + cy + ")");
                     return true;
                 }
@@ -1016,6 +1500,50 @@ public class UIManager {
         return passwordFieldDetected;
     }
 
+    /**
+     * Get current foreground activity name
+     * Returns format: "package/activity" or null if unable to detect
+     */
+    public String getCurrentActivity() {
+        try {
+            ProcessBuilder pb = new ProcessBuilder(
+                "adb", "shell", "dumpsys", "window"
+            );
+            Process process = pb.start();
+            BufferedReader reader = new BufferedReader(
+                new InputStreamReader(process.getInputStream())
+            );
+            
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("mCurrentFocus") || line.contains("mFocusedApp")) {
+                    // Extract activity name from lines like:
+                    // mCurrentFocus=Window{abc123 u0 com.newsblur/.MainActivity}
+                    // mFocusedApp=AppWindowToken{xyz u0 com.newsblur/.LoginActivity}
+                    int startIdx = line.indexOf("u0 ");
+                    if (startIdx > 0) {
+                        startIdx += 3; // Skip "u0 "
+                        int endIdx = line.indexOf("}", startIdx);
+                        if (endIdx < 0) {
+                            endIdx = line.length();
+                        }
+                        String activity = line.substring(startIdx, endIdx).trim();
+                        if (!activity.isEmpty() && activity.contains("/")) {
+                            reader.close();
+                            process.destroy();
+                            return activity;
+                        }
+                    }
+                }
+            }
+            reader.close();
+            process.waitFor();
+        } catch (Exception e) {
+            System.err.println("[UIManager] Failed to get current activity: " + e.getMessage());
+        }
+        return null;
+    }
+    
     /**
      * Close UI manager
      */

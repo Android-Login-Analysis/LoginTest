@@ -284,21 +284,35 @@ public class StaticAnalyzer {
             boolean hasLoginStrings = containsAny(searchable,
                 "/login", "/signin", "/auth", "authorization", "token", "idtoken", "401", "credentialmanager");
 
-            if (hasWebViewHint) {
-                result.addMatch("WebViewUsage", method);
-            }
+            // Only record WebView usage if it's in login/auth context or has login-related strings
             if (hasWebViewHint && hasLoginStrings) {
+                result.addMatch("WebViewUsage", method);
                 result.addMatch("WebViewLoginCandidate", method);
             }
+            // Skip generic WebView usage to reduce noise
 
             // Try reflective body scan (no compile-time dependency on Body/Unit APIs)
             try {
                 String bodyText = tryGetMethodBodyText(method.getMethodRef());
                 if (bodyText != null && !bodyText.isEmpty()) {
                     String bt = bodyText.toLowerCase(Locale.ROOT);
+                    // Minimal baseline signals (keep KISS)
                     boolean bodyHasAuth = containsAny(bt,
                         "firebaseauth.signin", "signinwithemailandpassword", "signwithcredential",
                         "retrofit", "okhttp", "/login", "/signin", "/auth", "authorization", "token", "401");
+
+                    // Append configurable IR keywords from config.properties (static.ir.keywords)
+                    try {
+                        ConfigLoader cfg = new ConfigLoader();
+                        String[] extra = cfg.getStaticIrKeywords();
+                        if (extra != null && extra.length > 0) {
+                            if (containsAny(bt, extra)) {
+                                bodyHasAuth = true;
+                            }
+                        }
+                    } catch (Throwable t) {
+                        // Do not fail analysis if config cannot be loaded
+                    }
                     boolean bodyHasWebView = containsAny(bt,
                         "android.webkit.webview", "evaluatejavascript", "loadurl");
                     if (bodyHasAuth) {

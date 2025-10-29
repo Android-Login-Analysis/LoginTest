@@ -1,0 +1,352 @@
+{
+    "description": "Taint Analyzer config for Android",
+    "sources": [
+        {
+            "name": "password_edittext",
+            "type": "PASSWORD",
+            "patterns": [
+                {
+                    "class": "android.widget.EditText",
+                    "method": "getText",
+                    "condition": "inputType contains PASSWORD or hint contains password"
+                }
+            ]
+        },
+        {
+            "name": "username_edittext",
+            "type": "USERNAME",
+            "patterns": [
+                {
+                    "class": "android.widget.EditText",
+                    "method": "getText",
+                    "condition": "hint contains username or hint contains email or hint contains user"
+                }
+            ]
+        },
+        {
+            "name": "http_cookie",
+            "type": "COOKIE",
+            "patterns": [
+                {
+                    "class": "okhttp3.Response",
+                    "method": "header",
+                    "condition": "parameter equals 'Set-Cookie' or parameter equals 'Cookie'"
+                },
+                {
+                    "class": "java.net.HttpURLConnection",
+                    "method": "getHeaderField",
+                    "condition": "parameter equals 'Set-Cookie'"
+                }
+            ]
+        },
+        {
+            "name": "http_auth_header",
+            "type": "AUTH_TOKEN",
+            "patterns": [
+                {
+                    "class": "okhttp3.Response",
+                    "method": "header",
+                    "condition": "parameter equals 'Authorization'"
+                }
+            ]
+        },
+        {
+            "name": "intent_password",
+            "type": "PASSWORD",
+            "patterns": [
+                {
+                    "class": "android.content.Intent",
+                    "method": "getStringExtra",
+                    "condition": "parameter contains password or parameter contains pwd"
+                }
+            ]
+        },
+        {
+            "name": "intent_token",
+            "type": "TOKEN",
+            "patterns": [
+                {
+                    "class": "android.content.Intent",
+                    "method": "getStringExtra",
+                    "condition": "parameter contains token or parameter contains auth"
+                }
+            ]
+        },
+        {
+            "name": "bundle_sensitive",
+            "type": "SENSITIVE",
+            "patterns": [
+                {
+                    "class": "android.os.Bundle",
+                    "method": "getString",
+                    "condition": "parameter contains password or parameter contains token or parameter contains secret"
+                }
+            ]
+        },
+        {
+            "name": "jwt_token",
+            "type": "JWT",
+            "patterns": [
+                {
+                    "class": "java.lang.String",
+                    "method": "toString",
+                    "condition": "value matches '^eyJ[A-Za-z0-9-_]+\\.[A-Za-z0-9-_]+\\.[A-Za-z0-9-_]*$'"
+                }
+            ]
+        }
+    ],
+    "propagation": [
+        {
+            "name": "string_operations",
+            "rules": [
+                {
+                    "class": "java.lang.String",
+                    "method": "substring",
+                    "type": "PROPAGATE_TO_RESULT"
+                },
+                {
+                    "class": "java.lang.String",
+                    "method": "concat",
+                    "type": "PROPAGATE_TO_RESULT"
+                },
+                {
+                    "class": "java.lang.String",
+                    "method": "replace",
+                    "type": "PROPAGATE_TO_RESULT"
+                },
+                {
+                    "class": "java.lang.String",
+                    "method": "toLowerCase",
+                    "type": "PROPAGATE_TO_RESULT"
+                },
+                {
+                    "class": "java.lang.String",
+                    "method": "toUpperCase",
+                    "type": "PROPAGATE_TO_RESULT"
+                },
+                {
+                    "class": "java.lang.String",
+                    "method": "trim",
+                    "type": "PROPAGATE_TO_RESULT"
+                }
+            ]
+        },
+        {
+            "name": "encoding_operations",
+            "rules": [
+                {
+                    "class": "java.util.Base64",
+                    "method": "encodeToString",
+                    "type": "PROPAGATE_TO_RESULT",
+                    "note": "Base64 encoding is NOT encryption"
+                },
+                {
+                    "class": "java.util.Base64",
+                    "method": "decode",
+                    "type": "PROPAGATE_TO_RESULT"
+                }
+            ]
+        },
+        {
+            "name": "json_operations",
+            "rules": [
+                {
+                    "class": "org.json.JSONObject",
+                    "method": "put",
+                    "type": "PROPAGATE_TO_OBJECT"
+                },
+                {
+                    "class": "com.google.gson.Gson",
+                    "method": "toJson",
+                    "type": "PROPAGATE_TO_RESULT"
+                }
+            ]
+        }
+    ],
+    "sanitizers": [
+        {
+            "name": "encryption",
+            "description": "encryption would clear taint",
+            "rules": [
+                {
+                    "class": "javax.crypto.Cipher",
+                    "method": "doFinal",
+                    "type": "SANITIZE"
+                },
+                {
+                    "class": "java.security.MessageDigest",
+                    "method": "digest",
+                    "type": "SANITIZE"
+                },
+                {
+                    "class": "org.mindrot.jbcrypt.BCrypt",
+                    "method": "hashpw",
+                    "type": "SANITIZE"
+                }
+            ]
+        },
+        {
+            "name": "secure_storage",
+            "description": "using secure storage API",
+            "rules": [
+                {
+                    "class": "androidx.security.crypto.EncryptedSharedPreferences",
+                    "method": "edit",
+                    "type": "SAFE_SINK"
+                }
+            ]
+        }
+    ],
+    "sinks": [
+        {
+            "name": "plaintext_storage",
+            "severity": "HIGH",
+            "description": "plaintext storage to persistent storage",
+            "patterns": [
+                {
+                    "class": "android.content.SharedPreferences$Editor",
+                    "method": "putString",
+                    "parameter_index": 1,
+                    "check_encryption": true
+                },
+                {
+                    "class": "android.content.SharedPreferences$Editor",
+                    "method": "putStringSet",
+                    "parameter_index": 1,
+                    "check_encryption": true
+                }
+            ]
+        },
+        {
+            "name": "file_write",
+            "severity": "HIGH",
+            "description": "write to file",
+            "patterns": [
+                {
+                    "class": "java.io.FileOutputStream",
+                    "method": "write",
+                    "parameter_index": 0,
+                    "check_encryption": true
+                },
+                {
+                    "class": "java.io.FileWriter",
+                    "method": "write",
+                    "parameter_index": 0,
+                    "check_encryption": true
+                }
+            ]
+        },
+        {
+            "name": "database_insert",
+            "severity": "HIGH",
+            "description": "insert into database",
+            "patterns": [
+                {
+                    "class": "android.database.sqlite.SQLiteDatabase",
+                    "method": "insert",
+                    "parameter_index": 2,
+                    "check_encryption": true
+                },
+                {
+                    "class": "android.database.sqlite.SQLiteDatabase",
+                    "method": "update",
+                    "parameter_index": 1,
+                    "check_encryption": true
+                }
+            ]
+        },
+        {
+            "name": "log_output",
+            "severity": "MEDIUM",
+            "description": "output to log",
+            "patterns": [
+                {
+                    "class": "android.util.Log",
+                    "method": "d",
+                    "parameter_index": 1,
+                    "check_encryption": false
+                },
+                {
+                    "class": "android.util.Log",
+                    "method": "i",
+                    "parameter_index": 1,
+                    "check_encryption": false
+                },
+                {
+                    "class": "android.util.Log",
+                    "method": "w",
+                    "parameter_index": 1,
+                    "check_encryption": false
+                },
+                {
+                    "class": "android.util.Log",
+                    "method": "e",
+                    "parameter_index": 1,
+                    "check_encryption": false
+                },
+                {
+                    "class": "java.lang.System",
+                    "method": "println",
+                    "parameter_index": 0,
+                    "check_encryption": false
+                }
+            ]
+        },
+        {
+            "name": "network_transmission",
+            "severity": "MEDIUM",
+            "description": "network transmission (should use HTTPS)",
+            "patterns": [
+                {
+                    "class": "java.net.HttpURLConnection",
+                    "method": "setRequestProperty",
+                    "parameter_index": 1,
+                    "check_encryption": false,
+                    "note": "Check if using HTTPS"
+                }
+            ]
+        },
+        {
+            "name": "clipboard",
+            "severity": "LOW",
+            "description": "copy to clipboard",
+            "patterns": [
+                {
+                    "class": "android.content.ClipboardManager",
+                    "method": "setPrimaryClip",
+                    "parameter_index": 0,
+                    "check_encryption": true
+                }
+            ]
+        }
+    ],
+    "app_specific": {
+        "com.newsblur": {
+            "sources": [
+                {
+                    "class": "com.newsblur.network.APIResponse",
+                    "method": "getCookie",
+                    "type": "SESSION_COOKIE"
+                }
+            ],
+            "sinks": [
+                {
+                    "class": "com.newsblur.util.PrefsUtils",
+                    "method": "saveLogin",
+                    "parameter_index": 2,
+                    "severity": "HIGH"
+                }
+            ]
+        }
+    },
+    "options": {
+        "track_string_operations": true,
+        "track_intent_passing": true,
+        "track_bundle_operations": true,
+        "check_encryption": true,
+        "generate_call_stack": true,
+        "min_taint_value_length": 3,
+        "max_propagation_depth": 10,
+        "report_interval_seconds": 30
+    }
+}

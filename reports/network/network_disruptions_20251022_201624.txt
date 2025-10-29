@@ -1,0 +1,19 @@
+================================================================================
+Network Chaos Testing Report
+================================================================================
+
+Configuration:
+  Mode: random
+  Good:Bad Ratio: 40:60
+  Switch Interval: 60 seconds
+
+Statistics:
+  Total good network periods: 2
+  Total bad network periods: 0
+  Total disruptions: 2
+  Actual good:bad ratio: 2:0
+
+Disruption Timeline:
+--------------------------------------------------------------------------------
+[2025-10-22 20:14:27] GOOD - Network restored to good state (duration: 0s)
+[2025-10-22 20:16:24] GOOD - Network restored to good state (duration: 0s)

@@ -1,0 +1,650 @@
+[2025-10-22 17:12:45.890] [INFO] === AndroidLoginDetector Started ===
+[2025-10-22 17:12:45.895] [INFO] Log file: logs/android_login_detector_20251022_171245.log
+[2025-10-22 17:12:45.895] [INFO] Timestamp: 2025-10-22 17:12:45.895
+[2025-10-22 17:12:45.910] [INFO] App configuration loaded:
+[2025-10-22 17:12:45.910] [INFO]   - Package: com.newsblur
+[2025-10-22 17:12:45.910] [INFO]   - Activity: com.newsblur.activity.Main        
+[2025-10-22 17:12:45.910] [INFO]   - APK Path: apps/com.newsblur_240.apk
+[2025-10-22 17:12:45.910] [INFO]   - Emulator Snapshot (auto-generated): snap_com_newsblur_login
+[2025-10-22 17:12:45.910] [INFO] Initializing static analyzer...
+[2025-10-22 17:12:45.911] [INFO] Static analysis result found and up-to-date: reports/static_analysis/com.newsblur_240_1.json
+[2025-10-22 17:12:45.911] [INFO] Initializing Frida manager with static analysis results...
+[2025-10-22 17:12:45.942] [INFO] Frida manager configured with static analysis results
+[2025-10-22 17:12:45.943] [INFO] ApiLogAnalyzer initialized with 5 patterns from static analysis
+[2025-10-22 17:12:45.962] [INFO] Using credential pool directory: pools/com.newsblur_240
+[2025-10-22 17:12:45.963] [INFO] Loaded credential pools:
+[2025-10-22 17:12:45.963] [INFO]   - Standard accounts: 15
+[2025-10-22 17:12:45.963] [INFO]   - Standard passwords: 16
+[2025-10-22 17:12:45.963] [INFO]   - Google accounts: 5
+[2025-10-22 17:12:45.963] [INFO]   - Google passwords: 5
+[2025-10-22 17:12:45.963] [INFO]   - Facebook accounts: 5
+[2025-10-22 17:12:45.964] [INFO]   - Facebook passwords: 5
+[2025-10-22 17:12:45.964] [INFO] State machine initialized with 45 states
+[2025-10-22 17:12:45.966] [INFO] Taint analyzer initialized
+[2025-10-22 17:12:45.966] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+[2025-10-22 17:12:45.975] [INFO] Frida monitoring started successfully
+[2025-10-22 17:12:45.977] [INFO] === Starting AndroidLoginDetector Test with Static Analysis ===
+[2025-10-22 17:12:45.978] [INFO] Target app: com.newsblur
+[2025-10-22 17:12:45.978] [INFO] Test rounds: 100
+[2025-10-22 17:12:45.978] [INFO] Static analysis results: reports/static_analysis/com.newsblur_240_1.json
+[2025-10-22 17:12:45.978] [INFO] Unified error report: reports/errors/test_errors_20251022_171245.txt
+[2025-10-22 17:12:45.978] [INFO] Starting global taint tracking...
+[2025-10-22 17:12:45.978] [INFO] ? Taint tracking active for all rounds
+[2025-10-22 17:12:45.978] [INFO] Checking Docker environment compatibility...
+[2025-10-22 17:12:45.981] [INFO] ADB device found: emulator-5554	device
+[2025-10-22 17:12:45.994] [INFO] Emulator Android version: 10
+[2025-10-22 17:12:46.117] [INFO] Frida version: 16.7.19
+[2025-10-22 17:12:46.117] [INFO] All required files found
+[2025-10-22 17:12:46.117] [INFO] Docker environment check passed
+[2025-10-22 17:12:48.213] [INFO] Starting network chaos testing (emulator is ready)...
+[2025-10-22 17:12:48.213] [INFO] === Starting Network Chaos Testing ===
+[2025-10-22 17:12:48.214] [INFO] Mode: random
+[2025-10-22 17:12:48.216] [INFO] Good:Bad Ratio: 40:60
+[2025-10-22 17:12:48.217] [INFO] Switch Interval: 60 seconds
+[2025-10-22 17:12:48.217] [INFO] Disruption Methods: disable_data, slow_network
+[2025-10-22 17:12:48.217] [INFO] ? Restoring GOOD network state
+[2025-10-22 17:12:48.687] [INFO] Network chaos scheduler started in random mode
+[2025-10-22 17:12:48.689] [INFO] ================================================================================
+[2025-10-22 17:12:48.690] [INFO] ROUND 1 STARTED
+[2025-10-22 17:12:48.690] [INFO] Round timestamp: 2025-10-22 17:12:48.690
+[2025-10-22 17:12:48.690] [INFO] ================================================================================
+[2025-10-22 17:12:48.690] [INFO] Round 1: Starting fresh without snapshot restore
+[2025-10-22 17:12:48.692] [INFO] Appended Frida round marker for round 1
+[2025-10-22 17:12:49.819] [INFO] No baseline snapshot found - will create one when login page is detected
+[2025-10-22 17:12:51.874] [INFO] Target app started: com.newsblur
+[2025-10-22 17:13:36.875] [INFO] Emulator snapshot operation completed
+[2025-10-22 17:13:36.875] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+[2025-10-22 17:13:36.882] [INFO] Frida monitoring started successfully
+[2025-10-22 17:13:36.882] [INFO] Using UI manager to detect login page...
+[2025-10-22 17:13:39.425] [INFO] UI manager detected login page
+[2025-10-22 17:13:39.426] [INFO]   - Google login: false
+[2025-10-22 17:13:39.426] [INFO]   - Facebook login: false
+[2025-10-22 17:13:39.426] [INFO]   - Username field: true
+[2025-10-22 17:13:39.427] [INFO]   - Password field: true
+[2025-10-22 17:13:43.647] [INFO] Baseline snapshot created after detecting login page
+[2025-10-22 17:13:43.800] [INFO] Using standard account: testuser1@messenger.com
+[2025-10-22 17:13:43.800] [INFO] Using standard password: Messenger12345!
+[2025-10-22 17:13:43.800] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 17:13:43.800] [INFO] Selected username: testuser1@messenger.com
+[2025-10-22 17:13:43.800] [INFO] Selected password: [15 chars]
+[2025-10-22 17:13:43.800] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 17:13:43.801] [INFO] Username to input: testuser1@messenger.com
+[2025-10-22 17:13:43.801] [INFO] Password length: 15 characters
+[2025-10-22 17:13:48.688] [INFO] ? Inducing BAD network state: SLOW_NETWORK for 19 seconds
+[2025-10-22 17:14:07.709] [INFO] ? Restoring GOOD network state
+[2025-10-22 17:14:12.372] [INFO] === Verifying Credential Input ===
+[2025-10-22 17:14:12.373] [INFO] UI changed after input: false
+[2025-10-22 17:14:12.373] [INFO] Username visible in UI: false
+[2025-10-22 17:14:12.373] [INFO] Password field appears filled: true
+[2025-10-22 17:14:12.374] [INFO] Input focus changed: false
+[2025-10-22 17:14:12.374] [INFO] Has input indicators: true
+[2025-10-22 17:14:12.374] [INFO] === Input Verification Result: VERIFIED ===
+[2025-10-22 17:14:12.374] [INFO] ? UI manager credentials input successful and verified
+[2025-10-22 17:14:13.586] [INFO] ? Credential input phase completed successfully
+[2025-10-22 17:14:13.586] [INFO] Login process completed successfully
+[2025-10-22 17:14:13.586] [INFO] Analyzing API logs and validating state machine...
+[2025-10-22 17:14:14.967] [INFO] Captured 21 API calls in current round
+[2025-10-22 17:14:14.968] [INFO] API call: l1.Y.a0 -> State: Authenticating
+[2025-10-22 17:14:14.968] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+[2025-10-22 17:14:14.968] [INFO] API call: com.newsblur.activity.LoginProgress.onCreate -> State: CredentialInput
+[2025-10-22 17:14:14.968] [INFO] API call: i2.b.p -> State: Authenticating
+[2025-10-22 17:14:14.968] [INFO] API call: m2.e.b -> State: Authenticating
+[2025-10-22 17:14:14.968] [INFO] API call: m2.a.a -> State: Authenticating
+[2025-10-22 17:14:14.968] [INFO] API call: m2.a.b -> State: Authenticating
+[2025-10-22 17:14:14.968] [INFO] API call: h1.C.a -> State: Authenticating
+[2025-10-22 17:14:14.969] [INFO] API call: E1.a.h -> State: NetworkError
+[2025-10-22 17:14:14.969] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+[2025-10-22 17:14:14.969] [INFO] API call: com.newsblur.activity.Login.onCreate -> State: CredentialInput
+[2025-10-22 17:14:14.969] [INFO] Known states from Frida: 9/21
+[2025-10-22 17:14:14.970] [INFO] State machine validation passed
+[2025-10-22 17:14:15.074] [INFO] [TAINT] Extracting taint flows for Round 1
+[2025-10-22 17:14:15.074] [INFO] Extracting taint analysis results for Round 1
+[2025-10-22 17:14:15.075] [INFO] [TAINT] Round 1: No violations detected
+[2025-10-22 17:14:15.076] [INFO] [TAINT] Round report saved to: reports/taint/round_1_taint.txt
+[2025-10-22 17:14:15.076] [INFO] Stopping Frida monitoring...
+[2025-10-22 17:14:15.080] [INFO] Frida monitoring stopped
+[2025-10-22 17:14:15.080] [INFO] [BUG_DETECTION] Running bug detectors for Round 1
+[2025-10-22 17:14:15.083] [INFO] ??  Detected 1 potential bug(s) in Round 1
+[2025-10-22 17:14:15.090] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:14:15.090] [INFO] ROUND 1 COMPLETED
+[2025-10-22 17:14:15.090] [INFO] Round duration: 86401ms
+[2025-10-22 17:14:15.090] [INFO] Total attempts: 1
+[2025-10-22 17:14:15.090] [INFO] Successful logins: 1
+[2025-10-22 17:14:15.090] [INFO] Failed logins: 0
+[2025-10-22 17:14:15.090] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:14:18.401] [INFO] ================================================================================
+[2025-10-22 17:14:18.401] [INFO] ROUND 2 STARTED
+[2025-10-22 17:14:18.401] [INFO] Round timestamp: 2025-10-22 17:14:18.401
+[2025-10-22 17:14:18.401] [INFO] ================================================================================
+[2025-10-22 17:14:18.402] [INFO] Round 2: Restoring baseline snapshot to clean state
+[2025-10-22 17:14:25.326] [INFO] Successfully restored baseline snapshot
+[2025-10-22 17:14:29.720] [INFO] Verified: App restored to login page
+[2025-10-22 17:14:29.721] [INFO] Appended Frida round marker for round 2
+[2025-10-22 17:14:39.539] [INFO] Baseline snapshot restored successfully
+[2025-10-22 17:15:29.539] [INFO] Emulator snapshot operation completed
+[2025-10-22 17:15:29.539] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+[2025-10-22 17:15:29.542] [INFO] Frida monitoring started successfully
+[2025-10-22 17:15:29.542] [INFO] Using UI manager to detect login page...
+[2025-10-22 17:15:31.907] [INFO] UI manager detected login page
+[2025-10-22 17:15:31.907] [INFO]   - Google login: false
+[2025-10-22 17:15:31.908] [INFO]   - Facebook login: false
+[2025-10-22 17:15:31.908] [INFO]   - Username field: true
+[2025-10-22 17:15:31.908] [INFO]   - Password field: true
+[2025-10-22 17:15:32.254] [INFO] Baseline snapshot created after detecting login page
+[2025-10-22 17:15:32.417] [INFO] Using standard account: testuser5@messenger.com
+[2025-10-22 17:15:32.417] [INFO] Using standard password: `7!'!]mqsF#.
+[2025-10-22 17:15:32.418] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 17:15:32.418] [INFO] Selected username: testuser5@messenger.com
+[2025-10-22 17:15:32.418] [INFO] Selected password: [12 chars]
+[2025-10-22 17:15:32.418] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 17:15:32.418] [INFO] Username to input: testuser5@messenger.com
+[2025-10-22 17:15:32.418] [INFO] Password length: 12 characters
+[2025-10-22 17:15:43.680] [ERROR] Failed to input credentials
+[2025-10-22 17:15:43.681] [INFO] ? Credential input phase failed
+[2025-10-22 17:15:43.883] [ERROR] Login process failed
+[2025-10-22 17:15:43.883] [INFO] Analyzing API logs and validating state machine...
+[2025-10-22 17:15:45.195] [INFO] Captured 4 API calls in current round
+[2025-10-22 17:15:45.195] [INFO] Known states from Frida: 0/4
+[2025-10-22 17:15:45.195] [INFO] State machine validation passed
+[2025-10-22 17:15:45.303] [INFO] [TAINT] Extracting taint flows for Round 2
+[2025-10-22 17:15:45.303] [INFO] Extracting taint analysis results for Round 2
+[2025-10-22 17:15:45.304] [INFO] [TAINT] Round 2: No violations detected
+[2025-10-22 17:15:45.305] [INFO] [TAINT] Round report saved to: reports/taint/round_2_taint.txt
+[2025-10-22 17:15:45.305] [INFO] Stopping Frida monitoring...
+[2025-10-22 17:15:45.309] [INFO] Frida monitoring stopped
+[2025-10-22 17:15:45.309] [INFO] [BUG_DETECTION] Running bug detectors for Round 2
+[2025-10-22 17:15:45.309] [INFO] ? No bugs detected in Round 2
+[2025-10-22 17:15:45.309] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:15:45.309] [INFO] ROUND 2 COMPLETED
+[2025-10-22 17:15:45.309] [INFO] Round duration: 86908ms
+[2025-10-22 17:15:45.309] [INFO] Total attempts: 2
+[2025-10-22 17:15:45.309] [INFO] Successful logins: 1
+[2025-10-22 17:15:45.309] [INFO] Failed logins: 1
+[2025-10-22 17:15:45.309] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:15:48.643] [INFO] ================================================================================
+[2025-10-22 17:15:48.643] [INFO] ROUND 3 STARTED
+[2025-10-22 17:15:48.644] [INFO] Round timestamp: 2025-10-22 17:15:48.644
+[2025-10-22 17:15:48.644] [INFO] ================================================================================
+[2025-10-22 17:15:48.644] [INFO] Round 3: Restoring baseline snapshot to clean state
+[2025-10-22 17:15:55.450] [INFO] Successfully restored baseline snapshot
+[2025-10-22 17:15:59.807] [INFO] Verified: App restored to login page
+[2025-10-22 17:15:59.808] [INFO] Appended Frida round marker for round 3
+[2025-10-22 17:16:09.489] [INFO] Baseline snapshot restored successfully
+[2025-10-22 17:16:48.687] [INFO] ? Inducing BAD network state: DISABLE_DATA for 11 seconds
+[2025-10-22 17:16:59.489] [INFO] Emulator snapshot operation completed
+[2025-10-22 17:16:59.490] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+[2025-10-22 17:16:59.492] [INFO] Frida monitoring started successfully
+[2025-10-22 17:16:59.492] [INFO] Using UI manager to detect login page...
+[2025-10-22 17:16:59.897] [INFO] ? Restoring GOOD network state
+[2025-10-22 17:17:01.847] [INFO] UI manager detected login page
+[2025-10-22 17:17:01.847] [INFO]   - Google login: false
+[2025-10-22 17:17:01.848] [INFO]   - Facebook login: false
+[2025-10-22 17:17:01.848] [INFO]   - Username field: true
+[2025-10-22 17:17:01.848] [INFO]   - Password field: true
+[2025-10-22 17:17:02.219] [INFO] Baseline snapshot created after detecting login page
+[2025-10-22 17:17:02.358] [INFO] Using standard account: testuser5@messenger.com
+[2025-10-22 17:17:02.358] [INFO] Using standard password: Hello36709
+[2025-10-22 17:17:02.358] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 17:17:02.358] [INFO] Selected username: testuser5@messenger.com
+[2025-10-22 17:17:02.358] [INFO] Selected password: [10 chars]
+[2025-10-22 17:17:02.358] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 17:17:02.358] [INFO] Username to input: testuser5@messenger.com
+[2025-10-22 17:17:02.358] [INFO] Password length: 10 characters
+[2025-10-22 17:17:30.008] [INFO] === Verifying Credential Input ===
+[2025-10-22 17:17:30.008] [INFO] UI changed after input: false
+[2025-10-22 17:17:30.008] [INFO] Username visible in UI: false
+[2025-10-22 17:17:30.009] [INFO] Password field appears filled: true
+[2025-10-22 17:17:30.009] [INFO] Input focus changed: false
+[2025-10-22 17:17:30.009] [INFO] Has input indicators: true
+[2025-10-22 17:17:30.009] [INFO] === Input Verification Result: VERIFIED ===
+[2025-10-22 17:17:30.009] [INFO] ? UI manager credentials input successful and verified
+[2025-10-22 17:17:31.229] [INFO] ? Credential input phase completed successfully
+[2025-10-22 17:17:31.229] [INFO] Login process completed successfully
+[2025-10-22 17:17:31.230] [INFO] Analyzing API logs and validating state machine...
+[2025-10-22 17:17:32.541] [INFO] Captured 16 API calls in current round
+[2025-10-22 17:17:32.541] [INFO] API call: l1.Y.a0 -> State: Authenticating
+[2025-10-22 17:17:32.541] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+[2025-10-22 17:17:32.541] [INFO] API call: com.newsblur.activity.LoginProgress.onCreate -> State: CredentialInput
+[2025-10-22 17:17:32.542] [INFO] API call: i2.b.p -> State: Authenticating
+[2025-10-22 17:17:32.542] [INFO] API call: m2.e.b -> State: Authenticating
+[2025-10-22 17:17:32.542] [INFO] API call: m2.a.a -> State: Authenticating
+[2025-10-22 17:17:32.542] [INFO] API call: m2.a.b -> State: Authenticating
+[2025-10-22 17:17:32.542] [INFO] API call: h1.C.a -> State: Authenticating
+[2025-10-22 17:17:32.542] [INFO] API call: E1.a.h -> State: NetworkError
+[2025-10-22 17:17:32.542] [INFO] API call: com.newsblur.activity.Login.onCreate -> State: CredentialInput
+[2025-10-22 17:17:32.542] [INFO] Known states from Frida: 9/16
+[2025-10-22 17:17:32.542] [INFO] State machine validation passed
+[2025-10-22 17:17:32.661] [INFO] [TAINT] Extracting taint flows for Round 3
+[2025-10-22 17:17:32.661] [INFO] Extracting taint analysis results for Round 3
+[2025-10-22 17:17:32.662] [INFO] [TAINT] Round 3: No violations detected
+[2025-10-22 17:17:32.662] [INFO] [TAINT] Round report saved to: reports/taint/round_3_taint.txt
+[2025-10-22 17:17:32.662] [INFO] Stopping Frida monitoring...
+[2025-10-22 17:17:32.666] [INFO] Frida monitoring stopped
+[2025-10-22 17:17:32.666] [INFO] [BUG_DETECTION] Running bug detectors for Round 3
+[2025-10-22 17:17:32.667] [INFO] ??  Detected 1 potential bug(s) in Round 3
+[2025-10-22 17:17:32.667] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:17:32.667] [INFO] ROUND 3 COMPLETED
+[2025-10-22 17:17:32.667] [INFO] Round duration: 104024ms
+[2025-10-22 17:17:32.667] [INFO] Total attempts: 3
+[2025-10-22 17:17:32.667] [INFO] Successful logins: 2
+[2025-10-22 17:17:32.667] [INFO] Failed logins: 1
+[2025-10-22 17:17:32.668] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:17:36.079] [INFO] ================================================================================
+[2025-10-22 17:17:36.079] [INFO] ROUND 4 STARTED
+[2025-10-22 17:17:36.080] [INFO] Round timestamp: 2025-10-22 17:17:36.080
+[2025-10-22 17:17:36.080] [INFO] ================================================================================
+[2025-10-22 17:17:36.080] [INFO] Round 4: Restoring baseline snapshot to clean state
+[2025-10-22 17:17:42.880] [INFO] Successfully restored baseline snapshot
+[2025-10-22 17:17:47.266] [INFO] Verified: App restored to login page
+[2025-10-22 17:17:47.267] [INFO] Appended Frida round marker for round 4
+[2025-10-22 17:17:48.687] [INFO] ? Inducing BAD network state: SLOW_NETWORK for 27 seconds
+[2025-10-22 17:17:56.558] [INFO] Baseline snapshot restored successfully
+[2025-10-22 17:18:15.716] [INFO] ? Restoring GOOD network state
+[2025-10-22 17:18:46.559] [INFO] Emulator snapshot operation completed
+[2025-10-22 17:18:46.559] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+[2025-10-22 17:18:46.562] [INFO] Frida monitoring started successfully
+[2025-10-22 17:18:46.562] [INFO] Using UI manager to detect login page...
+[2025-10-22 17:18:48.687] [INFO] ? Inducing BAD network state: DISABLE_DATA for 24 seconds
+[2025-10-22 17:18:48.934] [INFO] UI manager detected login page
+[2025-10-22 17:18:48.934] [INFO]   - Google login: false
+[2025-10-22 17:18:48.934] [INFO]   - Facebook login: false
+[2025-10-22 17:18:48.934] [INFO]   - Username field: true
+[2025-10-22 17:18:48.934] [INFO]   - Password field: true
+[2025-10-22 17:18:49.291] [INFO] Baseline snapshot created after detecting login page
+[2025-10-22 17:18:49.425] [INFO] Using standard account: testuser1@messenger.com
+[2025-10-22 17:18:49.426] [INFO] Using standard password: testuserpass
+[2025-10-22 17:18:49.426] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 17:18:49.426] [INFO] Selected username: testuser1@messenger.com
+[2025-10-22 17:18:49.426] [INFO] Selected password: [12 chars]
+[2025-10-22 17:18:49.426] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 17:18:49.426] [INFO] Username to input: testuser1@messenger.com
+[2025-10-22 17:18:49.426] [INFO] Password length: 12 characters
+[2025-10-22 17:19:12.842] [INFO] ? Restoring GOOD network state
+[2025-10-22 17:19:17.229] [INFO] === Verifying Credential Input ===
+[2025-10-22 17:19:17.229] [INFO] UI changed after input: false
+[2025-10-22 17:19:17.230] [INFO] Username visible in UI: false
+[2025-10-22 17:19:17.230] [INFO] Password field appears filled: true
+[2025-10-22 17:19:17.230] [INFO] Input focus changed: false
+[2025-10-22 17:19:17.230] [INFO] Has input indicators: true
+[2025-10-22 17:19:17.230] [INFO] === Input Verification Result: VERIFIED ===
+[2025-10-22 17:19:17.230] [INFO] ? UI manager credentials input successful and verified
+[2025-10-22 17:19:18.436] [INFO] ? Credential input phase completed successfully
+[2025-10-22 17:19:18.436] [INFO] Login process completed successfully
+[2025-10-22 17:19:18.436] [INFO] Analyzing API logs and validating state machine...
+[2025-10-22 17:19:19.757] [INFO] Captured 17 API calls in current round
+[2025-10-22 17:19:19.757] [INFO] API call: l1.Y.a0 -> State: Authenticating
+[2025-10-22 17:19:19.757] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+[2025-10-22 17:19:19.757] [INFO] API call: com.newsblur.activity.LoginProgress.onCreate -> State: CredentialInput
+[2025-10-22 17:19:19.757] [INFO] API call: i2.b.p -> State: Authenticating
+[2025-10-22 17:19:19.757] [INFO] API call: m2.e.b -> State: Authenticating
+[2025-10-22 17:19:19.757] [INFO] API call: m2.a.a -> State: Authenticating
+[2025-10-22 17:19:19.757] [INFO] API call: m2.a.b -> State: Authenticating
+[2025-10-22 17:19:19.757] [INFO] API call: h1.C.a -> State: Authenticating
+[2025-10-22 17:19:19.758] [INFO] API call: E1.a.h -> State: NetworkError
+[2025-10-22 17:19:19.758] [INFO] API call: com.newsblur.activity.Login.onCreate -> State: CredentialInput
+[2025-10-22 17:19:19.758] [INFO] Known states from Frida: 9/17
+[2025-10-22 17:19:19.758] [INFO] State machine validation passed
+[2025-10-22 17:19:19.899] [INFO] [TAINT] Extracting taint flows for Round 4
+[2025-10-22 17:19:19.899] [INFO] Extracting taint analysis results for Round 4
+[2025-10-22 17:19:19.899] [INFO] [TAINT] Round 4: No violations detected
+[2025-10-22 17:19:19.899] [INFO] [TAINT] Round report saved to: reports/taint/round_4_taint.txt
+[2025-10-22 17:19:19.899] [INFO] Stopping Frida monitoring...
+[2025-10-22 17:19:19.903] [INFO] Frida monitoring stopped
+[2025-10-22 17:19:19.903] [INFO] [BUG_DETECTION] Running bug detectors for Round 4
+[2025-10-22 17:19:19.903] [INFO] ??  Detected 1 potential bug(s) in Round 4
+[2025-10-22 17:19:19.904] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:19:19.904] [INFO] ROUND 4 COMPLETED
+[2025-10-22 17:19:19.904] [INFO] Round duration: 103825ms
+[2025-10-22 17:19:19.904] [INFO] Total attempts: 4
+[2025-10-22 17:19:19.904] [INFO] Successful logins: 3
+[2025-10-22 17:19:19.904] [INFO] Failed logins: 1
+[2025-10-22 17:19:19.904] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:19:23.299] [INFO] ================================================================================
+[2025-10-22 17:19:23.299] [INFO] ROUND 5 STARTED
+[2025-10-22 17:19:23.300] [INFO] Round timestamp: 2025-10-22 17:19:23.300
+[2025-10-22 17:19:23.300] [INFO] ================================================================================
+[2025-10-22 17:19:23.300] [INFO] Round 5: Restoring baseline snapshot to clean state
+[2025-10-22 17:19:30.107] [INFO] Successfully restored baseline snapshot
+[2025-10-22 17:19:34.496] [INFO] Verified: App restored to login page
+[2025-10-22 17:19:34.496] [INFO] Appended Frida round marker for round 5
+[2025-10-22 17:19:44.282] [INFO] Baseline snapshot restored successfully
+[2025-10-22 17:20:34.282] [INFO] Emulator snapshot operation completed
+[2025-10-22 17:20:34.283] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+[2025-10-22 17:20:34.285] [INFO] Frida monitoring started successfully
+[2025-10-22 17:20:34.285] [INFO] Using UI manager to detect login page...
+[2025-10-22 17:20:36.659] [INFO] UI manager detected login page
+[2025-10-22 17:20:36.659] [INFO]   - Google login: false
+[2025-10-22 17:20:36.659] [INFO]   - Facebook login: false
+[2025-10-22 17:20:36.659] [INFO]   - Username field: true
+[2025-10-22 17:20:36.659] [INFO]   - Password field: true
+[2025-10-22 17:20:37.011] [INFO] Baseline snapshot created after detecting login page
+[2025-10-22 17:20:37.167] [INFO] Using standard account: 9srgai
+[2025-10-22 17:20:37.167] [INFO] Using standard password: $0`(X{M,]8@@
+[2025-10-22 17:20:37.167] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 17:20:37.167] [INFO] Selected username: 9srgai
+[2025-10-22 17:20:37.167] [INFO] Selected password: [12 chars]
+[2025-10-22 17:20:37.167] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 17:20:37.167] [INFO] Username to input: 9srgai
+[2025-10-22 17:20:37.167] [INFO] Password length: 12 characters
+[2025-10-22 17:20:48.687] [INFO] ? Inducing BAD network state: SLOW_NETWORK for 25 seconds
+[2025-10-22 17:21:02.593] [INFO] === Verifying Credential Input ===
+[2025-10-22 17:21:02.593] [INFO] UI changed after input: false
+[2025-10-22 17:21:02.593] [INFO] Username visible in UI: false
+[2025-10-22 17:21:02.594] [INFO] Password field appears filled: true
+[2025-10-22 17:21:02.594] [INFO] Input focus changed: false
+[2025-10-22 17:21:02.594] [INFO] Has input indicators: true
+[2025-10-22 17:21:02.594] [INFO] === Input Verification Result: VERIFIED ===
+[2025-10-22 17:21:02.594] [INFO] ? UI manager credentials input successful and verified
+[2025-10-22 17:21:03.847] [INFO] ? Credential input phase completed successfully
+[2025-10-22 17:21:03.847] [INFO] Login process completed successfully
+[2025-10-22 17:21:03.847] [INFO] Analyzing API logs and validating state machine...
+[2025-10-22 17:21:05.161] [INFO] Captured 18 API calls in current round
+[2025-10-22 17:21:05.161] [INFO] API call: l1.Y.a0 -> State: Authenticating
+[2025-10-22 17:21:05.161] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+[2025-10-22 17:21:05.161] [INFO] API call: com.newsblur.activity.LoginProgress.onCreate -> State: CredentialInput
+[2025-10-22 17:21:05.162] [INFO] API call: i2.b.p -> State: Authenticating
+[2025-10-22 17:21:05.162] [INFO] API call: m2.e.b -> State: Authenticating
+[2025-10-22 17:21:05.162] [INFO] API call: m2.a.a -> State: Authenticating
+[2025-10-22 17:21:05.162] [INFO] API call: m2.a.b -> State: Authenticating
+[2025-10-22 17:21:05.162] [INFO] API call: h1.C.a -> State: Authenticating
+[2025-10-22 17:21:05.162] [INFO] API call: E1.a.h -> State: NetworkError
+[2025-10-22 17:21:05.162] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+[2025-10-22 17:21:05.162] [INFO] API call: com.newsblur.activity.Login.onCreate -> State: CredentialInput
+[2025-10-22 17:21:05.162] [INFO] Known states from Frida: 9/18
+[2025-10-22 17:21:05.162] [INFO] State machine validation passed
+[2025-10-22 17:21:05.270] [INFO] [TAINT] Extracting taint flows for Round 5
+[2025-10-22 17:21:05.271] [INFO] Extracting taint analysis results for Round 5
+[2025-10-22 17:21:05.271] [INFO] [TAINT] Round 5: No violations detected
+[2025-10-22 17:21:05.271] [INFO] [TAINT] Round report saved to: reports/taint/round_5_taint.txt
+[2025-10-22 17:21:05.271] [INFO] Stopping Frida monitoring...
+[2025-10-22 17:21:05.275] [INFO] Frida monitoring stopped
+[2025-10-22 17:21:05.275] [INFO] [BUG_DETECTION] Running bug detectors for Round 5
+[2025-10-22 17:21:05.275] [INFO] ??  Detected 1 potential bug(s) in Round 5
+[2025-10-22 17:21:05.276] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:21:05.276] [INFO] ROUND 5 COMPLETED
+[2025-10-22 17:21:05.276] [INFO] Round duration: 101977ms
+[2025-10-22 17:21:05.276] [INFO] Total attempts: 5
+[2025-10-22 17:21:05.276] [INFO] Successful logins: 4
+[2025-10-22 17:21:05.276] [INFO] Failed logins: 1
+[2025-10-22 17:21:05.276] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:21:08.668] [INFO] ================================================================================
+[2025-10-22 17:21:08.668] [INFO] ROUND 6 STARTED
+[2025-10-22 17:21:08.668] [INFO] Round timestamp: 2025-10-22 17:21:08.668
+[2025-10-22 17:21:08.668] [INFO] ================================================================================
+[2025-10-22 17:21:08.668] [INFO] Round 6: Restoring baseline snapshot to clean state
+[2025-10-22 17:21:13.717] [INFO] ? Restoring GOOD network state
+[2025-10-22 17:21:15.475] [INFO] Successfully restored baseline snapshot
+[2025-10-22 17:21:19.859] [INFO] Verified: App restored to login page
+[2025-10-22 17:21:19.860] [INFO] Appended Frida round marker for round 6
+[2025-10-22 17:21:29.205] [INFO] Baseline snapshot restored successfully
+[2025-10-22 17:21:48.687] [INFO] ? Inducing BAD network state: DISABLE_DATA for 14 seconds
+[2025-10-22 17:22:02.826] [INFO] ? Restoring GOOD network state
+[2025-10-22 17:22:19.205] [INFO] Emulator snapshot operation completed
+[2025-10-22 17:22:19.205] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+[2025-10-22 17:22:19.207] [INFO] Frida monitoring started successfully
+[2025-10-22 17:22:19.207] [INFO] Using UI manager to detect login page...
+[2025-10-22 17:22:21.617] [INFO] UI manager detected login page
+[2025-10-22 17:22:21.617] [INFO]   - Google login: false
+[2025-10-22 17:22:21.617] [INFO]   - Facebook login: false
+[2025-10-22 17:22:21.617] [INFO]   - Username field: true
+[2025-10-22 17:22:21.617] [INFO]   - Password field: true
+[2025-10-22 17:22:21.968] [INFO] Baseline snapshot created after detecting login page
+[2025-10-22 17:22:22.120] [INFO] Using standard account: tefafm6fp
+[2025-10-22 17:22:22.120] [INFO] Using standard password: $0`(X{M,]8@@
+[2025-10-22 17:22:22.120] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 17:22:22.120] [INFO] Selected username: tefafm6fp
+[2025-10-22 17:22:22.120] [INFO] Selected password: [12 chars]
+[2025-10-22 17:22:22.120] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 17:22:22.120] [INFO] Username to input: tefafm6fp
+[2025-10-22 17:22:22.120] [INFO] Password length: 12 characters
+[2025-10-22 17:22:48.004] [INFO] === Verifying Credential Input ===
+[2025-10-22 17:22:48.004] [INFO] UI changed after input: false
+[2025-10-22 17:22:48.004] [INFO] Username visible in UI: false
+[2025-10-22 17:22:48.004] [INFO] Password field appears filled: true
+[2025-10-22 17:22:48.004] [INFO] Input focus changed: false
+[2025-10-22 17:22:48.004] [INFO] Has input indicators: true
+[2025-10-22 17:22:48.004] [INFO] === Input Verification Result: VERIFIED ===
+[2025-10-22 17:22:48.004] [INFO] ? UI manager credentials input successful and verified
+[2025-10-22 17:22:49.232] [INFO] ? Credential input phase completed successfully
+[2025-10-22 17:22:49.232] [INFO] Login process completed successfully
+[2025-10-22 17:22:49.232] [INFO] Analyzing API logs and validating state machine...
+[2025-10-22 17:22:50.527] [INFO] Captured 16 API calls in current round
+[2025-10-22 17:22:50.527] [INFO] API call: l1.Y.a0 -> State: Authenticating
+[2025-10-22 17:22:50.527] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+[2025-10-22 17:22:50.527] [INFO] API call: com.newsblur.activity.LoginProgress.onCreate -> State: CredentialInput
+[2025-10-22 17:22:50.528] [INFO] API call: i2.b.p -> State: Authenticating
+[2025-10-22 17:22:50.528] [INFO] API call: m2.e.b -> State: Authenticating
+[2025-10-22 17:22:50.528] [INFO] API call: m2.a.a -> State: Authenticating
+[2025-10-22 17:22:50.528] [INFO] API call: m2.a.b -> State: Authenticating
+[2025-10-22 17:22:50.528] [INFO] API call: h1.C.a -> State: Authenticating
+[2025-10-22 17:22:50.528] [INFO] API call: E1.a.h -> State: NetworkError
+[2025-10-22 17:22:50.528] [INFO] API call: com.newsblur.activity.Login.onCreate -> State: CredentialInput
+[2025-10-22 17:22:50.528] [INFO] Known states from Frida: 9/16
+[2025-10-22 17:22:50.528] [INFO] State machine validation passed
+[2025-10-22 17:22:50.596] [INFO] [TAINT] Extracting taint flows for Round 6
+[2025-10-22 17:22:50.596] [INFO] Extracting taint analysis results for Round 6
+[2025-10-22 17:22:50.596] [INFO] [TAINT] Round 6: No violations detected
+[2025-10-22 17:22:50.596] [INFO] [TAINT] Round report saved to: reports/taint/round_6_taint.txt
+[2025-10-22 17:22:50.596] [INFO] Stopping Frida monitoring...
+[2025-10-22 17:22:50.600] [INFO] Frida monitoring stopped
+[2025-10-22 17:22:50.600] [INFO] [BUG_DETECTION] Running bug detectors for Round 6
+[2025-10-22 17:22:50.600] [INFO] ??  Detected 1 potential bug(s) in Round 6
+[2025-10-22 17:22:50.601] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:22:50.601] [INFO] ROUND 6 COMPLETED
+[2025-10-22 17:22:50.601] [INFO] Round duration: 101933ms
+[2025-10-22 17:22:50.601] [INFO] Total attempts: 6
+[2025-10-22 17:22:50.601] [INFO] Successful logins: 5
+[2025-10-22 17:22:50.601] [INFO] Failed logins: 1
+[2025-10-22 17:22:50.601] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:22:53.996] [INFO] ================================================================================
+[2025-10-22 17:22:53.996] [INFO] ROUND 7 STARTED
+[2025-10-22 17:22:53.996] [INFO] Round timestamp: 2025-10-22 17:22:53.996
+[2025-10-22 17:22:53.996] [INFO] ================================================================================
+[2025-10-22 17:22:53.996] [INFO] Round 7: Restoring baseline snapshot to clean state
+[2025-10-22 17:23:00.826] [INFO] Successfully restored baseline snapshot
+[2025-10-22 17:23:05.229] [INFO] Verified: App restored to login page
+[2025-10-22 17:23:05.230] [INFO] Appended Frida round marker for round 7
+[2025-10-22 17:23:14.939] [INFO] Baseline snapshot restored successfully
+[2025-10-22 17:24:04.939] [INFO] Emulator snapshot operation completed
+[2025-10-22 17:24:04.939] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+[2025-10-22 17:24:04.942] [INFO] Frida monitoring started successfully
+[2025-10-22 17:24:04.942] [INFO] Using UI manager to detect login page...
+[2025-10-22 17:24:07.332] [INFO] UI manager detected login page
+[2025-10-22 17:24:07.332] [INFO]   - Google login: false
+[2025-10-22 17:24:07.332] [INFO]   - Facebook login: false
+[2025-10-22 17:24:07.332] [INFO]   - Username field: true
+[2025-10-22 17:24:07.332] [INFO]   - Password field: true
+[2025-10-22 17:24:07.708] [INFO] Baseline snapshot created after detecting login page
+[2025-10-22 17:24:07.887] [INFO] Using standard account: 9srgai
+[2025-10-22 17:24:07.887] [INFO] Using standard password: (_g~H$f~Us%{
+[2025-10-22 17:24:07.887] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 17:24:07.887] [INFO] Selected username: 9srgai
+[2025-10-22 17:24:07.887] [INFO] Selected password: [12 chars]
+[2025-10-22 17:24:07.887] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 17:24:07.887] [INFO] Username to input: 9srgai
+[2025-10-22 17:24:07.887] [INFO] Password length: 12 characters
+[2025-10-22 17:24:33.490] [INFO] === Verifying Credential Input ===
+[2025-10-22 17:24:33.490] [INFO] UI changed after input: false
+[2025-10-22 17:24:33.490] [INFO] Username visible in UI: false
+[2025-10-22 17:24:33.490] [INFO] Password field appears filled: true
+[2025-10-22 17:24:33.491] [INFO] Input focus changed: false
+[2025-10-22 17:24:33.491] [INFO] Has input indicators: true
+[2025-10-22 17:24:33.491] [INFO] === Input Verification Result: VERIFIED ===
+[2025-10-22 17:24:33.491] [INFO] ? UI manager credentials input successful and verified
+[2025-10-22 17:24:34.712] [INFO] ? Credential input phase completed successfully
+[2025-10-22 17:24:34.712] [INFO] Login process completed successfully
+[2025-10-22 17:24:34.712] [INFO] Analyzing API logs and validating state machine...
+[2025-10-22 17:24:36.011] [INFO] Captured 15 API calls in current round
+[2025-10-22 17:24:36.011] [INFO] API call: l1.Y.a0 -> State: Authenticating
+[2025-10-22 17:24:36.011] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+[2025-10-22 17:24:36.011] [INFO] API call: com.newsblur.activity.LoginProgress.onCreate -> State: CredentialInput
+[2025-10-22 17:24:36.011] [INFO] API call: i2.b.p -> State: Authenticating
+[2025-10-22 17:24:36.012] [INFO] API call: m2.e.b -> State: Authenticating
+[2025-10-22 17:24:36.012] [INFO] API call: m2.a.a -> State: Authenticating
+[2025-10-22 17:24:36.012] [INFO] API call: m2.a.b -> State: Authenticating
+[2025-10-22 17:24:36.012] [INFO] API call: h1.C.a -> State: Authenticating
+[2025-10-22 17:24:36.012] [INFO] API call: E1.a.h -> State: NetworkError
+[2025-10-22 17:24:36.012] [INFO] API call: com.newsblur.activity.Login.onCreate -> State: CredentialInput
+[2025-10-22 17:24:36.012] [INFO] Known states from Frida: 9/15
+[2025-10-22 17:24:36.012] [INFO] State machine validation passed
+[2025-10-22 17:24:36.079] [INFO] [TAINT] Extracting taint flows for Round 7
+[2025-10-22 17:24:36.079] [INFO] Extracting taint analysis results for Round 7
+[2025-10-22 17:24:36.080] [INFO] [TAINT] Round 7: No violations detected
+[2025-10-22 17:24:36.080] [INFO] [TAINT] Round report saved to: reports/taint/round_7_taint.txt
+[2025-10-22 17:24:36.080] [INFO] Stopping Frida monitoring...
+[2025-10-22 17:24:36.084] [INFO] Frida monitoring stopped
+[2025-10-22 17:24:36.084] [INFO] [BUG_DETECTION] Running bug detectors for Round 7
+[2025-10-22 17:24:36.084] [INFO] ??  Detected 1 potential bug(s) in Round 7
+[2025-10-22 17:24:36.084] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:24:36.084] [INFO] ROUND 7 COMPLETED
+[2025-10-22 17:24:36.084] [INFO] Round duration: 102088ms
+[2025-10-22 17:24:36.084] [INFO] Total attempts: 7
+[2025-10-22 17:24:36.084] [INFO] Successful logins: 6
+[2025-10-22 17:24:36.084] [INFO] Failed logins: 1
+[2025-10-22 17:24:36.084] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:24:39.494] [INFO] ================================================================================
+[2025-10-22 17:24:39.495] [INFO] ROUND 8 STARTED
+[2025-10-22 17:24:39.495] [INFO] Round timestamp: 2025-10-22 17:24:39.495
+[2025-10-22 17:24:39.495] [INFO] ================================================================================
+[2025-10-22 17:24:39.495] [INFO] Round 8: Restoring baseline snapshot to clean state
+[2025-10-22 17:24:46.292] [INFO] Successfully restored baseline snapshot
+[2025-10-22 17:24:50.677] [INFO] Verified: App restored to login page
+[2025-10-22 17:24:50.677] [INFO] Appended Frida round marker for round 8
+[2025-10-22 17:25:00.418] [INFO] Baseline snapshot restored successfully
+[2025-10-22 17:25:48.687] [INFO] ? Inducing BAD network state: DISABLE_DATA for 12 seconds
+[2025-10-22 17:25:50.419] [INFO] Emulator snapshot operation completed
+[2025-10-22 17:25:50.419] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+[2025-10-22 17:25:50.422] [INFO] Frida monitoring started successfully
+[2025-10-22 17:25:50.422] [INFO] Using UI manager to detect login page...
+[2025-10-22 17:25:52.786] [INFO] UI manager detected login page
+[2025-10-22 17:25:52.786] [INFO]   - Google login: false
+[2025-10-22 17:25:52.786] [INFO]   - Facebook login: false
+[2025-10-22 17:25:52.786] [INFO]   - Username field: true
+[2025-10-22 17:25:52.786] [INFO]   - Password field: true
+[2025-10-22 17:25:53.119] [INFO] Baseline snapshot created after detecting login page
+[2025-10-22 17:25:53.254] [INFO] Using standard account: tefafm6fp
+[2025-10-22 17:25:53.254] [INFO] Using standard password: $0`(X{M,]8@@
+[2025-10-22 17:25:53.254] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 17:25:53.254] [INFO] Selected username: tefafm6fp
+[2025-10-22 17:25:53.254] [INFO] Selected password: [12 chars]
+[2025-10-22 17:25:53.254] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 17:25:53.254] [INFO] Username to input: tefafm6fp
+[2025-10-22 17:25:53.254] [INFO] Password length: 12 characters
+[2025-10-22 17:26:00.835] [INFO] ? Restoring GOOD network state
+[2025-10-22 17:26:19.093] [INFO] === Verifying Credential Input ===
+[2025-10-22 17:26:19.093] [INFO] UI changed after input: false
+[2025-10-22 17:26:19.093] [INFO] Username visible in UI: false
+[2025-10-22 17:26:19.094] [INFO] Password field appears filled: true
+[2025-10-22 17:26:19.094] [INFO] Input focus changed: false
+[2025-10-22 17:26:19.094] [INFO] Has input indicators: true
+[2025-10-22 17:26:19.094] [INFO] === Input Verification Result: VERIFIED ===
+[2025-10-22 17:26:19.094] [INFO] ? UI manager credentials input successful and verified
+[2025-10-22 17:26:20.271] [INFO] ? Credential input phase completed successfully
+[2025-10-22 17:26:20.271] [INFO] Login process completed successfully
+[2025-10-22 17:26:20.271] [INFO] Analyzing API logs and validating state machine...
+[2025-10-22 17:26:21.566] [INFO] Captured 15 API calls in current round
+[2025-10-22 17:26:21.566] [INFO] API call: l1.Y.a0 -> State: Authenticating
+[2025-10-22 17:26:21.566] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+[2025-10-22 17:26:21.566] [INFO] API call: com.newsblur.activity.LoginProgress.onCreate -> State: CredentialInput
+[2025-10-22 17:26:21.566] [INFO] API call: i2.b.p -> State: Authenticating
+[2025-10-22 17:26:21.566] [INFO] API call: m2.e.b -> State: Authenticating
+[2025-10-22 17:26:21.566] [INFO] API call: m2.a.a -> State: Authenticating
+[2025-10-22 17:26:21.566] [INFO] API call: m2.a.b -> State: Authenticating
+[2025-10-22 17:26:21.566] [INFO] API call: h1.C.a -> State: Authenticating
+[2025-10-22 17:26:21.566] [INFO] API call: E1.a.h -> State: NetworkError
+[2025-10-22 17:26:21.567] [INFO] API call: com.newsblur.activity.Login.onCreate -> State: CredentialInput
+[2025-10-22 17:26:21.567] [INFO] Known states from Frida: 9/15
+[2025-10-22 17:26:21.567] [INFO] State machine validation passed
+[2025-10-22 17:26:21.676] [INFO] [TAINT] Extracting taint flows for Round 8
+[2025-10-22 17:26:21.677] [INFO] Extracting taint analysis results for Round 8
+[2025-10-22 17:26:21.677] [INFO] [TAINT] Round 8: No violations detected
+[2025-10-22 17:26:21.677] [INFO] [TAINT] Round report saved to: reports/taint/round_8_taint.txt
+[2025-10-22 17:26:21.677] [INFO] Stopping Frida monitoring...
+[2025-10-22 17:26:21.679] [INFO] Frida monitoring stopped
+[2025-10-22 17:26:21.679] [INFO] [BUG_DETECTION] Running bug detectors for Round 8
+[2025-10-22 17:26:21.680] [INFO] ??  Detected 1 potential bug(s) in Round 8
+[2025-10-22 17:26:21.680] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:26:21.680] [INFO] ROUND 8 COMPLETED
+[2025-10-22 17:26:21.680] [INFO] Round duration: 102186ms
+[2025-10-22 17:26:21.680] [INFO] Total attempts: 8
+[2025-10-22 17:26:21.680] [INFO] Successful logins: 7
+[2025-10-22 17:26:21.680] [INFO] Failed logins: 1
+[2025-10-22 17:26:21.680] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:26:25.018] [INFO] ================================================================================
+[2025-10-22 17:26:25.019] [INFO] ROUND 9 STARTED
+[2025-10-22 17:26:25.019] [INFO] Round timestamp: 2025-10-22 17:26:25.019
+[2025-10-22 17:26:25.019] [INFO] ================================================================================
+[2025-10-22 17:26:25.019] [INFO] Round 9: Restoring baseline snapshot to clean state
+[2025-10-22 17:26:31.835] [INFO] Successfully restored baseline snapshot
+[2025-10-22 17:26:36.251] [INFO] Verified: App restored to login page
+[2025-10-22 17:26:36.251] [INFO] Appended Frida round marker for round 9
+[2025-10-22 17:26:45.916] [INFO] Baseline snapshot restored successfully
+[2025-10-22 17:27:35.916] [INFO] Emulator snapshot operation completed
+[2025-10-22 17:27:35.917] [INFO] Starting Frida monitoring with static analysis results for package: com.newsblur
+[2025-10-22 17:27:35.919] [INFO] Frida monitoring started successfully
+[2025-10-22 17:27:35.919] [INFO] Using UI manager to detect login page...
+[2025-10-22 17:27:38.302] [INFO] UI manager detected login page
+[2025-10-22 17:27:38.302] [INFO]   - Google login: false
+[2025-10-22 17:27:38.302] [INFO]   - Facebook login: false
+[2025-10-22 17:27:38.302] [INFO]   - Username field: true
+[2025-10-22 17:27:38.302] [INFO]   - Password field: true
+[2025-10-22 17:27:38.625] [INFO] Baseline snapshot created after detecting login page
+[2025-10-22 17:27:38.750] [INFO] Using standard account: testuser2@messenger.com
+[2025-10-22 17:27:38.750] [INFO] Using standard password: helloTest123
+[2025-10-22 17:27:38.750] [INFO] === Starting Credential Input Phase ===
+[2025-10-22 17:27:38.750] [INFO] Selected username: testuser2@messenger.com
+[2025-10-22 17:27:38.750] [INFO] Selected password: [12 chars]
+[2025-10-22 17:27:38.750] [INFO] === Starting Enhanced Credential Input Process ===
+[2025-10-22 17:27:38.750] [INFO] Username to input: testuser2@messenger.com
+[2025-10-22 17:27:38.750] [INFO] Password length: 12 characters
+[2025-10-22 17:27:48.687] [INFO] ? Inducing BAD network state: SLOW_NETWORK for 16 seconds
+[2025-10-22 17:28:04.703] [INFO] ? Restoring GOOD network state
+[2025-10-22 17:28:06.387] [INFO] === Verifying Credential Input ===
+[2025-10-22 17:28:06.388] [INFO] UI changed after input: false
+[2025-10-22 17:28:06.388] [INFO] Username visible in UI: false
+[2025-10-22 17:28:06.388] [INFO] Password field appears filled: true
+[2025-10-22 17:28:06.388] [INFO] Input focus changed: false
+[2025-10-22 17:28:06.388] [INFO] Has input indicators: true
+[2025-10-22 17:28:06.388] [INFO] === Input Verification Result: VERIFIED ===
+[2025-10-22 17:28:06.388] [INFO] ? UI manager credentials input successful and verified
+[2025-10-22 17:28:07.553] [INFO] ? Credential input phase completed successfully
+[2025-10-22 17:28:07.553] [INFO] Login process completed successfully
+[2025-10-22 17:28:07.553] [INFO] Analyzing API logs and validating state machine...
+[2025-10-22 17:28:08.848] [INFO] Captured 19 API calls in current round
+[2025-10-22 17:28:08.849] [INFO] API call: l1.Y.a0 -> State: Authenticating
+[2025-10-22 17:28:08.849] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+[2025-10-22 17:28:08.849] [INFO] API call: com.newsblur.activity.LoginProgress.onCreate -> State: CredentialInput
+[2025-10-22 17:28:08.849] [INFO] API call: i2.b.p -> State: Authenticating
+[2025-10-22 17:28:08.849] [INFO] API call: m2.e.b -> State: Authenticating
+[2025-10-22 17:28:08.849] [INFO] API call: m2.a.a -> State: Authenticating
+[2025-10-22 17:28:08.849] [INFO] API call: m2.a.b -> State: Authenticating
+[2025-10-22 17:28:08.849] [INFO] API call: h1.C.a -> State: Authenticating
+[2025-10-22 17:28:08.849] [INFO] API call: E1.a.h -> State: NetworkError
+[2025-10-22 17:28:08.849] [INFO] API call: android.app.Activity.onCreate -> State: Unknown
+[2025-10-22 17:28:08.849] [INFO] API call: com.newsblur.activity.Login.onCreate -> State: CredentialInput
+[2025-10-22 17:28:08.849] [INFO] Known states from Frida: 9/19
+[2025-10-22 17:28:08.849] [INFO] State machine validation passed
+[2025-10-22 17:28:08.929] [INFO] [TAINT] Extracting taint flows for Round 9
+[2025-10-22 17:28:08.929] [INFO] Extracting taint analysis results for Round 9
+[2025-10-22 17:28:08.930] [INFO] [TAINT] Round 9: No violations detected
+[2025-10-22 17:28:08.930] [INFO] [TAINT] Round report saved to: reports/taint/round_9_taint.txt
+[2025-10-22 17:28:08.930] [INFO] Stopping Frida monitoring...
+[2025-10-22 17:28:08.934] [INFO] Frida monitoring stopped
+[2025-10-22 17:28:08.934] [INFO] [BUG_DETECTION] Running bug detectors for Round 9
+[2025-10-22 17:28:08.934] [INFO] ??  Detected 1 potential bug(s) in Round 9
+[2025-10-22 17:28:08.935] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:28:08.935] [INFO] ROUND 9 COMPLETED
+[2025-10-22 17:28:08.935] [INFO] Round duration: 103917ms
+[2025-10-22 17:28:08.935] [INFO] Total attempts: 9
+[2025-10-22 17:28:08.935] [INFO] Successful logins: 8
+[2025-10-22 17:28:08.935] [INFO] Failed logins: 1
+[2025-10-22 17:28:08.935] [INFO] --------------------------------------------------------------------------------
+[2025-10-22 17:28:12.335] [INFO] ================================================================================
+[2025-10-22 17:28:12.335] [INFO] ROUND 10 STARTED
+[2025-10-22 17:28:12.335] [INFO] Round timestamp: 2025-10-22 17:28:12.335
+[2025-10-22 17:28:12.335] [INFO] ================================================================================
+[2025-10-22 17:28:12.335] [INFO] Round 10: Restoring baseline snapshot to clean state
+[2025-10-22 17:28:19.128] [INFO] Successfully restored baseline snapshot
+[2025-10-22 17:28:23.489] [INFO] Verified: App restored to login page
+[2025-10-22 17:28:23.490] [INFO] Appended Frida round marker for round 10
+[2025-10-22 17:28:33.238] [INFO] Baseline snapshot restored successfully

@@ -21,9 +21,12 @@ CheckingToken:::(?i)\b(FirebaseAuth|getLastSignedInAccount|getCurrentAccessToken
 LoggedIn_Via_Token:::(?i)\b(token).*\b(success|complete|auto\s*login|navigate)\b
 LoggedIn_Via_Token:::(?i)\b(loginWithToken|authenticateWithToken|token.*login|silent.*login)\b
 
-# Too broad across many apps; rely on lifecycle-based rules below
-# CredentialInput:::(?i)\b(login|sign\s*in|auth).*(screen|view|prompt|requires|fields)\b
-CredentialInput:::(?i)\b(Login|SignIn|Auth)[A-Za-z0-9_]*\.(onCreate|onViewCreated|onResume|init|setup|bind)\b
+# Login Activity/Fragment lifecycle methods - match actual API call format
+CredentialInput:::(?i)\b[a-z0-9_.]*\.(Login|SignIn|Auth)[A-Za-z0-9_]*\.(onCreate|onViewCreated|onResume|init|setup|bind)\b
+# Alternative pattern for full package paths
+CredentialInput:::(?i)\b[a-z0-9_.]*\.activity\.(Login|SignIn|Auth)[A-Za-z0-9_]*\.(onCreate|onViewCreated|onResume)\b
+# Pattern for fragment-based login
+CredentialInput:::(?i)\b[a-z0-9_.]*\.fragment\.(Login|SignIn|Auth)[A-Za-z0-9_]*Fragment\.(onCreate|onViewCreated|onResume)\b
 # NOTE: The following pattern was matching a very large number of UI library methods (e.g., TextInputLayout styling APIs)
 # and causing massive false positives. Temporarily disable to keep matches focused on real login contexts.
 # CredentialInput:::(?i)\b(EditText|TextInput|TextInputLayout|TextWatcher|requestFocus|onTextChanged|setText|append|onFocus)\b
@@ -40,15 +43,34 @@ CredentialFormatError:::(?i)\b(Login|SignIn|Auth)[A-Za-z0-9_]*\.(validate|isVali
 # Login Phase 
 # =============================================================================
 
+# Fine-grained authentication states
+PreparingAuth:::(?i)\bonPreExecute\b
+SendingCredentials:::(?i)\b(doInBackground|execute|enqueue|connect|post|request|newCall)\b.*\b(http|okhttp|retrofit|login|auth)\b
+AwaitingResponse:::(?i)\b(getResponseCode|getInputStream|getOutputStream|await|waitFor)\b
+ParsingResponse:::(?i)\b(onPostExecute|fromJson|parseJson|JSONObject|JSONArray|gson|jackson)\b.*\b(response|result)\b
+ValidatingCredentials:::(?i)\b(SharedPreferences\.edit|putString|commit|apply)\b.*\b(token|session|user|auth)\b
+LoadingProfile:::(?i)\b(updateUserProfile|loadProfile|getUserProfile|fetchUserData)\b
+RetrievingFeeds:::(?i)\b(retrieveFeed|loadFeed|syncFeed|getFeed|fetchFeed)\b
+InitializingSync:::(?i)\b(SubscriptionSyncService|syncService|schedule|initSync)\b
+ShowingError:::(?i)\bandroid\.widget\.Toast\.show\b
+ReturnToLogin:::(?i)\b(startActivity|navigate).*\b(Login|SignIn)\b
+LoggedIn:::(?i)\b(startActivity|navigate).*\b(Main|Home|Dashboard|Inbox)\b
+
 Authenticating:::(?i)\b(LoginButton|SignInButton|SubmitCredentials|AuthenticateButton|LoginSubmitButton)\b.*\bonClick\b
 Authenticating:::(?i)\b(login|sign\s*in|authenticate|submit).*(perform|initiate|attempt|start|execute|process|handle|request|clicked)\b
 Authenticating:::(?i)\b(loginWithCredentials|authenticate|AuthenticationManager\.login|LoginUseCase\.execute)\b
+# NewsBlur specific login methods
+Authenticating:::(?i)\b[a-z0-9_.]*\.fragment\.LoginRegisterFragment\.(logIn|signUp|onClick)\b
+Authenticating:::(?i)\b[a-z0-9_.]*\.activity\.LoginProgress\.(onCreate|doInBackground)\b
 
 ## Too broad; rely on explicit APIs and endpoints below
 # CheckingCredentials:::(?i)\b(check|verify|validate).*(credential|password|account|login)\b
 # Too broad; matches almost all network calls
 # CheckingCredentials:::(?i)\b(Call\.execute|enqueue|connect|getInputStream|execute|newCall|post|request)\b
 CheckingCredentials:::(?i)\b(signInWithEmailAndPassword|getSignInIntent|logInWithReadPermissions|AuthApi|LoginApi|UserApi|ApiService\.login)\b
+# NewsBlur specific API calls
+CheckingCredentials:::(?i)\b[a-z0-9_.]*\.network\.APIManager\.(login|authenticate)\b
+CheckingCredentials:::(?i)\b[a-z0-9_.]*\.APIManager\.(login|authenticate)\b
 
 # Too broad: network errors across the entire app
 # ServiceUnavailable_Auth:::(?i)\b(network|unreachable|service.*down|failure|timeout|onFailure|IOException|VolleyError|ServiceUnavailable|NetworkUnavailable|ConnectionFailed)\b
@@ -158,3 +180,24 @@ LoggedIn_WithMFA:::(?i)\b(MultiFactor|SecondFactor)\b.*\b(success|complete|enrol
 # AppMainScreen: navigation right after successful auth (kept narrow)
 AppMainScreen:::(?i)\b(NavController|Navigation|navigate)\b.*\b(Home|Main|Inbox|Dashboard|Timeline|Feed|MailList|MessageList)\b
 UserLogout:::(?i)\b(LogoutUseCase|LogoutRepository|LogoutService)\b.*\b(execute|logout|perform)\b
+
+# =============================================================================
+# OAuth / AppAuth / Provider specific (kept narrow)
+# =============================================================================
+
+# AppAuth: authorization request
+OAuth_BeginAuth:::(?i)\b(net\.openid\.appauth|AppAuth|AuthorizationService)\b.*\b(performAuthorizationRequest|createAuthorizationRequest|AuthorizationRequest)\b
+
+# AppAuth/PKCE: token exchange
+OAuth_TokenExchange:::(?i)\b(TokenRequest|exchange|grant_type|authorization_code|refresh_token|code_verifier|code_challenge|pkce|id_token|access_token)\b
+
+# Authorization header (Bearer) via OkHttp/Request
+AuthHeader_Bearer:::(?i)\b(OkHttp|Request|Header|addHeader|header)\b.*\b(Authorization)\b.*\b(Bearer\s+)\b
+
+# Providers (kept explicit to avoid noise)
+Provider_GoogleSignIn:::(?i)\b(com\.google\.android\.gms\.auth\.api\.signin|GoogleSignInClient|getSignInIntent|signIn)\b
+Provider_FacebookLogin:::(?i)\b(com\.facebook\.login|LoginManager|logInWithReadPermissions|logInWithPublishPermissions)\b
+Provider_Auth0:::(?i)\b(com\.auth0|Auth0|WebAuthProvider|AuthenticationAPIClient)\b
+Provider_Okta:::(?i)\b(com\.okta|OIDCClient|Okta|WebAuthClient)\b
+Provider_MSAL:::(?i)\b(com\.microsoft\.identity|msal|PublicClientApplication|SingleAccountPublicClientApplication)\b
+Provider_Cognito:::(?i)\b(cognito|aws\.cognito|Amplify|AWSCognitoAuthPlugin)\b

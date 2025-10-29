@@ -64,6 +64,19 @@ public class AndroidLoginDetector {
     private int totalAttempts = 0;
     private int successfulLogins = 0;
     private int failedLogins = 0;
+    
+    // Enhanced components
+    private LoginDetectionEnhancer.ErrorTracker errorTracker;
+    private LoginDetectionEnhancer.SnapshotManager snapshotManager;
+    private LoginDetectionEnhancer.ScreenshotManager screenshotManager;
+    private NetworkChaosManager networkChaosManager;
+    
+    // Unified error report file for all rounds
+    private String unifiedErrorReportPath;
+    
+    // Taint analysis
+    private TaintAnalyzer taintAnalyzer;
+    private boolean taintAnalysisEnabled = true;
 
     // Log record
     private PrintWriter logWriter;
@@ -75,6 +88,15 @@ public class AndroidLoginDetector {
         initializeComponents();
         loadCredentialPools();
         initializeStateMachine();
+        // Initialize enhanced components
+        errorTracker = new LoginDetectionEnhancer.ErrorTracker();
+        snapshotManager = new LoginDetectionEnhancer.SnapshotManager(appPackage);
+        
+        // Initialize taint analyzer
+        if (taintAnalysisEnabled) {
+            taintAnalyzer = new TaintAnalyzer(fridaManager);
+            logInfo("Taint analyzer initialized");
+        }
     }
 
     private void initializeLogging() {
@@ -101,8 +123,8 @@ public class AndroidLoginDetector {
     }
 
     /**
-     * Stepwise Monkey loop that feeds credentials only when the corresponding field is focused,
-     * and clicks login after both username and password were entered. Frida remains running outside.
+     * Stepwise Monkey + credential feeding loop for focused login testing
+     * Enhanced: Continue exploration when elements not fully found
      */
     private void exploreStepwiseMonkeyFeedCredentials(String username, String password) {
         int totalEvents = configLoader.getMonkeyEvents();
@@ -114,6 +136,10 @@ public class AndroidLoginDetector {
         boolean passwordDone = false;
         boolean loginClicked = false;
         boolean baselineMarked = false;
+        long loopStart = System.currentTimeMillis();
+        int idleSteps = 0;
+        int idleLimit = Math.max(10, Math.min(50, totalEvents / 2)); // KISS: cap idle steps
+        UIManager.FocusType lastFocus = null;
 
         for (int i = 1; i <= totalEvents; i++) {
             try {
@@ -123,7 +149,8 @@ public class AndroidLoginDetector {
                                 "--pct-nav 0 --pct-majornav 0 --pct-appswitch 0 --pct-anyevent 0 1",
                         appPackage, throttle, touchPct);
                 Process proc = Runtime.getRuntime().exec(cmd);
-                proc.waitFor();
+                int exit = proc.waitFor();
+                logInfo("Monkey step " + i + " finished with exit=" + exit);
 
                 if (i % shotInterval == 0) {
                     captureScreenshotForStep(i);
@@ -135,28 +162,46 @@ public class AndroidLoginDetector {
                 if (!baselineMarked) {
                     try {
                         if (uiManager.detectLoginPage()) {
-                            createBaselineSnapshotIfNeeded();
+                            // Create baseline snapshot when login page is detected
+                            boolean snapshotCreated = snapshotManager.createSnapshot("baseline", "Login page detected during credential feeding");
+                            if (snapshotCreated && screenshotManager != null) {
+                                screenshotManager.captureScreenshot("baseline_during_feeding");
+                            }
                             baselineMarked = true;
                             logInfo("Baseline snapshot ensured at step " + i);
                         }
                     } catch (Exception ignore) { }
                 }
 
-                // After each event, check focus and act
-                UIManager.FocusType focusType = uiManager.getFocusedElementType();
-                if (!usernameDone && focusType == UIManager.FocusType.USERNAME) {
-                    boolean ok = uiManager.inputTextToFocusedField(username);
+                // Use cache-based direct interaction instead of focus detection
+                UIElementCache cache = UIElementCache.getInstance();
+                boolean progressed = false;
+                
+                // Try to input username directly if not done
+                if (!usernameDone && cache.getUsernameField() != null) {
+                    UIElementCache.UIElement usernameField = cache.getUsernameField();
+                    boolean ok = uiManager.clickAndInputText(usernameField.centerX, usernameField.centerY, username);
+                    logInfo("Tried clicking and inputting username at (" + usernameField.centerX + "," + usernameField.centerY + "), ok=" + ok);
                     if (ok) {
                         usernameDone = true;
+                        progressed = true;
                         logInfo("Inserted username after step " + i);
                     }
-                } else if (!passwordDone && focusType == UIManager.FocusType.PASSWORD) {
-                    boolean ok = uiManager.inputTextToFocusedField(password);
+                }
+                
+                // Try to input password directly if not done
+                if (!passwordDone && cache.getPasswordField() != null) {
+                    UIElementCache.UIElement passwordField = cache.getPasswordField();
+                    boolean ok = uiManager.clickAndInputText(passwordField.centerX, passwordField.centerY, password);
+                    logInfo("Tried clicking and inputting password at (" + passwordField.centerX + "," + passwordField.centerY + "), ok=" + ok);
                     if (ok) {
                         passwordDone = true;
+                        progressed = true;
                         logInfo("Inserted password after step " + i);
                     }
                 }
+                
+                logInfo("Step " + i + " usernameDone=" + usernameDone + ", passwordDone=" + passwordDone + ", loginClicked=" + loginClicked);
 
                 // Once both are done, try to click login when possible
                 if (!loginClicked && usernameDone && passwordDone) {
@@ -165,11 +210,75 @@ public class AndroidLoginDetector {
                     if (clicked) {
                         loginClicked = true;
                         logInfo("Clicked login button after step " + i);
-                        // Optionally wait a short time to observe transition
-                        try { Thread.sleep(10000); } catch (InterruptedException ie) { Thread.currentThread().interrupt(); }
-                        // After waiting 10s, restore the first-login snapshot if present
-                        restoreBaselineSnapshotIfExists();
+                        // Smart login success detection instead of fixed wait
+                        boolean loginSuccess = detectLoginSuccessWithSmartWait();
+                        if (loginSuccess) {
+                            logInfo("Login successful - page transition detected");
+                            successfulLogins++;
+                            // Capture post-login screenshot
+                            if (screenshotManager != null) {
+                                screenshotManager.captureScreenshot("login_success");
+                            }
+                        } else {
+                            logInfo("Login may have failed or is still in progress");
+                            failedLogins++;
+                        }
+                        // After login attempt, do NOT restore snapshot immediately
+                        // Let the smart login detection handle the result first
+                        logInfo("Login attempt completed, waiting for result verification");
                         break;
+                    }
+                }
+
+                // If we haven't made progress with direct login elements, use Monkey exploration
+                if (!progressed) {
+                    idleSteps++;
+                    
+                    // Check if we have complete login elements
+                    if (!cache.hasCompleteNormalLogin() && !cache.hasGoogleLogin() && !cache.hasFacebookLogin()) {
+                        // No complete login elements found, use Monkey to explore
+                        logInfo("No complete login elements found, using Monkey exploration at step " + i);
+                        try {
+                            String monkeyCmd = String.format(
+                                "adb shell monkey -p %s -v --throttle %d " +
+                                "--pct-touch %d --pct-motion 0 --pct-trackball 0 --pct-syskeys 0 " +
+                                "--pct-nav 0 --pct-majornav 0 --pct-appswitch 0 --pct-anyevent 0 1",
+                                appPackage, throttle, configLoader.getMonkeyTouchPercentage());
+                            
+                            Process monkeyProcess = Runtime.getRuntime().exec(monkeyCmd);
+                            monkeyProcess.waitFor();
+                            
+                            // After monkey action, detect login page again
+                            if (uiManager.detectLoginPage()) {
+                                logInfo("Login page detected after Monkey exploration at step " + i);
+                                progressed = true; // Reset idle counter since we found something
+                                idleSteps = 0;
+                            }
+                        } catch (Exception e) {
+                            logError("Monkey exploration failed at step " + i + ": " + e.getMessage());
+                        }
+                    }
+                } else {
+                    idleSteps = 0;
+                }
+
+                if (idleSteps >= idleLimit) {
+                    logError("No progress for " + idleSteps + " steps (limit=" + idleLimit + "), breaking credential feed loop");
+                    if (configLoader.isRestoreOnMonkeyExhausted()) {
+                        restoreBaselineSnapshotIfExists();
+                    }
+                    break;
+                }
+
+                // Only apply timeout if we're still trying to detect login page
+                // Once Monkey exploration starts, let it complete all configured steps
+                if (!progressed && idleSteps == 0) {
+                    long elapsed = System.currentTimeMillis() - loopStart;
+                    long maxMillis = Math.max(5_000L, configLoader.getLoginTimeoutSeconds() * 1000L);
+                    if (elapsed > maxMillis) {
+                        logError("Login page detection timed out after " + elapsed + " ms (max=" + maxMillis + ")");
+                        logInfo("Switching to full Monkey exploration mode - no more timeout restrictions");
+                        // Don't break here, let Monkey continue with all configured steps
                     }
                 }
 
@@ -178,10 +287,10 @@ public class AndroidLoginDetector {
             }
         }
 
-        // If we finished all operations without clicking successfully, also restore
-        if (!loginClicked) {
-            logInfo("Monkey operations exhausted without successful click; restoring baseline snapshot");
-            restoreBaselineSnapshotIfExists();
+        // If we finished all operations without clicking successfully, optionally restore
+        if (!loginClicked && configLoader.isRestoreOnMonkeyExhausted()) {
+            logInfo("Monkey operations exhausted without successful click; will restore in next round");
+            // Don't restore immediately, let next round handle it
         }
     }
 
@@ -222,7 +331,11 @@ public class AndroidLoginDetector {
                     // Also run full detection for confirmation
                     if (uiManager.detectLoginPage()) {
                         logInfo("Login page confirmed after step " + i);
-                        createBaselineSnapshotIfNeeded();
+                        // Create baseline snapshot when login page is confirmed
+                        boolean snapshotCreated = snapshotManager.createSnapshot("baseline", "Login page confirmed after focus detection");
+                        if (snapshotCreated && screenshotManager != null) {
+                            screenshotManager.captureScreenshot("baseline_confirmed_after_focus");
+                        }
                         break;
                     }
                 }
@@ -230,7 +343,11 @@ public class AndroidLoginDetector {
                 // Full detection after each step (KISS, per request)
                 if (uiManager.detectLoginPage()) {
                     logInfo("Login page detected after step " + i);
-                    createBaselineSnapshotIfNeeded();
+                    // Create baseline snapshot when login page is found during exploration
+                    boolean snapshotCreated = snapshotManager.createSnapshot("baseline", "Login page found during Monkey exploration");
+                    if (snapshotCreated && screenshotManager != null) {
+                        screenshotManager.captureScreenshot("baseline_found_during_exploration");
+                    }
                     break;
                 }
             } catch (Exception e) {
@@ -263,13 +380,27 @@ public class AndroidLoginDetector {
         logInfo("ROUND " + roundNumber + " STARTED");
         logInfo("Round timestamp: " + LocalDateTime.now().format(logFormatter));
         logInfo(separator);
-        // Restore emulator snapshot if baseline exists and append Frida round marker
-        restoreBaselineSnapshotIfExists();
+        
+        // Only restore baseline snapshot if this is NOT the first round
+        // First round should start fresh, subsequent rounds restore to clean state
+        if (roundNumber > 1) {
+            logInfo("Round " + roundNumber + ": Restoring baseline snapshot to clean state");
+            restoreBaselineSnapshotIfExists();
+        } else {
+            logInfo("Round 1: Starting fresh without snapshot restore");
+        }
+        
         appendRoundMarker(roundNumber);
         // Record current round for downstream components (e.g., screenshot directory segregation)
         this.currentRound = roundNumber;
+        // Initialize screenshot manager for this round
+        screenshotManager = new LoginDetectionEnhancer.ScreenshotManager(appPackage, roundNumber);
+        // Clear previous error logs
+        errorTracker.clearLogs();
         // Prepare device for visual feedback and stable capture
         ensureDeviceReadyForScreens();
+        // Capture initial screenshot for this round
+        screenshotManager.captureScreenshot("round_" + roundNumber + "_start");
     }
 
     private void logRoundEnd(int roundNumber, long duration) {
@@ -281,6 +412,15 @@ public class AndroidLoginDetector {
         logInfo("Successful logins: " + successfulLogins);
         logInfo("Failed logins: " + failedLogins);
         logInfo(separator);
+        // Capture final screenshot for this round
+        if (screenshotManager != null) {
+            screenshotManager.captureScreenshot("round_" + roundNumber + "_end");
+        }
+        // Enhanced error tracking - append to unified error report
+        errorTracker.checkAndRecordErrors(appPackage);
+        // First round creates new file, subsequent rounds append
+        boolean appendMode = (roundNumber > 1);
+        errorTracker.saveErrorReport(unifiedErrorReportPath, roundNumber, appendMode);
         // Check ANR/Crash after each round and report
         checkCrashAndAnrLogs();
     }
@@ -306,52 +446,40 @@ public class AndroidLoginDetector {
     }
 
     private void restoreBaselineSnapshotIfExists() {
-        try {
-            // List snapshots and check existence
-            Process list = Runtime.getRuntime().exec("adb emu avd snapshot list");
-            BufferedReader br = new BufferedReader(new InputStreamReader(list.getInputStream()));
-            String line; boolean exists = false;
-            while ((line = br.readLine()) != null) {
-                if (line.contains(BASELINE_SNAPSHOT_NAME)) { exists = true; break; }
+        // Enhanced snapshot restoration with verification
+        boolean restored = snapshotManager.restoreSnapshot("baseline");
+        if (restored) {
+            logInfo("Successfully restored baseline snapshot");
+            // Verify app is in correct state
+            try {
+                TimeUnit.SECONDS.sleep(2);
+                // Check if we're on login page
+                if (uiManager.detectLoginPage()) {
+                    logInfo("Verified: App restored to login page");
+                } else {
+                    logInfo("Warning: App may not be on login page after restore");
+                }
+            } catch (Exception e) {
+                logError("Error verifying snapshot restore: " + e.getMessage());
             }
-            br.close();
-            list.waitFor();
-            if (!exists) {
-                logInfo("Baseline snapshot not found. Skipping restore.");
-                return;
-            }
-            // Restore snapshot
-            logInfo("Restoring baseline snapshot: " + BASELINE_SNAPSHOT_NAME);
-            Process load = Runtime.getRuntime().exec("adb emu avd snapshot load " + BASELINE_SNAPSHOT_NAME);
-            load.waitFor();
-            // Give emulator some time to settle
-            TimeUnit.SECONDS.sleep(2);
-        } catch (Exception e) {
-            logError("Failed to restore baseline snapshot: " + e.getMessage());
+        } else {
+            logInfo("No baseline snapshot to restore");
         }
     }
 
-    private void createBaselineSnapshotIfNeeded() {
+    /**
+     * Ensure the target app is running
+     */
+    private void ensureAppIsRunning() {
         try {
-            // Check if snapshot already exists
-            Process list = Runtime.getRuntime().exec("adb emu avd snapshot list");
-            BufferedReader br = new BufferedReader(new InputStreamReader(list.getInputStream()));
-            String line; boolean exists = false;
-            while ((line = br.readLine()) != null) {
-                if (line.contains(BASELINE_SNAPSHOT_NAME)) { exists = true; break; }
-            }
-            br.close();
-            list.waitFor();
-            if (exists) {
-                return; // already created
-            }
-            // Create snapshot
-            logInfo("Creating baseline snapshot: " + BASELINE_SNAPSHOT_NAME);
-            Process save = Runtime.getRuntime().exec("adb emu avd snapshot save " + BASELINE_SNAPSHOT_NAME);
-            save.waitFor();
-            TimeUnit.SECONDS.sleep(1);
+            // Start the app if not running
+            Process startApp = Runtime.getRuntime().exec(
+                "adb shell am start -n " + appPackage + "/" + appActivity);
+            startApp.waitFor();
+            TimeUnit.SECONDS.sleep(2);
+            logInfo("Target app started: " + appPackage);
         } catch (Exception e) {
-            logError("Failed to create baseline snapshot: " + e.getMessage());
+            logError("Failed to start app: " + e.getMessage());
         }
     }
 
@@ -374,16 +502,37 @@ public class AndroidLoginDetector {
         // Initialize Frida manager with static analysis results
         initializeFridaManager();
 
-        // Initialize API log analyzer
+        // Initialize API log analyzer with patterns from FridaManager
         try {
-            String regexPath = "src/main/resources/regex_patterns.txt";
-            apiLogAnalyzer = new ApiLogAnalyzer(regexPath);
-        } catch (IOException e) {
+            if (fridaManager != null) {
+                Map<String, Pattern> patterns = fridaManager.getStateToApiRegexPatterns();
+                apiLogAnalyzer = new ApiLogAnalyzer(patterns);
+                logInfo("ApiLogAnalyzer initialized with " + patterns.size() + " patterns from static analysis");
+            } else {
+                // Fallback to regex file if FridaManager not available
+                String regexPath = "src/main/resources/regex_patterns.txt";
+                apiLogAnalyzer = new ApiLogAnalyzer(regexPath);
+                logInfo("ApiLogAnalyzer initialized with regex file (fallback)");
+            }
+        } catch (Exception e) {
             logError("Failed to initialize ApiLogAnalyzer: " + e.getMessage());
         }
 
         // Initialize report manager
         reportManager = new LoginReportManager();
+        
+        // Initialize network chaos manager
+        networkChaosManager = new NetworkChaosManager(configLoader, new NetworkChaosManager.Logger() {
+            @Override
+            public void logInfo(String message) {
+                AndroidLoginDetector.this.logInfo(message);
+            }
+            
+            @Override
+            public void logError(String message) {
+                AndroidLoginDetector.this.logError(message);
+            }
+        });
     }
 
     private void loadAppConfig() {
@@ -394,7 +543,8 @@ public class AndroidLoginDetector {
                 appPackage = config.getProperty("app.package", "com.kickstarter.kickstarter");
                 appActivity = config.getProperty("app.activity", "com.kickstarter.ui.activities.DiscoveryActivity");
                 appPath = config.getProperty("app.path", "apps/Kickstarter_3.24.1_apkcombo.com.apk");
-                emulatorSnapshot = config.getProperty("emulator.snapshot", "snap_kickstarter_login");
+                // Auto-generate snapshot name based on app package
+                emulatorSnapshot = generateSnapshotName(appPackage);
             }
         } catch (Exception e) {
             logError("Failed to load config.properties: " + e.getMessage());
@@ -402,23 +552,23 @@ public class AndroidLoginDetector {
             appPackage = "com.kickstarter.kickstarter";
             appActivity = "com.kickstarter.ui.activities.DiscoveryActivity";
             appPath = "apps/Kickstarter_3.24.1_apkcombo.com.apk";
-            emulatorSnapshot = "snap_kickstarter_login";
+            emulatorSnapshot = generateSnapshotName(appPackage);
         }
 
         logInfo("App configuration loaded:");
         logInfo("  - Package: " + appPackage);
         logInfo("  - Activity: " + appActivity);
         logInfo("  - APK Path: " + appPath);
-        logInfo("  - Emulator Snapshot: " + emulatorSnapshot);
+        logInfo("  - Emulator Snapshot (auto-generated): " + emulatorSnapshot);
     }
 
     private void initializeStaticAnalyzer() {
         try {
             logInfo("Initializing static analyzer...");
             
-            String patternsPath = "src/main/resources/regex_patterns.txt";
-            // Use deterministic result path based on APK file name to avoid ambiguity
-            staticAnalysisResultPath = getStaticAnalysisResultPathForApk(appPath);
+            String patternsPath = configLoader.getStaticAnalysisPatternsPath();
+            // Use configurable result path based on APK file name and version
+            staticAnalysisResultPath = configLoader.getStaticAnalysisResultPath(appPath);
             
             // Create output directory
             File outputDir = new File(new File(staticAnalysisResultPath).getParent());
@@ -445,26 +595,6 @@ public class AndroidLoginDetector {
         }
     }
 
-    /**
-     * Build deterministic static analysis result path from APK path.
-     * Example: apps/foo/bar/MyApp.apk -> reports/static_analysis/MyApp.json
-     */
-    private String getStaticAnalysisResultPathForApk(String apkPath) {
-        try {
-            File apk = new File(apkPath);
-            String name = apk.getName();
-            int dot = name.lastIndexOf('.');
-            String base = (dot > 0) ? name.substring(0, dot) : name;
-            File dir = new File("reports/static_analysis");
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-            return new File(dir, base + ".json").getPath();
-        } catch (Exception e) {
-            // Fallback to previous default if anything goes wrong
-            return "reports/static_analysis_result.json";
-        }
-    }
 
     private void initializeFridaManager() {
         try {
@@ -476,7 +606,7 @@ public class AndroidLoginDetector {
             String controllerPath = "scripts/frida_controller.py";
 
             // Initialize Frida manager with static analysis results
-            fridaManager = new FridaManager(regexPath, agentPath, logPath, controllerPath, configLoader);
+            fridaManager = new FridaManager(regexPath, agentPath, logPath, staticAnalysisResultPath, configLoader);
             
             // Pass static analysis results to Frida manager for efficient hooking
             if (staticAnalysisResultPath != null && new File(staticAnalysisResultPath).exists()) {
@@ -728,11 +858,25 @@ public class AndroidLoginDetector {
 
         long testStartTime = System.currentTimeMillis();
         int testRounds = configLoader.getTestRounds();
+        
+        // Initialize unified error report path (one file for all rounds)
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+        unifiedErrorReportPath = "reports/errors/test_errors_" + timestamp + ".txt";
+        // Ensure error directory exists
+        new java.io.File("reports/errors").mkdirs();
 
         logInfo("=== Starting AndroidLoginDetector Test with Static Analysis ===");
         logInfo("Target app: " + appPackage);
         logInfo("Test rounds: " + testRounds);
         logInfo("Static analysis results: " + staticAnalysisResultPath);
+        logInfo("Unified error report: " + unifiedErrorReportPath);
+        
+        // Start taint analysis (once for all rounds)
+        if (taintAnalysisEnabled && taintAnalyzer != null) {
+            logInfo("Starting global taint tracking...");
+            taintAnalyzer.startTracking(appPackage);
+            logInfo("✓ Taint tracking active for all rounds");
+        }
 
         // Check Docker environment
         if (!checkDockerEnvironment()) {
@@ -744,6 +888,12 @@ public class AndroidLoginDetector {
         if (!uiManager.startUI()) {
             logError("UI manager startup failed, aborting test");
             return;
+        }
+        
+        // Start network chaos testing (if enabled) - AFTER emulator is ready
+        if (networkChaosManager != null) {
+            logInfo("Starting network chaos testing (emulator is ready)...");
+            networkChaosManager.start();
         }
 
         try {
@@ -765,6 +915,13 @@ public class AndroidLoginDetector {
 
             // Step 2: Start Frida monitoring with static analysis results
             startFridaMonitoring();
+            
+            // Step 2.5: Start crash detector monitoring (only once per test)
+            if (round == 1 && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+                var crashDetector = stateMachineManager.getBugDetectionManager().getCrashDetector();
+                crashDetector.startMonitoring(appPackage);
+                logInfo("✓ Crash detector monitoring started for package: " + appPackage);
+            }
 
             // Step 3: Start UI automation
             // UI manager is already initialized in constructor
@@ -773,18 +930,95 @@ public class AndroidLoginDetector {
             boolean loginPageDetected = detectLoginPageWithUI();
 
             if (loginPageDetected) {
-                // Ensure baseline snapshot is created at first login detection
-                createBaselineSnapshotIfNeeded();
+                // Create baseline snapshot ONLY when login page is first detected
+                boolean snapshotCreated = snapshotManager.createSnapshot("baseline", "Login page baseline - Round " + round);
+                if (snapshotCreated) {
+                    logInfo("Baseline snapshot created after detecting login page");
+                    if (screenshotManager != null) {
+                        screenshotManager.captureScreenshot("baseline_login_page");
+                    }
+                } else {
+                    logInfo("Failed to create baseline snapshot or already exists");
+                }
+                
                 // Step 5: Select appropriate credentials based on login type
                 String username = selectCredentials();
                 String password = selectPassword();
-
-                // Step 6: Input credentials and monitor login process
+                
+                // Note: Taint marking is now automatic in login_agent.js
+                // It detects password fields via hint/inputType and marks them automatically
+                // This avoids RPC session conflicts and captures all password inputs
+                
+                // Step 6: Input credentials with enhanced verification and monitoring
+                logInfo("=== Starting Credential Input Phase ===");
+                logInfo("Selected username: " + username);
+                logInfo("Selected password: [" + password.length() + " chars]");
+                
+                // Record login start time for timeout detection
+                if (stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+                    var timeoutDetector = stateMachineManager.getBugDetectionManager().getTimeoutDetector();
+                    timeoutDetector.recordLoginStart();
+                    logInfo("✓ Login timeout detector: recording start time");
+                }
+                
                 boolean loginSuccess = inputCredentialsWithUI(username, password);
+                
+                // Additional verification after input
+                if (loginSuccess) {
+                    // Wait a moment for UI to update
+                    try { Thread.sleep(1000); } catch (InterruptedException ie) { Thread.currentThread().interrupt(); }
+                    
+                    // Take final verification screenshot
+                    if (screenshotManager != null) {
+                        screenshotManager.captureScreenshot("credentials_input_complete");
+                    }
+                    
+                    logInfo("✅ Credential input phase completed successfully");
+                } else {
+                    logInfo("❌ Credential input phase failed");
+                    if (screenshotManager != null) {
+                        screenshotManager.captureScreenshot("credentials_input_failed");
+                    }
+                }
 
+                // Record login end time for timeout detection
+                if (stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+                    var timeoutDetector = stateMachineManager.getBugDetectionManager().getTimeoutDetector();
+                    timeoutDetector.recordLoginEnd(loginSuccess);
+                    logInfo("✓ Login timeout detector: recorded end time (success=" + loginSuccess + ")");
+                }
+                
                 if (loginSuccess) {
                     logInfo("Login process completed successfully");
                     successfulLogins++;
+                    
+                    // Record login success and navigation for NavigationFlowDetector
+                    if (stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+                        var navDetector = stateMachineManager.getBugDetectionManager().getNavigationDetector();
+                        navDetector.recordLoginSuccess();
+                        logInfo("✓ Navigation detector: recorded login success");
+                        
+                        // Get current activity after login
+                        try {
+                            String currentActivity = uiManager.getCurrentActivity();
+                            if (currentActivity != null) {
+                                navDetector.setCurrentActivity(currentActivity);
+                                logInfo("✓ Navigation detector: current activity = " + currentActivity);
+                            } else {
+                                logInfo("⚠ Navigation detector: unable to get current activity");
+                            }
+                            
+                            // Get current state from state machine (last observed state)
+                            List<String> stateSequence = stateMachineManager.getObservedStateSequence();
+                            if (!stateSequence.isEmpty()) {
+                                String currentState = stateSequence.get(stateSequence.size() - 1);
+                                navDetector.setCurrentState(currentState);
+                                logInfo("✓ Navigation detector: current state = " + currentState);
+                            }
+                        } catch (Exception e) {
+                            logError("Failed to update navigation detector context: " + e.getMessage());
+                        }
+                    }
                 } else {
                     logError("Login process failed");
                     failedLogins++;
@@ -802,10 +1036,53 @@ public class AndroidLoginDetector {
             // Step 8: Check for crashes and ANRs
             checkCrashAndAnrLogs();
 
-            // Step 9: Stop Frida monitoring
+            // Step 9: Extract taint flows BEFORE stopping Frida
+            // CRITICAL: Must extract taint before stopping Frida, otherwise TaintStore is lost
+            if (taintAnalysisEnabled && taintAnalyzer != null) {
+                logInfo("[TAINT] Extracting taint flows for Round " + round);
+                extractAndReportTaintFlows(round);
+            }
+
+            // Step 9.5: Run device rotation test (every 3 rounds)
+            if (round % 3 == 1) {
+                logInfo("=== Running Device Rotation Test (Round " + round + ") ===");
+                try {
+                    DeviceRotationTester rotationTester = new DeviceRotationTester(configLoader);
+                    boolean dataLoss = rotationTester.runRotationTest();
+                    
+                    if (dataLoss) {
+                        logInfo("⚠️  DATA LOSS DETECTED on device rotation!");
+                        // Bug will be reported in next detection phase
+                    } else {
+                        logInfo("✓ No data loss detected during rotation test");
+                    }
+                } catch (Exception e) {
+                    logError("Rotation test failed: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            } else {
+                logInfo("Skipping rotation test for round " + round + " (runs every 3 rounds)");
+            }
+
+            // Step 10: Stop Frida monitoring (after extracting taint)
             stopFridaMonitoring();
 
+            // Step 11: Run bug detection and generate report
+            if (stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+                logInfo("[BUG_DETECTION] Running bug detectors for Round " + round);
+                var bugManager = stateMachineManager.getBugDetectionManager();
+                var bugs = bugManager.detectAllBugs();
+                
+                if (!bugs.isEmpty()) {
+                    logInfo("⚠️  Detected " + bugs.size() + " potential bug(s) in Round " + round);
+                    bugManager.generateReport(round);
+                } else {
+                    logInfo("✓ No bugs detected in Round " + round);
+                }
+            }
+
             long roundDuration = System.currentTimeMillis() - roundStartTime;
+            
             logRoundEnd(round, roundDuration);
 
             // Wait for a while before starting the next round
@@ -821,6 +1098,13 @@ public class AndroidLoginDetector {
 
         // Generate final report
         generateFinalReport();
+        
+        // Stop crash detector monitoring
+        if (stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+            var crashDetector = stateMachineManager.getBugDetectionManager().getCrashDetector();
+            crashDetector.stopMonitoring();
+            logInfo("✓ Crash detector monitoring stopped");
+        }
 
         // Close Appium connection
         uiManager.close();
@@ -871,49 +1155,21 @@ public class AndroidLoginDetector {
     }
 
     /**
-     * Step 5: Restart emulator from snapshot
+     * Step 2: Restart emulator from snapshot (only if login baseline exists)
      */
     private void restartEmulatorSnapshot() {
         try {
-            logInfo("Restarting emulator snapshot: " + emulatorSnapshot);
-            
-            // Check if snapshot exists
-            Process checkProcess = Runtime.getRuntime().exec("adb emu avd snapshot list");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(checkProcess.getInputStream()));
-            String line; boolean snapshotExists = false;
-            
-            while ((line = reader.readLine()) != null) {
-                if (line.contains(emulatorSnapshot)) {
-                    snapshotExists = true;
-                    break;
-                }
-            }
-            reader.close();
-            checkProcess.waitFor();
-            
-            if (snapshotExists) {
-                // Load existing snapshot
-                Runtime.getRuntime().exec("adb emu avd snapshot load " + emulatorSnapshot);
-                logInfo("Emulator snapshot restored from existing snapshot");
-            } else {
-                // Create new snapshot if it doesn't exist
-                logInfo("Snapshot '" + emulatorSnapshot + "' not found, creating new snapshot...");
-                
-                // Wait for emulator to be ready
+            // Only try to load baseline snapshot if it exists
+            boolean restored = snapshotManager.restoreSnapshot("baseline");
+            if (restored) {
+                logInfo("Baseline snapshot restored successfully");
+                // Wait for emulator to stabilize
                 TimeUnit.SECONDS.sleep(5);
-                
-                // Create snapshot
-                Process createProcess = Runtime.getRuntime().exec("adb emu avd snapshot save " + emulatorSnapshot);
-                createProcess.waitFor();
-                
-                if (createProcess.exitValue() == 0) {
-                    logInfo("New snapshot '" + emulatorSnapshot + "' created successfully");
-                } else {
-                    logError("Failed to create snapshot '" + emulatorSnapshot + "'");
-                    // Continue without snapshot
-                }
+            } else {
+                logInfo("No baseline snapshot found - will create one when login page is detected");
+                // Just ensure app is running
+                ensureAppIsRunning();
             }
-            
             TimeUnit.SECONDS.sleep(configLoader.getTestSnapshotWait());
             logInfo("Emulator snapshot operation completed");
             
@@ -986,6 +1242,115 @@ public class AndroidLoginDetector {
         // Write report
         reportManager.writeTestSummary(totalAttempts, successfulLogins, failedLogins);
         logInfo("Detailed report written to: " + reportManager.getReportFilePath());
+        
+        // Generate final taint analysis report
+        if (taintAnalysisEnabled && taintAnalyzer != null) {
+            generateFinalTaintReport();
+        }
+        
+        // Append final summary to unified error report
+        appendFinalSummaryToErrorReport();
+    }
+    
+    /**
+     * Append final summary to unified error report
+     */
+    private void appendFinalSummaryToErrorReport() {
+        if (unifiedErrorReportPath == null) {
+            return;
+        }
+        
+        try (PrintWriter writer = new PrintWriter(new FileWriter(unifiedErrorReportPath, true))) {
+            writer.println();
+            writer.println("=".repeat(80));
+            writer.println("FINAL TEST SUMMARY");
+            writer.println("=".repeat(80));
+            writer.println("Completed at: " + LocalDateTime.now().format(logFormatter));
+            writer.println();
+            writer.println("Test Statistics:");
+            writer.println("  - Total Login Attempts: " + totalAttempts);
+            writer.println("  - Successful Logins: " + successfulLogins);
+            writer.println("  - Failed Logins: " + failedLogins);
+            writer.println("  - Success Rate: " + String.format("%.2f%%", 
+                totalAttempts > 0 ? (successfulLogins * 100.0 / totalAttempts) : 0));
+            writer.println();
+            writer.println("Error Report Location: " + unifiedErrorReportPath);
+            writer.println("=".repeat(80));
+            
+            logInfo("Final summary appended to unified error report: " + unifiedErrorReportPath);
+        } catch (IOException e) {
+            logError("Failed to append final summary to error report: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Extract and report taint flows for a specific round
+     */
+    private void extractAndReportTaintFlows(int roundNumber) {
+        try {
+            logInfo("Extracting taint analysis results for Round " + roundNumber);
+            
+            // Get taint report from analyzer
+            TaintAnalyzer.TaintReport report = taintAnalyzer.getTaintReport();
+            
+            if (report == null) {
+                logInfo("[TAINT] No taint report available for Round " + roundNumber);
+                return;
+            }
+            
+            // Log violations found in this round
+            List<TaintAnalyzer.TaintViolation> violations = report.getViolations();
+            
+            if (violations.isEmpty()) {
+                logInfo("[TAINT] Round " + roundNumber + ": No violations detected");
+            } else {
+                logInfo("[TAINT] Round " + roundNumber + ": Found " + violations.size() + " violation(s)");
+                
+                for (TaintAnalyzer.TaintViolation v : violations) {
+                    logError("[TAINT] " + v.toString());
+                }
+            }
+            
+            // Save round-specific report
+            String roundReportPath = "reports/taint/round_" + roundNumber + "_taint.txt";
+            new java.io.File("reports/taint").mkdirs();
+            taintAnalyzer.saveReport(roundReportPath);
+            logInfo("[TAINT] Round report saved to: " + roundReportPath);
+            
+        } catch (Exception e) {
+            logError("[TAINT] Failed to extract taint flows: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Generate final comprehensive taint analysis report
+     */
+    private void generateFinalTaintReport() {
+        try {
+            logInfo("=== Generating Final Taint Analysis Report ===");
+            
+            // Get comprehensive report
+            String readableReport = taintAnalyzer.generateReadableReport();
+            logInfo(readableReport);
+            
+            // Save to file
+            String finalReportPath = "reports/taint/final_taint_analysis.txt";
+            taintAnalyzer.saveReport(finalReportPath);
+            logInfo("[TAINT] Final comprehensive report saved to: " + finalReportPath);
+            
+            // Get summary statistics
+            TaintAnalyzer.TaintReport report = taintAnalyzer.getTaintReport();
+            if (report != null) {
+                logInfo("[TAINT] Total taints tracked: " + report.getTotalTaints());
+                logInfo("[TAINT] Total flows detected: " + report.getTotalFlows());
+                logInfo("[TAINT] Total violations: " + report.getViolations().size());
+            }
+            
+        } catch (Exception e) {
+            logError("[TAINT] Failed to generate final taint report: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     // Helper methods
@@ -1023,6 +1388,25 @@ public class AndroidLoginDetector {
         stopMonkey();
         if (fridaManager != null) {
             fridaManager.stopFrida();
+        }
+        // Stop network chaos testing and restore normal network
+        if (networkChaosManager != null) {
+            networkChaosManager.stop();
+            // Save disruption report
+            try {
+                // Ensure reports/network directory exists
+                File networkReportsDir = new File("reports/network");
+                if (!networkReportsDir.exists()) {
+                    networkReportsDir.mkdirs();
+                }
+                
+                String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+                String reportPath = "reports/network/network_disruptions_" + timestamp + ".txt";
+                networkChaosManager.saveDisruptionReport(reportPath);
+                logInfo("Network disruption report saved to: " + reportPath);
+            } catch (Exception e) {
+                logError("Failed to save network disruption report: " + e.getMessage());
+            }
         }
         if (logWriter != null) {
             logWriter.close();
@@ -1062,7 +1446,10 @@ public class AndroidLoginDetector {
                 logInfo("  - Username field: " + uiManager.isUsernameFieldDetected());
                 logInfo("  - Password field: " + uiManager.isPasswordFieldDetected());
                 // Create baseline snapshot once when first login page is detected
-                createBaselineSnapshotIfNeeded();
+                boolean snapshotCreated = snapshotManager.createSnapshot("baseline", "Login page detected via UI manager");
+                if (snapshotCreated && screenshotManager != null) {
+                    screenshotManager.captureScreenshot("baseline_ui_manager_detection");
+                }
             } else {
                 logInfo("UI manager did not detect login page");
             }
@@ -1115,24 +1502,151 @@ public class AndroidLoginDetector {
     }
 
     /**
-     * Use UI manager to input credentials
+     * Use UI manager to input credentials with enhanced verification
      */
     private boolean inputCredentialsWithUI(String username, String password) {
         try {
-            logInfo("Using UI manager to input credentials...");
-            boolean success = uiManager.inputCredentials(username, password);
-
-            if (success) {
-                logInfo("UI manager credentials input successful");
-            } else {
-                logInfo("UI manager credentials input failed");
+            logInfo("=== Starting Enhanced Credential Input Process ===");
+            logInfo("Username to input: " + username);
+            logInfo("Password length: " + password.length() + " characters");
+            
+            // Take screenshot before input
+            if (screenshotManager != null) {
+                screenshotManager.captureScreenshot("before_credential_input");
             }
-
-            return success;
+            
+            // Get UI dump before input for comparison
+            String uiDumpBefore = uiManager.getCurrentUIDump();
+            
+            // Step 1: Input credentials WITHOUT clicking button
+            boolean inputSuccess = uiManager.inputCredentialsOnly(username, password);
+            if (!inputSuccess) {
+                logError("Failed to input credentials");
+                return false;
+            }
+            
+            // Step 2: Take screenshot AFTER input but BEFORE clicking button
+            if (screenshotManager != null) {
+                screenshotManager.captureScreenshot("after_credential_input");
+            }
+            
+            // Step 3: Click login button
+            boolean clickSuccess = uiManager.clickLoginButton();
+            if (!clickSuccess) {
+                logError("Failed to click login button");
+                return false;
+            }
+            
+            // Get UI dump after input to verify changes
+            String uiDumpAfter = uiManager.getCurrentUIDump();
+            
+            boolean success = inputSuccess && clickSuccess;
+            
+            // Verify input by checking UI changes
+            boolean inputVerified = verifyCredentialInput(uiDumpBefore, uiDumpAfter, username, password);
+            
+            if (success && inputVerified) {
+                logInfo("✅ UI manager credentials input successful and verified");
+                return true;
+            } else if (success && !inputVerified) {
+                logInfo("⚠️  UI manager reported success but verification failed");
+                return false;
+            } else {
+                logInfo("❌ UI manager credentials input failed");
+                return false;
+            }
+            
         } catch (Exception e) {
             logError("UI manager credentials input failed: " + e.getMessage());
+            if (screenshotManager != null) {
+                screenshotManager.captureScreenshot("credential_input_error");
+            }
             return false;
         }
+    }
+    
+    /**
+     * Verify credential input by analyzing UI changes
+     */
+    private boolean verifyCredentialInput(String uiDumpBefore, String uiDumpAfter, String username, String password) {
+        try {
+            logInfo("=== Verifying Credential Input ===");
+            
+            // Check if UI changed (indicates input occurred)
+            boolean uiChanged = !uiDumpBefore.equals(uiDumpAfter);
+            logInfo("UI changed after input: " + uiChanged);
+            
+            // Look for username in UI dump (might be visible in some fields)
+            boolean usernameVisible = uiDumpAfter.toLowerCase().contains(username.toLowerCase());
+            logInfo("Username visible in UI: " + usernameVisible);
+            
+            // Check for password field indicators (usually shows dots or asterisks)
+            boolean passwordFieldFilled = checkPasswordFieldFilled(uiDumpAfter);
+            logInfo("Password field appears filled: " + passwordFieldFilled);
+            
+            // Check for input field focus changes
+            boolean focusChanged = checkFocusChanged(uiDumpBefore, uiDumpAfter);
+            logInfo("Input focus changed: " + focusChanged);
+            
+            // Additional verification: check for common input indicators
+            boolean hasInputIndicators = checkInputIndicators(uiDumpAfter);
+            logInfo("Has input indicators: " + hasInputIndicators);
+            
+            // Consider input verified if any positive indicator is found
+            boolean verified = uiChanged || usernameVisible || passwordFieldFilled || focusChanged || hasInputIndicators;
+            
+            logInfo("=== Input Verification Result: " + (verified ? "VERIFIED" : "FAILED") + " ===");
+            
+            return verified;
+            
+        } catch (Exception e) {
+            logError("Error during credential verification: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Check if password field appears to be filled
+     */
+    private boolean checkPasswordFieldFilled(String uiDump) {
+        // Look for common password field indicators
+        return uiDump.contains("••••") || 
+               uiDump.contains("****") || 
+               uiDump.contains("password") && (uiDump.contains("filled") || uiDump.contains("text="));
+    }
+    
+    /**
+     * Check if input focus changed between before and after
+     */
+    private boolean checkFocusChanged(String before, String after) {
+        // Look for focus indicators
+        String focusPattern = "focused=";
+        int focusCountBefore = countOccurrences(before, focusPattern);
+        int focusCountAfter = countOccurrences(after, focusPattern);
+        return focusCountBefore != focusCountAfter;
+    }
+    
+    /**
+     * Check for general input indicators in UI
+     */
+    private boolean checkInputIndicators(String uiDump) {
+        // Look for signs that input fields have content
+        return uiDump.contains("text=\"") && !uiDump.contains("text=\"\"")||  // Non-empty text fields
+               uiDump.contains("hint=") ||  // Hint text (often disappears when filled)
+               uiDump.contains("content-desc=");  // Content descriptions
+    }
+    
+    /**
+     * Count occurrences of a substring
+     */
+    private int countOccurrences(String text, String pattern) {
+        int count = 0;
+        int index = 0;
+        while ((index = text.indexOf(pattern, index)) != -1) {
+            count++;
+            index += pattern.length();
+        }
+        return count;
     }
 
     /**
@@ -1269,7 +1783,7 @@ public class AndroidLoginDetector {
         t.start();
     }
 
-    // Capture screenshot and UI dump for a specific step, toggling show_touches only around capture
+    // Enhanced screenshot capture with better organization and reliability
     private void captureScreenshotForStep(int step) {
         try {
             String baseDir = buildScreenshotDirFromApk();
@@ -1378,6 +1892,149 @@ public class AndroidLoginDetector {
         }
     }
 
+    /**
+     * Smart login success detection using multiple strategies
+     * Replaces simple 10-second wait with intelligent detection
+     */
+    private boolean detectLoginSuccessWithSmartWait() {
+        try {
+            String previousUiDump = uiManager.getCurrentUIDump();
+            long startTime = System.currentTimeMillis();
+            int maxWaitSeconds = configLoader.getPostLoginWaitSeconds();
+            
+            // Poll for login success with smart detection
+            for (int i = 0; i < maxWaitSeconds; i++) {
+                Thread.sleep(1000); // Check every second
+                
+                String currentUiDump = uiManager.getCurrentUIDump();
+                
+                // Use enhanced login success detector
+                boolean success = LoginDetectionEnhancer.LoginSuccessDetector.detectLoginSuccess(
+                    currentUiDump, previousUiDump, startTime, maxWaitSeconds);
+                
+                if (success) {
+                    logInfo("Login success detected after " + i + " seconds");
+                    return true;
+                }
+                
+                // Enhanced error detection - check for various error indicators
+                if (currentUiDump != null) {
+                    String lowerDump = currentUiDump.toLowerCase();
+                    
+                    // Common error messages
+                    if (lowerDump.contains("error") || 
+                        lowerDump.contains("invalid") ||
+                        lowerDump.contains("incorrect") ||
+                        lowerDump.contains("failed") ||
+                        lowerDump.contains("wrong") ||
+                        lowerDump.contains("denied") ||
+                        lowerDump.contains("unauthorized") ||
+                        lowerDump.contains("authentication failed") ||
+                        lowerDump.contains("login failed") ||
+                        lowerDump.contains("bad credentials") ||
+                        lowerDump.contains("username or password") ||
+                        lowerDump.contains("try again") ||
+                        lowerDump.contains("check your") ||
+                        lowerDump.contains("unable to") ||
+                        lowerDump.contains("connection error") ||
+                        lowerDump.contains("network error") ||
+                        lowerDump.contains("timeout")) {
+                        logInfo("Login error detected in UI after " + i + " seconds: " + extractErrorMessage(currentUiDump));
+                        return false;
+                    }
+                    
+                    // Check for Toast notifications (they appear as android.widget.Toast)
+                    if (lowerDump.contains("toast") && 
+                        (lowerDump.contains("error") || lowerDump.contains("failed") || lowerDump.contains("wrong") || lowerDump.contains("invalid"))) {
+                        logInfo("Toast error notification detected after " + i + " seconds");
+                        return false;
+                    }
+                    
+                    // Check for Dialog boxes with error content
+                    if (lowerDump.contains("dialog") && 
+                        (lowerDump.contains("error") || lowerDump.contains("failed") || lowerDump.contains("wrong"))) {
+                        logInfo("Error dialog detected after " + i + " seconds");
+                        return false;
+                    }
+                }
+                
+                // Update previous dump for next comparison
+                previousUiDump = currentUiDump;
+                
+                // Check for ANR/crash during login
+                errorTracker.checkAndRecordErrors(appPackage);
+                
+                // Additional check: Monitor logcat for Toast messages and other system notifications
+                if (i % 2 == 0) { // Check every 2 seconds to avoid overwhelming
+                    if (checkLogcatForErrors()) {
+                        logInfo("Login error detected via logcat after " + i + " seconds");
+                        return false;
+                    }
+                }
+            }
+            
+            // If we've waited max time, check final state more carefully
+            String finalUiDump = uiManager.getCurrentUIDump();
+            
+            // More robust login success detection
+            boolean stillOnLoginPage = finalUiDump != null && (
+                finalUiDump.toLowerCase().contains("login") || 
+                finalUiDump.toLowerCase().contains("sign") ||
+                finalUiDump.contains("login_username") ||
+                finalUiDump.contains("login_password") ||
+                finalUiDump.contains("login_button")
+            );
+            
+            if (stillOnLoginPage) {
+                logInfo("Still on login page after " + maxWaitSeconds + " seconds - login likely failed");
+                return false;
+            }
+            
+            // Check if we've moved to a different screen
+            boolean loginSuccess = !stillOnLoginPage && 
+                                 !finalUiDump.toLowerCase().contains("error") &&
+                                 !finalUiDump.toLowerCase().contains("invalid") &&
+                                 !finalUiDump.toLowerCase().contains("incorrect");
+            
+            logInfo("Final login detection result: " + (loginSuccess ? "SUCCESS" : "FAILED"));
+            return loginSuccess;
+                   
+        } catch (Exception e) {
+            logError("Error in smart login detection: " + e.getMessage());
+            // Fallback to simple wait
+            try {
+                Thread.sleep(configLoader.getPostLoginWaitSeconds() * 1000L);
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+            }
+            return false;
+        }
+    }
+    
+    /**
+     * Generate appropriate snapshot name based on app package
+     */
+    private String generateSnapshotName(String packageName) {
+        if (packageName == null || packageName.isEmpty()) {
+            return "snap_default_login";
+        }
+        
+        // Extract meaningful part from package name
+        String[] parts = packageName.split("\\.");
+        String appName = parts[parts.length - 1]; // Get last part (usually app name)
+        
+        // Handle common package patterns
+        if (parts.length >= 2) {
+            String secondLast = parts[parts.length - 2];
+            // For packages like com.company.appname, use company_appname
+            if (!secondLast.equals("android") && !secondLast.equals("google")) {
+                appName = secondLast + "_" + appName;
+            }
+        }
+        
+        return "snap_" + appName.toLowerCase() + "_login";
+    }
+    
     private void ensureDirExists(String dir) {
         try {
             java.nio.file.Files.createDirectories(java.nio.file.Paths.get(dir));
@@ -1398,18 +2055,34 @@ public class AndroidLoginDetector {
             if (apiLogAnalyzer != null) {
                 apiLogAnalyzer.parseLogFile(logFilePath);
 
-                List<ApiLogAnalyzer.ApiCallEntry> calls = apiLogAnalyzer.getApiCallLog();
+                // Get only the last round's calls (current round)
+                List<List<ApiLogAnalyzer.ApiCallEntry>> roundLogs = apiLogAnalyzer.getRoundLogs();
+                List<ApiLogAnalyzer.ApiCallEntry> calls = roundLogs.isEmpty() ? 
+                    new ArrayList<>() : roundLogs.get(roundLogs.size() - 1);
+                
                 if (!calls.isEmpty()) {
-                    logInfo("Captured " + calls.size() + " API calls");
+                    logInfo("Captured " + calls.size() + " API calls in current round");
 
-                    // Analyze each API call and determine state
+                    // Use state already determined by Frida agent
+                    int knownStateCount = 0;
                     for (ApiLogAnalyzer.ApiCallEntry call : calls) {
-                        String state = stateMachineManager.determineStateFromApiCall(call.methodName,
-                                call.getMethodSignature());
+                        // Use the state from Frida log if available, otherwise try to determine it
+                        String state = call.mappedState;
+                        if (state == null || state.equals("Unknown")) {
+                            state = stateMachineManager.determineStateFromApiCall(call.methodName,
+                                    call.getMethodSignature());
+                        } else {
+                            knownStateCount++;
+                        }
                         stateMachineManager.addObservedState(state);
 
-                        logInfo("API call: " + call.methodName + " -> State: " + state);
+                        // Only log non-Unknown states or important methods
+                        if (!state.equals("Unknown") || call.methodName.contains("onCreate") || 
+                            call.methodName.contains("http") || call.methodName.contains("Http")) {
+                            logInfo("API call: " + call.className + "." + call.methodName + " -> State: " + state);
+                        }
                     }
+                    logInfo("Known states from Frida: " + knownStateCount + "/" + calls.size());
 
                     // Validate state transitions
                     List<String> navigationErrors = stateMachineManager.validateStateTransitions();
@@ -1477,5 +2150,72 @@ public class AndroidLoginDetector {
             return facebookPasswordPool.get(new Random().nextInt(facebookPasswordPool.size()));
         }
         return "facebookpass123";
+    }
+    
+    /**
+     * Extract error message from UI dump for better logging
+     */
+    private String extractErrorMessage(String uiDump) {
+        if (uiDump == null) return "Unknown error";
+        
+        String[] lines = uiDump.split("\n");
+        for (String line : lines) {
+            String lowerLine = line.toLowerCase();
+            if (lowerLine.contains("error") || lowerLine.contains("invalid") || 
+                lowerLine.contains("failed") || lowerLine.contains("wrong") ||
+                lowerLine.contains("denied") || lowerLine.contains("unauthorized")) {
+                // Extract the relevant part of the line
+                return line.trim().length() > 100 ? line.trim().substring(0, 100) + "..." : line.trim();
+            }
+        }
+        return "Error detected but message not extracted";
+    }
+    
+    /**
+     * Check logcat for Toast messages and other system-level error notifications
+     */
+    private boolean checkLogcatForErrors() {
+        try {
+            // Use adb logcat to check for recent Toast messages and errors
+            ProcessBuilder pb = new ProcessBuilder("adb", "logcat", "-d", "-t", "10", "*:W");
+            Process process = pb.start();
+            
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String lowerLine = line.toLowerCase();
+                
+                // Check for Toast messages with error content
+                if (lowerLine.contains("toast") && 
+                    (lowerLine.contains("error") || lowerLine.contains("failed") || 
+                     lowerLine.contains("invalid") || lowerLine.contains("wrong") ||
+                     lowerLine.contains("authentication") || lowerLine.contains("login"))) {
+                    logInfo("Logcat Toast error detected: " + line.trim());
+                    return true;
+                }
+                
+                // Check for network errors that might indicate login failure
+                if (lowerLine.contains("network") && 
+                    (lowerLine.contains("error") || lowerLine.contains("failed") || lowerLine.contains("timeout"))) {
+                    logInfo("Logcat network error detected: " + line.trim());
+                    return true;
+                }
+                
+                // Check for authentication-related errors
+                if (lowerLine.contains("auth") && 
+                    (lowerLine.contains("error") || lowerLine.contains("failed") || lowerLine.contains("denied"))) {
+                    logInfo("Logcat authentication error detected: " + line.trim());
+                    return true;
+                }
+            }
+            
+            process.waitFor();
+            reader.close();
+            
+        } catch (Exception e) {
+            // Don't log this as error since logcat monitoring is supplementary
+            // logError("Failed to check logcat: " + e.getMessage());
+        }
+        return false;
     }
 }
