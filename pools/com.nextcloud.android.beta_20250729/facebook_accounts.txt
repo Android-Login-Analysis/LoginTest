@@ -1,5 +1,0 @@
-testuser1@facebook.com
-testuser2@facebook.com
-demo.user@facebook.com
-sample.account@facebook.com
-testfbuser@facebook.com
