@@ -34,11 +34,11 @@ public class FridaManager {
         this.fridaLogFilePath = logPath;
         this.configLoader = configLoader;
         this.stateToApiRegexPatterns = new HashMap<>();
-        
-        // 尝试加载静态分析结果
+
+        // Try to load static analysis results
         loadStaticAnalysisResult();
-        
-        // 如果没有静态分析结果，则使用正则表达式模式
+
+        // If no static analysis results available, use regex patterns
         if (staticAnalysisResultPath == null) {
             loadRegexesFromFile(stateAndApiRegexFilePath);
             prepareJsonRegexForAgent();

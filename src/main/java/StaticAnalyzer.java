@@ -69,9 +69,9 @@ public class StaticAnalyzer {
             throw new RuntimeException("Static analysis failed", e);
         }
     }
-    
+
     /**
-     * 加载状态模式
+     * Load state patterns
      */
     private List<StatePattern> loadPatterns() {
         List<StatePattern> patterns = new ArrayList<>();
@@ -132,9 +132,9 @@ public class StaticAnalyzer {
         
         return patterns;
     }
-    
+
     /**
-     * 使用SootUp提取方法信息
+     * Extract method information using SootUp
      */
     private List<MethodInfo> extractMethodsWithSootup() {
         List<MethodInfo> methods = new ArrayList<>();

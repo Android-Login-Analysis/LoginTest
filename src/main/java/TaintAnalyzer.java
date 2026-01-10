@@ -99,8 +99,8 @@ public class TaintAnalyzer {
         
         try {
             JSONObject data = new JSONObject(json);
-            
-            // 解析违规
+
+            // Parse violations
             if (data.has("violations")) {
                 JSONArray violationsArray = data.getJSONArray("violations");
                 for (int i = 0; i < violationsArray.length(); i++) {
@@ -114,13 +114,13 @@ public class TaintAnalyzer {
                     report.addViolation(violation);
                 }
             }
-            
-            // 解析所有流
+
+            // Parse all flows
             if (data.has("flows")) {
                 report.totalFlows = data.getJSONArray("flows").length();
             }
-            
-            // 解析污点数量
+
+            // Parse taint count
             if (data.has("taints")) {
                 report.totalTaints = data.getJSONArray("taints").length();
             }
