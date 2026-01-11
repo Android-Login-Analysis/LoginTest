@@ -458,23 +458,4 @@ rm -rf reports/*
 - Set `screenshot.enabled=false` to reduce I/O overhead
 - Use `--no-compile` flag to skip recompilation
 
-## Citation
 
-If you use this tool in your research, please cite:
-
-```
-@misc{androidlogindetector2025,
-  title={Android Login Detector: Automated Security Testing for Android Authentication Flows},
-  author={Your Name},
-  year={2025},
-  url={https://github.com/your-repo}
-}
-```
-
-## License
-
-[Specify your license]
-
-## Contact
-
-[Your contact information]
