@@ -1,155 +1,461 @@
-# Android Login Issue Detection Tool
+# Android Login Detector
 
-A comprehensive automated testing and analysis tool for detecting login-related issues in Android applications. This tool combines UI automation with dynamic analysis to identify various types of login problems.
+An automated security testing tool for detecting vulnerabilities in Android application login flows. The tool combines static analysis, dynamic instrumentation (Frida), UI automation, and state machine validation to identify security issues including SSL/TLS misconfigurations, session management flaws, injection vulnerabilities, and network fault handling problems.
 
 ## Features
 
-- **Automated Login Testing**: Tests multiple login methods (native, Google, Facebook)
-- **Dynamic Analysis**: Uses Frida for API call monitoring and state tracking
-- **Issue Detection**:
-  - Navigation flow errors
-  - Application crashes
-  - ANR (Application Not Responding) detection
-  - Login timeouts
-  - Credential rejection issues
-  - Special character handling problems
+- **Static Analysis**: Uses SootUp framework for bytecode analysis to identify login-related methods and data flows
+- **Dynamic Instrumentation**: Frida-based runtime hooking of security-critical APIs
+- **UI Automation**: ADB-based automated interaction with login interfaces
+- **State Machine Validation**: Detects incorrect state transitions in authentication flows
+- **Taint Analysis**: Tracks sensitive data flows to detect potential leaks
+- **Network Chaos Testing**: Simulates network failures to test error handling
+- **Multi-Layer Bug Detection**: 6 specialized detectors for common authentication vulnerabilities
 
-## System Architecture
+## Detected Vulnerabilities
 
-### Core Components
-
-1. **LoginDetectTest**: Main test runner that orchestrates the testing process
-   - Manages test rounds and credentials
-   - Handles UI interactions via Appium
-   - Coordinates with Frida for API monitoring
-   - Analyzes test results
-
-2. **FridaManager**: Manages Frida integration
-   - Handles Frida process lifecycle
-   - Manages API hook patterns
-   - Coordinates with login_agent.js
-
-3. **ApiLogAnalyzer**: Processes API call logs
-   - Maps API calls to application states
-   - Detects invalid state transitions
-   - Identifies potential issues
-
-4. **LoginReportManager**: Generates detailed test reports
-   - Tracks detected issues
-   - Generates test summaries
-   - Maintains issue statistics
-
-### Supporting Components
-
-- **login_agent.js**: Frida script for API monitoring
-- **frida_controller.py**: Python script for Frida RPC communication
-- **ConfigLoader**: Manages test configuration and patterns
+1. **SSL/TLS Issues**: Weak certificate validation, insecure protocols
+2. **Cookie Security**: Missing secure/httpOnly flags, improper scope
+3. **Session Management**: Unsafe in-memory session storage
+4. **Injection Attacks**: SQL injection, command injection via special characters
+5. **Deserialization**: Unsafe object deserialization vulnerabilities
+6. **Network Fault Handling**: ANR, crashes, or state corruption under poor network conditions
 
 ## Prerequisites
 
-1. **Java Development Environment**
-   - JDK 8 or higher
-   - Maven for dependency management
+- **Java**: JDK 17 or higher
+- **Maven**: 3.6+
+- **Python**: 3.8+
+- **Android SDK**: Platform tools (adb)
+- **Frida**: 16.0+
+- **Android Emulator**: With snapshot support
+- **Docker** (optional): For containerized execution
 
-2. **Android Development Tools**
-   - Android SDK
-   - ADB (Android Debug Bridge)
-   - An Android device or emulator
+## Quick Start
 
-3. **Appium**
+### 1. Installation
 
-   ```bash
-   npm install -g appium
-   ```
+```bash
+# Clone the repository
+git clone <repository-url>
+cd LoginTest
 
-4. **Frida**
+# Install Python dependencies
+pip3 install frida frida-tools
 
-   ```bash
-   pip install frida-tools
-   pip install frida
-   ```
+# Install Android SDK tools (if not already installed)
+# Download from https://developer.android.com/studio/releases/platform-tools
 
-5. **Python Dependencies**
+# Compile the project
+mvn clean compile
+```
 
-   ```bash
-   pip install frida
-   ```
+### 2. Configuration
 
-## Setup
+#### Configure Application Under Test
 
-1. **Device Setup**
-   - Enable USB debugging on your Android device
-   - Install and start frida-server on the device
+Edit `src/main/resources/config.properties`:
 
-   ```bash
-   adb push frida-server /data/local/tmp/
-   adb shell "chmod 755 /data/local/tmp/frida-server"
-   adb shell "/data/local/tmp/frida-server &"
-   ```
+```properties
+# Application configuration
+app.path=apps/your_app.apk
+app.package=com.example.app
+app.activity=com.example.app.MainActivity
 
-2. **Project Setup**
-   - Clone the repository
-   - Place test APK in the `apps/` directory
-   - Configure test credentials in the `pools/` directory
-   - Update regex patterns in `regex_patterns.txt`
+# Emulator configuration
+emulator.name=test_device
+emulator.port=5554
+emulator.snapshot=snap_baseline
+```
 
-3. **Configuration**
-   - Update `ConfigLoader` with appropriate patterns for your target app
-   - Configure test parameters in `LoginDetectTest`
+#### Configure Credential Pools
 
-## Usage
+Create credential files in the `pools/` directory:
 
-1. **Start Appium Server**
+**Global pools** (used for all apps):
+- `pools/accounts.txt` - One username/email per line
+- `pools/passwords.txt` - One password per line
+- `pools/google_accounts.txt` - Google accounts
+- `pools/google_passwords.txt` - Google passwords
+- `pools/facebook_accounts.txt` - Facebook accounts
+- `pools/facebook_passwords.txt` - Facebook passwords
 
-   ```bash
-   appium
-   ```
+**App-specific pools** (override global pools):
+Create a directory `pools/<app_package_name>/` with the same file structure.
 
-2. **Run Tests**
+Example for `com.example.app`:
+```
+pools/com.example.app/
+├── accounts.txt
+├── passwords.txt
+├── google_accounts.txt
+├── google_passwords.txt
+├── facebook_accounts.txt
+├── facebook_passwords.txt
+└── valid_pairs.csv
+```
 
-   ```bash
-   mvn test
-   ```
+**Format for valid_pairs.csv** (optional, for known valid credentials):
+```csv
+username,password
+user1@example.com,password123
+user2@example.com,pass456
+```
 
-3. **View Results**
-   - Check the `reports/` directory for detailed test reports
-   - Review console output for real-time test progress
+### 3. Setup Emulator
 
-## Test Data
+```bash
+# Create and start emulator
+emulator -avd test_device -port 5554 &
 
-The tool uses several pools of test data:
+# Install the APK
+adb -s emulator-5554 install apps/your_app.apk
 
-- `pools/accounts.txt`: Username pool
-- `pools/passwords.txt`: Password pool
-- `pools/instances.txt`: Instance URLs
-- `pools/google_accounts.txt`: Google account credentials
-- `pools/facebook_accounts.txt`: Facebook account credentials
+# Manually navigate to the login page and create a snapshot
+adb -s emulator-5554 emu avd snapshot save snap_baseline
 
-## Report Format
+# Verify snapshot
+adb -s emulator-5554 emu avd snapshot list
+```
 
-Test reports include:
+### 4. Run Detection
 
-- Timestamp and test duration
-- Total login attempts
-- Successful/failed login counts
-- Detailed issue breakdown
-- Issue descriptions and credentials used
-- State transition analysis
+```bash
+# Full run with environment check and compilation
+./scripts/run_detector.sh
 
-## Contributing
+# Skip environment check
+./scripts/run_detector.sh --no-check
 
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+# Skip compilation (use existing classes)
+./scripts/run_detector.sh --no-compile
 
-## License
+# Environment check only
+./scripts/run_detector.sh -c
+```
 
-[Add your license information here]
+Or run directly with Maven:
 
-## Acknowledgments
+```bash
+mvn compile
+mvn exec:java -Dexec.mainClass="AndroidLoginDetector"
+```
 
-- Appium for UI automation
-- Frida for dynamic analysis capabilities
-- TestNG for test framework
+### 5. View Results
+
+Results are saved in the `reports/` directory:
+
+```
+reports/
+├── <app_package>/
+│   ├── login_report_<timestamp>.json     # Main detection report
+│   ├── api_log_<timestamp>.txt          # Frida API logs
+│   ├── taint_analysis_<timestamp>.txt   # Taint analysis results
+│   └── screenshots/                     # UI screenshots
+└── static_analysis/
+    └── <app_package>_1.json             # Static analysis results
+```
+
+## Configuration Reference
+
+### Test Configuration
+
+```properties
+# Number of test rounds
+test.rounds=100
+
+# Timeout per round (milliseconds)
+test.timeout=360000
+
+# Test duration per round (milliseconds)
+test.duration=300000
+
+# Wait time after login attempt (seconds)
+test.login.wait=10
+
+# Snapshot recovery wait time (seconds)
+test.snapshot.wait=45
+```
+
+### Frida Configuration
+
+```properties
+# Enable/disable Frida instrumentation
+frida.enabled=true
+
+# Frida agent JavaScript file
+frida.script.path=src/main/resources/login_agent.js
+
+# Frida controller Python script
+frida.controller.path=scripts/frida_controller.py
+
+# API pattern matching file
+frida.patterns.path=src/main/resources/regex_patterns.txt
+
+# Frida timeout (seconds)
+frida.timeout=120
+```
+
+### Network Chaos Testing
+
+```properties
+# Enable network chaos testing
+network.chaos.enabled=true
+
+# Network state ratio (good:bad percentage)
+network.good.ratio=40
+network.bad.ratio=60
+
+# State switch interval (seconds)
+network.switch.interval=60
+
+# Chaos mode: random, periodic, adaptive
+network.chaos.mode=random
+
+# Disruption methods (comma-separated)
+network.disruption.methods=disable_data,slow_network
+
+# Disruption duration range (seconds)
+network.disruption.min.duration=10
+network.disruption.max.duration=30
+```
+
+### UI Element Recognition
+
+```properties
+# Login button patterns
+ui.login.button.patterns=login,log in,sign in,signin,submit,enter,go,continue
+
+# Username field patterns
+ui.username.field.patterns=username,user,email,login,account,user_id
+
+# Password field patterns
+ui.password.field.patterns=password,passwd,pass,pwd,secret
+
+# Google login patterns
+ui.google.login.patterns=sign in with google,continue with google,google sign in
+
+# Facebook login patterns
+ui.facebook.login.patterns=sign in with facebook,continue with facebook,facebook login
+
+# Login activity patterns
+ui.login.activity.patterns=LoginActivity,SignInActivity,AuthActivity,LoginFragment
+```
+
+### Static Analysis
+
+```properties
+# Output directory
+static.analysis.output.dir=reports/static_analysis
+
+# Output file pattern (placeholders: {apk_name}, {version})
+static.analysis.output.pattern={apk_name}_{version}.json
+
+# Version number (for testing different analysis methods)
+static.analysis.version=1
+
+# Regex patterns file
+static.analysis.patterns.path=src/main/resources/regex_patterns.txt
+```
+
+## Docker Deployment
+
+### Build and Run
+
+```bash
+# Build Docker image
+docker-compose build
+
+# Start container
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop container
+docker-compose down
+```
+
+### Docker Configuration
+
+The `docker-compose.yml` provides:
+- Pre-configured Android SDK and emulator
+- Frida and Python dependencies
+- X11 forwarding for emulator display (optional)
+- Volume mounts for apps, pools, and reports
+
+## Advanced Usage
+
+### Custom Bug Detectors
+
+Add custom bug detectors by extending the base class:
+
+```java
+public class BugDetectorCustom extends BugDetector {
+    @Override
+    public void analyze(LoginReport report, List<String> apiLog) {
+        // Your detection logic
+        if (vulnerabilityDetected) {
+            report.addBug(new Bug(
+                "CUSTOM_VULN",
+                "High",
+                "Description",
+                evidence
+            ));
+        }
+    }
+}
+```
+
+Register in `AndroidLoginDetector.java`:
+
+```java
+bugDetectors.add(new BugDetectorCustom());
+```
+
+### Modify API Hooking
+
+Edit `src/main/resources/login_agent.js` to hook additional methods:
+
+```javascript
+// Hook custom encryption method
+Java.perform(function() {
+    var CustomCrypto = Java.use("com.example.CustomCrypto");
+    CustomCrypto.encrypt.implementation = function(data) {
+        send({type: "crypto", method: "encrypt", data: data.toString()});
+        return this.encrypt(data);
+    };
+});
+```
+
+### Extend Taint Analysis
+
+Modify `src/main/java/TaintAnalyzer.java` to track additional sources/sinks:
+
+```java
+// Add custom taint source
+markTaint(packageName, "custom_source", valueLength);
+
+// Parse custom violations
+if (violationType.equals("CUSTOM_LEAK")) {
+    // Handle custom leak
+}
+```
+
+## Project Structure
+
+```
+AndroidLoginDetector/
+├── src/main/java/              # Core Java code
+│   ├── AndroidLoginDetector.java      # Main orchestrator
+│   ├── StaticAnalyzer.java            # SootUp-based static analysis
+│   ├── FridaManager.java              # Frida integration
+│   ├── UIManager.java                 # ADB-based UI automation
+│   ├── StateMachineManager.java       # State machine validation
+│   ├── TaintAnalyzer.java             # Taint tracking
+│   ├── ApiLogAnalyzer.java            # API log analysis
+│   ├── NetworkChaosManager.java       # Network fault injection
+│   ├── LoginReportManager.java        # Report generation
+│   ├── ConfigLoader.java              # Configuration loader
+│   ├── BugDetectorSSL.java            # SSL/TLS detector
+│   ├── BugDetectorCookieJar.java      # Cookie security detector
+│   ├── BugDetectorInMemorySession.java # Session management detector
+│   ├── BugDetectorSpecialChar.java    # Injection detector
+│   ├── BugDetectorUnsafeDeserialization.java # Deserialization detector
+│   └── BugDetectorNetworkFault.java   # Network fault detector
+├── src/main/resources/         # Configuration and scripts
+│   ├── config.properties              # Main configuration
+│   ├── regex_patterns.txt             # API pattern matching
+│   └── login_agent.js                 # Frida agent script
+├── scripts/                    # Helper scripts
+│   ├── frida_controller.py            # Frida Python controller
+│   ├── mark_taint_rpc.py              # Taint marking RPC
+│   ├── get_taint_report_rpc.py        # Taint report RPC
+│   ├── run_detector.sh                # Main run script
+│   └── docker-environment-check.sh    # Environment checker
+├── pools/                      # Credential pools
+│   ├── accounts.txt
+│   ├── passwords.txt
+│   ├── google_accounts.txt
+│   ├── google_passwords.txt
+│   ├── facebook_accounts.txt
+│   └── facebook_passwords.txt
+├── apps/                       # APK files
+├── logs/                       # Log files
+├── reports/                    # Detection reports
+├── resources/                  # Binary resources (frida-server)
+├── docker-compose.yml          # Docker Compose config
+├── Dockerfile                  # Docker image definition
+├── pom.xml                     # Maven configuration
+└── README.md                   # This file
+```
+
+## Troubleshooting
+
+### Frida Connection Issues
+
+```bash
+# Check Frida server on device
+adb shell "su -c 'ps | grep frida'"
+
+# Restart Frida server
+adb shell "su -c 'killall frida-server'"
+adb push resources/frida-server /data/local/tmp/
+adb shell "su -c 'chmod 755 /data/local/tmp/frida-server'"
+adb shell "su -c '/data/local/tmp/frida-server &'"
+
+# Verify Frida connection
+frida-ps -U
+```
+
+### Emulator Snapshot Issues
+
+```bash
+# List available snapshots
+adb -s emulator-5554 emu avd snapshot list
+
+# Load specific snapshot
+adb -s emulator-5554 emu avd snapshot load snap_baseline
+
+# Delete corrupted snapshot
+adb -s emulator-5554 emu avd snapshot delete snap_baseline
+
+# Recreate snapshot
+# 1. Manually navigate to login page
+# 2. Create new snapshot
+adb -s emulator-5554 emu avd snapshot save snap_baseline
+```
+
+### Compilation Errors
+
+```bash
+# Clean and rebuild
+mvn clean compile
+
+# Update dependencies
+mvn dependency:resolve
+
+# Check Java version
+java -version  # Should be 17+
+
+# Verify Maven
+mvn -version
+```
+
+### Permission Denied on Reports
+
+```bash
+# Fix permissions
+chmod -R u+w reports/
+rm -rf reports/*
+```
+
+## Performance Tuning
+
+- Reduce `test.rounds` for faster testing
+- Decrease `test.duration` for shorter test cycles
+- Disable `network.chaos.enabled` to speed up tests
+- Set `screenshot.enabled=false` to reduce I/O overhead
+- Use `--no-compile` flag to skip recompilation
+
+

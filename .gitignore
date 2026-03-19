@@ -36,3 +36,22 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Android ###
+#/reports/
+
+# Ignore decompiled APKs
+kickstarter_decompiled/
+messenger_decompiled/
+*.decompiled/
+out_check/
+out_organic/
+out_simplex/
+out_*/out_*/
+apps/
+*.apk
+apps/*.apk
+known_login_apks/*.apk
+reports/*.txt
+reports/screenshot/*
+

@@ -1,6 +1,0 @@
-=== Login Testing Report ===
-Generated: 2025-05-27_18-36-23
-
-Issues detected will be logged below:
-==============================
-
