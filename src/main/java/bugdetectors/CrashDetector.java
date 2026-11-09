@@ -176,6 +176,29 @@ public class CrashDetector implements BugDetector {
         return "Unknown";
     }
     
+    // FIX(v1): crashes raised through Frida hook trampolines are artifacts of the instrumentation, not
+    // app bugs. Java: frida bridge classes in the trace. Native: frida-agent frames in the crashing
+    // thread's backtrace of the latest tombstone (needs root; otherwise the crash is kept).
+    private boolean isInstrumentationInduced(CrashEvent crash) {
+        if (crash.stackTrace != null && (crash.stackTrace.contains("re.frida") || crash.stackTrace.contains("frida-agent"))) return true;
+        if (!"NATIVE_CRASH".equals(crash.exceptionType)) return false;
+        try {
+            Process p = new ProcessBuilder("adb", "shell",
+                "f=$(ls -t /data/tombstones/ 2>/dev/null | grep -v pb | head -1); [ -n \"$f\" ] && cat /data/tombstones/$f")
+                .redirectErrorStream(true).start();
+            String t = new String(p.getInputStream().readAllBytes());
+            p.waitFor();
+            if (targetPackage != null && !t.contains("Cmdline: " + targetPackage)) return false;
+            int b = t.indexOf("backtrace:");
+            if (b < 0) return false;
+            int e = t.indexOf("\n\n", b);
+            String crashingThread = e > 0 ? t.substring(b, e) : t.substring(b);
+            return crashingThread.contains("frida-agent");
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
     @Override
     public List<DetectedBug> detectBugs() {
         List<DetectedBug> bugs = new ArrayList<>();
@@ -184,6 +207,10 @@ public class CrashDetector implements BugDetector {
         System.out.println("[CRASH_DETECTOR] Total crashes recorded: " + crashes.size());
         
         for (CrashEvent crash : crashes) {
+            if (isInstrumentationInduced(crash)) {
+                System.out.println("[CRASH_DETECTOR] Excluded instrumentation-induced crash (Frida frames in crashing thread): " + crash.timestamp);
+                continue;
+            }
             DetectedBug bug = new DetectedBug(
                 BugCategory.CRASH,
                 crash.exceptionType,
