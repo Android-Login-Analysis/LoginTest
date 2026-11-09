@@ -610,6 +610,7 @@ public class UIManager {
         if (url == null) return;
         if (url.contains("accounts.google.com")) {
             googleLoginDetected = true;
+            if (roundValid && googleAccount != null) serviceAccountAdopted = true;
             if (roundValid && googleAccount != null && !googleAccount.equals(pendingUsername)) {
                 pendingUsername = googleAccount;
                 serviceAccountAdopted = true;
@@ -617,6 +618,7 @@ public class UIManager {
             }
         } else if (url.matches("https?://([a-z]+\\.)?facebook\\.com/.*")) {
             facebookLoginDetected = true;
+            if (roundValid && facebookAccount != null) serviceAccountAdopted = true;
             if (roundValid && facebookAccount != null && !facebookAccount.equals(pendingUsername)) {
                 pendingUsername = facebookAccount;
                 serviceAccountAdopted = true;
