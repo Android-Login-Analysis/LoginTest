@@ -1170,6 +1170,9 @@ public class AndroidLoginDetector {
                 if (networkChaosManager != null && networkChaosManager.isRunning()) { networkChaosManager.stop(); chaosPaused = true; }
                 try {
                     snapshotManager.restoreSnapshot("baseline");
+                    // re-attach Frida to the fresh process: keeps instrumentation and WebView debugging enabled
+                    startFridaMonitoring();
+                    try { TimeUnit.SECONDS.sleep(8); } catch (InterruptedException ignored) { }
                     boolean onLogin = detectLoginPageWithUI() || tryDirectLoginActivities();
                     if (onLogin) {
                         String rUser = accountPool.isEmpty() ? "testuser@example.com" : accountPool.get(new Random().nextInt(accountPool.size()));
