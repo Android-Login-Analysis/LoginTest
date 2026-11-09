@@ -1227,9 +1227,9 @@ public class AndroidLoginDetector {
                     String rUser = accountPool.isEmpty() ? "testuser@example.com" : accountPool.get(new Random().nextInt(accountPool.size()));
                     String rPass = passwordPool.isEmpty() ? "wrongpass123" : passwordPool.get(new Random().nextInt(passwordPool.size()));
                     uiManager.setPendingUsername(rUser);   // before navigation: it resets per-attempt state (incl. DOM mode)
+                    uiManager.setPreferGuestLogin(false);   // rotation checks need a credential form
                     boolean onLogin = detectLoginPageWithUI() || tryDirectLoginActivities();
                     if (onLogin) {
-                        uiManager.setPreferGuestLogin(false);
                         List<String[]> findings = uiManager.runRotationChecks(rUser, rPass);
                         if (stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
                             var lifecycle = stateMachineManager.getBugDetectionManager().getLifecycleDetector();
