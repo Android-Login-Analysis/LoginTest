@@ -389,10 +389,10 @@ public class UIManager {
     private int lastLoginEntryPriority = 99;
 
     public boolean detectLoginPage() {
-        for (int hop = 0; hop <= 2; hop++) {
+        for (int hop = 0; hop <= 3; hop++) {
             lastLoginEntryBounds = null; lastLoginEntryPriority = 99;
             if (detectLoginPageOnce()) return true;
-            if (hop == 2 || lastLoginEntryBounds == null) return false;
+            if (hop == 3 || lastLoginEntryBounds == null) return false;
             int[] r = parseBoundsRect(lastLoginEntryBounds);
             if (r == null) return false;
             int cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2;
@@ -422,10 +422,20 @@ public class UIManager {
             int voteThreshold = Math.max(1, configLoader.getLoginVoteThreshold());
 
             boolean loginButtonDetected = false;
+            boolean registrationForm = false;
 
             for (int i = 0; i < retries; i++) {
                 // Get UI element information for the current page
                 List<UIElement> elements = getAllUIElements();
+
+                // FIX(v1): a form with two password inputs (password + confirm) or a sign-up heading is a
+                // registration form, not a login form (cf. reviewer R2-1); prefer its "Login" entry instead.
+                int pwInputs = 0;
+                for (UIElement e : elements) {
+                    if (e.className != null && e.className.contains("[password]") && boundsOf(e) != null) pwInputs++;
+                    if (e.text != null && e.text.trim().toLowerCase().matches("(create (your |an |a )?(free )?account|sign up|register|create account)")) registrationForm = true;
+                }
+                if (pwInputs >= 2) registrationForm = true;
 
                 // Iterate through all elements to check if they match the login element pattern
                 for (UIElement element : elements) {
@@ -454,12 +464,15 @@ public class UIManager {
                     }
 
                     // Check login button
-                    if (element.visible && element.text != null && element.text.trim().length() <= 24 && boundsOf(element) != null) {
+                    if (element.visible && element.text != null && element.text.trim().length() <= 40 && boundsOf(element) != null) {
                         String t = element.text.trim().toLowerCase();
-                        if (t.matches("(sign in|log in|login|signin|log on|sign in / register|sign in or register)")) {
+                        if (t.matches("(sign in|log in|login|signin|log on|sign in / register|sign in or register)")
+                                || t.matches(".*(account|member)\\?\\s*(log ?in|sign ?in)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 1;
-                        } else if (lastLoginEntryPriority > 1 && t.matches("(open account menu|go to account menu|account|my account|profile)")) {
+                        } else if (lastLoginEntryPriority > 2 && t.matches("(open account menu|go to account menu|account|my account|profile)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2;
+                        } else if (lastLoginEntryPriority > 3 && t.matches("(get started|continue|next|skip|start|got it|let's go|lets go)")) {
+                            lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 3;
                         }
                     }
                     if (!loginButtonDetected && matchesLoginButtonPattern(element.text, element.resourceId)) {
@@ -527,6 +540,10 @@ public class UIManager {
 
             // FIX(v1): per paper Section V-B a credential login page needs a password field; screens with
             // only a "Sign in" entry (e.g. the app's home screen) are not login pages.
+            if (registrationForm) {
+                System.out.println("[LOGIN_PAGE] Registration (sign-up) form detected; not treated as a login page");
+                passwordFieldDetected = false;
+            }
             boolean isLoginByVote = passwordFieldDetected && votes >= voteThreshold;
             boolean isLoginBySso = (googleLoginDetected || facebookLoginDetected) && (usernameFieldDetected || passwordFieldDetected || loginButtonDetected);
             boolean isLoginByWebViewHeur = webViewPresent && passwordFieldDetected && (
