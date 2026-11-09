@@ -574,6 +574,7 @@ public class UIManager {
 
     /** Fill and submit a web login form with trusted input events (identifier-only screens: identifier + Next). */
     public boolean webLogin(String username, String password) {
+        try { Thread.sleep(1500); } catch (InterruptedException ignored) { }   // let sheet/slide-in animations settle
         Map<String, String> m = web().inspect();
         if (m.isEmpty()) return false;
         webLoginUrl = m.get("url");

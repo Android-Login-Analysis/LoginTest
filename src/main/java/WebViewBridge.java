@@ -188,7 +188,7 @@ public final class WebViewBridge {
         String js = "(()=>{" + VISIBLE_FN +
             "const ins=[...document.querySelectorAll('input,textarea')].filter(vis);" +
             "const pw=ins.find(e=>e.type==='password');" +
-            "const cands=ins.filter(e=>['text','email','tel',''].includes(e.type)&&!e.readOnly&&(!pw||e.compareDocumentPosition(pw)&Node.DOCUMENT_POSITION_FOLLOWING));" +
+            "const cands=ins.filter(e=>['text','email','tel',''].includes(e.type)&&!e.readOnly&&!/search/i.test((e.placeholder||'')+' '+(e.getAttribute('aria-label')||'')+' '+(e.name||'')+' '+(e.id||'')+' '+(typeof e.className==='string'?e.className:'')+' '+(e.getAttribute('role')||''))&&(!pw||e.compareDocumentPosition(pw)&Node.DOCUMENT_POSITION_FOLLOWING));" +
             "const id=cands.length?cands[cands.length-1]:null;" +   // the identifier closest before the password field
             "const e=" + ("pw".equals(which) ? "pw" : "id") + ";if(!e)return '';e.focus();e.select&&e.select();return 'ok';})()";
         if (!"ok".equals(eval(js))) return false;
@@ -230,7 +230,7 @@ public final class WebViewBridge {
             "d.set.call(e,v);e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));};" +
             "const ins=[...document.querySelectorAll('input,textarea')].filter(vis);" +
             "const pw=ins.find(e=>e.type==='password');" +
-            "const cands=ins.filter(e=>['text','email','tel',''].includes(e.type)&&!e.readOnly&&(!pw||e.compareDocumentPosition(pw)&Node.DOCUMENT_POSITION_FOLLOWING));" +
+            "const cands=ins.filter(e=>['text','email','tel',''].includes(e.type)&&!e.readOnly&&!/search/i.test((e.placeholder||'')+' '+(e.getAttribute('aria-label')||'')+' '+(e.name||'')+' '+(e.id||'')+' '+(typeof e.className==='string'?e.className:'')+' '+(e.getAttribute('role')||''))&&(!pw||e.compareDocumentPosition(pw)&Node.DOCUMENT_POSITION_FOLLOWING));" +
             "const id=cands.length?cands[cands.length-1]:null;" +
             "let n=0; if(id&&" + jsonString(username == null ? "" : username) + "){set(id," + jsonString(username == null ? "" : username) + ");n++;}" +
             "if(pw&&" + jsonString(password == null ? "" : password) + "){set(pw," + jsonString(password == null ? "" : password) + ");n++;}" +
