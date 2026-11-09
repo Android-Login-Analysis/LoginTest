@@ -1047,6 +1047,7 @@ public class UIManager {
                 Map<String, String> dom = web().inspect();
                 if (!dom.isEmpty() && !"0".equals(dom.getOrDefault("pw", "0"))) {
                     webMode = true;
+                    adoptServiceAccount(dom.getOrDefault("url", ""));
                     System.out.println("[WEBVIEW] Credential form is in a WebView; using DOM mode " + dom);
                 }
             }
