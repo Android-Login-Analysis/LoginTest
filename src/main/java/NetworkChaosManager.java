@@ -268,8 +268,14 @@ public class NetworkChaosManager {
             executeAdbCommandSilent("svc data disable");
             executeAdbCommandSilent("svc wifi disable");
             try {
-                String r = executeAdbCommand("ip route show default").trim();
-                if (r.startsWith("default")) { savedDefaultRoute = r; executeAdbCommandSilent("ip route del " + r); }
+                // Android uses policy routing: default routes live in per-network tables (e.g. "table eth0")
+                String all = executeAdbCommand("ip route show table all");
+                java.util.List<String> saved = new java.util.ArrayList<>();
+                for (String r : all.split("\\r?\\n")) {
+                    r = r.trim();
+                    if (r.startsWith("default ") && r.contains(" table ")) { saved.add(r); executeAdbCommandSilent("ip route del " + r); }
+                }
+                if (!saved.isEmpty()) savedDefaultRoute = String.join("\n", saved);
             } catch (Exception ignored) { }
         } else if ("limited".equalsIgnoreCase(condition)) {
             logger.logInfo("🟠 Round condition: LIMITED (2.5s latency, 25% loss)");
@@ -294,7 +300,10 @@ public class NetworkChaosManager {
             
             // Remove our traffic block and shaping (do not flush unrelated iptables rules)
             unblockTraffic();
-            if (savedDefaultRoute != null) { executeAdbCommandSilent("ip route add " + savedDefaultRoute); savedDefaultRoute = null; }
+            if (savedDefaultRoute != null) {
+                for (String r : savedDefaultRoute.split("\n")) executeAdbCommandSilent("ip route add " + r);
+                savedDefaultRoute = null;
+            }
             executeAdbCommandSilent("tc qdisc del dev " + iface() + " root");
             
             currentState = NetworkState.GOOD;
