@@ -971,7 +971,9 @@ public class AndroidLoginDetector {
             forcedValidity = null;
             roundUsedValidPair = lastCredentialChoiceValid;
             uiManager.setPendingUsername(roundUsername);
-            uiManager.setRoundValid(roundUsedValidPair);
+            // a valid-credential round (even when the app itself has no test account, its SSO provider may)
+            uiManager.setRoundValid(System.getenv("LIFT_VALID_PROB") != null ? roundUsedValidPair
+                : ROUND_VALIDITY[(round - 1) % ROUND_VALIDITY.length]);
             uiManager.setServiceAccounts(googleEmailPool.isEmpty() ? null : googleEmailPool.get(0),
                 facebookEmailPool.isEmpty() ? null : facebookEmailPool.get(0));
             // FIX(v1): deterministic network condition for the whole login (navigation, MFA, submit)
