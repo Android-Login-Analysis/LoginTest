@@ -154,13 +154,14 @@ public final class WebViewBridge {
             "const ins=[...document.querySelectorAll('input,textarea')].filter(vis);" +
             "const pw=ins.filter(e=>e.type==='password');" +
             "const ids=ins.filter(e=>['text','email','tel','number',''].includes(e.type)&&!e.readOnly);" +
+            "const idb=ids.filter(e=>!pw[0]||e.compareDocumentPosition(pw[0])&Node.DOCUMENT_POSITION_FOLLOWING);const idf=idb.length?idb[idb.length-1]:ids[0];" +
             "const btns=[...document.querySelectorAll('button,input[type=submit],[role=button],a')].filter(vis);" +
             "const lbl=b=>(b.innerText||b.value||b.getAttribute('aria-label')||'').trim().slice(0,40);" +
             "const sub=btns.find(b=>/^(log ?in|sign ?in|next|continue|submit|weiter|connexion)$/i.test(lbl(b)));" +
             "const errEl=[...document.querySelectorAll('[role=alert],[aria-live],.error,[class*=error],[id*=error]')].filter(vis).map(e=>e.innerText.trim()).filter(t=>t.length>3&&t.length<200);" +
             "const busy=!!(sub&&(sub.disabled||sub.getAttribute('aria-busy')==='true'||sub.getAttribute('aria-disabled')==='true'))||[...document.querySelectorAll('[role=progressbar],progress')].some(vis);" +
             "return ['pw='+pw.length,'id='+ids.length,'btn='+(sub?lbl(sub):''),'err='+(errEl[0]||'').replace(/[;\\n]/g,' '),'url='+location.href.slice(0,200),'busy='+busy," +
-            "'pwval='+(pw[0]?pw[0].value.length:0),'idval='+(ids[0]?ids[0].value.length:0)].join(';');})()";
+            "'pwval='+(pw[0]?pw[0].value.length:0),'idval='+(idf?idf.value.length:0)].join(';');})()";
         String r = eval(js);
         Map<String, String> m = new HashMap<>();
         if (r == null) return m;
@@ -187,7 +188,8 @@ public final class WebViewBridge {
         String js = "(()=>{" + VISIBLE_FN +
             "const ins=[...document.querySelectorAll('input,textarea')].filter(vis);" +
             "const pw=ins.find(e=>e.type==='password');" +
-            "const id=ins.find(e=>['text','email','tel',''].includes(e.type)&&!e.readOnly&&(!pw||e.compareDocumentPosition(pw)&Node.DOCUMENT_POSITION_FOLLOWING));" +
+            "const cands=ins.filter(e=>['text','email','tel',''].includes(e.type)&&!e.readOnly&&(!pw||e.compareDocumentPosition(pw)&Node.DOCUMENT_POSITION_FOLLOWING));" +
+            "const id=cands.length?cands[cands.length-1]:null;" +   // the identifier closest before the password field
             "const e=" + ("pw".equals(which) ? "pw" : "id") + ";if(!e)return '';e.focus();e.select&&e.select();return 'ok';})()";
         if (!"ok".equals(eval(js))) return false;
         call("Input.dispatchKeyEvent", "{\"type\":\"rawKeyDown\",\"key\":\"Backspace\",\"windowsVirtualKeyCode\":8}");
@@ -228,7 +230,8 @@ public final class WebViewBridge {
             "d.set.call(e,v);e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));};" +
             "const ins=[...document.querySelectorAll('input,textarea')].filter(vis);" +
             "const pw=ins.find(e=>e.type==='password');" +
-            "const id=ins.find(e=>['text','email','tel',''].includes(e.type)&&!e.readOnly&&(!pw||e.compareDocumentPosition(pw)&Node.DOCUMENT_POSITION_FOLLOWING));" +
+            "const cands=ins.filter(e=>['text','email','tel',''].includes(e.type)&&!e.readOnly&&(!pw||e.compareDocumentPosition(pw)&Node.DOCUMENT_POSITION_FOLLOWING));" +
+            "const id=cands.length?cands[cands.length-1]:null;" +
             "let n=0; if(id&&" + jsonString(username == null ? "" : username) + "){set(id," + jsonString(username == null ? "" : username) + ");n++;}" +
             "if(pw&&" + jsonString(password == null ? "" : password) + "){set(pw," + jsonString(password == null ? "" : password) + ");n++;}" +
             "return ''+n;})()";
