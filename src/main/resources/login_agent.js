@@ -150,7 +150,12 @@ rpc.exports = {
                 // method signatures reference unavailable types (e.g. build-time code shaded into the APK)
                 // raise a catchable Java exception here instead of aborting the process inside Frida's
                 // JNI method enumeration ("JNI DETECTED ERROR: obj == null").
-                const SKIP_PACKAGE_PREFIXES = ['de.undercouch.gradle.'];
+                // Build-time code shaded into APKs and low-level library internals (hot paths, not login logic).
+                // Public library APIs (e.g. okhttp3.Call, okhttp3.Response) remain hooked.
+                const SKIP_PACKAGE_PREFIXES = ['de.undercouch.gradle.', 'okhttp3.internal.', 'okio.'];
+                // FIX(v1): hot-method guard. A method invoked thousands of times is not a login state
+                // transition; keeping its hook exhausts the JNI global reference table and crashes the app.
+                const HOT_CALL_LIMIT = 2000;
                 const classSafetyCache = {};
                 function isClassSafeToHook(className) {
                     if (className in classSafetyCache) return classSafetyCache[className];
@@ -181,7 +186,13 @@ rpc.exports = {
                         const method = clazz[methodName];
                         if (method && method.overloads) {
                             method.overloads.forEach(overload => {
-                                overload.implementation = function() { return implementation.call(this, overload, Array.prototype.slice.call(arguments)); };
+                                let calls = 0;
+                                overload.implementation = function() {
+                                    if (++calls === HOT_CALL_LIMIT) {
+                                        try { overload.implementation = null; console.log(`[-] Unhooked hot method: ${className}.${methodName}`); } catch (e) {}
+                                    }
+                                    return implementation.call(this, overload, Array.prototype.slice.call(arguments));
+                                };
                             });
                             console.log(`[+] Hooked: ${className}.${methodName}`);
                             return true;
