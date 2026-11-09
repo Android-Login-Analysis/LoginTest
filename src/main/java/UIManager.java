@@ -604,18 +604,22 @@ public class UIManager {
     public void setServiceAccounts(String google, String facebook) { googleAccount = google; facebookAccount = facebook; }
     public void setRoundValid(boolean v) { roundValid = v; }
     public boolean isRoundValid() { return roundValid; }
+    private boolean serviceAccountAdopted = false;
+    public boolean isServiceAccountAdopted() { return serviceAccountAdopted; }
     private void adoptServiceAccount(String url) {
         if (url == null) return;
         if (url.contains("accounts.google.com")) {
             googleLoginDetected = true;
             if (roundValid && googleAccount != null && !googleAccount.equals(pendingUsername)) {
                 pendingUsername = googleAccount;
+                serviceAccountAdopted = true;
                 System.out.println("[WEBVIEW] Google sign-in page: using the Google test account");
             }
         } else if (url.matches("https?://([a-z]+\\.)?facebook\\.com/.*")) {
             facebookLoginDetected = true;
             if (roundValid && facebookAccount != null && !facebookAccount.equals(pendingUsername)) {
                 pendingUsername = facebookAccount;
+                serviceAccountAdopted = true;
                 System.out.println("[WEBVIEW] Facebook sign-in page: using the Facebook test account");
             }
         }
@@ -660,7 +664,7 @@ public class UIManager {
     private boolean twoStepJustFilled = false;
     private List<UIElement> lastScanElements = null;
 
-    public void setPendingUsername(String u) { loginButtonClickTime = 0; lastWaitEndedInProgress = false; pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; webMode = false; webLoginUrl = null; mfaAfterSubmit = false; }
+    public void setPendingUsername(String u) { serviceAccountAdopted = false; loginButtonClickTime = 0; lastWaitEndedInProgress = false; pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; webMode = false; webLoginUrl = null; mfaAfterSubmit = false; }
     private boolean mfaAfterSubmit = false;
     public boolean mfaPromptAfterSubmit() { return mfaAfterSubmit; }
 
