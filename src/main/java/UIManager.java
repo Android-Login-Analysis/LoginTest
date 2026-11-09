@@ -782,8 +782,10 @@ public class UIManager {
                         if (t.matches("(sign in|log in|login|signin|log on|sign in / register|sign in or register)")
                                 || t.matches(".*(account|member)\\?\\s*(log ?in|sign ?in)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 1;
-                        } else if (lastLoginEntryPriority > 2 && t.matches("(open account menu|go to account menu|account|my account|profile)")) {
+                        } else if (lastLoginEntryPriority > 2 && t.matches("(open account menu|account|sign in or register)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2;
+                        } else if (lastLoginEntryPriority > 3 && t.matches("(go to account menu|my account|profile)")) {
+                            lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 3;
                         } else if (lastLoginEntryPriority > 3 && t.matches("(get started|continue|next|skip|start|got it|let's go|lets go)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 3;
                         } else if (lastLoginEntryPriority > 4 && t.matches("(facebook|google)")) {
@@ -1677,11 +1679,13 @@ public class UIManager {
             return false;
         }
         
-        // Must be an input-capable element for password
-        if (!isWhitelistedClass(className) && 
-            !className.toLowerCase().contains("edit") &&
-            !className.toLowerCase().contains("input") &&
-            !className.toLowerCase().contains("text")) {
+        // Must be an input-capable element for password (FIX(v1): a TextView mentioning "password"
+        // in help text is not a password field; previously any class containing "text" passed)
+        String clsLower = className.toLowerCase();
+        if (clsLower.contains("textview") && !clsLower.contains("autocomplete")) return false;
+        if (!isWhitelistedClass(className) &&
+            !clsLower.contains("edit") &&
+            !clsLower.contains("input")) {
             return false;
         }
 
