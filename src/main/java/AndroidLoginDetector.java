@@ -986,6 +986,9 @@ public class AndroidLoginDetector {
                     && !"pending".equals(uiManager.getLastMfaOutcome())) {
                 logInfo("Login page not reached under '" + roundCondition + "'; loading it on a normal network first");
                 networkChaosManager.applyCondition("normal");
+                // pages that failed to load while offline (e.g. WebView error pages) do not reload by themselves
+                AppLauncher.run("adb", "shell", "am", "force-stop", appPackage);
+                AppLauncher.launch(appPackage);
                 uiManager.setPendingUsername(roundUsername);
                 loginPageDetected = detectLoginPageWithUI();
                 networkChaosManager.applyCondition(roundCondition);
