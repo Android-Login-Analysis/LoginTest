@@ -47,7 +47,46 @@ Reproduces Table V exactly (Standard Notes: 98,531 methods, 3,974 hooked, 96.0% 
 | 19 | Two-step logins (identifier, then password) stall | Tool expected both fields on one screen | Fill the identifier screen, continue, then enter the password |
 | 20 | Network disruption had no effect on redroid | netem hard-coded to `wlan0`, never removed; "disable data" relied on `svc` | Interface from routing table; iptables `DROP` (adb port kept); netem on a prio band excluding adb; cleanup on restore. Host needs `sch_netem sch_prio cls_u32 iptable_filter` loaded |
 | 21 | Credentials containing `'` could not be typed | `Runtime.exec(String)` and a bare single quote | Device-shell single-quote escaping (verified for all 51 special characters in the pools) |
+| 23 | Native crash during text input reported as an app bug (Notesnook) | The SIGSEGV was raised through Frida hook trampolines (31 `frida-agent` frames in the crashing thread) | Exclude crashes whose crashing-thread backtrace (tombstone) or Java trace contains Frida frames; worth stating as a threat (instrumentation can perturb the app, R2-4) |
 | 22 | Crash oracle reported other processes (system search app); ANR never detected; stack traces cut to 2 lines | No package filter; logcat filter dropped `ActivityManager`; continuation check assumed tab-prefixed lines | Filter by `Process:`/`ANR in`/native process name; listen to `ActivityManager:E` and `libc:F`; keep full traces |
+
+### Fixes made during the targeted per-bug runs (2026-11-09)
+
+| # | Symptom | Root cause | Fix |
+|---|---|---|---|
+| 24 | Invalid round never reached server-side handling (SN #4031/#4032) | One random special-character username per round; most are rejected client-side | Email-shaped special-character usernames, retried (up to 4) while the app rejects them |
+| 25 | MFA after invalid credentials missed (SN #4032) | The MFA screen is a native React Native view over the WebView, or an MFA form inside the page; DOM-only wait | Web login wait checks native UI and page text for MFA prompts (`security key`, `two-factor`, ...) |
+| 26 | Rejected Facebook login reported as accepted (Nora) | Page without password field / failed load counted as success | Login/challenge/error URLs and unreachable WebViews are not a completed login |
+| 27 | Offline round never reached the form (Nora) | WebView error page does not reload after the network returns | Relaunch the app when loading the page on a normal network |
+| 28 | Onboarding blocked (Aurora "Permissions") | Special access (install packages, all-files) is an app-op, not a runtime permission | Grant declared special app-ops on reset; `finish/accept/agree` onboarding entries |
+| 29 | Credential-free login unsupported (Aurora Anonymous) | Only credential forms were tested | Guest/anonymous option used as the login method in odd rounds; judged like a valid login |
+| 30 | Google sign-in page treated as registration form | "Create account" link | Sign-up text only counts without a sign-in heading |
+| 31 | Login entry behind an unlabeled settings icon (OuterTune) | Entries found by text only; dead entries re-tapped | Unlabeled toolbar icon as last resort; tapped entries are not retried; settings/account entries |
+| 32 | Username typed into search boxes (OuterTune native, SN web) | Any single input / any text input before the password | Identifier step requires an identifier hint and excludes search fields |
+| 33 | App crashes in `GenericJniMethodEnd` after a few thousand calls (OuterTune, likely Notesnook/Tasks/InnerTune earlier) | Auto-unhook of hot methods raced with calls inside the hook trampoline | Hot methods pass through instead of being unhooked; crash-derived hook blacklist |
+| 34 | Rotation never tested on Google identifier screens (Aurora #1436) | Navigation filled the identifier and moved on | Rotation phase stops at identifier-only web forms |
+
+### Per-bug detection status (targeted runs, current code)
+
+| App | Issue | Status | Oracle / evidence |
+|---|---|---|---|
+| Standard Notes | #4030 | detected (every round) | DOM rotation: input 23/12 -> 0/0 |
+| Standard Notes | #4032 | detected | MFA_AFTER_INVALID_CREDENTIALS: "Please authenticate with your hardware security key." for `$0\`(X{M,]8@@`; also reproduced manually with `^=+.%*('gLR@` |
+| Standard Notes | #4031, #3908, #3909 | open | "already signed in" / ANR not observed yet |
+| Organic Maps | #11668, #11669, #11670 | detected | rotation A/B, differential error message |
+| Nora | #106 | detected | DOM rotation B (submit busy -> idle) |
+| Nora | #107 | blocked | Facebook now answers wrong passwords with a captcha from this IP |
+| NewsBlur | #1996 | detected | |
+| AuroraStore | #1435 | detected | plaintext `auth` / `PREFERENCE_AUTH_DATA` in SharedPreferences after Anonymous login |
+| AuroraStore | #1436 | detected | typed Google identifier lost on rotation |
+| AuroraStore | #1437 | pending | limited/offline Anonymous login rounds |
+| OuterTune | #964 | partial | rotation reloads the Google login WebView (password -> identifier step, input lost); no crash in release 0.10.0 (issue used a debug build) |
+| OuterTune | #965 | needs Google login | |
+| Notesnook | #6640, #6647 | not reproducible | both fixed upstream; 3.0.18 (affected version) logs in but its post-login sync never finishes against today's server, blocking the 2FA settings flow; the login MFA prompt is dismissable |
+| InnerTune | #1830 | pending | |
+| InnerTune | #1831, #1860, #1861 | need Google login | |
+| Tasks | #3962 | needs Google Play services image | |
+| OpenTune | #345, #346 | unavailable | repository taken down (HTTP 451) |
 
 Items 2, 3, 9-11, 16-18 and 20-22 change the tool's behaviour in ways that matter for the paper's numbers (instrumentation
 scope, credential policy, oracle definitions). Table V and the precision figures must be recomputed with this code.
