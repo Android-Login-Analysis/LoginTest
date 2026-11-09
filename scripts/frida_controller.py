@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import sys
+import signal
 import frida
 import time
 import json
@@ -167,7 +168,12 @@ def on_message(message, data):
             logging.error(f"Stack: {message['stack']}")
 
 
+def _sigterm_to_keyboard_interrupt(signum, frame):
+    raise KeyboardInterrupt()
+
+
 def main():
+    signal.signal(signal.SIGTERM, _sigterm_to_keyboard_interrupt)
     setup_logging()
     config = load_config()
     
@@ -556,6 +562,18 @@ def main():
                 
             except KeyboardInterrupt:
                 logging.info("Monitoring stopped by user.")
+                # FIX(v1): unload hooks and detach cleanly; leaving the agent injected after the
+                # controller dies makes the app SIGSEGV the next time a hooked method runs.
+                try:
+                    script.unload()
+                    logging.info("Frida script unloaded")
+                except Exception as ue:
+                    logging.warning(f"Script unload failed: {ue}")
+                try:
+                    session.detach()
+                    logging.info("Frida session detached")
+                except Exception as de:
+                    logging.warning(f"Session detach failed: {de}")
                 break
             except Exception as e:
                 consecutive_failures += 1
