@@ -228,6 +228,18 @@ def main():
             with open(static_analysis_path, 'r') as f:
                 analysis_result = json.load(f)
             logging.info(f"Loaded static analysis result: {static_analysis_path}")
+            # FIX(v1): drop methods whose hook crashed the app in an earlier round
+            bl_path = os.path.join(script_dir, '..', 'reports', 'hook_blacklist', f"{package_name}.txt")
+            if os.path.exists(bl_path):
+                with open(bl_path) as bf:
+                    banned = {l.strip() for l in bf if l.strip()}
+                removed = 0
+                for st, lst in analysis_result.get('matches', {}).items():
+                    if isinstance(lst, list):
+                        keep = [m for m in lst if m.get('fullSignature') not in banned]
+                        removed += len(lst) - len(keep)
+                        analysis_result['matches'][st] = keep
+                logging.info(f"Hook blacklist: removed {removed} methods ({len(banned)} entries)")
             logging.info(f"Analysis contains {len(analysis_result.get('matches', {}))} state matches")
             logging.info(f"Matched methods: {analysis_result.get('statistics', {}).get('matchedMethods', 0)}")
         except Exception as e:

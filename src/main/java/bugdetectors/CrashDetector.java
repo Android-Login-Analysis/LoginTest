@@ -199,6 +199,22 @@ public class CrashDetector implements BugDetector {
         return false;
     }
 
+    // FIX(v1): the hooked method whose replacement crashed is not hooked again for this app
+    // (reports/hook_blacklist/<package>.txt, read by scripts/frida_controller.py)
+    private void blacklistHookedMethod(String frame) {
+        java.util.regex.Matcher m = java.util.regex.Pattern.compile("\\(([\\w$.]+)\\+\\d+\\)").matcher(frame);
+        if (!m.find() || targetPackage == null) return;
+        String method = m.group(1);
+        try {
+            java.nio.file.Path dir = java.nio.file.Paths.get("reports", "hook_blacklist");
+            java.nio.file.Files.createDirectories(dir);
+            java.nio.file.Path f = dir.resolve(targetPackage + ".txt");
+            if (java.nio.file.Files.exists(f) && java.nio.file.Files.readAllLines(f).contains(method)) return;
+            java.nio.file.Files.writeString(f, method + "\n", java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.APPEND);
+            System.out.println("[CRASH_DETECTOR] Hooked method " + method + " crashed through the hook trampoline; it will not be hooked again");
+        } catch (Exception ignored) { }
+    }
+
     private boolean isInstrumentationInduced(CrashEvent crash) {
         if (inToolWindow(crash)) {
             System.out.println("[CRASH_DETECTOR] Crash within a tool-driven direct activity launch window");
@@ -225,7 +241,10 @@ public class CrashDetector implements BugDetector {
                 if (frames[i].contains("GenericJniMethodEnd") || frames[i].contains("art_quick_generic_jni_trampoline")) {
                     for (int j = i + 1; j < Math.min(frames.length, i + 4); j++) {
                         String f = frames[j];
-                        if (f.contains("/data/app/") && (f.contains(".vdex") || f.contains(".odex") || f.contains(".oat"))) return true;
+                        if (f.contains("/data/app/") && (f.contains(".vdex") || f.contains(".odex") || f.contains(".oat"))) {
+                            blacklistHookedMethod(f);
+                            return true;
+                        }
                         if (f.contains("dalvik-jit-code-cache")) return true;   // JIT-compiled app bytecode
                         if (f.contains(".so")) break;
                     }

@@ -730,6 +730,19 @@ public class UIManager {
             if (isInputClass(e.className) && boundsOf(e) != null) { inputs++; only = e; }
         }
         if (inputs != 1) return;
+        // FIX(v1): only an identifier screen: the input or a label must talk about email/username/phone,
+        // and it must not be a search box
+        boolean idHint = false;
+        java.util.regex.Pattern idp = java.util.regex.Pattern.compile("(?i)(e-?mail|user ?name|phone|identifier|account|login|sign ?in)");
+        for (UIElement e : lastScanElements) {
+            String tx = (e.text == null ? "" : e.text) + " " + (e.resourceId == null ? "" : e.resourceId);
+            if (idp.matcher(tx).find()) idHint = true;
+        }
+        String own = ((only.text == null ? "" : only.text) + " " + (only.resourceId == null ? "" : only.resourceId)).toLowerCase();
+        boolean search = own.contains("search");
+        for (UIElement e : lastScanElements) if (e.text != null && e.text.trim().equalsIgnoreCase("search") && boundsOf(e) != null
+                && java.util.Arrays.equals(boundsOf(e), boundsOf(only))) search = true;
+        if (!idHint || search) return;
         int[] r = boundsOf(only);
         int cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2;
         System.out.println("[TWO_STEP] Identifier-only screen; entering username before continuing");

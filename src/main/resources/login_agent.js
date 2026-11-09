@@ -228,9 +228,10 @@ rpc.exports = {
                             method.overloads.forEach(overload => {
                                 let calls = 0;
                                 overload.implementation = function() {
-                                    if (++calls === HOT_CALL_LIMIT) {
-                                        try { overload.implementation = null; console.log(`[-] Unhooked hot method: ${className}.${methodName}`); } catch (e) {}
-                                    }
+                                    // hot methods: pass straight through. Reverting the hook at runtime (unhooking) races
+                                    // with calls already inside the trampoline and crashes in GenericJniMethodEnd.
+                                    if (calls >= HOT_CALL_LIMIT) return overload.apply(this, arguments);
+                                    if (++calls === HOT_CALL_LIMIT) console.log(`[-] Hot method, now pass-through: ${className}.${methodName}`);
                                     return implementation.call(this, overload, Array.prototype.slice.call(arguments));
                                 };
                             });
