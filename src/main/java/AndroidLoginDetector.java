@@ -1004,9 +1004,10 @@ public class AndroidLoginDetector {
                 // page is no longer visible. Invalid credentials legitimately keep the page, so an
                 // unfinished login only counts (as a timeout) when a valid credential pair was used.
                 long clickTime = uiManager.getLoginButtonClickTime();
+                long gone = -1;
                 if (loginSuccess && clickTime > 0 && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
                     var timeoutDetector = stateMachineManager.getBugDetectionManager().getTimeoutDetector();
-                    long gone = uiManager.waitForLoginPageGone(35000);
+                    gone = uiManager.waitForLoginPageGone(35000);
                     if (gone > 0) {
                         timeoutDetector.recordLoginAttempt(clickTime, gone, true);
                     } else if (usedValidPair) {
@@ -1016,9 +1017,16 @@ public class AndroidLoginDetector {
                     }
                 }
                 
-                if (loginSuccess) {
+                // FIX(v1): loginSuccess only means "credentials entered and login clicked". Authentication
+                // is considered successful only if the login page went away; with a valid pair we expect
+                // success, so a remaining login page is a legitimate candidate. Invalid credentials that keep
+                // the login page are expected behaviour and must not reach the navigation oracle.
+                boolean authenticated = gone > 0;
+                boolean expectSuccess = authenticated || usedValidPair;
+                logInfo("Login outcome: inputOk=" + loginSuccess + ", loginPageGone=" + authenticated + ", validPair=" + usedValidPair);
+                if (loginSuccess && expectSuccess) {
                     logInfo("Login process completed successfully");
-                    successfulLogins++;
+                    if (authenticated) successfulLogins++;
                     
                     // Record login success and navigation for NavigationFlowDetector
                     if (stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
@@ -1047,6 +1055,9 @@ public class AndroidLoginDetector {
                             logError("Failed to update navigation detector context: " + e.getMessage());
                         }
                     }
+                } else if (loginSuccess) {
+                    logInfo("Login rejected with invalid credentials (expected); login page still shown");
+                    failedLogins++;
                 } else {
                     logError("Login process failed");
                     failedLogins++;
