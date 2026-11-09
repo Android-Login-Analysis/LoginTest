@@ -1985,7 +1985,32 @@ public class UIManager {
             List<UIElement> els = getAllUIElements();
             UIElement pw = findPasswordAnchor(els);
             UIElement user = usernameEnteredInStep1 ? null : findUsernameField();
-            if (pw == null) { System.out.println("[ROTATION] Not on a credential form; skipping"); return findings; }
+            if (pw == null) {
+                // Identifier-only screens (e.g. Google sign-in WebView): check that the typed identifier survives
+                UIElement idField = null; int inputs = 0;
+                for (UIElement e : els) if (isInputClass(e.className) && boundsOf(e) != null) { inputs++; idField = e; }
+                if (inputs != 1) { System.out.println("[ROTATION] Not on a credential form; skipping"); return findings; }
+                int[] ic = extractCoordinates(idField.bounds);
+                clickAndInputText(ic[0], ic[1], username);
+                try { new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_BACK").start().waitFor(5, java.util.concurrent.TimeUnit.SECONDS); } catch (Exception ignored) { }
+                Thread.sleep(800);
+                boolean before = false;
+                for (UIElement e : getAllUIElements()) if (isInputClass(e.className) && textOf(e).contains(username)) before = true;
+                System.out.println("[ROTATION] A(identifier): before rotation: identifier=" + before);
+                setRotation(1);
+                Thread.sleep(3500);
+                if (!AppLauncher.isInForeground(appPackage)) {
+                    findings.add(new String[]{"ROTATION_APP_EXIT", "App left the foreground after rotating the identifier screen"});
+                } else {
+                    boolean after = false;
+                    for (UIElement e : getAllUIElements()) if (isInputClass(e.className) && textOf(e).contains(username)) after = true;
+                    System.out.println("[ROTATION] A(identifier): after rotation: identifier=" + after);
+                    if (before && !after) findings.add(new String[]{"ROTATION_INPUT_LOST", "Typed identifier lost on rotation (screen reloaded or state not saved)"});
+                }
+                setRotation(0);
+                for (String[] f : findings) System.out.println("[ROTATION] Finding: " + f[0] + " - " + f[1]);
+                return findings;
+            }
             String pwHint = textOf(pw);
 
             // ---- A: input retention -------------------------------------------------------
