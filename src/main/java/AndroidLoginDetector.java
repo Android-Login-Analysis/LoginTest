@@ -141,7 +141,13 @@ public class AndroidLoginDetector {
         int idleLimit = Math.max(10, Math.min(50, totalEvents / 2)); // KISS: cap idle steps
         UIManager.FocusType lastFocus = null;
 
+        final long exploreCapMs = 8 * 60 * 1000L; // FIX(v1): bound exploration per round
+        final long exploreStart = System.currentTimeMillis();
         for (int i = 1; i <= totalEvents; i++) {
+            if (System.currentTimeMillis() - exploreStart > exploreCapMs) {
+                logError("Exploration time cap reached (8 min) at step " + i + "; ending exploration");
+                break;
+            }
             try {
                 String cmd = String.format(
                         "adb shell monkey -p %s -v --throttle %d " +
@@ -302,7 +308,13 @@ public class AndroidLoginDetector {
         int throttle = configLoader.getMonkeyThrottle();
         int touchPct = configLoader.getMonkeyTouchPercentage();
         final int shotInterval = Math.max(1, configLoader.getMonkeyScreenshotInterval());
+        final long exploreCapMs = 8 * 60 * 1000L; // FIX(v1): bound exploration per round
+        final long exploreStart = System.currentTimeMillis();
         for (int i = 1; i <= totalEvents; i++) {
+            if (System.currentTimeMillis() - exploreStart > exploreCapMs) {
+                logError("Exploration time cap reached (8 min) at step " + i + "; ending exploration");
+                break;
+            }
             try {
                 String cmd = String.format(
                         "adb shell monkey -p %s -v --throttle %d " +
