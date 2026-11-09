@@ -103,6 +103,16 @@ public class UIManager {
                 // the password field disappearing means the form was consumed (single-page apps keep other inputs)
                 boolean formGone = "0".equals(m.getOrDefault("pw", "0")) && !"true".equals(m.get("busy"));
                 boolean urlChanged = webLoginUrl != null && !webLoginUrl.equals(m.get("url")) && "0".equals(m.getOrDefault("pw", "0"));
+                // FIX(v1): identity-provider verification steps (Google "Verify it's you", Facebook checkpoints,
+                // two-step pages) are an MFA prompt, not a slow login
+                String curl = m.getOrDefault("url", "");
+                if (curl.matches("(?i).*(/signin/challenge/|/checkpoint/|two_step_verification|/two_factor|/2fa).*")
+                        && !curl.contains("/challenge/pwd") && !curl.equals(webLoginUrl == null ? "" : webLoginUrl)) {
+                    mfaAfterSubmit = true;
+                    lastMfaOutcome = "pending";
+                    System.out.println("[LOGIN_RESULT] Identity provider verification step after web login: " + curl.replaceAll("\\?.*", ""));
+                    return -3;
+                }
                 // FIX(v1): a page that is still a login/challenge/error page is not a completed login (e.g. a web
                 // service redirecting a rejected login to its own error page, or a failed load on a degraded network)
                 String url = m.getOrDefault("url", "");
