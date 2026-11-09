@@ -1065,7 +1065,7 @@ public class AndroidLoginDetector {
                 long gone = -1;
                 if (loginSuccess && clickTime > 0 && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
                     var timeoutDetector = stateMachineManager.getBugDetectionManager().getTimeoutDetector();
-                    gone = uiManager.waitForLoginPageGone(35000);
+                    gone = uiManager.waitForLoginPageGone("normal".equals(roundCondition) ? 35000 : 90000);
                     if (gone > 0) {
                         // FIX(v1): latency thresholds only make sense on a working network; on degraded networks
                         // the oracle looks for hangs (no result at all) instead of slowness
@@ -1097,7 +1097,7 @@ public class AndroidLoginDetector {
                         logInfo("Invalid credentials rejected; retrying with the next special-character username: " + username);
                         loginSuccess = inputCredentialsWithUI(username, password);
                         clickTime = uiManager.getLoginButtonClickTime();
-                        gone = (loginSuccess && clickTime > 0) ? uiManager.waitForLoginPageGone(35000) : -1;
+                        gone = (loginSuccess && clickTime > 0) ? uiManager.waitForLoginPageGone("normal".equals(roundCondition) ? 35000 : 90000) : -1;
                         if (gone == -2) recordFailureMessage(uiManager.getLastLoginErrorText(), false);
                         if (gone == -3) logInfo("Login stopped at the MFA prompt after invalid credentials");
                     }
