@@ -146,8 +146,37 @@ rpc.exports = {
                 }
 
                 // Helper function to safely hook methods
+                // FIX(v1): pre-flight class loading through Java-level reflection so that classes whose
+                // method signatures reference unavailable types (e.g. build-time code shaded into the APK)
+                // raise a catchable Java exception here instead of aborting the process inside Frida's
+                // JNI method enumeration ("JNI DETECTED ERROR: obj == null").
+                const SKIP_PACKAGE_PREFIXES = ['de.undercouch.gradle.'];
+                const classSafetyCache = {};
+                function isClassSafeToHook(className) {
+                    if (className in classSafetyCache) return classSafetyCache[className];
+                    let safe = true;
+                    if (SKIP_PACKAGE_PREFIXES.some(p => className.startsWith(p))) {
+                        safe = false;
+                    } else {
+                        try {
+                            const JClass = Java.use('java.lang.Class');
+                            const loader = Java.classFactory.loader ||
+                                Java.use('java.lang.Thread').currentThread().getContextClassLoader();
+                            const k = JClass.forName(className, false, loader);
+                            k.getDeclaredMethods();
+                            k.getDeclaredConstructors();
+                        } catch (e) {
+                            safe = false;
+                        }
+                    }
+                    if (!safe) console.log(`[-] Skipped unsafe class: ${className}`);
+                    classSafetyCache[className] = safe;
+                    return safe;
+                }
+
                 function hookMethod(className, methodName, implementation) {
                     try {
+                        if (!isClassSafeToHook(className)) return false;
                         const clazz = Java.use(className);
                         const method = clazz[methodName];
                         if (method && method.overloads) {
