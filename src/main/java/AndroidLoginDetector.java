@@ -1428,7 +1428,11 @@ public class AndroidLoginDetector {
         return roundPassword;
     }
     private boolean lastCredentialChoiceValid = false;
-    private static final double VALID_PAIR_PROBABILITY = 0.5;
+    // LIFT_VALID_PROB overrides the share of attempts that use a valid pair (e.g. 1.0 to verify accounts)
+    private static final double VALID_PAIR_PROBABILITY = parseProb(System.getenv("LIFT_VALID_PROB"), 0.5);
+    private static double parseProb(String v, double d) {
+        try { return v == null ? d : Math.max(0, Math.min(1, Double.parseDouble(v))); } catch (Exception e) { return d; }
+    }
 
     private String getRandomAccount() {
         pendingPairedPassword = null;
