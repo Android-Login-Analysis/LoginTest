@@ -970,8 +970,12 @@ public class AndroidLoginDetector {
             roundUsedValidPair = lastCredentialChoiceValid;
             uiManager.setPendingUsername(roundUsername);
             boolean loginPageDetected = detectLoginPageWithUI();
-            if (!loginPageDetected) {
+            boolean mfaPendingRound = "pending".equals(uiManager.getLastMfaOutcome());
+            if (!loginPageDetected && !mfaPendingRound) {
                 loginPageDetected = tryDirectLoginActivities();
+            }
+            if (mfaPendingRound) {
+                logInfo("Login reached the MFA prompt before the password step (MFACodePending); no authenticator secret for " + roundUsername);
             }
 
             if (loginPageDetected) {
@@ -1086,6 +1090,8 @@ public class AndroidLoginDetector {
                     logError("Login process failed");
                     failedLogins++;
                 }
+            } else if (mfaPendingRound) {
+                logInfo("Skipping exploration: MFA prompt reached");
             } else {
                 logInfo("No login page detected, starting stepwise Monkey exploration with focused credential feeding");
                 String username = pickRoundUsername();

@@ -451,7 +451,7 @@ public class UIManager {
     private boolean twoStepJustFilled = false;
     private List<UIElement> lastScanElements = null;
 
-    public void setPendingUsername(String u) { pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; }
+    public void setPendingUsername(String u) { pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; }
 
     // FIX(v1): MFA support. Authenticator-app accounts get a TOTP code; other accounts stop at the
     // MFA prompt (MFACodePending), which is a legitimate login state, not a completed login.
@@ -492,6 +492,58 @@ public class UIManager {
         } catch (Exception ignored) { }
     }
 
+    private boolean onMfaScreen() {
+        if (lastScanElements == null) return false;
+        if (findMfaInput(lastScanElements) != null) return true;
+        for (UIElement e : lastScanElements) if (e.text != null && MFA_HINT.matcher(e.text).find()) return true;
+        return false;
+    }
+
+    /** "progressed" if an MFA step was completed, "pending" if MFA cannot be completed, null otherwise. */
+    private String handleMfaDuringNavigation() {
+        if (lastScanElements == null || !onMfaScreen()) return null;
+        String secret = pendingUsername == null ? null : totpSecrets.get(pendingUsername);
+        try {
+            UIElement input = findMfaInput(lastScanElements);
+            if (input != null) {
+                if (secret == null) {
+                    System.out.println("[MFA] Code prompt during navigation without an authenticator secret (MFACodePending)");
+                    lastMfaOutcome = "pending";
+                    return "pending";
+                }
+                if (mfaHandled) return null;
+                mfaHandled = true;
+                int[] r = boundsOf(input);
+                System.out.println("[MFA] Code prompt during navigation; entering TOTP code");
+                clickAndInputText((r[0] + r[2]) / 2, (r[1] + r[3]) / 2, Totp.freshCode(secret));
+                submitMfa(lastScanElements);
+                lastMfaOutcome = "totp-entered";
+                Thread.sleep(5000);
+                return "progressed";
+            }
+            // method selection screen
+            UIElement choice = null;
+            for (UIElement e : lastScanElements) {
+                String t = (e.text == null ? "" : e.text).toLowerCase();
+                if (boundsOf(e) == null) continue;
+                if (secret != null && t.contains("authenticator")) { choice = e; break; }
+            }
+            if (choice == null) {
+                System.out.println("[MFA] MFA method selection without a usable authenticator (MFACodePending)");
+                lastMfaOutcome = "pending";
+                return "pending";
+            }
+            int[] r = boundsOf(choice);
+            System.out.println("[MFA] Selecting authenticator-app MFA method");
+            new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf((r[0] + r[2]) / 2), String.valueOf((r[1] + r[3]) / 2))
+                .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+            Thread.sleep(3000);
+            return "progressed";
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private String lastMfaOutcome = null;   // null | "totp-entered" | "pending"
     public String getLastMfaOutcome() { return lastMfaOutcome; }
 
@@ -516,7 +568,12 @@ public class UIManager {
         for (int hop = 0; hop <= 5; hop++) {
             lastLoginEntryBounds = null; lastLoginEntryPriority = 99;
             if (detectLoginPageOnce()) return true;
-            if (hop == 5 || lastLoginEntryBounds == null) return false;
+            if (hop == 5) return false;
+            if (lastLoginEntryBounds == null && !onMfaScreen()) return false;
+            // FIX(v1): MFA screens that appear during navigation (e.g. email -> 2FA -> password)
+            String mfaNav = handleMfaDuringNavigation();
+            if ("pending".equals(mfaNav)) return false;
+            if ("progressed".equals(mfaNav)) { lastLoginEntryBounds = null; continue; }
             maybeFillIdentifierStep();
             int[] r = parseBoundsRect(lastLoginEntryBounds);
             if (r == null) return false;
