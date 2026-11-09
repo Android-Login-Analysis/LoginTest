@@ -97,6 +97,43 @@ public final class AppLauncher {
         return false;
     }
 
+    /**
+     * FIX(v1): candidate login activities declared in the APK manifest (names containing
+     * Login/SignIn/Auth), used to reach login screens hidden behind deep menus. Requires aapt on PATH;
+     * returns an empty list otherwise.
+     */
+    public static java.util.List<String> findLoginActivities(String apkPath, String pkg) {
+        java.util.List<String> out = new java.util.ArrayList<>();
+        String xml = run("aapt", "dump", "xmltree", apkPath, "AndroidManifest.xml");
+        String[] lines = xml.split("\\r?\\n");
+        boolean inActivity = false;
+        java.util.regex.Pattern name = java.util.regex.Pattern.compile("A: android:name\\(0x01010003\\)=\"([^\"]+)\"");
+        java.util.regex.Pattern login = java.util.regex.Pattern.compile("(?i)(login|signin|sign_in|logon|authenticat)");
+        java.util.regex.Pattern exclude = java.util.regex.Pattern.compile("(?i)(callback|redirect|receiver|service|provider|biometric|lock|pin)");
+        for (String line : lines) {
+            String t = line.trim();
+            if (t.startsWith("E: ")) inActivity = t.startsWith("E: activity") || t.startsWith("E: activity-alias");
+            if (!inActivity) continue;
+            java.util.regex.Matcher m = name.matcher(t);
+            if (m.find()) {
+                String cls = m.group(1);
+                String simple = cls.substring(cls.lastIndexOf('.') + 1);
+                if (login.matcher(simple).find() && !exclude.matcher(simple).find() && !out.contains(cls)) out.add(cls);
+                inActivity = false;
+            }
+        }
+        return out;
+    }
+
+    /** Launch a specific activity (works for non-exported activities when adbd runs as root). */
+    public static boolean launchActivity(String pkg, String cls) {
+        String comp = pkg + "/" + (cls.startsWith(pkg + ".") ? cls.substring(pkg.length()) : cls);
+        String out = run("adb", "shell", "am", "start", "-W", "-n", comp);
+        sleep(4000);
+        dismissPermissionDialogs();
+        return !out.contains("Error") && isInForeground(pkg);
+    }
+
     static void sleep(long ms) {
         try { Thread.sleep(ms); } catch (InterruptedException ignored) { }
     }

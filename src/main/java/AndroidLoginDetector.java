@@ -953,6 +953,9 @@ public class AndroidLoginDetector {
 
             // Step 4: Detect login page using UI manager
             boolean loginPageDetected = detectLoginPageWithUI();
+            if (!loginPageDetected) {
+                loginPageDetected = tryDirectLoginActivities();
+            }
 
             if (loginPageDetected) {
                 // Create baseline snapshot ONLY when login page is first detected
@@ -1491,6 +1494,24 @@ public class AndroidLoginDetector {
         } finally {
             detector.cleanup();
         }
+    }
+
+    // FIX(v1): before random exploration, try login activities declared in the manifest.
+    private boolean tryDirectLoginActivities() {
+        try {
+            java.util.List<String> candidates = AppLauncher.findLoginActivities(appPath, appPackage);
+            logInfo("Manifest login activity candidates: " + candidates);
+            for (String cls : candidates) {
+                logInfo("Trying direct launch of login activity: " + cls);
+                if (AppLauncher.launchActivity(appPackage, cls) && detectLoginPageWithUI()) {
+                    logInfo("Login page reached via direct activity launch: " + cls);
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            logError("Direct login activity launch failed: " + e.getMessage());
+        }
+        return false;
     }
 
     /**
