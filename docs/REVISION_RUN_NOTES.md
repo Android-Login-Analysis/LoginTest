@@ -39,8 +39,17 @@ Reproduces Table V exactly (Standard Notes: 98,531 methods, 3,974 hooked, 96.0% 
 | 11 | Spurious `STUCK_ON_LOGIN_SCREEN` | "Credentials typed" recorded as "login succeeded" | Success only if the login page disappears or a valid pair was used |
 | 12 | App not relaunched after reset; permission dialogs block UI | `monkey -p` fails when another app owns focus | `AppLauncher`: resolve launcher activity, `am start`, allow permission dialogs |
 | 13 | Emulator snapshots unavailable on redroid | `adb emu avd snapshot` only exists on the emulator | `LIFT_RESET_MODE=app`: force-stop, `pm clear`, re-grant permissions, relaunch |
+| 14 | Stale logged-in session hides the login page | Round 1 started without a reset | App-level reset at every round |
+| 15 | Exploration never ends | Up to 1,000 Monkey steps at ~20-80 s each | 8-minute cap per round |
+| 16 | Invalid-credential rejections reported as login success + delay (Organic Maps) | The "Login error." dialog hides the form from uiautomator, so the form looked gone | Error dialog/snackbar = rejection; message text logged |
+| 17 | Intermediate progress screen counted as login completion (NewsBlur) | Completion = first poll without a password field | Ignore screens with a ProgressBar; require two consecutive polls |
+| 18 | Sign-up forms treated as login forms (Notesnook, R2-1) | Any screen with a password field counted | Two password inputs or a sign-up heading = registration; follow "Already have an account? Login" |
+| 19 | Two-step logins (identifier, then password) stall | Tool expected both fields on one screen | Fill the identifier screen, continue, then enter the password |
+| 20 | Network disruption had no effect on redroid | netem hard-coded to `wlan0`, never removed; "disable data" relied on `svc` | Interface from routing table; iptables `DROP` (adb port kept); netem on a prio band excluding adb; cleanup on restore. Host needs `sch_netem sch_prio cls_u32 iptable_filter` loaded |
+| 21 | Credentials containing `'` could not be typed | `Runtime.exec(String)` and a bare single quote | Device-shell single-quote escaping (verified for all 51 special characters in the pools) |
+| 22 | Crash oracle reported other processes (system search app); ANR never detected; stack traces cut to 2 lines | No package filter; logcat filter dropped `ActivityManager`; continuation check assumed tab-prefixed lines | Filter by `Process:`/`ANR in`/native process name; listen to `ActivityManager:E` and `libc:F`; keep full traces |
 
-Items 2, 3 and 9-11 change the tool's behaviour in ways that matter for the paper's numbers (instrumentation
+Items 2, 3, 9-11, 16-18 and 20-22 change the tool's behaviour in ways that matter for the paper's numbers (instrumentation
 scope, credential policy, oracle definitions). Table V and the precision figures must be recomputed with this code.
 
 ## Observations relevant to reviewer comments
