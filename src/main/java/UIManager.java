@@ -905,7 +905,8 @@ public class UIManager {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 1;
                         } else if (lastLoginEntryPriority > 2 && t.matches("(open account menu|account|sign in or register)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2;
-                        } else if (lastLoginEntryPriority > 3 && t.matches("(go to account menu|my account|profile|account and sync|accounts?( settings)?|settings)")) {
+                        } else if (lastLoginEntryPriority > 3 && (t.matches("(go to account menu|my account|profile|account and sync|accounts?( settings)?|content|sync|services|integrations)")
+                                || (t.equals("settings") && boundsOf(element)[1] > 230))) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 3;
                         } else if (lastLoginEntryPriority > 3 && t.matches("(get started|continue|next|skip|start|got it|let's go|lets go|finish|done|accept|agree|i agree)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 3;
