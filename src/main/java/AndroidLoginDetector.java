@@ -1818,10 +1818,10 @@ public class AndroidLoginDetector {
 
         if (uiManager.isGoogleLoginDetected()) {
             password = getRandomGooglePassword();
-            logInfo("Google login detected, using Google password: " + password);
+            logInfo("Google login detected, using Google password: [" + password.length() + " chars]");
         } else if (uiManager.isFacebookLoginDetected()) {
             password = getRandomFacebookPassword();
-            logInfo("Facebook login detected, using Facebook password: " + password);
+            logInfo("Facebook login detected, using Facebook password: [" + password.length() + " chars]");
         } else {
             password = getRandomPassword();
             logInfo("Using standard password: " + password);
