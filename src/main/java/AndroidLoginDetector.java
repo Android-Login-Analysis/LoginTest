@@ -967,13 +967,7 @@ public class AndroidLoginDetector {
                 logInfo("Selected username: " + username);
                 logInfo("Selected password: [" + password.length() + " chars]");
                 
-                // Record login start time for timeout detection
-                if (stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
-                    var timeoutDetector = stateMachineManager.getBugDetectionManager().getTimeoutDetector();
-                    timeoutDetector.recordLoginStart();
-                    logInfo("✓ Login timeout detector: recording start time");
-                }
-                
+                boolean usedValidPair = lastCredentialChoiceValid;
                 boolean loginSuccess = inputCredentialsWithUI(username, password);
                 
                 // Additional verification after input
@@ -994,11 +988,20 @@ public class AndroidLoginDetector {
                     }
                 }
 
-                // Record login end time for timeout detection
-                if (stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+                // FIX(v1): Login Delay oracle per paper V-C: delta-t from clicking login until the login
+                // page is no longer visible. Invalid credentials legitimately keep the page, so an
+                // unfinished login only counts (as a timeout) when a valid credential pair was used.
+                long clickTime = uiManager.getLoginButtonClickTime();
+                if (loginSuccess && clickTime > 0 && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
                     var timeoutDetector = stateMachineManager.getBugDetectionManager().getTimeoutDetector();
-                    timeoutDetector.recordLoginEnd(loginSuccess);
-                    logInfo("✓ Login timeout detector: recorded end time (success=" + loginSuccess + ")");
+                    long gone = uiManager.waitForLoginPageGone(35000);
+                    if (gone > 0) {
+                        timeoutDetector.recordLoginAttempt(clickTime, gone, true);
+                    } else if (usedValidPair) {
+                        timeoutDetector.recordLoginAttempt(clickTime, System.currentTimeMillis(), false);
+                    } else {
+                        logInfo("Login page still shown after invalid credentials; not a delay sample");
+                    }
                 }
                 
                 if (loginSuccess) {
@@ -1372,6 +1375,7 @@ public class AndroidLoginDetector {
     // valid pair was almost never used and successful-login flows were rarely exercised.
     private final java.util.List<String[]> validPairs = new java.util.ArrayList<>();
     private String pendingPairedPassword = null;
+    private boolean lastCredentialChoiceValid = false;
     private static final double VALID_PAIR_PROBABILITY = 0.5;
 
     private String getRandomAccount() {
@@ -1379,9 +1383,11 @@ public class AndroidLoginDetector {
         if (!validPairs.isEmpty() && new Random().nextDouble() < VALID_PAIR_PROBABILITY) {
             String[] pair = validPairs.get(new Random().nextInt(validPairs.size()));
             pendingPairedPassword = pair[1];
+            lastCredentialChoiceValid = true;
             logInfo("Credential choice: VALID pair");
             return pair[0];
         }
+        lastCredentialChoiceValid = false;
         logInfo("Credential choice: random (likely invalid / special characters)");
         if (!accountPool.isEmpty()) {
             return accountPool.get(new Random().nextInt(accountPool.size()));

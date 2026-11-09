@@ -21,6 +21,29 @@ public class UIManager {
 
     // Timestamp records
     private long loginButtonClickTime = 0;
+
+    public long getLoginButtonClickTime() { return loginButtonClickTime; }
+
+    /**
+     * FIX(v1): wait until the login page is gone (no password field from the app under test while the
+     * app stays in foreground). Returns the completion timestamp, or -1 if the page is still shown
+     * after timeoutMs.
+     */
+    public long waitForLoginPageGone(long timeoutMs) {
+        long deadline = System.currentTimeMillis() + timeoutMs;
+        while (System.currentTimeMillis() < deadline) {
+            try {
+                if (AppLauncher.isInForeground(appPackage)) {
+                    List<UIElement> els = getAllUIElements();
+                    if (findPasswordAnchor(els) == null) return System.currentTimeMillis();
+                }
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                return -1;
+            }
+        }
+        return -1;
+    }
     private long loginButtonDisappearTime = 0;
 
     public UIManager(ConfigLoader configLoader) {

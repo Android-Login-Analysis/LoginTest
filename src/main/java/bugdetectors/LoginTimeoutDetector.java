@@ -49,6 +49,23 @@ public class LoginTimeoutDetector implements BugDetector {
     /**
      * Record the end of a login attempt
      */
+    /**
+     * FIX(v1): record an attempt with explicit timestamps (login click -> login page gone),
+     * matching paper Section V-C. reason is derived from the same thresholds.
+     */
+    public void recordLoginAttempt(long startMs, long endMs, boolean success) {
+        LoginAttempt attempt = new LoginAttempt();
+        attempt.startTime = startMs;
+        attempt.endTime = endMs;
+        attempt.success = success;
+        long duration = attempt.getDuration();
+        if (duration > TIMEOUT_THRESHOLD) attempt.reason = "timeout";
+        else if (duration > NORMAL_LOGIN_THRESHOLD) attempt.reason = "delay";
+        else attempt.reason = "normal";
+        attempts.add(attempt);
+        System.out.println("[TIMEOUT_DETECTOR] Login attempt: " + duration + "ms (" + attempt.reason + ", success=" + success + ")");
+    }
+
     public void recordLoginEnd(boolean success) {
         if (attempts.isEmpty()) {
             return;
