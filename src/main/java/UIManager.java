@@ -687,6 +687,16 @@ public class UIManager {
             if (detectLoginPageOnce()) return true;
             if (hop == 5) return false;
             if (lastLoginEntryBounds == null && !onMfaScreen()) return false;
+            // FIX(v1): login entries inside a WebView may be missing from the accessibility tree
+            Map<String, String> wnav = web().inspect();
+            if (!wnav.isEmpty() && "0".equals(wnav.getOrDefault("pw", "0"))) {
+                String hit = web().clickText("^(sign in|log in|login|sign in with email|use email)$");
+                if (hit != null) {
+                    System.out.println("[WEBVIEW] Tapped web login entry '" + hit + "'");
+                    try { Thread.sleep(4000); } catch (InterruptedException ignored) { }
+                    continue;
+                }
+            }
             // FIX(v1): MFA screens that appear during navigation (e.g. email -> 2FA -> password)
             String mfaNav = handleMfaDuringNavigation();
             if ("pending".equals(mfaNav)) return false;

@@ -207,6 +207,12 @@ public final class WebViewBridge {
         return p.length > 2 ? p[2] : "";
     }
 
+    /** Trusted click on the first visible element whose text matches the regex (case-insensitive). */
+    public String clickText(String regex) {
+        return clickByJs("[...document.querySelectorAll('button,[role=button],a,input[type=submit],[role=menuitem]')].filter(vis)" +
+            ".find(e=>new RegExp(" + jsonString(regex) + ",'i').test((e.innerText||e.value||e.getAttribute('aria-label')||'').trim()))");
+    }
+
     /** Fill identifier and/or password with trusted input events. */
     public boolean fillTrusted(String username, String password) {
         boolean a = typeInto("id", username);

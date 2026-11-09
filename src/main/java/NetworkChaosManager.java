@@ -275,7 +275,11 @@ public class NetworkChaosManager {
                     r = r.trim();
                     if (r.startsWith("default ") && r.contains(" table ")) { saved.add(r); executeAdbCommandSilent("ip route del " + r); }
                 }
-                if (!saved.isEmpty()) savedDefaultRoute = String.join("\n", saved);
+                if (!saved.isEmpty()) {
+                    savedDefaultRoute = String.join("\n", saved);
+                    // persist on the device so a later run can restore it even if this process is killed
+                    executeAdbCommandSilent("echo '" + savedDefaultRoute.replace("'", "") + "' > /data/local/tmp/lift_saved_routes");
+                }
             } catch (Exception ignored) { }
         } else if ("limited".equalsIgnoreCase(condition)) {
             logger.logInfo("🟠 Round condition: LIMITED (2.5s latency, 25% loss)");
@@ -304,6 +308,15 @@ public class NetworkChaosManager {
                 for (String r : savedDefaultRoute.split("\n")) executeAdbCommandSilent("ip route add " + r);
                 savedDefaultRoute = null;
             }
+            // routes removed by an earlier (killed) run
+            try {
+                String persisted = executeAdbCommand("cat /data/local/tmp/lift_saved_routes 2>/dev/null");
+                for (String r : persisted.split("\\r?\\n")) {
+                    r = r.trim();
+                    if (r.startsWith("default ")) executeAdbCommandSilent("ip route add " + r);
+                }
+                executeAdbCommandSilent("rm -f /data/local/tmp/lift_saved_routes");
+            } catch (Exception ignored) { }
             executeAdbCommandSilent("tc qdisc del dev " + iface() + " root");
             
             currentState = NetworkState.GOOD;
