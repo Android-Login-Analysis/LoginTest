@@ -1824,7 +1824,7 @@ public class AndroidLoginDetector {
             logInfo("Facebook login detected, using Facebook password: [" + password.length() + " chars]");
         } else {
             password = getRandomPassword();
-            logInfo("Using standard password: " + password);
+            logInfo("Using standard password: [" + password.length() + " chars]");
         }
 
         return password;
