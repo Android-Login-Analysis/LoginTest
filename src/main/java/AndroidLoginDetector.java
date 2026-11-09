@@ -1043,7 +1043,10 @@ public class AndroidLoginDetector {
                     var timeoutDetector = stateMachineManager.getBugDetectionManager().getTimeoutDetector();
                     gone = uiManager.waitForLoginPageGone(35000);
                     if (gone > 0) {
-                        timeoutDetector.recordLoginAttempt(clickTime, gone, true);
+                        // FIX(v1): latency thresholds only make sense on a working network; on degraded networks
+                        // the oracle looks for hangs (no result at all) instead of slowness
+                        if ("normal".equals(roundCondition)) timeoutDetector.recordLoginAttempt(clickTime, gone, true);
+                        else logInfo("Login completed under '" + roundCondition + "' network in " + (gone - clickTime) + " ms (not a delay sample)");
                     } else if (gone == -3) {
                         logInfo("Login stopped at the MFA prompt (MFACodePending); no authenticator secret for this account");
                     } else if (gone == -2) {
