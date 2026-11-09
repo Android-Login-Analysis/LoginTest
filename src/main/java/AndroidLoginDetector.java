@@ -1111,7 +1111,9 @@ public class AndroidLoginDetector {
                         }
                     }
                 } else if (loginSuccess) {
-                    logInfo("Login rejected with invalid credentials (expected); login page still shown");
+                    logInfo(usedValidPair
+                        ? "Login with valid credentials did not complete under '" + roundCondition + "' network; login page still shown"
+                        : "Login rejected with invalid credentials (expected); login page still shown");
                     failedLogins++;
                 } else {
                     logError("Login process failed");
