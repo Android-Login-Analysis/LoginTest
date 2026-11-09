@@ -1013,6 +1013,8 @@ public class AndroidLoginDetector {
                     gone = uiManager.waitForLoginPageGone(35000);
                     if (gone > 0) {
                         timeoutDetector.recordLoginAttempt(clickTime, gone, true);
+                    } else if (gone == -2) {
+                        logInfo("Login rejected with message: '" + uiManager.getLastLoginErrorText() + "' (validPair=" + usedValidPair + ")");
                     } else if (usedValidPair) {
                         timeoutDetector.recordLoginAttempt(clickTime, System.currentTimeMillis(), false);
                     } else {

@@ -29,12 +29,39 @@ public class UIManager {
      * app stays in foreground). Returns the completion timestamp, or -1 if the page is still shown
      * after timeoutMs.
      */
+    private String lastLoginErrorText = null;
+    public String getLastLoginErrorText() { return lastLoginErrorText; }
+
+    /** Text of a modal error/alert dialog on screen, or null. */
+    private String findDialogMessage(List<UIElement> els) {
+        boolean dialog = false; String msg = null;
+        for (UIElement e : els) {
+            String id = e.resourceId == null ? "" : e.resourceId;
+            if (id.endsWith(":id/message") || id.endsWith(":id/alertTitle") || id.endsWith(":id/snackbar_text")
+                    || id.endsWith(":id/button1") || id.endsWith(":id/parentPanel")) dialog = true;
+            if ((id.endsWith(":id/message") || id.endsWith(":id/alertTitle") || id.endsWith(":id/snackbar_text"))
+                    && e.text != null && !e.text.trim().isEmpty()) msg = e.text.trim();
+        }
+        return dialog ? (msg != null ? msg : "") : null;
+    }
+
+    /**
+     * FIX(v1): returns completion time (>0) when the login page is gone, -2 when the app answered with an
+     * error dialog/snackbar (login rejected; the dialog hides the form from uiautomator), -1 on timeout.
+     */
     public long waitForLoginPageGone(long timeoutMs) {
+        lastLoginErrorText = null;
         long deadline = System.currentTimeMillis() + timeoutMs;
         while (System.currentTimeMillis() < deadline) {
             try {
                 if (AppLauncher.isInForeground(appPackage)) {
                     List<UIElement> els = getAllUIElements();
+                    String dialogMsg = findDialogMessage(els);
+                    if (dialogMsg != null) {
+                        lastLoginErrorText = dialogMsg;
+                        System.out.println("[LOGIN_RESULT] Error dialog after login: '" + dialogMsg + "'");
+                        return -2;
+                    }
                     if (findPasswordAnchor(els) == null) return System.currentTimeMillis();
                 }
                 Thread.sleep(1000);
