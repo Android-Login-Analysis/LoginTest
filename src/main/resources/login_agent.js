@@ -167,7 +167,9 @@ rpc.exports = {
                 const SKIP_PACKAGE_PREFIXES = ['de.undercouch.gradle.', 'okhttp3.internal.', 'okio.',
                     // UI widget internals run on the drawing path (e.g. EditText.getText during onPreDraw);
                     // hooking them crashed apps in ART's JNI trampoline and they carry no login logic.
-                    'androidx.appcompat.', 'android.widget.', 'com.google.android.material.'];
+                    'androidx.appcompat.', 'android.widget.', 'com.google.android.material.',
+                    // React Native framework internals (per-frame rendering path); RN login logic lives in JS
+                    'com.facebook.react.', 'com.facebook.hermes.', 'com.facebook.yoga.'];
                 // FIX(v1): hot-method guard. A method invoked thousands of times is not a login state
                 // transition; keeping its hook exhausts the JNI global reference table and crashes the app.
                 const HOT_CALL_LIMIT = 2000;

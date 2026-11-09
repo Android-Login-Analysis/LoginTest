@@ -226,6 +226,7 @@ public class CrashDetector implements BugDetector {
                     for (int j = i + 1; j < Math.min(frames.length, i + 4); j++) {
                         String f = frames[j];
                         if (f.contains("/data/app/") && (f.contains(".vdex") || f.contains(".odex") || f.contains(".oat"))) return true;
+                        if (f.contains("dalvik-jit-code-cache")) return true;   // JIT-compiled app bytecode
                         if (f.contains(".so")) break;
                     }
                 }
