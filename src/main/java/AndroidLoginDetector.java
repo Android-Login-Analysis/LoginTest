@@ -1078,7 +1078,7 @@ public class AndroidLoginDetector {
                         if ("normal".equals(roundCondition) && !usedValidPair) recordFailureMessage(uiManager.getLastLoginErrorText(), false);
                         // offline: the request cannot reach the server, so any message is about the network failure;
                         // limited: the server may still answer, so only valid credentials make it a network failure
-                        else if ("offline".equals(roundCondition) || ("limited".equals(roundCondition) && usedValidPair))
+                        else if ("offline".equals(roundCondition) || "unresponsive".equals(roundCondition) || ("limited".equals(roundCondition) && usedValidPair))
                             recordFailureMessage(uiManager.getLastLoginErrorText(), true);
                     } else if (usedValidPair) {
                         timeoutDetector.recordLoginAttempt(clickTime, System.currentTimeMillis(), false);
@@ -1579,8 +1579,8 @@ public class AndroidLoginDetector {
     }
 
     // FIX(v1): deterministic 4-round schedule (network condition x credential validity)
-    private static final String[] ROUND_CONDITIONS = {"normal", "normal", "limited", "offline"};
-    private static final Boolean[] ROUND_VALIDITY = {true, false, true, true};
+    private static final String[] ROUND_CONDITIONS = {"normal", "normal", "limited", "offline", "unresponsive"};
+    private static final Boolean[] ROUND_VALIDITY = {true, false, true, true, true};
     private Boolean forcedValidity = null;
     // differential misleading-error oracle: messages seen for credential failures vs network failures
     private final java.util.Set<String> credentialFailureMessages = new java.util.LinkedHashSet<>();

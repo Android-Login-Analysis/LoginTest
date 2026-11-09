@@ -281,6 +281,17 @@ public class NetworkChaosManager {
                     executeAdbCommandSilent("echo '" + savedDefaultRoute.replace("'", "") + "' > /data/local/tmp/lift_saved_routes");
                 }
             } catch (Exception ignored) { }
+        } else if ("unresponsive".equalsIgnoreCase(condition)) {
+            // FIX(v1): connected, DNS answers, but servers never respond (dead uplink / captive network): TCP is dropped
+            logger.logInfo("🔴 Round condition: UNRESPONSIVE (DNS works, TCP packets dropped: servers never answer)");
+            executeAdbCommandSilent("iptables -N LIFT_BLOCK");
+            executeAdbCommandSilent("iptables -F LIFT_BLOCK");
+            executeAdbCommandSilent("iptables -A LIFT_BLOCK -p tcp --sport 5555 -j ACCEPT");
+            executeAdbCommandSilent("iptables -A LIFT_BLOCK -o lo -j ACCEPT");
+            executeAdbCommandSilent("iptables -A LIFT_BLOCK -p udp --dport 53 -j ACCEPT");
+            executeAdbCommandSilent("iptables -A LIFT_BLOCK -p tcp --dport 53 -j ACCEPT");
+            executeAdbCommandSilent("iptables -A LIFT_BLOCK -j DROP");
+            executeAdbCommandSilent("iptables -I OUTPUT 1 -j LIFT_BLOCK");
         } else if ("limited".equalsIgnoreCase(condition)) {
             logger.logInfo("🟠 Round condition: LIMITED (2.5s latency, 25% loss)");
             shapeTraffic("delay 2500ms 500ms loss 25%");
