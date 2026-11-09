@@ -215,6 +215,48 @@ public class NetworkChaosManager {
         }
     }
     
+    // FIX(v1): network disruption that works on emulators, devices and redroid containers.
+    // - interface detected from the routing table (eth0 on redroid, wlan0/eth0 on emulators)
+    // - "disable" also blocks outbound traffic with iptables (built-in DROP), keeping adb (tcp/5555)
+    // - netem shaping is attached to a prio band that excludes adb traffic, and is removed on restore
+    private String netIface = null;
+
+    private String iface() {
+        if (netIface != null) return netIface;
+        netIface = "wlan0";
+        try {
+            String routes = executeAdbCommand("ip route");
+            java.util.regex.Matcher m = java.util.regex.Pattern.compile("dev\\s+(\\S+)").matcher(routes == null ? "" : routes);
+            if (m.find()) netIface = m.group(1).replaceAll("@.*", "");
+        } catch (Exception ignored) { }
+        logger.logInfo("Network disruption interface: " + netIface);
+        return netIface;
+    }
+
+    private void blockTraffic() {
+        executeAdbCommandSilent("iptables -N LIFT_BLOCK");
+        executeAdbCommandSilent("iptables -F LIFT_BLOCK");
+        executeAdbCommandSilent("iptables -A LIFT_BLOCK -p tcp --sport 5555 -j ACCEPT");
+        executeAdbCommandSilent("iptables -A LIFT_BLOCK -o lo -j ACCEPT");
+        executeAdbCommandSilent("iptables -A LIFT_BLOCK -j DROP");
+        executeAdbCommandSilent("iptables -I OUTPUT 1 -j LIFT_BLOCK");
+    }
+
+    private void unblockTraffic() {
+        executeAdbCommandSilent("iptables -D OUTPUT -j LIFT_BLOCK");
+        executeAdbCommandSilent("iptables -F LIFT_BLOCK");
+        executeAdbCommandSilent("iptables -X LIFT_BLOCK");
+    }
+
+    private void shapeTraffic(String netemArgs) {
+        String i = iface();
+        executeAdbCommandSilent("tc qdisc del dev " + i + " root");
+        executeAdbCommandSilent("tc qdisc add dev " + i + " root handle 1: prio");
+        executeAdbCommandSilent("tc qdisc add dev " + i + " parent 1:3 handle 30: netem " + netemArgs);
+        executeAdbCommandSilent("tc filter add dev " + i + " parent 1:0 protocol ip prio 1 u32 match ip sport 5555 0xffff flowid 1:1");
+        executeAdbCommandSilent("tc filter add dev " + i + " parent 1:0 protocol ip prio 2 u32 match u32 0 0 flowid 1:3");
+    }
+
     /**
      * Restore good network (enable all connections)
      */
@@ -228,8 +270,9 @@ public class NetworkChaosManager {
             // Enable WiFi (silent - may not be supported on all Android versions)
             executeAdbCommandSilent("svc wifi enable");
             
-            // Clear any iptables rules (silent - requires root, may not work on all devices)
-            executeAdbCommandSilent("iptables -F");
+            // Remove our traffic block and shaping (do not flush unrelated iptables rules)
+            unblockTraffic();
+            executeAdbCommandSilent("tc qdisc del dev " + iface() + " root");
             
             currentState = NetworkState.GOOD;
             goodNetworkCount++;
@@ -266,14 +309,16 @@ public class NetworkChaosManager {
             
             switch (method) {
                 case DISABLE_DATA:
-                    executeAdbCommand("svc data disable");
+                    executeAdbCommandSilent("svc data disable");
+                    blockTraffic();
                     disruptionHistory.add(new NetworkDisruptionEvent(
                         NetworkState.BAD, method, duration, "Mobile data disabled"
                     ));
                     break;
                     
                 case DISABLE_WIFI:
-                    executeAdbCommand("svc wifi disable");
+                    executeAdbCommandSilent("svc wifi disable");
+                    blockTraffic();
                     disruptionHistory.add(new NetworkDisruptionEvent(
                         NetworkState.BAD, method, duration, "WiFi disabled"
                     ));
@@ -326,7 +371,7 @@ public class NetworkChaosManager {
     private void simulateSlowNetwork() {
         try {
             // Add 500ms delay to all packets
-            executeAdbCommand("tc qdisc add dev wlan0 root netem delay 500ms");
+            shapeTraffic("delay 500ms");
         } catch (Exception e) {
             logger.logError("Failed to simulate slow network: " + e.getMessage());
         }
@@ -338,7 +383,7 @@ public class NetworkChaosManager {
     private void simulatePacketLoss() {
         try {
             // Drop 20% of packets
-            executeAdbCommand("tc qdisc add dev wlan0 root netem loss 20%");
+            shapeTraffic("loss 20%");
         } catch (Exception e) {
             logger.logError("Failed to simulate packet loss: " + e.getMessage());
         }
@@ -350,7 +395,7 @@ public class NetworkChaosManager {
     private void simulateHighLatency() {
         try {
             // Add 500ms delay
-            executeAdbCommand("tc qdisc add dev wlan0 root netem delay 500ms 100ms");
+            shapeTraffic("delay 500ms 100ms");
         } catch (Exception e) {
             logger.logError("Failed to simulate high latency: " + e.getMessage());
         }
