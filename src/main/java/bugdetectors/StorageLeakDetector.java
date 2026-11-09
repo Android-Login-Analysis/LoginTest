@@ -31,8 +31,14 @@ public class StorageLeakDetector implements BugDetector {
     public void scan(String pkg, String username, String password) {
         String base = "/data/data/" + pkg;
         String dirs = base + "/shared_prefs " + base + "/files " + base + "/databases " + base + "/app_webview";
-        if (password != null && password.length() >= 6) {
-            String hits = sh("grep -rlaF -- " + q(password) + " " + dirs + " 2>/dev/null | head -5");
+        boolean pwUsable = password != null && password.length() >= 6
+            && !pkg.toLowerCase().contains(password.toLowerCase());   // e.g. password equal to the app name
+        if (!pwUsable) System.out.println("[STORAGE] Password too short or part of the package name; skipping verbatim check");
+        if (pwUsable) {
+            // whole-token match: not adjacent to identifier/path characters (avoids URLs, package names, paths)
+            String esc = password.replaceAll("([\\\\.\\[\\]{}()*+?^$|])", "\\\\$1");
+            String ere = "(^|[^A-Za-z0-9._/-])" + esc + "([^A-Za-z0-9._/-]|$)";
+            String hits = sh("grep -rlaE -- " + q(ere) + " " + dirs + " 2>/dev/null | head -5");
             for (String f : hits.split("\\r?\\n")) {
                 f = f.trim();
                 if (f.isEmpty() || !reported.add("pw:" + f)) continue;
@@ -58,11 +64,17 @@ public class StorageLeakDetector implements BugDetector {
                 java.util.regex.Matcher m = key.matcher(line);
                 if (!m.find()) continue;
                 String k = m.group();
-                // value: in XML on the same line between > <, in protobuf usually the next printable string
+                if (k.toLowerCase().matches(".*(timestamp|time|date|count|version|enabled|expir|duration|interval).*")) continue;
+                // value: XML <string name=..>VALUE</string> only; protobuf/json: the next printable string
                 String v = "";
-                int gt = line.indexOf('>'), lt = line.lastIndexOf('<');
-                if (gt >= 0 && lt > gt) v = line.substring(gt + 1, lt);
-                else if (i + 1 < lines.length) v = lines[i + 1];
+                if (f.endsWith(".xml")) {
+                    if (!line.contains("<string")) continue;
+                    int gt = line.indexOf('>'), lt = line.lastIndexOf('<');
+                    if (gt >= 0 && lt > gt) v = line.substring(gt + 1, lt);
+                } else if (i + 1 < lines.length) {
+                    v = lines[i + 1];
+                }
+                if (v.matches("-?[0-9.]+")) continue;   // numeric values are not credentials
                 v = v.trim();
                 boolean readable = v.length() >= 20 && v.chars().allMatch(c -> c >= 32 && c < 127);
                 boolean looksEncrypted = v.matches("[A-Za-z0-9+/=]{40,}") && f.contains("encrypted");
