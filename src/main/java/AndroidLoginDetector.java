@@ -980,6 +980,17 @@ public class AndroidLoginDetector {
             }
             logInfo("Round network condition for login: " + roundCondition);
             boolean loginPageDetected = detectLoginPageWithUI();
+            // FIX(v1): pages that need the network to render the form (e.g. web logins) cannot be reached
+            // offline; load the form on a working network, then re-apply the round condition before submitting
+            if (!loginPageDetected && !"normal".equals(roundCondition) && networkChaosManager != null
+                    && !"pending".equals(uiManager.getLastMfaOutcome())) {
+                logInfo("Login page not reached under '" + roundCondition + "'; loading it on a normal network first");
+                networkChaosManager.applyCondition("normal");
+                uiManager.setPendingUsername(roundUsername);
+                loginPageDetected = detectLoginPageWithUI();
+                networkChaosManager.applyCondition(roundCondition);
+                if (loginPageDetected) logInfo("Login page loaded; round condition '" + roundCondition + "' re-applied before submitting");
+            }
             boolean mfaPendingRound = "pending".equals(uiManager.getLastMfaOutcome());
             if (!loginPageDetected && !mfaPendingRound) {
                 loginPageDetected = tryDirectLoginActivities();
