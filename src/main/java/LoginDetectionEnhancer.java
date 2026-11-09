@@ -328,13 +328,63 @@ public class LoginDetectionEnhancer {
         
         public SnapshotManager(String appPackage) {
             this.appPackage = appPackage;
+            String mode = System.getenv("LIFT_RESET_MODE");
+            this.appResetMode = "app".equalsIgnoreCase(mode);
+            if (appResetMode) {
+                System.out.println("[SNAPSHOT] LIFT_RESET_MODE=app: using app-level reset instead of emulator snapshots");
+            }
+        }
+
+        // FIX(v1): environments without emulator snapshots (e.g. redroid containers, physical devices)
+        // reset state at the app level: force-stop, clear app data, re-grant runtime permissions, relaunch.
+        private final boolean appResetMode;
+
+        private static void runQuiet(String... cmd) {
+            try {
+                Process p = new ProcessBuilder(cmd).redirectErrorStream(true).start();
+                p.getInputStream().readAllBytes();
+                p.waitFor(30, TimeUnit.SECONDS);
+            } catch (Exception ignored) { }
+        }
+
+        private void grantRequestedPermissions() {
+            try {
+                Process p = new ProcessBuilder("adb", "shell", "dumpsys", "package", appPackage).redirectErrorStream(true).start();
+                String out = new String(p.getInputStream().readAllBytes());
+                p.waitFor(30, TimeUnit.SECONDS);
+                java.util.regex.Matcher m = java.util.regex.Pattern.compile("(android\\.permission\\.[A-Z_]+)").matcher(out);
+                java.util.Set<String> perms = new java.util.LinkedHashSet<>();
+                while (m.find()) perms.add(m.group(1));
+                for (String perm : perms) runQuiet("adb", "shell", "pm", "grant", appPackage, perm);
+            } catch (Exception ignored) { }
+        }
+
+        public boolean appLevelReset() {
+            try {
+                System.out.println("[SNAPSHOT] App-level reset: " + appPackage);
+                runQuiet("adb", "shell", "am", "force-stop", appPackage);
+                runQuiet("adb", "shell", "pm", "clear", appPackage);
+                grantRequestedPermissions();
+                runQuiet("adb", "shell", "monkey", "-p", appPackage, "-c", "android.intent.category.LAUNCHER", "1");
+                Thread.sleep(8000);
+                return true;
+            } catch (Exception e) {
+                System.err.println("App-level reset failed: " + e.getMessage());
+                return false;
+            }
         }
         
         public boolean hasSnapshot(String name) {
+            if (appResetMode) return snapshots.containsKey(name);
             return snapshots.containsKey(name) || findSnapshot(name) != null;
         }
         
         public boolean createSnapshot(String name, String description) {
+            if (appResetMode) {
+                snapshots.put(name, "app-reset:" + name);
+                System.out.println("[SNAPSHOT] Created (app-level marker): " + name + " (" + description + ")");
+                return true;
+            }
             try {
                 // Check if snapshot already exists - don't recreate
                 if (snapshots.containsKey(name)) {
@@ -366,6 +416,10 @@ public class LoginDetectionEnhancer {
         }
         
         public boolean restoreSnapshot(String name) {
+            if (appResetMode) {
+                if (!snapshots.containsKey(name)) return false;
+                return appLevelReset();
+            }
             try {
                 String snapshotName = snapshots.get(name);
                 if (snapshotName == null) {

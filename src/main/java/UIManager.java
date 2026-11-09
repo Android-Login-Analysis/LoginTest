@@ -118,6 +118,13 @@ public class UIManager {
             String text = matcher.group(5); // only present for paired nodes
             if (text == null) text = "";
 
+            // FIX(v1): ignore UI elements that belong to other apps (launcher, dialer, system UI);
+            // Google Play services is kept for Google Sign-In account pickers.
+            String pkgAttr = extractAttribute(attributes, "package");
+            if (pkgAttr != null && !pkgAttr.isEmpty() && appPackage != null && !appPackage.isEmpty()
+                    && !pkgAttr.equals(appPackage) && !pkgAttr.startsWith("com.google.android.gms")) {
+                continue;
+            }
             String resourceId = extractAttribute(attributes, "resource-id");
             String className = extractAttribute(attributes, "class");
             String bounds = extractAttribute(attributes, "bounds");
@@ -338,9 +345,40 @@ public class UIManager {
     /**
      * Detect login page
      */
+    // FIX(v1): only accept a login page that belongs to the app under test. Without this check the
+    // detector matched launcher/dialer widgets (e.g. a "Phone" icon) as login fields after the app died.
+    private boolean isAppInForeground() {
+        try {
+            Process p = new ProcessBuilder("adb", "shell", "dumpsys", "activity", "activities").redirectErrorStream(true).start();
+            String out = new String(p.getInputStream().readAllBytes());
+            p.waitFor(15, java.util.concurrent.TimeUnit.SECONDS);
+            for (String line : out.split("\n")) {
+                if (line.contains("topResumedActivity") || line.contains("mResumedActivity")) {
+                    return line.contains(appPackage + "/");
+                }
+            }
+        } catch (Exception ignored) { }
+        return false;
+    }
+
+    public boolean ensureAppInForeground() {
+        if (isAppInForeground()) return true;
+        System.out.println("[FOREGROUND] App under test is not in foreground; relaunching " + appPackage);
+        try {
+            new ProcessBuilder("adb", "shell", "monkey", "-p", appPackage, "-c", "android.intent.category.LAUNCHER", "1")
+                .redirectErrorStream(true).start().waitFor(20, java.util.concurrent.TimeUnit.SECONDS);
+            Thread.sleep(6000);
+        } catch (Exception ignored) { }
+        return isAppInForeground();
+    }
+
     public boolean detectLoginPage() {
         try {
             System.out.println("Using ADB to detect login page...");
+            if (!ensureAppInForeground()) {
+                System.out.println("[FOREGROUND] App under test still not in foreground; login page not detected");
+                return false;
+            }
 
             // Reset detection flags (accumulate across small retry window)
             resetDetectionFlags();
