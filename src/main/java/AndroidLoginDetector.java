@@ -979,8 +979,9 @@ public class AndroidLoginDetector {
                 networkChaosManager.applyCondition(roundCondition);
             }
             logInfo("Round network condition for login: " + roundCondition);
-            // FIX(v1): apps offering a credential-free login next to SSO use it in odd rounds (valid rounds 1 and 3)
-            uiManager.setPreferGuestLogin(round % 2 == 1);
+            // FIX(v1): apps offering a credential-free login next to SSO use it in the valid-credential rounds
+            // (normal, limited, offline); the invalid round and the rotation phase use the credential form
+            uiManager.setPreferGuestLogin(ROUND_VALIDITY[(round - 1) % ROUND_VALIDITY.length]);
             boolean loginPageDetected = detectLoginPageWithUI();
             // FIX(v1): pages that need the network to render the form (e.g. web logins) cannot be reached
             // offline; load the form on a working network, then re-apply the round condition before submitting
