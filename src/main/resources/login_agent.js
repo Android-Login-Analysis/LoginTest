@@ -152,7 +152,7 @@ rpc.exports = {
                         const method = clazz[methodName];
                         if (method && method.overloads) {
                             method.overloads.forEach(overload => {
-                                overload.implementation = implementation;
+                                overload.implementation = function() { return implementation.call(this, overload, Array.prototype.slice.call(arguments)); };
                             });
                             console.log(`[+] Hooked: ${className}.${methodName}`);
                             return true;
@@ -415,9 +415,10 @@ rpc.exports = {
 
                 // Dynamic hook creation based on configuration
                 function createConfigurableHook(hookDef) {
-                    return function() {
-                        const args = Array.prototype.slice.call(arguments);
-                        const result = this[hookDef.methodName].apply(this, args);
+                    return function(overload, args) {
+                        // FIX(v1): call the exact hooked overload; never let logging errors reach the app
+                        const result = overload.apply(this, args);
+                        try {
                         
                         let shouldLog = true;
                         let capturedArgs = [];
@@ -590,6 +591,7 @@ rpc.exports = {
                             logApiCall(hookDef.className, hookDef.methodName, capturedArgs, extra);
                         }
 
+                        } catch (hookErr) { /* swallow: instrumentation must not alter app behavior */ }
                         return result;
                     };
                 }
