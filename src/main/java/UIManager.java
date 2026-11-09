@@ -70,7 +70,8 @@ public class UIManager {
                     return -2;
                 }
                 lastWaitEndedInProgress = "true".equals(m.get("busy"));
-                boolean formGone = "0".equals(m.getOrDefault("pw", "0")) && "0".equals(m.getOrDefault("id", "0"));
+                // the password field disappearing means the form was consumed (single-page apps keep other inputs)
+                boolean formGone = "0".equals(m.getOrDefault("pw", "0")) && !"true".equals(m.get("busy"));
                 boolean urlChanged = webLoginUrl != null && !webLoginUrl.equals(m.get("url")) && "0".equals(m.getOrDefault("pw", "0"));
                 if (formGone || urlChanged) { goneStreak++; if (goneStreak >= 2) return t; } else goneStreak = 0;
             }
@@ -128,9 +129,11 @@ public class UIManager {
                     // a loading screen has a progress indicator and nothing actionable; a determinate progress
                     // bar next to buttons (e.g. a "Download" screen after login) is not a pending login
                     progressShown = progressShown && !actionable;
+                    // FIX(v1): leaving the login activity means completion, unless the new screen is a pure
+                    // loading screen (e.g. NewsBlur's LoginProgress), which is still part of the login
                     String topNow = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
                     boolean activityChanged = !loginActivity.isEmpty() && !topNow.equals(loginActivity);
-                    if (activityChanged && findPasswordAnchor(els) == null) return pollStart;    // left the login screen
+                    if (activityChanged && !progressShown && findPasswordAnchor(els) == null) return pollStart;
                     lastWaitEndedInProgress = progressShown;
                     boolean formAbsent = findPasswordAnchor(els) == null;
                     if (formAbsent && formAbsentSince < 0) formAbsentSince = pollStart;
