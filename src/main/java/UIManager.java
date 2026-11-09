@@ -889,6 +889,15 @@ public class UIManager {
                     (focusedInWebView && hasIdClassHints)
             );
             boolean isLoginPage = isLoginByVote || isLoginBySso || isLoginByWebViewHeur;
+            // FIX(v1): forms hosted in a WebView are driven through the DOM even when partially visible to
+            // accessibility: the DOM exposes real values and busy states the accessibility tree misses
+            if (isLoginPage && passwordFieldDetected) {
+                Map<String, String> dom = web().inspect();
+                if (!dom.isEmpty() && !"0".equals(dom.getOrDefault("pw", "0"))) {
+                    webMode = true;
+                    System.out.println("[WEBVIEW] Credential form is in a WebView; using DOM mode " + dom);
+                }
+            }
 
             System.out.println("Login page detection result: " + isLoginPage);
             System.out.println("  - Votes(username,password,button): " + votes + "/" + voteThreshold);
