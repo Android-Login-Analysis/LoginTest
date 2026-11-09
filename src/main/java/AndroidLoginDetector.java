@@ -1029,7 +1029,8 @@ public class AndroidLoginDetector {
                 logInfo("Selected username: " + username);
                 logInfo("Selected password: [" + password.length() + " chars]");
                 
-                boolean usedValidPair = lastCredentialChoiceValid;
+                // a credential-free login has no wrong credentials: it is expected to succeed like a valid pair
+                boolean usedValidPair = lastCredentialChoiceValid || uiManager.isGuestMode();
                 boolean loginSuccess = inputCredentialsWithUI(username, password);
                 
                 // Additional verification after input
