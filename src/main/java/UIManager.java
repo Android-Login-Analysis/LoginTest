@@ -2100,6 +2100,22 @@ public class UIManager {
                 err = visibleErrorText(getAllUIElements());
                 if (err == null) Thread.sleep(1500);
             }
+            if (err == null) {
+                // the in-flight request may have been lost by the rotation (B); submit again without rotating
+                setRotation(1);
+                Thread.sleep(1500);
+                UIElement again = findLoginButton();
+                if (again != null && findPasswordAnchor(getAllUIElements()) != null) {
+                    int[] ac = extractCoordinates(again.bounds);
+                    System.out.println("[ROTATION] C: re-submitting to obtain an error message");
+                    new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf(ac[0]), String.valueOf(ac[1])).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+                    deadline = System.currentTimeMillis() + 25000;
+                    while (System.currentTimeMillis() < deadline && err == null) {
+                        Thread.sleep(1500);
+                        err = visibleErrorText(getAllUIElements());
+                    }
+                }
+            }
             System.out.println("[ROTATION] C: error shown before rotating back: " + (err == null ? "none" : "'" + err + "'"));
             if (err != null) {
                 setRotation(0);
