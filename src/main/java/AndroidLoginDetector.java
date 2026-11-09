@@ -971,6 +971,14 @@ public class AndroidLoginDetector {
             forcedValidity = null;
             roundUsedValidPair = lastCredentialChoiceValid;
             uiManager.setPendingUsername(roundUsername);
+            // FIX(v1): deterministic network condition for the whole login (navigation, MFA, submit)
+            final String roundCondition = ROUND_CONDITIONS[(round - 1) % ROUND_CONDITIONS.length];
+            final boolean chaosWasRunning = networkChaosManager != null && networkChaosManager.isRunning();
+            if (networkChaosManager != null) {
+                if (chaosWasRunning) networkChaosManager.stop();
+                networkChaosManager.applyCondition(roundCondition);
+            }
+            logInfo("Round network condition for login: " + roundCondition);
             boolean loginPageDetected = detectLoginPageWithUI();
             boolean mfaPendingRound = "pending".equals(uiManager.getLastMfaOutcome());
             if (!loginPageDetected && !mfaPendingRound) {
@@ -1006,14 +1014,6 @@ public class AndroidLoginDetector {
                 logInfo("Selected password: [" + password.length() + " chars]");
                 
                 boolean usedValidPair = lastCredentialChoiceValid;
-                // FIX(v1): deterministic network condition for this round's login attempt
-                String roundCondition = ROUND_CONDITIONS[(round - 1) % ROUND_CONDITIONS.length];
-                boolean chaosWasRunning = networkChaosManager != null && networkChaosManager.isRunning();
-                if (networkChaosManager != null) {
-                    if (chaosWasRunning) networkChaosManager.stop();
-                    networkChaosManager.applyCondition(roundCondition);
-                }
-                logInfo("Round network condition for login: " + roundCondition);
                 boolean loginSuccess = inputCredentialsWithUI(username, password);
                 
                 // Additional verification after input
@@ -1070,10 +1070,6 @@ public class AndroidLoginDetector {
                     logInfo("Login still in progress after the wait under '" + roundCondition + "' network: no timeout handling");
                     stateMachineManager.getBugDetectionManager().getTimeoutDetector().recordLoginAttempt(clickTime, System.currentTimeMillis(), false);
                 }
-                if (networkChaosManager != null) {
-                    networkChaosManager.applyCondition("normal");
-                    if (chaosWasRunning) networkChaosManager.start();
-                }
                 boolean authenticated = gone > 0;
                 if (authenticated && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
                     try { Thread.sleep(4000); } catch (InterruptedException ignored) { }   // let the app persist the session
@@ -1124,11 +1120,32 @@ public class AndroidLoginDetector {
                 }
             } else if (mfaPendingRound) {
                 logInfo("Skipping exploration: MFA prompt reached");
+                // FIX(v1): MFA prompt checks (#6640-style: code 'sent' while offline; #6647-style: prompt cannot be closed)
+                if (stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+                    var observed = stateMachineManager.getBugDetectionManager().getObservedDetector();
+                    String prompt = uiManager.currentMfaPromptText();
+                    if (prompt != null && !"normal".equals(roundCondition) && prompt.toLowerCase().matches(".*\\b(sent|we've sent|we have sent|check your)\\b.*")) {
+                        observed.record("ACCOUNT_MANAGEMENT_BREAK", "MFA_CODE_PROMPT_WITHOUT_DELIVERY",
+                            "MFA prompt claims a code was sent while the device had no working network",
+                            "Network '" + roundCondition + "', prompt: '" + prompt + "'");
+                    }
+                    if (prompt != null && !uiManager.tryDismissMfaPrompt()) {
+                        observed.record("UI_ERROR", "MFA_PROMPT_NOT_DISMISSABLE",
+                            "The MFA prompt cannot be cancelled (Cancel/Back keep the user on it)",
+                            "Prompt: '" + prompt + "'");
+                    }
+                }
             } else {
                 logInfo("No login page detected, starting stepwise Monkey exploration with focused credential feeding");
                 String username = pickRoundUsername();
                 String password = pickRoundPassword();
                 exploreStepwiseMonkeyFeedCredentials(username, password);
+            }
+
+            // FIX(v1): restore the network after the login phase
+            if (networkChaosManager != null) {
+                networkChaosManager.applyCondition("normal");
+                if (chaosWasRunning) networkChaosManager.start();
             }
 
             // Step 7: Analyze API logs and validate state machine

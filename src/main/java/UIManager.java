@@ -61,6 +61,7 @@ public class UIManager {
             ? loginClickActivity : AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
         long deadline = System.currentTimeMillis() + timeoutMs;
         long goneSince = -1;
+        long formAbsentSince = -1;
         while (System.currentTimeMillis() < deadline) {
             long pollStart = System.currentTimeMillis();
             try {
@@ -104,6 +105,12 @@ public class UIManager {
                     boolean activityChanged = !loginActivity.isEmpty() && !topNow.equals(loginActivity);
                     if (activityChanged && findPasswordAnchor(els) == null) return pollStart;    // left the login screen
                     lastWaitEndedInProgress = progressShown;
+                    boolean formAbsent = findPasswordAnchor(els) == null;
+                    if (formAbsent && formAbsentSince < 0) formAbsentSince = pollStart;
+                    if (!formAbsent) formAbsentSince = -1;
+                    // single-activity apps: a form that stays gone for 15 s means the login finished, even if
+                    // a (sync/download) progress indicator is still on screen
+                    if (progressShown && formAbsentSince > 0 && pollStart - formAbsentSince >= 15000) return formAbsentSince;
                     if (progressShown) { goneSince = -1; Thread.sleep(500); continue; } // login still in progress
                     if (findPasswordAnchor(els) != null && !progressShown) {
                         String inline = visibleErrorText(els);              // inline error next to the form
@@ -568,6 +575,37 @@ public class UIManager {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    /** Text of the current MFA prompt (instructions), or null. */
+    public String currentMfaPromptText() {
+        try {
+            List<UIElement> els = getAllUIElements();
+            lastScanElements = els;
+            for (UIElement e : els) if (e.text != null && MFA_HINT.matcher(e.text).find()) return e.text.trim();
+            for (UIElement e : els) if (e.text != null && e.text.toLowerCase().contains("code")) return e.text.trim();
+        } catch (Exception ignored) { }
+        return null;
+    }
+
+    /** Try to leave the MFA prompt (Cancel button, then BACK). Returns true if the prompt went away. */
+    public boolean tryDismissMfaPrompt() {
+        try {
+            for (UIElement e : getAllUIElements()) {
+                if (e.text == null || boundsOf(e) == null) continue;
+                if (e.text.trim().toLowerCase().matches("(cancel|cancel login|close|back|not now)")) {
+                    int[] r = boundsOf(e);
+                    new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf((r[0] + r[2]) / 2), String.valueOf((r[1] + r[3]) / 2))
+                        .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+                    break;
+                }
+            }
+            Thread.sleep(3000);
+            if (currentMfaPromptText() == null || !AppLauncher.isInForeground(appPackage)) return true;
+            new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_BACK").redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+            Thread.sleep(3000);
+            return currentMfaPromptText() == null || !AppLauncher.isInForeground(appPackage);
+        } catch (Exception e) { return true; }
     }
 
     private String lastMfaOutcome = null;   // null | "totp-entered" | "pending"

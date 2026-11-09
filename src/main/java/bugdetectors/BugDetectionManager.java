@@ -23,6 +23,7 @@ public class BugDetectionManager {
     private LoginTimeoutDetector timeoutDetector;
     private NavigationFlowDetector navigationDetector;
     private StorageLeakDetector storageDetector;
+    private ObservedFindingsDetector observedDetector;
     
     public BugDetectionManager(String reportDirectory) {
         this.reportDirectory = reportDirectory;
@@ -56,6 +57,8 @@ public class BugDetectionManager {
         // FIX(v1): plaintext credential/token storage after login
         storageDetector = new StorageLeakDetector();
         detectors.add(storageDetector);
+        observedDetector = new ObservedFindingsDetector();
+        detectors.add(observedDetector);
         
         System.out.println("[BUG_DETECTION] Initialized " + detectors.size() + " symptom-based bug detectors");
         System.out.println("[BUG_DETECTION]   1. ErrorMessageMismatchDetector (Symptom 7)");
@@ -75,6 +78,10 @@ public class BugDetectionManager {
     /**
      * Get lifecycle data loss detector
      */
+    public ObservedFindingsDetector getObservedDetector() {
+        return observedDetector;
+    }
+
     public StorageLeakDetector getStorageDetector() {
         return storageDetector;
     }
