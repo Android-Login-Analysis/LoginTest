@@ -1723,6 +1723,10 @@ public class AndroidLoginDetector {
      * Use UI manager to input credentials with enhanced verification
      */
     private boolean inputCredentialsWithUI(String username, String password) {
+        if (uiManager.isWebMode()) {
+            logInfo("Login form is inside a WebView; using DevTools input");
+            return uiManager.webLogin(username, password);
+        }
         try {
             logInfo("=== Starting Enhanced Credential Input Process ===");
             logInfo("Username to input: " + username);

@@ -107,6 +107,18 @@ rpc.exports = {
         Java.perform(function () {
             console.log('[*] Java.perform started');
 
+            // FIX(v1): expose WebView content to the DevTools protocol so LIFTDroid can drive web-based
+            // login forms that are hidden from the accessibility tree (e.g. custom WebView wrappers).
+            try {
+                const WebViewCls = Java.use('android.webkit.WebView');
+                Java.scheduleOnMainThread(function () {
+                    try {
+                        WebViewCls.setWebContentsDebuggingEnabled(true);
+                        console.log('[+] WebView debugging enabled');
+                    } catch (e) { console.log('[-] WebView debugging not enabled: ' + e); }
+                });
+            } catch (e) { console.log('[-] WebView class unavailable: ' + e); }
+
             try {
                 // Parse hook configuration
                 let config = {};

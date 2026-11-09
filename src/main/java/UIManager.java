@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -53,8 +54,34 @@ public class UIManager {
     private boolean lastWaitEndedInProgress = false;
     public boolean lastWaitEndedInProgress() { return lastWaitEndedInProgress; }
 
+    private long waitForWebLogin(long timeoutMs) {
+        long deadline = System.currentTimeMillis() + timeoutMs;
+        int goneStreak = 0;
+        while (System.currentTimeMillis() < deadline) {
+            long t = System.currentTimeMillis();
+            if (!AppLauncher.isInForeground(appPackage)) { try { Thread.sleep(1000); } catch (InterruptedException ignored) { } continue; }
+            Map<String, String> m = web().inspect();
+            if (m.isEmpty()) { goneStreak++; if (goneStreak >= 2) return t; }
+            else {
+                String err = m.getOrDefault("err", "");
+                if (!err.isEmpty() && !"0".equals(m.getOrDefault("pw", "0"))) {
+                    lastLoginErrorText = err;
+                    System.out.println("[LOGIN_RESULT] Web error after login: '" + err + "'");
+                    return -2;
+                }
+                lastWaitEndedInProgress = "true".equals(m.get("busy"));
+                boolean formGone = "0".equals(m.getOrDefault("pw", "0")) && "0".equals(m.getOrDefault("id", "0"));
+                boolean urlChanged = webLoginUrl != null && !webLoginUrl.equals(m.get("url")) && "0".equals(m.getOrDefault("pw", "0"));
+                if (formGone || urlChanged) { goneStreak++; if (goneStreak >= 2) return t; } else goneStreak = 0;
+            }
+            try { Thread.sleep(1500); } catch (InterruptedException ignored) { }
+        }
+        return -1;
+    }
+
     public long waitForLoginPageGone(long timeoutMs) {
         lastWaitEndedInProgress = false;
+        if (webMode) { lastLoginErrorText = null; return waitForWebLogin(timeoutMs); }
         lastLoginErrorText = null;
         lastMfaOutcome = null;
         String loginActivity = loginClickActivity != null && !loginClickActivity.isEmpty()
@@ -478,13 +505,33 @@ public class UIManager {
     // FIX(v1): if the screen has a login entry ("Sign in", "Log in") but no credential form, tap the
     // entry (up to 2 hops) before falling back to random Monkey exploration.
     private String lastLoginEntryBounds = null;
+    // FIX(v1): WebView (DevTools) mode for login forms hidden from the accessibility tree
+    private WebViewBridge web = null;
+    private boolean webMode = false;
+    private String webLoginUrl = null;
+    public boolean isWebMode() { return webMode; }
+    private WebViewBridge web() { if (web == null) web = new WebViewBridge(appPackage); return web; }
+
+    /** Fill and submit a web login form with trusted input events (identifier-only screens: identifier + Next). */
+    public boolean webLogin(String username, String password) {
+        Map<String, String> m = web().inspect();
+        if (m.isEmpty()) return false;
+        webLoginUrl = m.get("url");
+        boolean pwShown = !"0".equals(m.get("pw"));
+        boolean filled = usernameEnteredInStep1 ? web().fillTrusted(null, password)
+            : web().fillTrusted(username, pwShown ? password : null);
+        System.out.println("[WEBVIEW] filled form (password field " + (pwShown ? "present" : "absent") + "): " + filled);
+        loginClickActivity = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
+        loginButtonClickTime = System.currentTimeMillis();
+        return filled && web().submit();
+    }
     // FIX(v1): two-step login support (identifier screen -> password screen)
     private String pendingUsername = null;
     private boolean usernameEnteredInStep1 = false;
     private boolean twoStepJustFilled = false;
     private List<UIElement> lastScanElements = null;
 
-    public void setPendingUsername(String u) { pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; }
+    public void setPendingUsername(String u) { pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; webMode = false; webLoginUrl = null; }
 
     // FIX(v1): MFA support. Authenticator-app accounts get a TOTP code; other accounts stop at the
     // MFA prompt (MFACodePending), which is a legitimate login state, not a completed login.
@@ -721,6 +768,8 @@ public class UIManager {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2;
                         } else if (lastLoginEntryPriority > 3 && t.matches("(get started|continue|next|skip|start|got it|let's go|lets go)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 3;
+                        } else if (lastLoginEntryPriority > 4 && t.matches("(facebook|google|twitch|reddit|github|microsoft|x|twitter|instagram|bluesky|mastodon)")) {
+                            lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 4;   // SSO / service selection
                         }
                     }
                     if (!loginButtonDetected && matchesLoginButtonPattern(element.text, element.resourceId)) {
@@ -791,6 +840,26 @@ public class UIManager {
             if (registrationForm) {
                 System.out.println("[LOGIN_PAGE] Registration (sign-up) form detected; not treated as a login page");
                 passwordFieldDetected = false;
+            }
+            webMode = false;
+            if (!passwordFieldDetected && !registrationForm) {
+                Map<String, String> wm = web().inspect();
+                if (!wm.isEmpty()) {
+                    System.out.println("[WEBVIEW] page: " + wm);
+                    if (!"0".equals(wm.get("pw"))) {
+                        webMode = true;
+                        System.out.println("[WEBVIEW] Login form found in WebView DOM");
+                        return true;
+                    }
+                    if (pendingUsername != null && !usernameEnteredInStep1 && !"0".equals(wm.getOrDefault("id", "0"))
+                            && !wm.getOrDefault("btn", "").isEmpty()) {
+                        System.out.println("[WEBVIEW] Identifier-only web form; entering username and continuing");
+                        if (web().fillTrusted(pendingUsername, null) && web().submit()) usernameEnteredInStep1 = true;
+                        Thread.sleep(7000);
+                        Map<String, String> next = web().inspect();
+                        if (!"0".equals(next.getOrDefault("pw", "0"))) { webMode = true; return true; }
+                    }
+                }
             }
             boolean isLoginByVote = passwordFieldDetected && votes >= voteThreshold;
             boolean isLoginBySso = (googleLoginDetected || facebookLoginDetected) && (usernameFieldDetected || passwordFieldDetected || loginButtonDetected);
@@ -2041,7 +2110,69 @@ public class UIManager {
         return false;
     }
 
+    private List<String[]> runWebRotationChecks(String username, String password) {
+        List<String[]> findings = new ArrayList<>();
+        try {
+            WebViewBridge w = web();
+            // A: input retention
+            w.fillTrusted(usernameEnteredInStep1 ? null : username, password);
+            Thread.sleep(800);
+            Map<String, String> before = w.inspect();
+            System.out.println("[ROTATION] A(web): before " + before);
+            setRotation(1);
+            Thread.sleep(4000);
+            if (!AppLauncher.isInForeground(appPackage)) {
+                findings.add(new String[]{"ROTATION_APP_EXIT", "App left the foreground after rotating the filled web login form"});
+                return findings;
+            }
+            Map<String, String> after = w.inspect();
+            System.out.println("[ROTATION] A(web): after " + after);
+            boolean lost = (!"0".equals(before.getOrDefault("idval", "0")) && "0".equals(after.getOrDefault("idval", "0")))
+                || (!"0".equals(before.getOrDefault("pwval", "0")) && "0".equals(after.getOrDefault("pwval", "0")));
+            if (after.isEmpty() || lost) findings.add(new String[]{"ROTATION_INPUT_LOST",
+                "Web login input lost on rotation (WebView reloaded or state not restored): before=" + before.get("idval") + "/" + before.get("pwval")
+                + " after=" + after.getOrDefault("idval", "-") + "/" + after.getOrDefault("pwval", "-")});
+            setRotation(0);
+            Thread.sleep(3000);
+            // B: rotate while the request is in flight
+            Map<String, String> cur = w.inspect();
+            if ("0".equals(cur.getOrDefault("pwval", "0"))) w.fillTrusted(usernameEnteredInStep1 ? null : username, password);
+            String url0 = cur.get("url");
+            if (!w.submit()) return findings;
+            Thread.sleep(600);
+            Map<String, String> inflight = w.inspect();
+            boolean busyBefore = "true".equals(inflight.get("busy"));
+            setRotation(1);
+            Thread.sleep(4000);
+            Map<String, String> rotated = w.inspect();
+            System.out.println("[ROTATION] B(web): in-flight " + inflight + " -> after rotation " + rotated);
+            boolean idleAgain = !rotated.isEmpty() && !"true".equals(rotated.get("busy")) && rotated.getOrDefault("err", "").isEmpty()
+                && !"0".equals(rotated.getOrDefault("pw", "0")) && (url0 == null || rotated.getOrDefault("url", "").startsWith(url0.split("#")[0]));
+            if (busyBefore && idleAgain) findings.add(new String[]{"ROTATION_LOGIN_STATE_RESET",
+                "Web login was in progress (submit busy) when the device rotated; afterwards the form is idle with no result"});
+            // C: error message survives rotation
+            String err = null;
+            long deadline = System.currentTimeMillis() + 20000;
+            while (System.currentTimeMillis() < deadline && (err == null || err.isEmpty())) { Thread.sleep(1500); err = w.inspect().get("err"); }
+            if (err != null && !err.isEmpty()) {
+                setRotation(0);
+                Thread.sleep(4000);
+                String errAfter = w.inspect().getOrDefault("err", "");
+                System.out.println("[ROTATION] C(web): '" + err + "' -> '" + errAfter + "'");
+                if (errAfter.isEmpty() && AppLauncher.isInForeground(appPackage))
+                    findings.add(new String[]{"ROTATION_ERROR_MESSAGE_LOST", "Web error message '" + err + "' disappeared after rotation"});
+            }
+        } catch (Exception e) {
+            System.out.println("[ROTATION] Web check aborted: " + e.getMessage());
+        } finally {
+            setRotation(0);
+        }
+        for (String[] f : findings) System.out.println("[ROTATION] Finding: " + f[0] + " - " + f[1]);
+        return findings;
+    }
+
     public List<String[]> runRotationChecks(String username, String password) {
+        if (webMode) return runWebRotationChecks(username, password);
         List<String[]> findings = new ArrayList<>();
         try {
             List<UIElement> els = getAllUIElements();
@@ -2100,6 +2231,17 @@ public class UIManager {
                 findings.add(new String[]{"ROTATION_FORM_LOST", "Credential form disappeared after rotation (login page reset or navigated away)"});
             } else {
                 boolean pwLost = !pwBefore.isEmpty() && !pwBefore.equals(pwHint) && (pwAfter.isEmpty() || pwAfter.equals(pwHint));
+                if ((userBefore && !userAfter) || pwLost) {
+                    // WebView-based screens: confirm with the DOM (the accessibility tree can lag after rotation)
+                    Map<String, String> dom = web().inspect();
+                    if (!dom.isEmpty() && !"0".equals(dom.getOrDefault("pw", "0"))) {
+                        System.out.println("[ROTATION] A: DOM after rotation " + dom);
+                        if (!"0".equals(dom.getOrDefault("pwval", "0")) && (!userBefore || !"0".equals(dom.getOrDefault("idval", "0")))) {
+                            System.out.println("[ROTATION] A: values still present in the DOM; accessibility tree was stale");
+                            userAfter = true; pwLost = false;
+                        }
+                    }
+                }
                 if ((userBefore && !userAfter) || pwLost) {
                     findings.add(new String[]{"ROTATION_INPUT_LOST",
                         "Input lost on rotation: username " + (userBefore && !userAfter ? "lost" : "kept") + ", password " + (pwLost ? "lost" : "kept")});
