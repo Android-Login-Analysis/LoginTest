@@ -50,7 +50,11 @@ public class UIManager {
      * FIX(v1): returns completion time (>0) when the login page is gone, -2 when the app answered with an
      * error dialog/snackbar (login rejected; the dialog hides the form from uiautomator), -1 on timeout.
      */
+    private boolean lastWaitEndedInProgress = false;
+    public boolean lastWaitEndedInProgress() { return lastWaitEndedInProgress; }
+
     public long waitForLoginPageGone(long timeoutMs) {
+        lastWaitEndedInProgress = false;
         lastLoginErrorText = null;
         lastMfaOutcome = null;
         String loginActivity = loginClickActivity != null && !loginClickActivity.isEmpty()
@@ -99,6 +103,7 @@ public class UIManager {
                     String topNow = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
                     boolean activityChanged = !loginActivity.isEmpty() && !topNow.equals(loginActivity);
                     if (activityChanged && findPasswordAnchor(els) == null) return pollStart;    // left the login screen
+                    lastWaitEndedInProgress = progressShown;
                     if (progressShown) { goneSince = -1; Thread.sleep(500); continue; } // login still in progress
                     if (findPasswordAnchor(els) == null) {
                         if (goneSince < 0) goneSince = pollStart;            // first poll without the form

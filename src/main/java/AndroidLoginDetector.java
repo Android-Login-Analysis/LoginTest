@@ -1004,6 +1004,14 @@ public class AndroidLoginDetector {
                 logInfo("Selected password: [" + password.length() + " chars]");
                 
                 boolean usedValidPair = lastCredentialChoiceValid;
+                // FIX(v1): deterministic network condition for this round's login attempt
+                String roundCondition = round % 3 == 2 ? "limited" : (round % 3 == 0 ? "offline" : "normal");
+                boolean chaosWasRunning = networkChaosManager != null && networkChaosManager.isRunning();
+                if (networkChaosManager != null) {
+                    if (chaosWasRunning) networkChaosManager.stop();
+                    networkChaosManager.applyCondition(roundCondition);
+                }
+                logInfo("Round network condition for login: " + roundCondition);
                 boolean loginSuccess = inputCredentialsWithUI(username, password);
                 
                 // Additional verification after input
@@ -1049,7 +1057,21 @@ public class AndroidLoginDetector {
                 // is considered successful only if the login page went away; with a valid pair we expect
                 // success, so a remaining login page is a legitimate candidate. Invalid credentials that keep
                 // the login page are expected behaviour and must not reach the navigation oracle.
+                // LOGIN_HANG: still spinning at the end of the wait (no timeout handling), whatever the credentials
+                if (gone == -1 && !usedValidPair && uiManager.lastWaitEndedInProgress() && stateMachineManager != null
+                        && stateMachineManager.getBugDetectionManager() != null && clickTime > 0) {
+                    logInfo("Login still in progress after the wait under '" + roundCondition + "' network: no timeout handling");
+                    stateMachineManager.getBugDetectionManager().getTimeoutDetector().recordLoginAttempt(clickTime, System.currentTimeMillis(), false);
+                }
+                if (networkChaosManager != null) {
+                    networkChaosManager.applyCondition("normal");
+                    if (chaosWasRunning) networkChaosManager.start();
+                }
                 boolean authenticated = gone > 0;
+                if (authenticated && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+                    try { Thread.sleep(4000); } catch (InterruptedException ignored) { }   // let the app persist the session
+                    stateMachineManager.getBugDetectionManager().getStorageDetector().scan(appPackage, username, password);
+                }
                 boolean expectSuccess = authenticated || usedValidPair;
                 logInfo("Login outcome: inputOk=" + loginSuccess + ", loginPageGone=" + authenticated + ", validPair=" + usedValidPair);
                 if (loginSuccess && expectSuccess) {

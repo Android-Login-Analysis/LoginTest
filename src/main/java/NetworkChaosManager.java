@@ -258,6 +258,24 @@ public class NetworkChaosManager {
     }
 
     /**
+     * FIX(v1): deterministic per-round network conditions (paper V-B multi-round testing):
+     * "offline" blocks app traffic, "limited" adds heavy latency and loss, anything else restores.
+     */
+    public void applyCondition(String condition) {
+        if ("offline".equalsIgnoreCase(condition)) {
+            logger.logInfo("🔴 Round condition: OFFLINE");
+            executeAdbCommandSilent("svc data disable");
+            executeAdbCommandSilent("svc wifi disable");
+            blockTraffic();
+        } else if ("limited".equalsIgnoreCase(condition)) {
+            logger.logInfo("🟠 Round condition: LIMITED (2.5s latency, 25% loss)");
+            shapeTraffic("delay 2500ms 500ms loss 25%");
+        } else {
+            restoreGoodNetwork();
+        }
+    }
+
+    /**
      * Restore good network (enable all connections)
      */
     private void restoreGoodNetwork() {
