@@ -274,9 +274,15 @@ def main():
         # Get active emulator device ID dynamically
         def get_active_device():
             try:
+                # FIX(v1): honor ANDROID_SERIAL and accept any adb device (emulator, redroid over TCP, phone)
+                serial = os.environ.get('ANDROID_SERIAL')
+                if serial:
+                    logging.info(f"Using ANDROID_SERIAL: {serial}")
+                    return serial
                 result = subprocess.run(['adb', 'devices'], capture_output=True, text=True, check=True)
                 for line in result.stdout.strip().split('\n')[1:]:  # Skip header
-                    if 'device' in line and 'emulator-' in line:
+                    parts = line.split()
+                    if len(parts) >= 2 and parts[1] == 'device':
                         device_id = line.split()[0]
                         logging.info(f"Found active emulator: {device_id}")
                         return device_id
@@ -351,10 +357,15 @@ def main():
             android_device = None
             
             for dev in devices:
-                logging.info(f"Found device: {dev.name} (type: {dev.type})")
-                if dev.type != 'local':
+                logging.info(f"Found device: {dev.name} (id: {dev.id}, type: {dev.type})")
+                if dev.id == device_id:
                     android_device = dev
                     break
+            if android_device is None:
+                for dev in devices:
+                    if dev.type not in ('local', 'remote') or dev.type == 'usb':
+                        android_device = dev
+                        break
             
             if android_device:
                 device = android_device
