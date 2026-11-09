@@ -60,6 +60,18 @@ public class UIManager {
         while (System.currentTimeMillis() < deadline) {
             long t = System.currentTimeMillis();
             if (!AppLauncher.isInForeground(appPackage)) { try { Thread.sleep(1000); } catch (InterruptedException ignored) { } continue; }
+            // FIX(v1): a native MFA screen can open on top of the WebView (e.g. React Native modals), while the
+            // DOM still holds the old form; check the native UI for an MFA prompt on every poll
+            try {
+                for (UIElement e : getAllUIElements()) {
+                    if (e.text != null && MFA_HINT.matcher(e.text).find() && boundsOf(e) != null) {
+                        mfaAfterSubmit = true;
+                        lastMfaOutcome = "pending";
+                        System.out.println("[LOGIN_RESULT] MFA prompt after web login: '" + e.text.trim() + "'");
+                        return -3;
+                    }
+                }
+            } catch (Exception ignored) { }
             Map<String, String> m = web().inspect();
             if (m.isEmpty()) {
                 // DevTools page unreachable: only a login that left the WebView altogether counts as done
@@ -558,7 +570,7 @@ public class UIManager {
     public void setTotpSecrets(java.util.Map<String, String> m) { if (m != null) totpSecrets = m; }
 
     private static final java.util.regex.Pattern MFA_HINT = java.util.regex.Pattern.compile(
-        "(?i)(two[- ]?factor|2fa|authenticator|verification code|one[- ]?time|\\botp\\b|security code|enter (the )?code|6[- ]digit|recovery code)");
+        "(?i)(two[- ]?factor|2fa|authenticator|verification code|one[- ]?time|\\botp\\b|security code|enter (the )?code|6[- ]digit|recovery code|security key|authenticate with your)");
 
     /** Returns the MFA code input on screen, or null if this is not an MFA prompt. */
     private UIElement findMfaInput(List<UIElement> els) {
