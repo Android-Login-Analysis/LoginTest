@@ -42,33 +42,33 @@ public class CrashDetector implements BugDetector {
     /**
      * Start monitoring logcat for crashes
      */
+    // FIX(v1): crash/ANR oracle restricted to the app under test.
+    private String targetPackage = null;
+
     public void startMonitoring(String packageName) {
         if (monitoring) {
             return;
         }
-        
+        this.targetPackage = packageName;
         try {
-            // Start logcat monitoring in background
+            // AndroidRuntime: Java crashes; ActivityManager: "ANR in <pkg>"; libc: native fatal signals.
             ProcessBuilder pb = new ProcessBuilder(
-                "adb", "logcat", 
+                "adb", "logcat",
                 "-v", "time",
-                "AndroidRuntime:E", // Only error level
-                "*:S" // Silence others
+                "AndroidRuntime:E",
+                "ActivityManager:E",
+                "libc:F",
+                "*:S"
             );
-            
             logcatProcess = pb.start();
             monitoring = true;
-            
-            // Start thread to read logcat output
             new Thread(() -> readLogcat()).start();
-            
-            System.out.println("[CRASH_DETECTOR] Started monitoring for crashes");
-            
+            System.out.println("[CRASH_DETECTOR] Started monitoring for crashes of " + packageName);
         } catch (IOException e) {
             System.err.println("[CRASH_DETECTOR] Failed to start monitoring: " + e.getMessage());
         }
     }
-    
+
     /**
      * Stop monitoring logcat
      */
@@ -83,67 +83,88 @@ public class CrashDetector implements BugDetector {
     /**
      * Read logcat output and detect crashes
      */
+    private boolean belongsToTarget(String block) {
+        if (targetPackage == null) return true;
+        if (block.contains("Process: " + targetPackage + ",") || block.contains("Process: " + targetPackage + "\n")) return true;
+        if (block.contains("ANR in " + targetPackage)) return true;
+        // native: libc prints the (truncated, max 15 chars) process name in parentheses
+        String tail = targetPackage.length() > 15 ? targetPackage.substring(targetPackage.length() - 15) : targetPackage;
+        return block.contains("Fatal signal") && block.contains("(" + tail + ")");
+    }
+
+    private void finishBlock(StringBuilder block, String ts, String type) {
+        String text = block.toString();
+        if (belongsToTarget(text)) {
+            crashes.add(new CrashEvent(ts, type, text, "Unknown"));
+            System.out.println("[CRASH_DETECTOR] Crash recorded: " + type);
+        } else {
+            String first = text.split("\n")[0];
+            System.out.println("[CRASH_DETECTOR] Ignored crash of another process: " + (first.length() > 160 ? first.substring(0, 160) : first));
+        }
+    }
+
     private void readLogcat() {
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(logcatProcess.getInputStream()))) {
-            
             String line;
-            StringBuilder currentCrash = new StringBuilder();
-            boolean inCrash = false;
-            String crashTimestamp = null;
-            String exceptionType = null;
-            
+            StringBuilder block = new StringBuilder();
+            String blockTag = null;   // logcat tag of the current block (AndroidRuntime / ActivityManager)
+            String ts = null, type = null;
+            CrashEvent recorded = null; boolean decided = false;
             while ((line = reader.readLine()) != null && monitoring) {
-                // Detect FATAL EXCEPTION
-                if (line.contains("FATAL EXCEPTION")) {
-                    inCrash = true;
-                    currentCrash.setLength(0);
-                    currentCrash.append(line).append("\n");
-                    
-                    // Extract timestamp
-                    crashTimestamp = extractTimestamp(line);
-                    exceptionType = "FATAL_EXCEPTION";
-                    
-                    System.out.println("[CRASH_DETECTOR] ⚠️  Crash detected!");
-                    
-                } else if (line.contains("ANR in")) {
-                    // Application Not Responding
-                    inCrash = true;
-                    currentCrash.setLength(0);
-                    currentCrash.append(line).append("\n");
-                    
-                    crashTimestamp = extractTimestamp(line);
-                    exceptionType = "ANR";
-                    
-                    System.out.println("[CRASH_DETECTOR] ⚠️  ANR detected!");
-                    
-                } else if (inCrash) {
-                    currentCrash.append(line).append("\n");
-                    
-                    // Crash stack trace usually ends with a blank line or new log entry
-                    if (line.trim().isEmpty() || !line.startsWith("\t")) {
-                        // Save crash
-                        CrashEvent crash = new CrashEvent(
-                            crashTimestamp,
-                            exceptionType,
-                            currentCrash.toString(),
-                            "Unknown" // Will be updated with actual state
-                        );
-                        crashes.add(crash);
-                        
-                        System.out.println("[CRASH_DETECTOR] Crash recorded: " + exceptionType);
-                        inCrash = false;
+                boolean startJava = line.contains("FATAL EXCEPTION");
+                boolean startAnr = line.contains("ANR in ");
+                boolean startNative = line.contains("Fatal signal");
+                if (blockTag != null && !startJava && !startAnr && line.contains("/" + blockTag + "(")) {
+                    block.append(line).append("\n");   // continuation of the current block
+                    if (recorded != null) recorded.stackTrace = block.toString();
+                    // decide as soon as the process is known so the crash is visible to this round
+                    if (recorded == null && !decided && (line.contains("Process: ") || "ANR".equals(type))) {
+                        decided = true;
+                        if (belongsToTarget(block.toString())) {
+                            recorded = new CrashEvent(ts, type, block.toString(), "Unknown");
+                            crashes.add(recorded);
+                            System.out.println("[CRASH_DETECTOR] Crash recorded: " + type);
+                        } else {
+                            System.out.println("[CRASH_DETECTOR] Ignored crash of another process: " + line.trim());
+                        }
                     }
+                    continue;
+                }
+                if (blockTag != null) {
+                    if (!decided) finishBlock(block, ts, type);
+                    blockTag = null;
+                }
+                recorded = null; decided = false;
+                if (startJava || startAnr) {
+                    block.setLength(0);
+                    block.append(line).append("\n");
+                    ts = extractTimestamp(line);
+                    type = startJava ? "FATAL_EXCEPTION" : "ANR";
+                    blockTag = startJava ? "AndroidRuntime" : "ActivityManager";
+                    if (startAnr) {
+                        decided = true;
+                        if (belongsToTarget(line)) {
+                            recorded = new CrashEvent(ts, type, block.toString(), "Unknown");
+                            crashes.add(recorded);
+                            System.out.println("[CRASH_DETECTOR] ANR recorded");
+                        } else {
+                            System.out.println("[CRASH_DETECTOR] Ignored ANR of another process: " + line.trim());
+                        }
+                    }
+                } else if (startNative) {
+                    StringBuilder one = new StringBuilder(line).append("\n");
+                    finishBlock(one, extractTimestamp(line), "NATIVE_CRASH");
                 }
             }
-            
+            if (blockTag != null && !decided) finishBlock(block, ts, type);
         } catch (IOException e) {
             if (monitoring) {
                 System.err.println("[CRASH_DETECTOR] Error reading logcat: " + e.getMessage());
             }
         }
     }
-    
+
     /**
      * Extract timestamp from logcat line
      */
