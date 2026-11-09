@@ -52,7 +52,9 @@ public class UIManager {
     public long waitForLoginPageGone(long timeoutMs) {
         lastLoginErrorText = null;
         long deadline = System.currentTimeMillis() + timeoutMs;
+        long goneSince = -1;
         while (System.currentTimeMillis() < deadline) {
+            long pollStart = System.currentTimeMillis();
             try {
                 if (AppLauncher.isInForeground(appPackage)) {
                     List<UIElement> els = getAllUIElements();
@@ -62,7 +64,17 @@ public class UIManager {
                         System.out.println("[LOGIN_RESULT] Error dialog after login: '" + dialogMsg + "'");
                         return -2;
                     }
-                    if (findPasswordAnchor(els) == null) return System.currentTimeMillis();
+                    boolean progressShown = false;
+                    for (UIElement e : els) {
+                        if (e.className != null && e.className.contains("ProgressBar") && boundsOf(e) != null) { progressShown = true; break; }
+                    }
+                    if (progressShown) { goneSince = -1; Thread.sleep(500); continue; } // login still in progress
+                    if (findPasswordAnchor(els) == null) {
+                        if (goneSince < 0) goneSince = pollStart;            // first poll without the form
+                        else return goneSince;                                // confirmed by a second poll
+                    } else {
+                        goneSince = -1;                                       // form is back (e.g. after a progress screen)
+                    }
                 }
                 Thread.sleep(1000);
             } catch (Exception e) {
