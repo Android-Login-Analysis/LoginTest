@@ -54,7 +54,18 @@ public class UIManager {
     private boolean lastWaitEndedInProgress = false;
     public boolean lastWaitEndedInProgress() { return lastWaitEndedInProgress; }
 
+    private boolean recoveryTried = false;
+    /** Click a visible Restart / Try again / Retry control on a web error page; true if one was used. */
+    private boolean tryWebRecovery() {
+        String hit = web().clickText("^(restart|try again|retry|reload)$");
+        if (hit == null) return false;
+        System.out.println("[WEBVIEW] Error page offered '" + hit + "'; using it like a user would");
+        try { Thread.sleep(5000); } catch (InterruptedException ignored) { }
+        return true;
+    }
+
     private long waitForWebLogin(long timeoutMs) {
+        recoveryTried = false;
         long deadline = System.currentTimeMillis() + timeoutMs;
         int goneStreak = 0;
         while (System.currentTimeMillis() < deadline) {
@@ -94,6 +105,8 @@ public class UIManager {
             }
             else {
                 String err = m.getOrDefault("err", "");
+                // FIX(v1): a user facing an error page with a recovery control (Restart / Try again) uses it once
+                if (!recoveryTried && tryWebRecovery()) { recoveryTried = true; continue; }
                 if (!err.isEmpty() && !"0".equals(m.getOrDefault("pw", "0"))) {
                     lastLoginErrorText = err;
                     System.out.println("[LOGIN_RESULT] Web error after login: '" + err + "'");
@@ -833,6 +846,7 @@ public class UIManager {
                     continue;
                 }
             }
+            if (!wnav.isEmpty() && tryWebRecovery()) continue;
             // FIX(v1): MFA screens that appear during navigation (e.g. email -> 2FA -> password)
             String mfaNav = handleMfaDuringNavigation();
             if ("pending".equals(mfaNav)) return false;
