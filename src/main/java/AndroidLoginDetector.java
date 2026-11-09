@@ -974,8 +974,7 @@ public class AndroidLoginDetector {
             // a valid-credential round (even when the app itself has no test account, its SSO provider may)
             uiManager.setRoundValid(System.getenv("LIFT_VALID_PROB") != null ? roundUsedValidPair
                 : ROUND_VALIDITY[(round - 1) % ROUND_VALIDITY.length]);
-            uiManager.setServiceAccounts(googleEmailPool.isEmpty() ? null : googleEmailPool.get(0),
-                facebookEmailPool.isEmpty() ? null : facebookEmailPool.get(0));
+            uiManager.setServiceAccounts(realAccount(googleEmailPool), realAccount(facebookEmailPool));
             // FIX(v1): deterministic network condition for the whole login (navigation, MFA, submit)
             final String roundCondition = ROUND_CONDITIONS[(round - 1) % ROUND_CONDITIONS.length];
             final boolean chaosWasRunning = networkChaosManager != null && networkChaosManager.isRunning();
@@ -2472,6 +2471,16 @@ public class AndroidLoginDetector {
     /**
      * Get random Google account
      */
+    // placeholder accounts in the pools (demo/test/example addresses) are not real service accounts
+    private static String realAccount(List<String> pool) {
+        for (String a : pool) {
+            String l = a.toLowerCase();
+            if (l.matches(".*(demo|test|example|sample|dummy|fake).*") || l.endsWith("@facebook.com")) continue;
+            return a;
+        }
+        return null;
+    }
+
     private String getRandomGoogleAccount() {
         if (!googleEmailPool.isEmpty()) {
             return googleEmailPool.get(new Random().nextInt(googleEmailPool.size()));
