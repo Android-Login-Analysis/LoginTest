@@ -1175,11 +1175,11 @@ public class AndroidLoginDetector {
                     // re-attach Frida to the fresh process: keeps instrumentation and WebView debugging enabled
                     startFridaMonitoring();
                     try { TimeUnit.SECONDS.sleep(8); } catch (InterruptedException ignored) { }
+                    String rUser = accountPool.isEmpty() ? "testuser@example.com" : accountPool.get(new Random().nextInt(accountPool.size()));
+                    String rPass = passwordPool.isEmpty() ? "wrongpass123" : passwordPool.get(new Random().nextInt(passwordPool.size()));
+                    uiManager.setPendingUsername(rUser);   // before navigation: it resets per-attempt state (incl. DOM mode)
                     boolean onLogin = detectLoginPageWithUI() || tryDirectLoginActivities();
                     if (onLogin) {
-                        String rUser = accountPool.isEmpty() ? "testuser@example.com" : accountPool.get(new Random().nextInt(accountPool.size()));
-                        String rPass = passwordPool.isEmpty() ? "wrongpass123" : passwordPool.get(new Random().nextInt(passwordPool.size()));
-                        uiManager.setPendingUsername(rUser);
                         List<String[]> findings = uiManager.runRotationChecks(rUser, rPass);
                         if (stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
                             var lifecycle = stateMachineManager.getBugDetectionManager().getLifecycleDetector();
