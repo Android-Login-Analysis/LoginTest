@@ -560,6 +560,7 @@ public class UIManager {
     private boolean roundValid = false;
     public void setServiceAccounts(String google, String facebook) { googleAccount = google; facebookAccount = facebook; }
     public void setRoundValid(boolean v) { roundValid = v; }
+    public boolean isRoundValid() { return roundValid; }
     private void adoptServiceAccount(String url) {
         if (url == null) return;
         if (url.contains("accounts.google.com")) {
