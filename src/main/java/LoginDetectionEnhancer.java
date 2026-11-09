@@ -356,6 +356,11 @@ public class LoginDetectionEnhancer {
                 java.util.Set<String> perms = new java.util.LinkedHashSet<>();
                 while (m.find()) perms.add(m.group(1));
                 for (String perm : perms) runQuiet("adb", "shell", "pm", "grant", appPackage, perm);
+                // FIX(v1): special access is an app-op, not a runtime permission; onboarding screens can block on it
+                String[][] ops = {{"REQUEST_INSTALL_PACKAGES", "REQUEST_INSTALL_PACKAGES"}, {"MANAGE_EXTERNAL_STORAGE", "MANAGE_EXTERNAL_STORAGE"},
+                                  {"SYSTEM_ALERT_WINDOW", "SYSTEM_ALERT_WINDOW"}, {"SCHEDULE_EXACT_ALARM", "SCHEDULE_EXACT_ALARM"}};
+                for (String[] op : ops) if (perms.contains("android.permission." + op[0])) runQuiet("adb", "shell", "appops", "set", appPackage, op[1], "allow");
+                if (out.contains("REQUEST_IGNORE_BATTERY_OPTIMIZATIONS")) runQuiet("adb", "shell", "dumpsys", "deviceidle", "whitelist", "+" + appPackage);
             } catch (Exception ignored) { }
         }
 

@@ -72,6 +72,18 @@ public class UIManager {
                     }
                 }
             } catch (Exception ignored) { }
+            // ... or inside the page itself (an MFA code form replacing the credential form)
+            String domText = web().eval("(document.body&&document.body.innerText||'').slice(0,20000)");
+            if (domText != null) {
+                java.util.regex.Matcher mm = MFA_HINT.matcher(domText);
+                if (mm.find() && (webLoginDomText == null || !MFA_HINT.matcher(webLoginDomText).find())) {
+                    int a = Math.max(0, domText.lastIndexOf('\n', mm.start()) + 1), b = domText.indexOf('\n', mm.end());
+                    mfaAfterSubmit = true;
+                    lastMfaOutcome = "pending";
+                    System.out.println("[LOGIN_RESULT] MFA prompt in page after web login: '" + domText.substring(a, b < 0 ? domText.length() : b).trim() + "'");
+                    return -3;
+                }
+            }
             Map<String, String> m = web().inspect();
             if (m.isEmpty()) {
                 // DevTools page unreachable: only a login that left the WebView altogether counts as done
@@ -537,7 +549,27 @@ public class UIManager {
     private WebViewBridge web = null;
     private boolean webMode = false;
     private String webLoginUrl = null;
+    private String webLoginDomText = null;   // page text before submitting, to tell new MFA prompts from static text
     public boolean isWebMode() { return webMode; }
+    private String lastGuestBounds = null;
+    private boolean preferGuestLogin = false;
+    private boolean guestMode = false;
+    public void setPreferGuestLogin(boolean b) { preferGuestLogin = b; guestMode = false; }
+    public boolean isGuestMode() { return guestMode; }
+
+    /** Tap the anonymous/guest login option; the login is then judged like any other submitted login. */
+    public boolean guestLogin() {
+        int[] r = parseBoundsRect(lastGuestBounds);
+        if (r == null) return false;
+        loginClickActivity = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
+        loginButtonClickTime = System.currentTimeMillis();
+        try {
+            new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf((r[0] + r[2]) / 2), String.valueOf((r[1] + r[3]) / 2))
+                .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+        } catch (Exception e) { return false; }
+        System.out.println("[LOGIN] Tapped credential-free login option");
+        return true;
+    }
     private WebViewBridge web() { if (web == null) web = new WebViewBridge(appPackage); return web; }
 
     /** Fill and submit a web login form with trusted input events (identifier-only screens: identifier + Next). */
@@ -545,6 +577,7 @@ public class UIManager {
         Map<String, String> m = web().inspect();
         if (m.isEmpty()) return false;
         webLoginUrl = m.get("url");
+        webLoginDomText = web().eval("(document.body&&document.body.innerText||'').slice(0,20000)");
         boolean pwShown = !"0".equals(m.get("pw"));
         boolean filled = usernameEnteredInStep1 ? web().fillTrusted(null, password)
             : web().fillTrusted(username, pwShown ? password : null);
@@ -707,8 +740,14 @@ public class UIManager {
 
     public boolean detectLoginPage() {
         for (int hop = 0; hop <= 5; hop++) {
-            lastLoginEntryBounds = null; lastLoginEntryPriority = 99;
+            lastLoginEntryBounds = null; lastLoginEntryPriority = 99; lastGuestBounds = null;
             if (detectLoginPageOnce()) return true;
+            // FIX(v1): credential-free (anonymous/guest) login offered next to SSO: use it when the round asks for it
+            if (preferGuestLogin && lastGuestBounds != null && lastLoginEntryPriority >= 4) {
+                guestMode = true;
+                System.out.println("[LOGIN_ENTRY] Credential-free login offered; using it as this round's login method");
+                return true;
+            }
             if (hop == 5) return false;
             if (lastLoginEntryBounds == null && !onMfaScreen()) return false;
             // FIX(v1): login entries inside a WebView may be missing from the accessibility tree
@@ -819,6 +858,9 @@ public class UIManager {
                     // Check login button
                     if (element.visible && element.text != null && element.text.trim().length() <= 40 && boundsOf(element) != null) {
                         String t = element.text.trim().toLowerCase();
+                        if (t.matches("(anonymous|guest|continue as guest|login as guest|use without (an )?account|try as guest)")) {
+                            lastGuestBounds = element.bounds;
+                        }
                         if (t.matches("(sign in|log in|login|signin|log on|sign in / register|sign in or register)")
                                 || t.matches(".*(account|member)\\?\\s*(log ?in|sign ?in)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 1;
@@ -826,7 +868,7 @@ public class UIManager {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2;
                         } else if (lastLoginEntryPriority > 3 && t.matches("(go to account menu|my account|profile)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 3;
-                        } else if (lastLoginEntryPriority > 3 && t.matches("(get started|continue|next|skip|start|got it|let's go|lets go)")) {
+                        } else if (lastLoginEntryPriority > 3 && t.matches("(get started|continue|next|skip|start|got it|let's go|lets go|finish|done|accept|agree|i agree)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 3;
                         } else if (lastLoginEntryPriority > 4 && t.matches("(facebook|google)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 4;   // SSO / service selection
