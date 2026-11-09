@@ -220,6 +220,7 @@ public class NetworkChaosManager {
     // - "disable" also blocks outbound traffic with iptables (built-in DROP), keeping adb (tcp/5555)
     // - netem shaping is attached to a prio band that excludes adb traffic, and is removed on restore
     private String netIface = null;
+    private String savedDefaultRoute = null;
 
     private String iface() {
         if (netIface != null) return netIface;
@@ -263,10 +264,13 @@ public class NetworkChaosManager {
      */
     public void applyCondition(String condition) {
         if ("offline".equalsIgnoreCase(condition)) {
-            logger.logInfo("🔴 Round condition: OFFLINE");
+            logger.logInfo("🔴 Round condition: OFFLINE (default route removed: connections fail fast, like airplane mode)");
             executeAdbCommandSilent("svc data disable");
             executeAdbCommandSilent("svc wifi disable");
-            blockTraffic();
+            try {
+                String r = executeAdbCommand("ip route show default").trim();
+                if (r.startsWith("default")) { savedDefaultRoute = r; executeAdbCommandSilent("ip route del " + r); }
+            } catch (Exception ignored) { }
         } else if ("limited".equalsIgnoreCase(condition)) {
             logger.logInfo("🟠 Round condition: LIMITED (2.5s latency, 25% loss)");
             shapeTraffic("delay 2500ms 500ms loss 25%");
@@ -290,6 +294,7 @@ public class NetworkChaosManager {
             
             // Remove our traffic block and shaping (do not flush unrelated iptables rules)
             unblockTraffic();
+            if (savedDefaultRoute != null) { executeAdbCommandSilent("ip route add " + savedDefaultRoute); savedDefaultRoute = null; }
             executeAdbCommandSilent("tc qdisc del dev " + iface() + " root");
             
             currentState = NetworkState.GOOD;

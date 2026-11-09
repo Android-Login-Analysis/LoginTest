@@ -965,8 +965,10 @@ public class AndroidLoginDetector {
             // Step 4: Detect login page using UI manager
             // FIX(v1): pick this round's credentials before detection so two-step logins
             // (identifier first, password on the next screen) can be completed during navigation.
+            forcedValidity = System.getenv("LIFT_VALID_PROB") != null ? null : ROUND_VALIDITY[(round - 1) % ROUND_VALIDITY.length];
             roundUsername = getRandomAccount();
             roundPassword = getRandomPassword();
+            forcedValidity = null;
             roundUsedValidPair = lastCredentialChoiceValid;
             uiManager.setPendingUsername(roundUsername);
             boolean loginPageDetected = detectLoginPageWithUI();
@@ -1005,7 +1007,7 @@ public class AndroidLoginDetector {
                 
                 boolean usedValidPair = lastCredentialChoiceValid;
                 // FIX(v1): deterministic network condition for this round's login attempt
-                String roundCondition = round % 3 == 2 ? "limited" : (round % 3 == 0 ? "offline" : "normal");
+                String roundCondition = ROUND_CONDITIONS[(round - 1) % ROUND_CONDITIONS.length];
                 boolean chaosWasRunning = networkChaosManager != null && networkChaosManager.isRunning();
                 if (networkChaosManager != null) {
                     if (chaosWasRunning) networkChaosManager.stop();
@@ -1046,6 +1048,8 @@ public class AndroidLoginDetector {
                         logInfo("Login stopped at the MFA prompt (MFACodePending); no authenticator secret for this account");
                     } else if (gone == -2) {
                         logInfo("Login rejected with message: '" + uiManager.getLastLoginErrorText() + "' (validPair=" + usedValidPair + ")");
+                        if ("normal".equals(roundCondition) && !usedValidPair) recordFailureMessage(uiManager.getLastLoginErrorText(), false);
+                        else if (!"normal".equals(roundCondition) && usedValidPair) recordFailureMessage(uiManager.getLastLoginErrorText(), true);
                     } else if (usedValidPair) {
                         timeoutDetector.recordLoginAttempt(clickTime, System.currentTimeMillis(), false);
                     } else {
@@ -1072,7 +1076,8 @@ public class AndroidLoginDetector {
                     try { Thread.sleep(4000); } catch (InterruptedException ignored) { }   // let the app persist the session
                     stateMachineManager.getBugDetectionManager().getStorageDetector().scan(appPackage, username, password);
                 }
-                boolean expectSuccess = authenticated || usedValidPair;
+                // a valid login is only expected to succeed on a working network
+                boolean expectSuccess = authenticated || (usedValidPair && "normal".equals(roundCondition));
                 logInfo("Login outcome: inputOk=" + loginSuccess + ", loginPageGone=" + authenticated + ", validPair=" + usedValidPair);
                 if (loginSuccess && expectSuccess) {
                     logInfo("Login process completed successfully");
@@ -1485,9 +1490,33 @@ public class AndroidLoginDetector {
         try { return v == null ? d : Math.max(0, Math.min(1, Double.parseDouble(v))); } catch (Exception e) { return d; }
     }
 
+    // FIX(v1): deterministic 4-round schedule (network condition x credential validity)
+    private static final String[] ROUND_CONDITIONS = {"normal", "normal", "limited", "offline"};
+    private static final Boolean[] ROUND_VALIDITY = {true, false, true, true};
+    private Boolean forcedValidity = null;
+    // differential misleading-error oracle: messages seen for credential failures vs network failures
+    private final java.util.Set<String> credentialFailureMessages = new java.util.LinkedHashSet<>();
+    private final java.util.Set<String> networkFailureMessages = new java.util.LinkedHashSet<>();
+    private boolean misleadingReported = false;
+
+    private void recordFailureMessage(String msg, boolean networkFault) {
+        if (msg == null || msg.trim().isEmpty()) return;
+        String norm = msg.trim().toLowerCase().replaceAll("\\s+", " ");
+        (networkFault ? networkFailureMessages : credentialFailureMessages).add(norm);
+        if (misleadingReported) return;
+        for (String n : networkFailureMessages) {
+            if (credentialFailureMessages.contains(n) && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+                misleadingReported = true;
+                stateMachineManager.getBugDetectionManager().getErrorMismatchDetector().recordDifferentialFinding(n);
+                logInfo("[ERROR_MSG] Same message for wrong credentials and network failure: '" + n + "'");
+            }
+        }
+    }
+
     private String getRandomAccount() {
         pendingPairedPassword = null;
-        if (!validPairs.isEmpty() && new Random().nextDouble() < VALID_PAIR_PROBABILITY) {
+        boolean useValid = forcedValidity != null ? forcedValidity : new Random().nextDouble() < VALID_PAIR_PROBABILITY;
+        if (!validPairs.isEmpty() && useValid) {
             String[] pair = validPairs.get(new Random().nextInt(validPairs.size()));
             pendingPairedPassword = pair[1];
             lastCredentialChoiceValid = true;

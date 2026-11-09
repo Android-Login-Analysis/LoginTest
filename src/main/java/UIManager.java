@@ -105,6 +105,14 @@ public class UIManager {
                     if (activityChanged && findPasswordAnchor(els) == null) return pollStart;    // left the login screen
                     lastWaitEndedInProgress = progressShown;
                     if (progressShown) { goneSince = -1; Thread.sleep(500); continue; } // login still in progress
+                    if (findPasswordAnchor(els) != null && !progressShown) {
+                        String inline = visibleErrorText(els);              // inline error next to the form
+                        if (inline != null) {
+                            lastLoginErrorText = inline;
+                            System.out.println("[LOGIN_RESULT] Inline error after login: '" + inline + "'");
+                            return -2;
+                        }
+                    }
                     if (findPasswordAnchor(els) == null) {
                         if (goneSince < 0) goneSince = pollStart;            // first poll without the form
                         else return goneSince;                                // confirmed by a second poll

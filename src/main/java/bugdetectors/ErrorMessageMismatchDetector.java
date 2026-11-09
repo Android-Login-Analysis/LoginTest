@@ -75,9 +75,23 @@ public class ErrorMessageMismatchDetector implements BugDetector {
         System.out.println("[BUG_DETECTOR] Recorded toast: " + message + " (state: " + currentState + ")");
     }
     
+    // FIX(v1): differential oracle (paper V-C): identical messages for different failure causes
+    private final List<DetectedBug> differential = new ArrayList<>();
+
+    public void recordDifferentialFinding(String message) {
+        DetectedBug bug = new DetectedBug(BugCategory.IMPROPER_ERROR_STATE_HANDLING, "MISLEADING_ERROR_MESSAGE",
+            "The same error message is shown for wrong credentials and for a network failure");
+        bug.setSeverity(DetectedBug.Severity.MEDIUM);
+        bug.setLocation("Login error handling");
+        bug.setEvidence("Message for both causes: '" + message + "'");
+        differential.add(bug);
+    }
+
     @Override
     public List<DetectedBug> detectBugs() {
         detectedBugs.clear();
+        detectedBugs.addAll(differential);
+        differential.clear();
         
         // For each toast message, find the closest error state
         for (ToastMessage toast : toastMessages) {
