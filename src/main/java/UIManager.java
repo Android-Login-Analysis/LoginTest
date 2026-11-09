@@ -555,6 +555,8 @@ public class UIManager {
     private boolean preferGuestLogin = false;
     private boolean guestMode = false;
     public void setPreferGuestLogin(boolean b) { preferGuestLogin = b; guestMode = false; }
+    private boolean stopAtIdentifier = false;
+    public void setStopAtIdentifier(boolean b) { stopAtIdentifier = b; }
     public boolean isGuestMode() { return guestMode; }
 
     /** Tap the anonymous/guest login option; the login is then judged like any other submitted login. */
@@ -995,6 +997,10 @@ public class UIManager {
                     }
                     if (pendingUsername != null && !usernameEnteredInStep1 && !"0".equals(wm.getOrDefault("id", "0"))
                             && !wm.getOrDefault("btn", "").isEmpty()) {
+                        if (stopAtIdentifier) {
+                            System.out.println("[WEBVIEW] Identifier-only web form reached (rotation checks run on it)");
+                            return true;
+                        }
                         System.out.println("[WEBVIEW] Identifier-only web form; entering username and continuing");
                         if (web().fillTrusted(pendingUsername, null) && web().submit()) usernameEnteredInStep1 = true;
                         Thread.sleep(7000);
