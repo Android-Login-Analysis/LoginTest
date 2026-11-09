@@ -128,6 +128,15 @@ def on_message(message, data):
                 # Try to parse the message as JSON
                 payload = json.loads(message['payload'])
             
+            if payload.get('type') == 'intent_extra':
+                # FIX(v1): string extras put into Intents/Bundles (key + SHA-256 of the value, never the value)
+                try:
+                    p_ = os.path.join(os.path.dirname(__file__), '..', 'logs', 'intent_extras.txt')
+                    with open(p_, 'a') as f_:
+                        f_.write(f"{time.time():.3f}\t{payload.get('where','')}\t{payload.get('key','')}\t{payload.get('sha','')}\n")
+                except Exception:
+                    pass
+                return
             if payload.get('type') == 'api_call':
                 tainted = payload.get('tainted', False)
                 taint_marker = ' [TAINTED]' if tainted else ''

@@ -107,6 +107,28 @@ rpc.exports = {
         Java.perform(function () {
             console.log('[*] Java.perform started');
 
+            // FIX(v1): record string extras put into Intents/Bundles (key + SHA-256 of value) so the
+            // oracle can tell whether the login password is passed around in plaintext (e.g. NewsBlur #1996).
+            try {
+                const MD = Java.use('java.security.MessageDigest');
+                const JStr = Java.use('java.lang.String');
+                const sha = function (v) {
+                    const d = MD.getInstance('SHA-256').digest(JStr.$new(v).getBytes('UTF-8'));
+                    let h = ''; for (let i = 0; i < d.length; i++) h += ('0' + (d[i] & 0xff).toString(16)).slice(-2);
+                    return h;
+                };
+                const report = function (where, k, v) {
+                    try { if (v !== null && v !== undefined && ('' + v).length >= 4 && ('' + v).length <= 128) send({type: 'intent_extra', where: where, key: '' + k, sha: sha('' + v)}); } catch (e) { }
+                };
+                const Intent = Java.use('android.content.Intent');
+                const putStr = Intent.putExtra.overload('java.lang.String', 'java.lang.String');
+                putStr.implementation = function (k, v) { report('Intent', k, v); return putStr.call(this, k, v); };
+                const Bundle = Java.use('android.os.BaseBundle');
+                const bPut = Bundle.putString.overload('java.lang.String', 'java.lang.String');
+                bPut.implementation = function (k, v) { report('Bundle', k, v); return bPut.call(this, k, v); };
+                console.log('[+] Intent/Bundle extra recorder installed');
+            } catch (e) { console.log('[-] Intent extra recorder unavailable: ' + e); }
+
             // FIX(v1): expose WebView content to the DevTools protocol so LIFTDroid can drive web-based
             // login forms that are hidden from the accessibility tree (e.g. custom WebView wrappers).
             try {

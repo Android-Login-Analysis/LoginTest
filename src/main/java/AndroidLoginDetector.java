@@ -1070,6 +1070,8 @@ public class AndroidLoginDetector {
                     logInfo("Login still in progress after the wait under '" + roundCondition + "' network: no timeout handling");
                     stateMachineManager.getBugDetectionManager().getTimeoutDetector().recordLoginAttempt(clickTime, System.currentTimeMillis(), false);
                 }
+                // FIX(v1): password passed through an Intent/Bundle extra in plaintext
+                checkPasswordInExtras(password, clickTime);
                 boolean authenticated = gone > 0;
                 if (authenticated && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
                     try { Thread.sleep(4000); } catch (InterruptedException ignored) { }   // let the app persist the session
@@ -1523,6 +1525,34 @@ public class AndroidLoginDetector {
     private final java.util.Set<String> credentialFailureMessages = new java.util.LinkedHashSet<>();
     private final java.util.Set<String> networkFailureMessages = new java.util.LinkedHashSet<>();
     private boolean misleadingReported = false;
+
+    private final java.util.Set<String> extraFindings = new java.util.HashSet<>();
+
+    private void checkPasswordInExtras(String password, long sinceMs) {
+        if (password == null || password.length() < 4 || stateMachineManager == null || stateMachineManager.getBugDetectionManager() == null) return;
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
+            byte[] d = md.digest(password.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            StringBuilder h = new StringBuilder();
+            for (byte b : d) h.append(String.format("%02x", b));
+            java.io.File f = new java.io.File("logs/intent_extras.txt");
+            if (!f.exists()) return;
+            for (String line : java.nio.file.Files.readAllLines(f.toPath())) {
+                String[] p = line.split("\t");
+                if (p.length < 4 || !p[3].equals(h.toString())) continue;
+                double ts = Double.parseDouble(p[0]) * 1000;
+                if (sinceMs > 0 && ts < sinceMs - 60000) continue;
+                String key = p[1] + ":" + p[2];
+                if (extraFindings.add(key)) {
+                    stateMachineManager.getBugDetectionManager().getObservedDetector().record("INCORRECT_LOGIN_FLOW", "PASSWORD_IN_INTENT_EXTRA",
+                        "The login password is passed in plaintext through an Intent/Bundle extra",
+                        p[1] + " extra '" + p[2] + "' carries the password used for this login");
+                }
+            }
+        } catch (Exception e) {
+            logError("Intent extra check failed: " + e.getMessage());
+        }
+    }
 
     private void recordFailureMessage(String msg, boolean networkFault) {
         if (msg == null || msg.trim().isEmpty()) return;
