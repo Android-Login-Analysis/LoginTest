@@ -1613,6 +1613,11 @@ public class AndroidLoginDetector {
             // FIX(v1): invalid rounds use a special-character string as the username (paper V-B credential pool)
             java.util.List<String> specials = new java.util.ArrayList<>();
             for (String c : passwordPool) if (c.matches(".*[\\^=+%*()'\\\\<>&;].*")) specials.add(c);
+            // prefer email-shaped strings: many forms validate the email format client-side, so only those
+            // invalid credentials actually reach the authentication logic
+            java.util.List<String> emailLike = new java.util.ArrayList<>();
+            for (String c : specials) if (c.contains("@")) emailLike.add(c);
+            if (!emailLike.isEmpty()) specials = emailLike;
             if (!specials.isEmpty()) {
                 String u = specials.get(new Random().nextInt(specials.size()));
                 logInfo("Credential choice: invalid, special-character username");
