@@ -555,6 +555,27 @@ public class UIManager {
     private boolean preferGuestLogin = false;
     private boolean guestMode = false;
     public void setPreferGuestLogin(boolean b) { preferGuestLogin = b; guestMode = false; }
+    // FIX(v1): SSO pages opened inside a WebView (Google/Facebook) take the service's own account in valid rounds
+    private String googleAccount = null, facebookAccount = null;
+    private boolean roundValid = false;
+    public void setServiceAccounts(String google, String facebook) { googleAccount = google; facebookAccount = facebook; }
+    public void setRoundValid(boolean v) { roundValid = v; }
+    private void adoptServiceAccount(String url) {
+        if (url == null) return;
+        if (url.contains("accounts.google.com")) {
+            googleLoginDetected = true;
+            if (roundValid && googleAccount != null && !googleAccount.equals(pendingUsername)) {
+                pendingUsername = googleAccount;
+                System.out.println("[WEBVIEW] Google sign-in page: using the Google test account");
+            }
+        } else if (url.matches("https?://([a-z]+\\.)?facebook\\.com/.*")) {
+            facebookLoginDetected = true;
+            if (roundValid && facebookAccount != null && !facebookAccount.equals(pendingUsername)) {
+                pendingUsername = facebookAccount;
+                System.out.println("[WEBVIEW] Facebook sign-in page: using the Facebook test account");
+            }
+        }
+    }
     private boolean stopAtIdentifier = false;
     public void setStopAtIdentifier(boolean b) { stopAtIdentifier = b; }
     public boolean isGuestMode() { return guestMode; }
@@ -991,6 +1012,7 @@ public class UIManager {
                 Map<String, String> wm = web().inspect();
                 if (!wm.isEmpty()) {
                     System.out.println("[WEBVIEW] page: " + wm);
+                    adoptServiceAccount(wm.getOrDefault("url", ""));
                     if (!"0".equals(wm.get("pw"))) {
                         webMode = true;
                         System.out.println("[WEBVIEW] Login form found in WebView DOM");

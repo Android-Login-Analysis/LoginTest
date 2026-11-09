@@ -971,6 +971,9 @@ public class AndroidLoginDetector {
             forcedValidity = null;
             roundUsedValidPair = lastCredentialChoiceValid;
             uiManager.setPendingUsername(roundUsername);
+            uiManager.setRoundValid(roundUsedValidPair);
+            uiManager.setServiceAccounts(googleEmailPool.isEmpty() ? null : googleEmailPool.get(0),
+                facebookEmailPool.isEmpty() ? null : facebookEmailPool.get(0));
             // FIX(v1): deterministic network condition for the whole login (navigation, MFA, submit)
             final String roundCondition = ROUND_CONDITIONS[(round - 1) % ROUND_CONDITIONS.length];
             final boolean chaosWasRunning = networkChaosManager != null && networkChaosManager.isRunning();
