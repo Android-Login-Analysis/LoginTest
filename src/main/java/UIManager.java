@@ -127,6 +127,8 @@ public class UIManager {
             }
             String resourceId = extractAttribute(attributes, "resource-id");
             String className = extractAttribute(attributes, "class");
+            // FIX(v1): uiautomator exposes password inputs (inputType 0x81) as password="true"
+            if ("true".equalsIgnoreCase(extractAttribute(attributes, "password"))) className = className + " [password]";
             String bounds = extractAttribute(attributes, "bounds");
             String textAttr = extractAttribute(attributes, "text");
             String contentDesc = extractAttribute(attributes, "content-desc");
@@ -348,31 +350,39 @@ public class UIManager {
     // FIX(v1): only accept a login page that belongs to the app under test. Without this check the
     // detector matched launcher/dialer widgets (e.g. a "Phone" icon) as login fields after the app died.
     private boolean isAppInForeground() {
-        try {
-            Process p = new ProcessBuilder("adb", "shell", "dumpsys", "activity", "activities").redirectErrorStream(true).start();
-            String out = new String(p.getInputStream().readAllBytes());
-            p.waitFor(15, java.util.concurrent.TimeUnit.SECONDS);
-            for (String line : out.split("\n")) {
-                if (line.contains("topResumedActivity") || line.contains("mResumedActivity")) {
-                    return line.contains(appPackage + "/");
-                }
-            }
-        } catch (Exception ignored) { }
-        return false;
+        AppLauncher.dismissPermissionDialogs();
+        return AppLauncher.isInForeground(appPackage);
     }
 
     public boolean ensureAppInForeground() {
         if (isAppInForeground()) return true;
         System.out.println("[FOREGROUND] App under test is not in foreground; relaunching " + appPackage);
-        try {
-            new ProcessBuilder("adb", "shell", "monkey", "-p", appPackage, "-c", "android.intent.category.LAUNCHER", "1")
-                .redirectErrorStream(true).start().waitFor(20, java.util.concurrent.TimeUnit.SECONDS);
-            Thread.sleep(6000);
-        } catch (Exception ignored) { }
-        return isAppInForeground();
+        return AppLauncher.launch(appPackage);
     }
 
+    // FIX(v1): if the screen has a login entry ("Sign in", "Log in") but no credential form, tap the
+    // entry (up to 2 hops) before falling back to random Monkey exploration.
+    private String lastLoginEntryBounds = null;
+
     public boolean detectLoginPage() {
+        for (int hop = 0; hop <= 2; hop++) {
+            lastLoginEntryBounds = null;
+            if (detectLoginPageOnce()) return true;
+            if (hop == 2 || lastLoginEntryBounds == null) return false;
+            int[] r = parseBoundsRect(lastLoginEntryBounds);
+            if (r == null) return false;
+            int cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2;
+            System.out.println("[LOGIN_ENTRY] No credential form yet; tapping login entry at (" + cx + "," + cy + ")");
+            try {
+                new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf(cx), String.valueOf(cy))
+                    .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+                Thread.sleep(4000);
+            } catch (Exception ignored) { }
+        }
+        return false;
+    }
+
+    private boolean detectLoginPageOnce() {
         try {
             System.out.println("Using ADB to detect login page...");
             if (!ensureAppInForeground()) {
@@ -420,6 +430,10 @@ public class UIManager {
                     }
 
                     // Check login button
+                    if (element.visible && element.text != null && element.text.trim().length() <= 20
+                            && element.text.trim().toLowerCase().matches("(sign in|log in|login|signin|sign in / register|sign in or register)")) {
+                        lastLoginEntryBounds = element.bounds;
+                    }
                     if (!loginButtonDetected && matchesLoginButtonPattern(element.text, element.resourceId)) {
                         loginButtonDetected = true;
                         System.out.println("Login button detected: " + element.text + " (ID: " + element.resourceId + ")");
@@ -483,9 +497,11 @@ public class UIManager {
                 hasIdClassHints = hasLoginHintsInIdOrClass(snapshotElements);
             }
 
-            boolean isLoginByVote = votes >= voteThreshold;
+            // FIX(v1): per paper Section V-B a credential login page needs a password field; screens with
+            // only a "Sign in" entry (e.g. the app's home screen) are not login pages.
+            boolean isLoginByVote = passwordFieldDetected && votes >= voteThreshold;
             boolean isLoginBySso = (googleLoginDetected || facebookLoginDetected) && (usernameFieldDetected || passwordFieldDetected || loginButtonDetected);
-            boolean isLoginByWebViewHeur = webViewPresent && (
+            boolean isLoginByWebViewHeur = webViewPresent && passwordFieldDetected && (
                     votes >= 1 ||
                     (webViewLarge && hasIdClassHints) ||
                     (focusedInWebView && hasIdClassHints)
@@ -986,6 +1002,8 @@ public class UIManager {
             // Parse attributes
             String resourceId = extractAttribute(attributes, "resource-id");
             String className = extractAttribute(attributes, "class");
+            // FIX(v1): uiautomator exposes password inputs (inputType 0x81) as password="true"
+            if ("true".equalsIgnoreCase(extractAttribute(attributes, "password"))) className = className + " [password]";
             String bounds = extractAttribute(attributes, "bounds");
             // UIAutomator keeps visible labels in a 'text' ATTRIBUTE, not innerText
             String textAttr = extractAttribute(attributes, "text");
@@ -1196,6 +1214,7 @@ public class UIManager {
     }
 
     private boolean matchesPasswordPattern(String text, String resourceId, String className) {
+        if (className != null && className.contains("[password]")) return true;
         if (text == null)
             text = "";
         if (resourceId == null)

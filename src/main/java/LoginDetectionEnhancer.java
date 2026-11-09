@@ -365,9 +365,9 @@ public class LoginDetectionEnhancer {
                 runQuiet("adb", "shell", "am", "force-stop", appPackage);
                 runQuiet("adb", "shell", "pm", "clear", appPackage);
                 grantRequestedPermissions();
-                runQuiet("adb", "shell", "monkey", "-p", appPackage, "-c", "android.intent.category.LAUNCHER", "1");
-                Thread.sleep(8000);
-                return true;
+                boolean ok = AppLauncher.launch(appPackage);
+                Thread.sleep(3000);
+                return ok;
             } catch (Exception e) {
                 System.err.println("App-level reset failed: " + e.getMessage());
                 return false;
