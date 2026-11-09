@@ -1087,6 +1087,19 @@ public class AndroidLoginDetector {
                 // FIX(v1): password passed through an Intent/Bundle extra in plaintext
                 checkPasswordInExtras(username, password, clickTime);
                 boolean authenticated = gone > 0;
+                // FIX(v1): wrong credentials must never be accepted or advance to MFA (#4031 / #4032-style)
+                if (!usedValidPair && loginSuccess && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+                    var observed = stateMachineManager.getBugDetectionManager().getObservedDetector();
+                    if (uiManager.mfaPromptAfterSubmit()) {
+                        observed.record("INCORRECT_LOGIN_FLOW", "MFA_AFTER_INVALID_CREDENTIALS",
+                            "Invalid credentials advanced the login to the MFA step",
+                            "username '" + username + "' (invalid) reached the MFA prompt under '" + roundCondition + "' network");
+                    } else if (authenticated) {
+                        observed.record("INCORRECT_NAVIGATION", "INVALID_CREDENTIALS_ACCEPTED",
+                            "The login screen was left although the credentials were invalid",
+                            "username '" + username + "' (invalid); screen after login: " + AppLauncher.topActivityLine().trim());
+                    }
+                }
                 if (authenticated && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
                     try { Thread.sleep(4000); } catch (InterruptedException ignored) { }   // let the app persist the session
                     stateMachineManager.getBugDetectionManager().getStorageDetector().scan(appPackage, username, password);
@@ -1596,6 +1609,16 @@ public class AndroidLoginDetector {
             return pair[0];
         }
         lastCredentialChoiceValid = false;
+        if (forcedValidity != null && !forcedValidity) {
+            // FIX(v1): invalid rounds use a special-character string as the username (paper V-B credential pool)
+            java.util.List<String> specials = new java.util.ArrayList<>();
+            for (String c : passwordPool) if (c.matches(".*[\\^=+%*()'\\\\<>&;].*")) specials.add(c);
+            if (!specials.isEmpty()) {
+                String u = specials.get(new Random().nextInt(specials.size()));
+                logInfo("Credential choice: invalid, special-character username");
+                return u;
+            }
+        }
         logInfo("Credential choice: random (likely invalid / special characters)");
         if (!accountPool.isEmpty()) {
             return accountPool.get(new Random().nextInt(accountPool.size()));

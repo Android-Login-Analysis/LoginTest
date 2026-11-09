@@ -104,6 +104,7 @@ public class UIManager {
                     UIElement mfaInput = findMfaInput(els);
                     if (mfaInput != null) {
                         String secret = pendingUsername == null ? null : totpSecrets.get(pendingUsername);
+                        mfaAfterSubmit = true;   // FIX(v1): an MFA prompt appeared after the credentials were submitted
                         if (secret != null && !mfaHandled) {
                             mfaHandled = true;
                             int[] r = boundsOf(mfaInput);
@@ -534,7 +535,9 @@ public class UIManager {
     private boolean twoStepJustFilled = false;
     private List<UIElement> lastScanElements = null;
 
-    public void setPendingUsername(String u) { pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; webMode = false; webLoginUrl = null; }
+    public void setPendingUsername(String u) { pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; webMode = false; webLoginUrl = null; mfaAfterSubmit = false; }
+    private boolean mfaAfterSubmit = false;
+    public boolean mfaPromptAfterSubmit() { return mfaAfterSubmit; }
 
     // FIX(v1): MFA support. Authenticator-app accounts get a TOTP code; other accounts stop at the
     // MFA prompt (MFACodePending), which is a legitimate login state, not a completed login.
