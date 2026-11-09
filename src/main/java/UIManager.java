@@ -738,9 +738,14 @@ public class UIManager {
     }
     private int lastLoginEntryPriority = 99;
 
+    // entries already tapped during this navigation (an entry that leads nowhere is not tapped again)
+    private final java.util.Set<String> tappedEntries = new java.util.HashSet<>();
+    private String lastLoginEntryKey = null;
+
     public boolean detectLoginPage() {
-        for (int hop = 0; hop <= 5; hop++) {
-            lastLoginEntryBounds = null; lastLoginEntryPriority = 99; lastGuestBounds = null;
+        tappedEntries.clear();
+        for (int hop = 0; hop <= 6; hop++) {
+            lastLoginEntryBounds = null; lastLoginEntryPriority = 99; lastGuestBounds = null; lastLoginEntryKey = null;
             if (detectLoginPageOnce()) return true;
             // FIX(v1): credential-free (anonymous/guest) login offered next to SSO: use it when the round asks for it
             if (preferGuestLogin && lastGuestBounds != null && lastLoginEntryPriority >= 4) {
@@ -748,7 +753,7 @@ public class UIManager {
                 System.out.println("[LOGIN_ENTRY] Credential-free login offered; using it as this round's login method");
                 return true;
             }
-            if (hop == 5) return false;
+            if (hop == 6) return false;
             if (lastLoginEntryBounds == null && !onMfaScreen()) return false;
             // FIX(v1): login entries inside a WebView may be missing from the accessibility tree
             Map<String, String> wnav = web().inspect();
@@ -769,6 +774,7 @@ public class UIManager {
             if (r == null) return false;
             int cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2;
             System.out.println("[LOGIN_ENTRY] No credential form yet; tapping login entry at (" + cx + "," + cy + ")");
+            if (lastLoginEntryKey != null) tappedEntries.add(lastLoginEntryKey);
             try {
                 new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf(cx), String.valueOf(cy))
                     .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
@@ -856,8 +862,20 @@ public class UIManager {
                     }
 
                     // Check login button
-                    if (element.visible && element.text != null && element.text.trim().length() <= 40 && boundsOf(element) != null) {
+                    // FIX(v1): unlabeled toolbar icons (e.g. a settings gear without content description) are a
+                    // last-resort way into account screens
+                    if (element.visible && (element.text == null || element.text.trim().isEmpty()) && element.className != null
+                            && element.className.contains("[clickable]") && lastLoginEntryPriority > 6) {
+                        int[] ib = boundsOf(element);
+                        if (ib != null && ib[1] < 260 && ib[3] - ib[1] < 220 && ib[2] - ib[0] < 220 && (ib[0] + ib[2]) / 2 > 700
+                                && !tappedEntries.contains("@" + element.bounds)) {
+                            lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 6; lastLoginEntryKey = "@" + element.bounds;
+                        }
+                    }
+                    if (element.visible && element.text != null && element.text.trim().length() <= 40 && boundsOf(element) != null
+                            && !tappedEntries.contains(element.text.trim().toLowerCase() + "@" + element.bounds)) {
                         String t = element.text.trim().toLowerCase();
+                        int prevPriority = lastLoginEntryPriority;
                         if (t.matches("(anonymous|guest|continue as guest|login as guest|use without (an )?account|try as guest)")) {
                             lastGuestBounds = element.bounds;
                         }
@@ -866,7 +884,7 @@ public class UIManager {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 1;
                         } else if (lastLoginEntryPriority > 2 && t.matches("(open account menu|account|sign in or register)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2;
-                        } else if (lastLoginEntryPriority > 3 && t.matches("(go to account menu|my account|profile)")) {
+                        } else if (lastLoginEntryPriority > 3 && t.matches("(go to account menu|my account|profile|account and sync|accounts?( settings)?|settings)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 3;
                         } else if (lastLoginEntryPriority > 3 && t.matches("(get started|continue|next|skip|start|got it|let's go|lets go|finish|done|accept|agree|i agree)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 3;
@@ -875,6 +893,7 @@ public class UIManager {
                         } else if (lastLoginEntryPriority > 5 && t.matches("(twitch|reddit|github|microsoft|x|twitter|instagram|bluesky|mastodon)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 5;
                         }
+                        if (lastLoginEntryPriority != prevPriority) lastLoginEntryKey = t + "@" + element.bounds;
                     }
                     if (!loginButtonDetected && matchesLoginButtonPattern(element.text, element.resourceId)) {
                         loginButtonDetected = true;
