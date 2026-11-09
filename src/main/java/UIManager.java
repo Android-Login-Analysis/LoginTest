@@ -61,7 +61,13 @@ public class UIManager {
             long t = System.currentTimeMillis();
             if (!AppLauncher.isInForeground(appPackage)) { try { Thread.sleep(1000); } catch (InterruptedException ignored) { } continue; }
             Map<String, String> m = web().inspect();
-            if (m.isEmpty()) { goneStreak++; if (goneStreak >= 2) return t; }
+            if (m.isEmpty()) {
+                // DevTools page unreachable: only a login that left the WebView altogether counts as done
+                boolean webViewShown = false;
+                try { for (UIElement e : getAllUIElements()) if (isWebViewClass(e.className)) { webViewShown = true; break; } }
+                catch (Exception ignored) { }
+                if (!webViewShown) { goneStreak++; if (goneStreak >= 2) return t; } else goneStreak = 0;
+            }
             else {
                 String err = m.getOrDefault("err", "");
                 if (!err.isEmpty() && !"0".equals(m.getOrDefault("pw", "0"))) {
@@ -73,7 +79,13 @@ public class UIManager {
                 // the password field disappearing means the form was consumed (single-page apps keep other inputs)
                 boolean formGone = "0".equals(m.getOrDefault("pw", "0")) && !"true".equals(m.get("busy"));
                 boolean urlChanged = webLoginUrl != null && !webLoginUrl.equals(m.get("url")) && "0".equals(m.getOrDefault("pw", "0"));
-                if (formGone || urlChanged) { goneStreak++; if (goneStreak >= 2) return t; } else goneStreak = 0;
+                // FIX(v1): a page that is still a login/challenge/error page is not a completed login (e.g. a web
+                // service redirecting a rejected login to its own error page, or a failed load on a degraded network)
+                String url = m.getOrDefault("url", "");
+                boolean notDone = url.isEmpty() || url.matches("(?i).*(/login|/signin|sign_in|/checkpoint|/recover|captcha|two_step|two_factor|/challenge|chrome-error:|about:blank|/accounts/login).*")
+                        && !url.equals(webLoginUrl == null ? "" : webLoginUrl);
+                if (url.matches("(?i)^(chrome-error:|about:blank).*")) notDone = true;
+                if ((formGone || urlChanged) && !notDone) { goneStreak++; if (goneStreak >= 2) return t; } else goneStreak = 0;
             }
             try { Thread.sleep(1500); } catch (InterruptedException ignored) { }
         }

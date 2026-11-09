@@ -1074,6 +1074,22 @@ public class AndroidLoginDetector {
                     }
                 }
                 
+                // FIX(v1): invalid round on a working network: while the app rejects the special-character username,
+                // try the next one from the pool (up to 4 in total) on the same form, since only some of them reach
+                // server-side handling that can misbehave (e.g. accepting the login or asking for MFA)
+                if (!usedValidPair && invalidCandidates.size() > 1 && "normal".equals(roundCondition) && Boolean.FALSE.equals(forcedValidity)) {
+                    for (int k = 1; k < Math.min(4, invalidCandidates.size()) && loginSuccess
+                            && (gone == -2 || (gone == -1 && !uiManager.lastWaitEndedInProgress())); k++) {
+                        username = invalidCandidates.get(k);
+                        logInfo("Invalid credentials rejected; retrying with the next special-character username: " + username);
+                        loginSuccess = inputCredentialsWithUI(username, password);
+                        clickTime = uiManager.getLoginButtonClickTime();
+                        gone = (loginSuccess && clickTime > 0) ? uiManager.waitForLoginPageGone(35000) : -1;
+                        if (gone == -2) recordFailureMessage(uiManager.getLastLoginErrorText(), false);
+                        if (gone == -3) logInfo("Login stopped at the MFA prompt after invalid credentials");
+                    }
+                }
+                invalidCandidates = new java.util.ArrayList<>();
                 // FIX(v1): loginSuccess only means "credentials entered and login clicked". Authentication
                 // is considered successful only if the login page went away; with a valid pair we expect
                 // success, so a remaining login page is a legitimate candidate. Invalid credentials that keep
@@ -1538,6 +1554,8 @@ public class AndroidLoginDetector {
         return roundPassword;
     }
     private boolean lastCredentialChoiceValid = false;
+    // special-character usernames for the invalid round; the first is tried, the rest are retries while rejected
+    private java.util.List<String> invalidCandidates = new java.util.ArrayList<>();
     // LIFT_VALID_PROB overrides the share of attempts that use a valid pair (e.g. 1.0 to verify accounts)
     private static final double VALID_PAIR_PROBABILITY = parseProb(System.getenv("LIFT_VALID_PROB"), 0.5);
     private static double parseProb(String v, double d) {
@@ -1619,7 +1637,9 @@ public class AndroidLoginDetector {
             for (String c : specials) if (c.contains("@")) emailLike.add(c);
             if (!emailLike.isEmpty()) specials = emailLike;
             if (!specials.isEmpty()) {
-                String u = specials.get(new Random().nextInt(specials.size()));
+                invalidCandidates = new java.util.ArrayList<>(specials);
+                java.util.Collections.shuffle(invalidCandidates);
+                String u = invalidCandidates.get(0);
                 logInfo("Credential choice: invalid, special-character username");
                 return u;
             }
