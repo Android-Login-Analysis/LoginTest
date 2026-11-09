@@ -179,7 +179,31 @@ public class CrashDetector implements BugDetector {
     // FIX(v1): crashes raised through Frida hook trampolines are artifacts of the instrumentation, not
     // app bugs. Java: frida bridge classes in the trace. Native: frida-agent frames in the crashing
     // thread's backtrace of the latest tombstone (needs root; otherwise the crash is kept).
+    // FIX(v1): crashes right after the tool launched an activity directly (without the extras the app
+    // normally passes) are caused by the tool, not by the app's login flow.
+    private static final java.util.List<long[]> toolWindows = new java.util.concurrent.CopyOnWriteArrayList<>();
+    public static void markToolInducedWindow(long startMs, long endMs) { toolWindows.add(new long[]{startMs, endMs}); }
+
+    private static long parseLogcatTime(String ts) {
+        try {
+            int year = java.time.Year.now().getValue();
+            java.time.LocalDateTime t = java.time.LocalDateTime.parse(year + "-" + ts.trim().replace(' ', 'T'));
+            return t.atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
+        } catch (Exception e) { return -1; }
+    }
+
+    private boolean inToolWindow(CrashEvent crash) {
+        long t = crash.timestamp == null ? -1 : parseLogcatTime(crash.timestamp);
+        if (t < 0) return false;
+        for (long[] w : toolWindows) if (t >= w[0] - 1000 && t <= w[1]) return true;
+        return false;
+    }
+
     private boolean isInstrumentationInduced(CrashEvent crash) {
+        if (inToolWindow(crash)) {
+            System.out.println("[CRASH_DETECTOR] Crash within a tool-driven direct activity launch window");
+            return true;
+        }
         if (crash.stackTrace != null && (crash.stackTrace.contains("re.frida") || crash.stackTrace.contains("frida-agent"))) return true;
         if (!"NATIVE_CRASH".equals(crash.exceptionType)) return false;
         try {
@@ -193,7 +217,12 @@ public class CrashDetector implements BugDetector {
             if (b < 0) return false;
             int e = t.indexOf("\n\n", b);
             String crashingThread = e > 0 ? t.substring(b, e) : t.substring(b);
-            return crashingThread.contains("frida-agent");
+            if (crashingThread.contains("frida-agent")) return true;
+            // JNI abort raised from Frida's JS thread: only libc/anonymous (JIT) frames, no app code
+            boolean jniAbort = t.contains("JNI DETECTED ERROR") || t.contains("JNI ERROR (app bug)");
+            boolean anonymousOnly = crashingThread.contains("<anonymous:") && !crashingThread.contains("/data/app/")
+                && !crashingThread.contains(".oat") && !crashingThread.contains(".vdex");
+            return jniAbort && anonymousOnly;
         } catch (Exception ex) {
             return false;
         }

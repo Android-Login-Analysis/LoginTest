@@ -170,6 +170,7 @@ rpc.exports = {
                             const k = JClass.forName(className, false, loader);
                             k.getDeclaredMethods();
                             k.getDeclaredConstructors();
+                            k.getDeclaredFields();   // Java.use() also resolves field types
                         } catch (e) {
                             safe = false;
                         }

@@ -1529,7 +1529,10 @@ public class AndroidLoginDetector {
             logInfo("Manifest login activity candidates: " + candidates);
             for (String cls : candidates) {
                 logInfo("Trying direct launch of login activity: " + cls);
-                if (AppLauncher.launchActivity(appPackage, cls) && detectLoginPageWithUI()) {
+                long launchStart = System.currentTimeMillis();
+                boolean launched = AppLauncher.launchActivity(appPackage, cls);
+                bugdetectors.CrashDetector.markToolInducedWindow(launchStart, System.currentTimeMillis() + 10000);
+                if (launched && detectLoginPageWithUI()) {
                     logInfo("Login page reached via direct activity launch: " + cls);
                     return true;
                 }
