@@ -829,11 +829,16 @@ public class UIManager {
                 // FIX(v1): a form with two password inputs (password + confirm) or a sign-up heading is a
                 // registration form, not a login form (cf. reviewer R2-1); prefer its "Login" entry instead.
                 int pwInputs = 0;
+                boolean signUpText = false, signInHeading = false;
                 for (UIElement e : elements) {
                     if (e.className != null && e.className.contains("[password]") && boundsOf(e) != null) pwInputs++;
-                    if (e.text != null && e.text.trim().toLowerCase().matches("(create (your |an |a )?(free )?account|sign up|register|create account)")) registrationForm = true;
+                    String lt = e.text == null ? "" : e.text.trim().toLowerCase();
+                    if (lt.matches("(create (your |an |a )?(free )?account|sign up|register|create account)")) signUpText = true;
+                    if (lt.matches("(sign in|log in|login|sign in to .*|log in to .*|welcome back)")) signInHeading = true;
                 }
-                if (pwInputs >= 2) registrationForm = true;
+                // a sign-in page commonly offers a "Create account" link; only a sign-up text without a sign-in heading
+                // marks a registration form
+                if (pwInputs >= 2 || (signUpText && !signInHeading)) registrationForm = true;
 
                 // Iterate through all elements to check if they match the login element pattern
                 for (UIElement element : elements) {
