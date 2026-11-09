@@ -141,6 +141,26 @@ public class UIManager {
             try {
                 if (AppLauncher.isInForeground(appPackage)) {
                     List<UIElement> els = getAllUIElements();
+                    // FIX(v1): a credential-free login has no form to disappear: it is done only when the guest
+                    // option is gone; an error text next to a still-visible option is a rejection
+                    if (guestMode) {
+                        boolean guestVisible = false; String errText = null;
+                        for (UIElement e : els) {
+                            String lt = e.text == null ? "" : e.text.trim();
+                            if (lt.toLowerCase().matches("(anonymous|guest|continue as guest|login as guest|use without (an )?account|try as guest)")) guestVisible = true;
+                            else if (lt.length() > 8 && lt.matches("(?i).*(unable|error|failed|couldn.t|could not|no internet|network|timed? ?out|try again).*")) errText = lt;
+                        }
+                        if (guestVisible) {
+                            if (errText != null) {
+                                lastLoginErrorText = errText;
+                                System.out.println("[LOGIN_RESULT] Error after credential-free login: '" + errText + "'");
+                                return -2;
+                            }
+                            goneSince = -1;
+                            Thread.sleep(1500);
+                            continue;
+                        }
+                    }
                     String dialogMsg = findDialogMessage(els);
                     if (dialogMsg != null) {
                         lastLoginErrorText = dialogMsg;
@@ -627,7 +647,7 @@ public class UIManager {
     private boolean twoStepJustFilled = false;
     private List<UIElement> lastScanElements = null;
 
-    public void setPendingUsername(String u) { pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; webMode = false; webLoginUrl = null; mfaAfterSubmit = false; }
+    public void setPendingUsername(String u) { loginButtonClickTime = 0; lastWaitEndedInProgress = false; pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; webMode = false; webLoginUrl = null; mfaAfterSubmit = false; }
     private boolean mfaAfterSubmit = false;
     public boolean mfaPromptAfterSubmit() { return mfaAfterSubmit; }
 

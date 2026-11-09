@@ -1108,7 +1108,7 @@ public class AndroidLoginDetector {
                 // success, so a remaining login page is a legitimate candidate. Invalid credentials that keep
                 // the login page are expected behaviour and must not reach the navigation oracle.
                 // LOGIN_HANG: still spinning at the end of the wait (no timeout handling), whatever the credentials
-                if (gone == -1 && !usedValidPair && uiManager.lastWaitEndedInProgress() && stateMachineManager != null
+                if (loginSuccess && gone == -1 && !usedValidPair && uiManager.lastWaitEndedInProgress() && stateMachineManager != null
                         && stateMachineManager.getBugDetectionManager() != null && clickTime > 0) {
                     logInfo("Login still in progress after the wait under '" + roundCondition + "' network: no timeout handling");
                     stateMachineManager.getBugDetectionManager().getTimeoutDetector().recordLoginAttempt(clickTime, System.currentTimeMillis(), false);
