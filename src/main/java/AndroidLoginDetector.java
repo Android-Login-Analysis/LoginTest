@@ -1077,7 +1077,7 @@ public class AndroidLoginDetector {
                 // FIX(v1): invalid round on a working network: while the app rejects the special-character username,
                 // try the next one from the pool (up to 4 in total) on the same form, since only some of them reach
                 // server-side handling that can misbehave (e.g. accepting the login or asking for MFA)
-                if (!usedValidPair && invalidCandidates.size() > 1 && "normal".equals(roundCondition) && Boolean.FALSE.equals(forcedValidity)) {
+                if (!usedValidPair && invalidCandidates.size() > 1 && "normal".equals(roundCondition)) {
                     for (int k = 1; k < Math.min(4, invalidCandidates.size()) && loginSuccess
                             && (gone == -2 || (gone == -1 && !uiManager.lastWaitEndedInProgress())); k++) {
                         username = invalidCandidates.get(k);
