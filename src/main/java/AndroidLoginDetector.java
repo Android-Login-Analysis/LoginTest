@@ -1085,7 +1085,7 @@ public class AndroidLoginDetector {
                     stateMachineManager.getBugDetectionManager().getTimeoutDetector().recordLoginAttempt(clickTime, System.currentTimeMillis(), false);
                 }
                 // FIX(v1): password passed through an Intent/Bundle extra in plaintext
-                checkPasswordInExtras(password, clickTime);
+                checkPasswordInExtras(username, password, clickTime);
                 boolean authenticated = gone > 0;
                 if (authenticated && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
                     try { Thread.sleep(4000); } catch (InterruptedException ignored) { }   // let the app persist the session
@@ -1542,7 +1542,9 @@ public class AndroidLoginDetector {
 
     private final java.util.Set<String> extraFindings = new java.util.HashSet<>();
 
-    private void checkPasswordInExtras(String password, long sinceMs) {
+    private void checkPasswordInExtras(String username, String password, long sinceMs) {
+        // when the test account reuses the username as password, only password-like keys are meaningful
+        boolean sameAsUser = username != null && username.equals(password);
         if (password == null || password.length() < 4 || stateMachineManager == null || stateMachineManager.getBugDetectionManager() == null) return;
         try {
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
@@ -1556,6 +1558,7 @@ public class AndroidLoginDetector {
                 if (p.length < 4 || !p[3].equals(h.toString())) continue;
                 double ts = Double.parseDouble(p[0]) * 1000;
                 if (sinceMs > 0 && ts < sinceMs - 60000) continue;
+                if (sameAsUser && !p[2].toLowerCase().matches(".*(pass|pwd|secret|cred).*")) continue;
                 String key = p[1] + ":" + p[2];
                 if (extraFindings.add(key)) {
                     stateMachineManager.getBugDetectionManager().getObservedDetector().record("INCORRECT_LOGIN_FLOW", "PASSWORD_IN_INTENT_EXTRA",
