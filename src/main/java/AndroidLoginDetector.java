@@ -1052,7 +1052,10 @@ public class AndroidLoginDetector {
                     } else if (gone == -2) {
                         logInfo("Login rejected with message: '" + uiManager.getLastLoginErrorText() + "' (validPair=" + usedValidPair + ")");
                         if ("normal".equals(roundCondition) && !usedValidPair) recordFailureMessage(uiManager.getLastLoginErrorText(), false);
-                        else if (!"normal".equals(roundCondition) && usedValidPair) recordFailureMessage(uiManager.getLastLoginErrorText(), true);
+                        // offline: the request cannot reach the server, so any message is about the network failure;
+                        // limited: the server may still answer, so only valid credentials make it a network failure
+                        else if ("offline".equals(roundCondition) || ("limited".equals(roundCondition) && usedValidPair))
+                            recordFailureMessage(uiManager.getLastLoginErrorText(), true);
                     } else if (usedValidPair) {
                         timeoutDetector.recordLoginAttempt(clickTime, System.currentTimeMillis(), false);
                     } else {
