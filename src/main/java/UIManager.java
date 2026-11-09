@@ -695,6 +695,14 @@ public class UIManager {
                     .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
                 Thread.sleep(twoStepJustFilled ? 7000 : 4000);
                 twoStepJustFilled = false;
+                if (lastLoginEntryPriority >= 4) {
+                    // service entries open web pages that can take a while to load: wait for a web form
+                    for (int w = 0; w < 15; w++) {
+                        Map<String, String> wm = web().inspect();
+                        if (!wm.isEmpty() && (!"0".equals(wm.getOrDefault("pw", "0")) || !"0".equals(wm.getOrDefault("id", "0")))) break;
+                        Thread.sleep(3000);
+                    }
+                }
             } catch (Exception ignored) { }
         }
         return false;
@@ -768,8 +776,10 @@ public class UIManager {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2;
                         } else if (lastLoginEntryPriority > 3 && t.matches("(get started|continue|next|skip|start|got it|let's go|lets go)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 3;
-                        } else if (lastLoginEntryPriority > 4 && t.matches("(facebook|google|twitch|reddit|github|microsoft|x|twitter|instagram|bluesky|mastodon)")) {
+                        } else if (lastLoginEntryPriority > 4 && t.matches("(facebook|google)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 4;   // SSO / service selection
+                        } else if (lastLoginEntryPriority > 5 && t.matches("(twitch|reddit|github|microsoft|x|twitter|instagram|bluesky|mastodon)")) {
+                            lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 5;
                         }
                     }
                     if (!loginButtonDetected && matchesLoginButtonPattern(element.text, element.resourceId)) {
