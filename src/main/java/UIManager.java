@@ -696,10 +696,20 @@ public class UIManager {
                 Thread.sleep(twoStepJustFilled ? 7000 : 4000);
                 twoStepJustFilled = false;
                 if (lastLoginEntryPriority >= 4) {
-                    // service entries open web pages that can take a while to load: wait for a web form
-                    for (int w = 0; w < 15; w++) {
+                    // service entries open web pages that can take a while to load: wait for a web form;
+                    // a WebView that stays blank (never navigated) is recovered once by relaunching the app
+                    int blank = 0; boolean relaunched = false;
+                    for (int w = 0; w < 20; w++) {
                         Map<String, String> wm = web().inspect();
                         if (!wm.isEmpty() && (!"0".equals(wm.getOrDefault("pw", "0")) || !"0".equals(wm.getOrDefault("id", "0")))) break;
+                        String u = web().visiblePageUrl();
+                        blank = (u != null && u.isEmpty()) ? blank + 1 : 0;
+                        if (blank >= 5 && !relaunched) {
+                            System.out.println("[WEBVIEW] Page stayed blank after opening the service; relaunching the app");
+                            new ProcessBuilder("adb", "shell", "am", "force-stop", appPackage).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+                            AppLauncher.launch(appPackage);
+                            relaunched = true; blank = 0;
+                        }
                         Thread.sleep(3000);
                     }
                 }

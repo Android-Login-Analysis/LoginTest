@@ -247,6 +247,21 @@ public final class WebViewBridge {
         return r != null && !r.isEmpty();
     }
 
+    /** URL of the visible page from the DevTools page list ("" for a blank WebView, null if unavailable). */
+    public String visiblePageUrl() {
+        if (!ensureForward()) return null;
+        try {
+            HttpRequest req = HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + "/json")).timeout(Duration.ofSeconds(5)).build();
+            String body = http.send(req, HttpResponse.BodyHandlers.ofString()).body();
+            Matcher m = Pattern.compile("\"description\":\\s*\"((?:[^\"\\\\]|\\\\.)*)\"[^{}]*?\"url\":\\s*\"([^\"]*)\"", Pattern.DOTALL).matcher(body);
+            while (m.find()) if (m.group(1).contains("visible\\\":true")) return m.group(2);
+            Matcher u = Pattern.compile("\"url\":\\s*\"([^\"]*)\"").matcher(body);
+            return u.find() ? u.group(1) : null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public boolean available() {
         return ensureForward() && pageSocket() != null;
     }
