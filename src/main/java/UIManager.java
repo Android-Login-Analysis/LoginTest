@@ -448,6 +448,7 @@ public class UIManager {
     // FIX(v1): two-step login support (identifier screen -> password screen)
     private String pendingUsername = null;
     private boolean usernameEnteredInStep1 = false;
+    private boolean twoStepJustFilled = false;
     private List<UIElement> lastScanElements = null;
 
     public void setPendingUsername(String u) { pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; }
@@ -507,14 +508,15 @@ public class UIManager {
         int cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2;
         System.out.println("[TWO_STEP] Identifier-only screen; entering username before continuing");
         if (clickAndInputText(cx, cy, pendingUsername)) usernameEnteredInStep1 = true;
+        twoStepJustFilled = true;
     }
     private int lastLoginEntryPriority = 99;
 
     public boolean detectLoginPage() {
-        for (int hop = 0; hop <= 3; hop++) {
+        for (int hop = 0; hop <= 5; hop++) {
             lastLoginEntryBounds = null; lastLoginEntryPriority = 99;
             if (detectLoginPageOnce()) return true;
-            if (hop == 3 || lastLoginEntryBounds == null) return false;
+            if (hop == 5 || lastLoginEntryBounds == null) return false;
             maybeFillIdentifierStep();
             int[] r = parseBoundsRect(lastLoginEntryBounds);
             if (r == null) return false;
@@ -523,7 +525,8 @@ public class UIManager {
             try {
                 new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf(cx), String.valueOf(cy))
                     .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
-                Thread.sleep(4000);
+                Thread.sleep(twoStepJustFilled ? 7000 : 4000);
+                twoStepJustFilled = false;
             } catch (Exception ignored) { }
         }
         return false;
