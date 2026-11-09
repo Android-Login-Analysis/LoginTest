@@ -2114,6 +2114,14 @@ public class AndroidLoginDetector {
     private void stopFridaMonitoring() {
         try {
             logInfo("Stopping Frida monitoring...");
+            // FIX(v1): end the app process before detaching (see FridaManager.startFrida) so the
+            // tool's own detach cannot crash the app and be misreported as an app crash.
+            if ("app".equalsIgnoreCase(System.getenv("LIFT_RESET_MODE"))) {
+                try {
+                    new ProcessBuilder("adb", "shell", "am", "force-stop", appPackage)
+                        .redirectErrorStream(true).start().waitFor(15, TimeUnit.SECONDS);
+                } catch (Exception ignored) { }
+            }
             fridaManager.stopFrida();
             logInfo("Frida monitoring stopped");
         } catch (Exception e) {

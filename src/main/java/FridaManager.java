@@ -246,6 +246,16 @@ public class FridaManager {
         try {
             logInfo("Starting Frida monitoring for package: " + appPackageName);
             
+            // FIX(v1): Frida cannot safely unload ~2k ART hooks from a live process (the agent
+            // SIGSEGVs). In app-reset mode stop the app first so the old session dies with its
+            // process; the controller then spawns a fresh instance with hooks installed at launch.
+            if ("app".equalsIgnoreCase(System.getenv("LIFT_RESET_MODE"))) {
+                try {
+                    new ProcessBuilder("adb", "shell", "am", "force-stop", appPackageName)
+                        .redirectErrorStream(true).start().waitFor(15, TimeUnit.SECONDS);
+                    Thread.sleep(1000);
+                } catch (Exception ignored) { }
+            }
             // Kill any existing Frida processes
             stopFrida();
             
