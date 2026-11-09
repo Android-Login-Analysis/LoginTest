@@ -363,10 +363,11 @@ public class UIManager {
     // FIX(v1): if the screen has a login entry ("Sign in", "Log in") but no credential form, tap the
     // entry (up to 2 hops) before falling back to random Monkey exploration.
     private String lastLoginEntryBounds = null;
+    private int lastLoginEntryPriority = 99;
 
     public boolean detectLoginPage() {
         for (int hop = 0; hop <= 2; hop++) {
-            lastLoginEntryBounds = null;
+            lastLoginEntryBounds = null; lastLoginEntryPriority = 99;
             if (detectLoginPageOnce()) return true;
             if (hop == 2 || lastLoginEntryBounds == null) return false;
             int[] r = parseBoundsRect(lastLoginEntryBounds);
@@ -430,9 +431,13 @@ public class UIManager {
                     }
 
                     // Check login button
-                    if (element.visible && element.text != null && element.text.trim().length() <= 20
-                            && element.text.trim().toLowerCase().matches("(sign in|log in|login|signin|sign in / register|sign in or register)")) {
-                        lastLoginEntryBounds = element.bounds;
+                    if (element.visible && element.text != null && element.text.trim().length() <= 24 && boundsOf(element) != null) {
+                        String t = element.text.trim().toLowerCase();
+                        if (t.matches("(sign in|log in|login|signin|log on|sign in / register|sign in or register)")) {
+                            lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 1;
+                        } else if (lastLoginEntryPriority > 1 && t.matches("(open account menu|go to account menu|account|my account|profile)")) {
+                            lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2;
+                        }
                     }
                     if (!loginButtonDetected && matchesLoginButtonPattern(element.text, element.resourceId)) {
                         loginButtonDetected = true;
@@ -1078,8 +1083,52 @@ public class UIManager {
     /**
      * Find username field
      */
+    // FIX(v1): form-aware field lookup. Prefer real input widgets and use the password field as an
+    // anchor: the username is the nearest input above it, the submit button the nearest match below it.
+    private static boolean isInputClass(String cls) {
+        if (cls == null) return false;
+        String c = cls.toLowerCase();
+        return c.contains("edittext") || c.contains("autocompletetextview") || c.contains("textinput");
+    }
+
+    private UIElement findPasswordAnchor(List<UIElement> elements) {
+        for (UIElement e : elements) {
+            if (e.className != null && e.className.contains("[password]") && boundsOf(e) != null) return e;
+        }
+        for (UIElement e : elements) {
+            if (isInputClass(e.className) && matchesPasswordPattern(e.text, e.resourceId, e.className) && boundsOf(e) != null) return e;
+        }
+        return null;
+    }
+
+    private int[] boundsOf(UIElement e) {
+        int[] r = parseBoundsRect(e.bounds);
+        if (r == null || r[2] <= r[0] || r[3] <= r[1]) return null; // skip zero-size (hidden) nodes
+        return r;
+    }
+
     private UIElement findUsernameField() throws Exception {
         List<UIElement> elements = getAllUIElements();
+        UIElement pw = findPasswordAnchor(elements);
+        int pwTop = pw != null ? boundsOf(pw)[1] : Integer.MAX_VALUE;
+        UIElement best = null; int bestBottom = -1;
+        // Pass 1: input widgets matching username patterns (closest above the password field)
+        for (UIElement e : elements) {
+            if (e == pw || !isInputClass(e.className) || (e.className != null && e.className.contains("[password]"))) continue;
+            int[] r = boundsOf(e); if (r == null) continue;
+            if (matchesUsernamePattern(e.text, e.resourceId, e.className) && r[3] <= pwTop && r[3] > bestBottom) { best = e; bestBottom = r[3]; }
+        }
+        if (best != null) return best;
+        // Pass 2: nearest input widget above the password field (unlabeled WebView/Compose forms)
+        if (pw != null) {
+            for (UIElement e : elements) {
+                if (e == pw || !isInputClass(e.className) || e.className.contains("[password]")) continue;
+                int[] r = boundsOf(e); if (r == null) continue;
+                if (r[3] <= pwTop && r[3] > bestBottom) { best = e; bestBottom = r[3]; }
+            }
+            if (best != null) return best;
+        }
+        // Pass 3: original behaviour
         for (UIElement element : elements) {
             if (matchesUsernamePattern(element.text, element.resourceId, element.className)) {
                 return element;
@@ -1093,6 +1142,8 @@ public class UIManager {
      */
     private UIElement findPasswordField() throws Exception {
         List<UIElement> elements = getAllUIElements();
+        UIElement anchor = findPasswordAnchor(elements);
+        if (anchor != null) return anchor;
         for (UIElement element : elements) {
             if (matchesPasswordPattern(element.text, element.resourceId, element.className)) {
                 return element;
@@ -1107,6 +1158,19 @@ public class UIManager {
     private UIElement findLoginButton() throws Exception {
         List<UIElement> elements = getAllUIElements();
         UIElement fallbackButton = null;
+        UIElement pwAnchor = findPasswordAnchor(elements);
+        if (pwAnchor != null) {
+            int pwBottom = boundsOf(pwAnchor)[3];
+            UIElement below = null; int bestTop = Integer.MAX_VALUE;
+            for (UIElement e : elements) {
+                int[] r = boundsOf(e); if (r == null) continue;
+                String cls = e.className == null ? "" : e.className.toLowerCase();
+                if (!(cls.contains("button") || cls.contains("view"))) continue;
+                if (e.text == null || e.text.trim().isEmpty() || e.text.length() > 30) continue;
+                if (r[1] >= pwBottom && r[1] < bestTop && matchesLoginButtonPattern(e.text, e.resourceId)) { below = e; bestTop = r[1]; }
+            }
+            if (below != null) return below;
+        }
         
         // Pass 1: Find button with explicit text or exact "login_button" ID
         for (UIElement element : elements) {
