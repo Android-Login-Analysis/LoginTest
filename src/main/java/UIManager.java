@@ -21,6 +21,7 @@ public class UIManager {
 
     // Timestamp records
     private long loginButtonClickTime = 0;
+    private String loginClickActivity = "";
 
     public long getLoginButtonClickTime() { return loginButtonClickTime; }
 
@@ -52,7 +53,8 @@ public class UIManager {
     public long waitForLoginPageGone(long timeoutMs) {
         lastLoginErrorText = null;
         lastMfaOutcome = null;
-        String loginActivity = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
+        String loginActivity = loginClickActivity != null && !loginClickActivity.isEmpty()
+            ? loginClickActivity : AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
         long deadline = System.currentTimeMillis() + timeoutMs;
         long goneSince = -1;
         while (System.currentTimeMillis() < deadline) {
@@ -85,10 +87,15 @@ public class UIManager {
                             return -3;
                         }
                     }
-                    boolean progressShown = false;
+                    boolean progressShown = false, actionable = false;
                     for (UIElement e : els) {
-                        if (e.className != null && e.className.contains("ProgressBar") && boundsOf(e) != null) { progressShown = true; break; }
+                        if (e.className != null && e.className.contains("ProgressBar") && boundsOf(e) != null) progressShown = true;
+                        else if (e.className != null && e.className.contains("[clickable]") && !e.className.contains("[disabled]")
+                                && e.text != null && !e.text.trim().isEmpty() && boundsOf(e) != null) actionable = true;
                     }
+                    // a loading screen has a progress indicator and nothing actionable; a determinate progress
+                    // bar next to buttons (e.g. a "Download" screen after login) is not a pending login
+                    progressShown = progressShown && !actionable;
                     String topNow = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
                     boolean activityChanged = !loginActivity.isEmpty() && !topNow.equals(loginActivity);
                     if (activityChanged && findPasswordAnchor(els) == null) return pollStart;    // left the login screen
@@ -216,6 +223,7 @@ public class UIManager {
             // FIX(v1): uiautomator exposes password inputs (inputType 0x81) as password="true"
             if ("true".equalsIgnoreCase(extractAttribute(attributes, "password"))) className = className + " [password]";
             if ("false".equalsIgnoreCase(extractAttribute(attributes, "enabled"))) className = className + " [disabled]";
+            if ("true".equalsIgnoreCase(extractAttribute(attributes, "clickable"))) className = className + " [clickable]";
             String bounds = extractAttribute(attributes, "bounds");
             String textAttr = extractAttribute(attributes, "text");
             String contentDesc = extractAttribute(attributes, "content-desc");
@@ -456,7 +464,7 @@ public class UIManager {
     private boolean twoStepJustFilled = false;
     private List<UIElement> lastScanElements = null;
 
-    public void setPendingUsername(String u) { pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; }
+    public void setPendingUsername(String u) { pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; }
 
     // FIX(v1): MFA support. Authenticator-app accounts get a TOTP code; other accounts stop at the
     // MFA prompt (MFACodePending), which is a legitimate login state, not a completed login.
@@ -955,6 +963,7 @@ public class UIManager {
             }
             
             loginButtonClickTime = System.currentTimeMillis();
+            loginClickActivity = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
             clickElement(loginButton);
             System.out.println("[CREDENTIAL_INPUT] Clicked login button, timestamp: " + loginButtonClickTime);
 
@@ -1029,6 +1038,7 @@ public class UIManager {
             
             System.out.println("[CREDENTIAL_INPUT] About to click login button - input fields should be visible now");
             loginButtonClickTime = System.currentTimeMillis();
+            loginClickActivity = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
             clickElement(loginButton);
             System.out.println("[CREDENTIAL_INPUT] Clicked login button, timestamp: " + loginButtonClickTime);
 
@@ -1232,6 +1242,7 @@ public class UIManager {
             // FIX(v1): uiautomator exposes password inputs (inputType 0x81) as password="true"
             if ("true".equalsIgnoreCase(extractAttribute(attributes, "password"))) className = className + " [password]";
             if ("false".equalsIgnoreCase(extractAttribute(attributes, "enabled"))) className = className + " [disabled]";
+            if ("true".equalsIgnoreCase(extractAttribute(attributes, "clickable"))) className = className + " [clickable]";
             String bounds = extractAttribute(attributes, "bounds");
             // UIAutomator keeps visible labels in a 'text' ATTRIBUTE, not innerText
             String textAttr = extractAttribute(attributes, "text");
