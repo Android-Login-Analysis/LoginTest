@@ -952,6 +952,12 @@ public class AndroidLoginDetector {
             // UI manager is already initialized in constructor
 
             // Step 4: Detect login page using UI manager
+            // FIX(v1): pick this round's credentials before detection so two-step logins
+            // (identifier first, password on the next screen) can be completed during navigation.
+            roundUsername = getRandomAccount();
+            roundPassword = getRandomPassword();
+            roundUsedValidPair = lastCredentialChoiceValid;
+            uiManager.setPendingUsername(roundUsername);
             boolean loginPageDetected = detectLoginPageWithUI();
             if (!loginPageDetected) {
                 loginPageDetected = tryDirectLoginActivities();
@@ -970,8 +976,8 @@ public class AndroidLoginDetector {
                 }
                 
                 // Step 5: Select appropriate credentials based on login type
-                String username = selectCredentials();
-                String password = selectPassword();
+                String username = pickRoundUsername();
+                String password = pickRoundPassword();
                 
                 // Note: Taint marking is now automatic in login_agent.js
                 // It detects password fields via hint/inputType and marks them automatically
@@ -1069,8 +1075,8 @@ public class AndroidLoginDetector {
                 }
             } else {
                 logInfo("No login page detected, starting stepwise Monkey exploration with focused credential feeding");
-                String username = selectCredentials();
-                String password = selectPassword();
+                String username = pickRoundUsername();
+                String password = pickRoundPassword();
                 exploreStepwiseMonkeyFeedCredentials(username, password);
             }
 
@@ -1403,6 +1409,24 @@ public class AndroidLoginDetector {
     // valid pair was almost never used and successful-login flows were rarely exercised.
     private final java.util.List<String[]> validPairs = new java.util.ArrayList<>();
     private String pendingPairedPassword = null;
+    private String roundUsername = null, roundPassword = null;
+    private boolean roundUsedValidPair = false;
+
+    // Google/Facebook flows keep their dedicated pools; otherwise use the round's pre-picked pair.
+    private String pickRoundUsername() {
+        if (uiManager.isGoogleLoginDetected() || uiManager.isFacebookLoginDetected() || roundUsername == null) {
+            return selectCredentials();
+        }
+        lastCredentialChoiceValid = roundUsedValidPair;
+        return roundUsername;
+    }
+
+    private String pickRoundPassword() {
+        if (uiManager.isGoogleLoginDetected() || uiManager.isFacebookLoginDetected() || roundPassword == null) {
+            return selectPassword();
+        }
+        return roundPassword;
+    }
     private boolean lastCredentialChoiceValid = false;
     private static final double VALID_PAIR_PROBABILITY = 0.5;
 

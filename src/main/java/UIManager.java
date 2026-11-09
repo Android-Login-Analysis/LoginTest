@@ -425,6 +425,27 @@ public class UIManager {
     // FIX(v1): if the screen has a login entry ("Sign in", "Log in") but no credential form, tap the
     // entry (up to 2 hops) before falling back to random Monkey exploration.
     private String lastLoginEntryBounds = null;
+    // FIX(v1): two-step login support (identifier screen -> password screen)
+    private String pendingUsername = null;
+    private boolean usernameEnteredInStep1 = false;
+    private List<UIElement> lastScanElements = null;
+
+    public void setPendingUsername(String u) { pendingUsername = u; usernameEnteredInStep1 = false; }
+
+    /** If the screen shows a single identifier input and no password field, type the username into it. */
+    private void maybeFillIdentifierStep() {
+        if (pendingUsername == null || usernameEnteredInStep1 || lastScanElements == null) return;
+        if (findPasswordAnchor(lastScanElements) != null) return;
+        UIElement only = null; int inputs = 0;
+        for (UIElement e : lastScanElements) {
+            if (isInputClass(e.className) && boundsOf(e) != null) { inputs++; only = e; }
+        }
+        if (inputs != 1) return;
+        int[] r = boundsOf(only);
+        int cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2;
+        System.out.println("[TWO_STEP] Identifier-only screen; entering username before continuing");
+        if (clickAndInputText(cx, cy, pendingUsername)) usernameEnteredInStep1 = true;
+    }
     private int lastLoginEntryPriority = 99;
 
     public boolean detectLoginPage() {
@@ -432,6 +453,7 @@ public class UIManager {
             lastLoginEntryBounds = null; lastLoginEntryPriority = 99;
             if (detectLoginPageOnce()) return true;
             if (hop == 3 || lastLoginEntryBounds == null) return false;
+            maybeFillIdentifierStep();
             int[] r = parseBoundsRect(lastLoginEntryBounds);
             if (r == null) return false;
             int cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2;
@@ -466,6 +488,7 @@ public class UIManager {
             for (int i = 0; i < retries; i++) {
                 // Get UI element information for the current page
                 List<UIElement> elements = getAllUIElements();
+                lastScanElements = elements;
 
                 // FIX(v1): a form with two password inputs (password + confirm) or a sign-up heading is a
                 // registration form, not a login form (cf. reviewer R2-1); prefer its "Login" entry instead.
@@ -742,14 +765,18 @@ public class UIManager {
             System.out.println("Using ADB to input credentials (without clicking button)...");
 
             // Find username input field
-            UIElement usernameField = findUsernameField();
-            if (usernameField == null) {
+            UIElement usernameField = usernameEnteredInStep1 ? null : findUsernameField();
+            if (usernameField == null && !usernameEnteredInStep1) {
                 System.err.println("[CREDENTIAL_INPUT] Username field not found!");
                 return false;
             }
+            int[] coords = null;
+            if (usernameEnteredInStep1) {
+                System.out.println("[CREDENTIAL_INPUT] Username already entered on the identifier screen (two-step login)");
+            } else {
             
             // Extract coordinates from bounds and click
-            int[] coords = extractCoordinates(usernameField.bounds);
+            coords = extractCoordinates(usernameField.bounds);
             System.out.println("[CREDENTIAL_INPUT] Found username field at (" + coords[0] + "," + coords[1] + ")");
             System.out.println("[CREDENTIAL_INPUT] Input username: " + username);
             boolean usernameInputted = clickAndInputText(coords[0], coords[1], username);
@@ -758,6 +785,7 @@ public class UIManager {
                 return false;
             }
             Thread.sleep(500);
+            }
 
             // Find password input field
             UIElement passwordField = findPasswordField();
@@ -822,14 +850,18 @@ public class UIManager {
             System.out.println("Using ADB to input credentials...");
 
             // Find username input field
-            UIElement usernameField = findUsernameField();
-            if (usernameField == null) {
+            UIElement usernameField = usernameEnteredInStep1 ? null : findUsernameField();
+            if (usernameField == null && !usernameEnteredInStep1) {
                 System.err.println("[CREDENTIAL_INPUT] Username field not found!");
                 return false;
             }
+            int[] coords = null;
+            if (usernameEnteredInStep1) {
+                System.out.println("[CREDENTIAL_INPUT] Username already entered on the identifier screen (two-step login)");
+            } else {
             
             // Extract coordinates from bounds and click
-            int[] coords = extractCoordinates(usernameField.bounds);
+            coords = extractCoordinates(usernameField.bounds);
             System.out.println("[CREDENTIAL_INPUT] Found username field at (" + coords[0] + "," + coords[1] + ")");
             System.out.println("[CREDENTIAL_INPUT] Input username: " + username);
             boolean usernameInputted = clickAndInputText(coords[0], coords[1], username);
@@ -838,6 +870,7 @@ public class UIManager {
                 return false;
             }
             Thread.sleep(500);
+            }
 
             // Find password input field
             UIElement passwordField = findPasswordField();
