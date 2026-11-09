@@ -417,7 +417,8 @@ public class LoginDetectionEnhancer {
         
         public boolean restoreSnapshot(String name) {
             if (appResetMode) {
-                if (!snapshots.containsKey(name)) return false;
+                // FIX(v1): app-level reset is always available, including round 1, so every round starts
+                // from a clean, logged-out state (stale sessions from earlier runs hide the login page).
                 return appLevelReset();
             }
             try {
