@@ -698,6 +698,19 @@ public class AndroidLoginDetector {
         if (tmp == null || tmp.isEmpty()) tmp = readLinesFromFile(globalFacebookPasswords);
         facebookPasswordPool = (tmp != null) ? tmp : new java.util.ArrayList<>();
 
+        // FIX(v1): load tester-supplied valid credential pairs (valid_pairs.csv: username,password)
+        validPairs.clear();
+        java.util.List<String> pairLines = readLinesFromFile(new java.io.File(credDir, "valid_pairs.csv").getPath());
+        if (pairLines != null) {
+            for (String l : pairLines) {
+                String t = l.trim();
+                if (t.isEmpty() || t.startsWith("#") || t.toLowerCase().startsWith("username,")) continue;
+                int c = t.indexOf(',');
+                if (c > 0 && c < t.length() - 1) validPairs.add(new String[]{t.substring(0, c).trim(), t.substring(c + 1).trim()});
+            }
+        }
+        logInfo("Loaded " + validPairs.size() + " valid credential pair(s)");
+
         logInfo("Loaded credential pools:");
         logInfo("  - Standard accounts: " + accountPool.size());
         logInfo("  - Standard passwords: " + passwordPool.size());
@@ -1354,7 +1367,22 @@ public class AndroidLoginDetector {
     }
 
     // Helper methods
+    // FIX(v1): per paper Section V-B each attempt draws from valid credentials, invalid credentials and
+    // special-character strings. Previously usernames and passwords were sampled independently, so a
+    // valid pair was almost never used and successful-login flows were rarely exercised.
+    private final java.util.List<String[]> validPairs = new java.util.ArrayList<>();
+    private String pendingPairedPassword = null;
+    private static final double VALID_PAIR_PROBABILITY = 0.5;
+
     private String getRandomAccount() {
+        pendingPairedPassword = null;
+        if (!validPairs.isEmpty() && new Random().nextDouble() < VALID_PAIR_PROBABILITY) {
+            String[] pair = validPairs.get(new Random().nextInt(validPairs.size()));
+            pendingPairedPassword = pair[1];
+            logInfo("Credential choice: VALID pair");
+            return pair[0];
+        }
+        logInfo("Credential choice: random (likely invalid / special characters)");
         if (!accountPool.isEmpty()) {
             return accountPool.get(new Random().nextInt(accountPool.size()));
         }
@@ -1362,6 +1390,11 @@ public class AndroidLoginDetector {
     }
 
     private String getRandomPassword() {
+        if (pendingPairedPassword != null) {
+            String p = pendingPairedPassword;
+            pendingPairedPassword = null;
+            return p;
+        }
         if (!passwordPool.isEmpty()) {
             return passwordPool.get(new Random().nextInt(passwordPool.size()));
         }
