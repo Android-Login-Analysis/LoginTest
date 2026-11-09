@@ -688,39 +688,22 @@ public class UIManager {
                     // Space keyevent
                     Process spaceProcess = Runtime.getRuntime().exec("adb shell input keyevent 62");
                     spaceProcess.waitFor();
-                } else if (c == '\'') {
-                    // Single quote - cannot be escaped in single-quoted strings
-                    // Use double quotes instead
-                    Process charProcess = Runtime.getRuntime().exec(
-                        new String[]{"adb", "shell", "input", "text", charStr}
-                    );
-                    int exitCode = charProcess.waitFor();
-                    if (exitCode != 0) {
-                        System.err.println(String.format("[INPUT] Failed to input char '%s' at position %d (exit code: %d)", 
-                                                         c, i, exitCode));
-                        return false;
-                    }
                 } else {
-                    // Escape necessary characters for shell
-                    String escaped = charStr
-                        .replace("\\", "\\\\")
-                        .replace("\"", "\\\"")
-                        .replace("`", "\\`")
-                        .replace("$", "\\$")
-                        .replace("!", "\\!");
-                    
-                    // Use double quotes to avoid single quote issues
-                    Process charProcess = Runtime.getRuntime().exec(
-                        String.format("adb shell input text \"%s\"", escaped)
-                    );
+                    // FIX(v1): quote for the device shell as a single argument ('...' with ' -> '\''),
+                    // verified for all special characters used in the credential pools. The previous
+                    // Runtime.exec(String) path did not handle quotes and failed on a bare single quote.
+                    String quoted = "'" + charStr.replace("'", "'\\''") + "'";
+                    Process charProcess = new ProcessBuilder("adb", "shell", "input text " + quoted)
+                        .redirectErrorStream(true).start();
+                    charProcess.getInputStream().readAllBytes();
                     int exitCode = charProcess.waitFor();
                     if (exitCode != 0) {
-                        System.err.println(String.format("[INPUT] Failed to input char '%s' at position %d (exit code: %d)", 
+                        System.err.println(String.format("[INPUT] Failed to input char '%s' at position %d (exit code: %d)",
                                                          c, i, exitCode));
                         return false;
                     }
                 }
-                
+
                 // Small delay between characters for stability
                 if (i % 5 == 0 && i > 0) {
                     Thread.sleep(50);
