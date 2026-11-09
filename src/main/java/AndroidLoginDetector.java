@@ -1117,6 +1117,8 @@ public class AndroidLoginDetector {
             try { rotationEvery = Math.max(1, Integer.parseInt(System.getenv().getOrDefault("LIFT_ROTATION_EVERY", "1"))); } catch (Exception ignored) { }
             if (round % rotationEvery == 0) {
                 logInfo("=== Rotation (lifecycle) checks, round " + round + " ===");
+                boolean chaosPaused = false;
+                if (networkChaosManager != null && networkChaosManager.isRunning()) { networkChaosManager.stop(); chaosPaused = true; }
                 try {
                     snapshotManager.restoreSnapshot("baseline");
                     boolean onLogin = detectLoginPageWithUI() || tryDirectLoginActivities();
@@ -1136,6 +1138,8 @@ public class AndroidLoginDetector {
                     }
                 } catch (Exception e) {
                     logError("Rotation checks failed: " + e.getMessage());
+                } finally {
+                    if (chaosPaused) networkChaosManager.start();
                 }
             }
 

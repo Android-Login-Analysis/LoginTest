@@ -52,6 +52,7 @@ public class UIManager {
     public long waitForLoginPageGone(long timeoutMs) {
         lastLoginErrorText = null;
         lastMfaOutcome = null;
+        String loginActivity = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
         long deadline = System.currentTimeMillis() + timeoutMs;
         long goneSince = -1;
         while (System.currentTimeMillis() < deadline) {
@@ -88,6 +89,9 @@ public class UIManager {
                     for (UIElement e : els) {
                         if (e.className != null && e.className.contains("ProgressBar") && boundsOf(e) != null) { progressShown = true; break; }
                     }
+                    String topNow = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
+                    boolean activityChanged = !loginActivity.isEmpty() && !topNow.equals(loginActivity);
+                    if (activityChanged && findPasswordAnchor(els) == null) return pollStart;    // left the login screen
                     if (progressShown) { goneSince = -1; Thread.sleep(500); continue; } // login still in progress
                     if (findPasswordAnchor(els) == null) {
                         if (goneSince < 0) goneSince = pollStart;            // first poll without the form
@@ -211,6 +215,7 @@ public class UIManager {
             String className = extractAttribute(attributes, "class");
             // FIX(v1): uiautomator exposes password inputs (inputType 0x81) as password="true"
             if ("true".equalsIgnoreCase(extractAttribute(attributes, "password"))) className = className + " [password]";
+            if ("false".equalsIgnoreCase(extractAttribute(attributes, "enabled"))) className = className + " [disabled]";
             String bounds = extractAttribute(attributes, "bounds");
             String textAttr = extractAttribute(attributes, "text");
             String contentDesc = extractAttribute(attributes, "content-desc");
@@ -1226,6 +1231,7 @@ public class UIManager {
             String className = extractAttribute(attributes, "class");
             // FIX(v1): uiautomator exposes password inputs (inputType 0x81) as password="true"
             if ("true".equalsIgnoreCase(extractAttribute(attributes, "password"))) className = className + " [password]";
+            if ("false".equalsIgnoreCase(extractAttribute(attributes, "enabled"))) className = className + " [disabled]";
             String bounds = extractAttribute(attributes, "bounds");
             // UIAutomator keeps visible labels in a 'text' ATTRIBUTE, not innerText
             String textAttr = extractAttribute(attributes, "text");
@@ -1959,6 +1965,20 @@ public class UIManager {
 
     private String textOf(UIElement e) { return e == null || e.text == null ? "" : e.text; }
 
+    /** Submit/login button below the password field is disabled. */
+    private boolean submitDisabled(List<UIElement> els) {
+        UIElement pw = findPasswordAnchor(els);
+        int top = pw == null ? 0 : boundsOf(pw)[3];
+        for (UIElement e : els) {
+            if (e.text == null || boundsOf(e) == null || boundsOf(e)[1] < top) continue;
+            String t = e.text.trim().toLowerCase();
+            if (t.length() <= 30 && matchesLoginButtonPattern(e.text, e.resourceId)) {
+                return e.className != null && e.className.contains("[disabled]");
+            }
+        }
+        return false;
+    }
+
     public List<String[]> runRotationChecks(String username, String password) {
         List<String[]> findings = new ArrayList<>();
         try {
@@ -1977,6 +1997,7 @@ public class UIManager {
             els = getAllUIElements();
             boolean userBefore = user != null && textOf(findUsernameField()).contains(username);
             String pwBefore = textOf(findPasswordAnchor(els));
+            System.out.println("[ROTATION] A: before rotation: username=" + userBefore + ", passwordFilled=" + (!pwBefore.isEmpty() && !pwBefore.equals(pwHint)));
             setRotation(1);
             Thread.sleep(3500);
             if (!AppLauncher.isInForeground(appPackage)) {
@@ -2015,7 +2036,9 @@ public class UIManager {
             new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf(bc[0]), String.valueOf(bc[1])).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
             Thread.sleep(700);
             List<UIElement> inflight = getAllUIElements();
-            boolean busyBefore = progressVisible(inflight) || findPasswordAnchor(inflight) == null;
+            boolean btnDisabledBefore = submitDisabled(inflight);
+            boolean busyBefore = progressVisible(inflight) || btnDisabledBefore || findPasswordAnchor(inflight) == null;
+            System.out.println("[ROTATION] B: in-flight before rotation: progress=" + progressVisible(inflight) + ", submitDisabled=" + btnDisabledBefore + ", formShown=" + (findPasswordAnchor(inflight) != null));
             setRotation(1);
             Thread.sleep(3500);
             if (!AppLauncher.isInForeground(appPackage)) {
@@ -2025,11 +2048,13 @@ public class UIManager {
             }
             List<UIElement> rotated = getAllUIElements();
             UIElement pwR = findPasswordAnchor(rotated);
-            boolean formIdle = pwR != null && !progressVisible(rotated) && visibleErrorText(rotated) == null
-                && (textOf(pwR).isEmpty() || textOf(pwR).equals(pwHint));
+            boolean noResult = visibleErrorText(rotated) == null && findDialogMessage(rotated) == null;
+            boolean formIdle = pwR != null && !progressVisible(rotated) && !submitDisabled(rotated) && noResult;
+            System.out.println("[ROTATION] B: after rotation: formShown=" + (pwR != null) + ", progress=" + progressVisible(rotated)
+                + ", submitDisabled=" + submitDisabled(rotated) + ", result=" + !noResult);
             if (busyBefore && formIdle) {
                 findings.add(new String[]{"ROTATION_LOGIN_STATE_RESET",
-                    "Login was in progress when the device rotated; afterwards the form is idle and empty with no result shown"});
+                    "Login was in progress when the device rotated; afterwards the form is idle again (no progress, submit enabled) with no result shown"});
             }
 
             // ---- C: error message survives rotation ----------------------------------------
@@ -2039,11 +2064,13 @@ public class UIManager {
                 err = visibleErrorText(getAllUIElements());
                 if (err == null) Thread.sleep(1500);
             }
+            System.out.println("[ROTATION] C: error shown before rotating back: " + (err == null ? "none" : "'" + err + "'"));
             if (err != null) {
                 setRotation(0);
                 Thread.sleep(3500);
                 List<UIElement> back = getAllUIElements();
                 String errAfter = visibleErrorText(back);
+                System.out.println("[ROTATION] C: error after rotation: " + (errAfter == null ? "none" : "'" + errAfter + "'"));
                 if (errAfter == null && AppLauncher.isInForeground(appPackage)) {
                     findings.add(new String[]{"ROTATION_ERROR_MESSAGE_LOST", "Error message '" + err + "' disappeared after rotation"});
                 }
