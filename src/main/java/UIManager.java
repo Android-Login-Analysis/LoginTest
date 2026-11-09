@@ -1862,4 +1862,138 @@ public class UIManager {
                     '}';
         }
     }
+
+    // =====================================================================================
+    // FIX(v1): Lifecycle (rotation) oracle. The previous DeviceRotationTester used hard-coded
+    // credentials and only reported when a "normal" login succeeded, so it could never fire.
+    // These checks target the symptoms observed in the empirical study (RQ1, "Interference with
+    // other state machines"): lost input, reset in-flight login state, and lost error messages.
+    // Each finding is {type, evidence}.
+    // =====================================================================================
+    private void setRotation(int r) {
+        try {
+            new ProcessBuilder("adb", "shell", "settings", "put", "system", "accelerometer_rotation", "0").start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+            new ProcessBuilder("adb", "shell", "settings", "put", "system", "user_rotation", String.valueOf(r)).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+        } catch (Exception ignored) { }
+    }
+
+    private static final java.util.regex.Pattern ERROR_TEXT = java.util.regex.Pattern.compile(
+        "(?i)(error|invalid|incorrect|wrong|failed|failure|unable|could not|couldn't|denied|not found|try again)");
+
+    private String visibleErrorText(List<UIElement> els) {
+        String d = findDialogMessage(els);
+        if (d != null && !d.isEmpty()) return d;
+        for (UIElement e : els) {
+            if (e.text == null || boundsOf(e) == null || isInputClass(e.className)) continue;
+            String t = e.text.trim();
+            if (t.length() >= 4 && t.length() <= 160 && ERROR_TEXT.matcher(t).find()
+                    && !t.toLowerCase().contains("forgot")) return t;
+        }
+        return null;
+    }
+
+    private boolean progressVisible(List<UIElement> els) {
+        for (UIElement e : els) if (e.className != null && e.className.contains("ProgressBar") && boundsOf(e) != null) return true;
+        return false;
+    }
+
+    private String textOf(UIElement e) { return e == null || e.text == null ? "" : e.text; }
+
+    public List<String[]> runRotationChecks(String username, String password) {
+        List<String[]> findings = new ArrayList<>();
+        try {
+            List<UIElement> els = getAllUIElements();
+            UIElement pw = findPasswordAnchor(els);
+            UIElement user = usernameEnteredInStep1 ? null : findUsernameField();
+            if (pw == null) { System.out.println("[ROTATION] Not on a credential form; skipping"); return findings; }
+            String pwHint = textOf(pw);
+
+            // ---- A: input retention -------------------------------------------------------
+            if (user != null) { int[] c = extractCoordinates(user.bounds); clickAndInputText(c[0], c[1], username); }
+            int[] pc = extractCoordinates(pw.bounds);
+            clickAndInputText(pc[0], pc[1], password);
+            try { new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_BACK").start().waitFor(5, java.util.concurrent.TimeUnit.SECONDS); } catch (Exception ignored) { }
+            Thread.sleep(800);
+            els = getAllUIElements();
+            boolean userBefore = user != null && textOf(findUsernameField()).contains(username);
+            String pwBefore = textOf(findPasswordAnchor(els));
+            setRotation(1);
+            Thread.sleep(3500);
+            if (!AppLauncher.isInForeground(appPackage)) {
+                findings.add(new String[]{"ROTATION_APP_EXIT", "App left the foreground after rotating the filled login form"});
+                setRotation(0);
+                return findings;
+            }
+            List<UIElement> after = getAllUIElements();
+            UIElement pwAfterEl = findPasswordAnchor(after);
+            boolean userAfter = textOf(findUsernameField()).contains(username);
+            String pwAfter = textOf(pwAfterEl);
+            if (pwAfterEl == null) {
+                findings.add(new String[]{"ROTATION_FORM_LOST", "Credential form disappeared after rotation (login page reset or navigated away)"});
+            } else {
+                boolean pwLost = !pwBefore.isEmpty() && !pwBefore.equals(pwHint) && (pwAfter.isEmpty() || pwAfter.equals(pwHint));
+                if ((userBefore && !userAfter) || pwLost) {
+                    findings.add(new String[]{"ROTATION_INPUT_LOST",
+                        "Input lost on rotation: username " + (userBefore && !userAfter ? "lost" : "kept") + ", password " + (pwLost ? "lost" : "kept")});
+                }
+            }
+            setRotation(0);
+            Thread.sleep(2500);
+
+            // ---- B: rotate while the login request is in flight ----------------------------
+            els = getAllUIElements();
+            UIElement pwNow = findPasswordAnchor(els);
+            if (pwNow != null && textOf(pwNow).equals(pwHint)) {        // re-fill if A cleared it
+                int[] c2 = extractCoordinates(pwNow.bounds);
+                clickAndInputText(c2[0], c2[1], password);
+                try { new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_BACK").start().waitFor(5, java.util.concurrent.TimeUnit.SECONDS); } catch (Exception ignored) { }
+                Thread.sleep(600);
+            }
+            UIElement btn = findLoginButton();
+            if (btn == null) { System.out.println("[ROTATION] No login button; skipping in-flight check"); return findings; }
+            int[] bc = extractCoordinates(btn.bounds);
+            new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf(bc[0]), String.valueOf(bc[1])).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+            Thread.sleep(700);
+            List<UIElement> inflight = getAllUIElements();
+            boolean busyBefore = progressVisible(inflight) || findPasswordAnchor(inflight) == null;
+            setRotation(1);
+            Thread.sleep(3500);
+            if (!AppLauncher.isInForeground(appPackage)) {
+                findings.add(new String[]{"ROTATION_APP_EXIT", "App left the foreground when rotated during an in-flight login"});
+                setRotation(0);
+                return findings;
+            }
+            List<UIElement> rotated = getAllUIElements();
+            UIElement pwR = findPasswordAnchor(rotated);
+            boolean formIdle = pwR != null && !progressVisible(rotated) && visibleErrorText(rotated) == null
+                && (textOf(pwR).isEmpty() || textOf(pwR).equals(pwHint));
+            if (busyBefore && formIdle) {
+                findings.add(new String[]{"ROTATION_LOGIN_STATE_RESET",
+                    "Login was in progress when the device rotated; afterwards the form is idle and empty with no result shown"});
+            }
+
+            // ---- C: error message survives rotation ----------------------------------------
+            long deadline = System.currentTimeMillis() + 20000;
+            String err = null;
+            while (System.currentTimeMillis() < deadline && err == null) {
+                err = visibleErrorText(getAllUIElements());
+                if (err == null) Thread.sleep(1500);
+            }
+            if (err != null) {
+                setRotation(0);
+                Thread.sleep(3500);
+                List<UIElement> back = getAllUIElements();
+                String errAfter = visibleErrorText(back);
+                if (errAfter == null && AppLauncher.isInForeground(appPackage)) {
+                    findings.add(new String[]{"ROTATION_ERROR_MESSAGE_LOST", "Error message '" + err + "' disappeared after rotation"});
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("[ROTATION] Check aborted: " + e.getMessage());
+        } finally {
+            setRotation(0);
+        }
+        for (String[] f : findings) System.out.println("[ROTATION] Finding: " + f[0] + " - " + f[1]);
+        return findings;
+    }
 }

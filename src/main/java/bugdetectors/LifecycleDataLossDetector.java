@@ -72,9 +72,21 @@ public class LifecycleDataLossDetector implements BugDetector {
         activity.inputFieldIds.add(fieldId);
     }
     
+    // FIX(v1): findings observed at runtime by the rotation oracle (UIManager.runRotationChecks)
+    private final List<DetectedBug> observed = new ArrayList<>();
+
+    public void recordObservedLoss(String type, String evidence, String activity) {
+        DetectedBug bug = new DetectedBug(BugCategory.LIFECYCLE_INTERFERENCE, type, "Login state lost on device rotation");
+        bug.setSeverity(DetectedBug.Severity.HIGH);
+        bug.setLocation(activity == null ? "Login activity" : activity);
+        bug.setEvidence(evidence);
+        observed.add(bug);
+    }
+
     @Override
     public List<DetectedBug> detectBugs() {
         detectedBugs.clear();
+        detectedBugs.addAll(observed);
         
         for (ActivityInfo activity : activities) {
             // Check Pattern 1: Has user input but no state saving
@@ -202,6 +214,7 @@ public class LifecycleDataLossDetector implements BugDetector {
     public void reset() {
         activities.clear();
         detectedBugs.clear();
+        observed.clear();
     }
     
     /**

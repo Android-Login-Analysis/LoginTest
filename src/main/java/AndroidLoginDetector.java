@@ -1106,25 +1106,31 @@ public class AndroidLoginDetector {
                 extractAndReportTaintFlows(round);
             }
 
-            // Step 9.5: Run device rotation test (every 3 rounds)
-            if (round % 3 == 1) {
-                logInfo("=== Running Device Rotation Test (Round " + round + ") ===");
+            // Step 9.5 (FIX v1): lifecycle/rotation oracle on a fresh login page, every N rounds
+            int rotationEvery = 1;
+            try { rotationEvery = Math.max(1, Integer.parseInt(System.getenv().getOrDefault("LIFT_ROTATION_EVERY", "1"))); } catch (Exception ignored) { }
+            if (round % rotationEvery == 0) {
+                logInfo("=== Rotation (lifecycle) checks, round " + round + " ===");
                 try {
-                    DeviceRotationTester rotationTester = new DeviceRotationTester(configLoader);
-                    boolean dataLoss = rotationTester.runRotationTest();
-                    
-                    if (dataLoss) {
-                        logInfo("⚠️  DATA LOSS DETECTED on device rotation!");
-                        // Bug will be reported in next detection phase
+                    snapshotManager.restoreSnapshot("baseline");
+                    boolean onLogin = detectLoginPageWithUI() || tryDirectLoginActivities();
+                    if (onLogin) {
+                        String rUser = accountPool.isEmpty() ? "testuser@example.com" : accountPool.get(new Random().nextInt(accountPool.size()));
+                        String rPass = passwordPool.isEmpty() ? "wrongpass123" : passwordPool.get(new Random().nextInt(passwordPool.size()));
+                        uiManager.setPendingUsername(rUser);
+                        List<String[]> findings = uiManager.runRotationChecks(rUser, rPass);
+                        if (stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+                            var lifecycle = stateMachineManager.getBugDetectionManager().getLifecycleDetector();
+                            String activity = AppLauncher.topActivityLine().trim();
+                            for (String[] f : findings) lifecycle.recordObservedLoss(f[0], f[1], activity);
+                        }
+                        logInfo("Rotation checks finished with " + findings.size() + " finding(s)");
                     } else {
-                        logInfo("✓ No data loss detected during rotation test");
+                        logInfo("Rotation checks skipped: login page not reached");
                     }
                 } catch (Exception e) {
-                    logError("Rotation test failed: " + e.getMessage());
-                    e.printStackTrace();
+                    logError("Rotation checks failed: " + e.getMessage());
                 }
-            } else {
-                logInfo("Skipping rotation test for round " + round + " (runs every 3 rounds)");
             }
 
             // Step 10: Stop Frida monitoring (after extracting taint)
