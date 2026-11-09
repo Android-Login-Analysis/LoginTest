@@ -218,6 +218,18 @@ public class CrashDetector implements BugDetector {
             int e = t.indexOf("\n\n", b);
             String crashingThread = e > 0 ? t.substring(b, e) : t.substring(b);
             if (crashingThread.contains("frida-agent")) return true;
+            // A Java method replaced by a Frida hook runs as a native method; a crash returning through
+            // ART's generic JNI trampoline into app bytecode (vdex/odex/oat) is a hook artifact.
+            String[] frames = crashingThread.split("\n");
+            for (int i = 0; i < Math.min(frames.length, 6); i++) {
+                if (frames[i].contains("GenericJniMethodEnd") || frames[i].contains("art_quick_generic_jni_trampoline")) {
+                    for (int j = i + 1; j < Math.min(frames.length, i + 4); j++) {
+                        String f = frames[j];
+                        if (f.contains("/data/app/") && (f.contains(".vdex") || f.contains(".odex") || f.contains(".oat"))) return true;
+                        if (f.contains(".so")) break;
+                    }
+                }
+            }
             // JNI abort raised from Frida's JS thread: only libc/anonymous (JIT) frames, no app code
             boolean jniAbort = t.contains("JNI DETECTED ERROR") || t.contains("JNI ERROR (app bug)");
             boolean anonymousOnly = crashingThread.contains("<anonymous:") && !crashingThread.contains("/data/app/")

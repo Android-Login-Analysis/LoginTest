@@ -152,7 +152,10 @@ rpc.exports = {
                 // JNI method enumeration ("JNI DETECTED ERROR: obj == null").
                 // Build-time code shaded into APKs and low-level library internals (hot paths, not login logic).
                 // Public library APIs (e.g. okhttp3.Call, okhttp3.Response) remain hooked.
-                const SKIP_PACKAGE_PREFIXES = ['de.undercouch.gradle.', 'okhttp3.internal.', 'okio.'];
+                const SKIP_PACKAGE_PREFIXES = ['de.undercouch.gradle.', 'okhttp3.internal.', 'okio.',
+                    // UI widget internals run on the drawing path (e.g. EditText.getText during onPreDraw);
+                    // hooking them crashed apps in ART's JNI trampoline and they carry no login logic.
+                    'androidx.appcompat.', 'android.widget.', 'com.google.android.material.'];
                 // FIX(v1): hot-method guard. A method invoked thousands of times is not a login state
                 // transition; keeping its hook exhausts the JNI global reference table and crashes the app.
                 const HOT_CALL_LIMIT = 2000;
