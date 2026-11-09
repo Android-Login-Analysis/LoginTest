@@ -51,6 +51,7 @@ public class UIManager {
      */
     public long waitForLoginPageGone(long timeoutMs) {
         lastLoginErrorText = null;
+        lastMfaOutcome = null;
         long deadline = System.currentTimeMillis() + timeoutMs;
         long goneSince = -1;
         while (System.currentTimeMillis() < deadline) {
@@ -63,6 +64,25 @@ public class UIManager {
                         lastLoginErrorText = dialogMsg;
                         System.out.println("[LOGIN_RESULT] Error dialog after login: '" + dialogMsg + "'");
                         return -2;
+                    }
+                    UIElement mfaInput = findMfaInput(els);
+                    if (mfaInput != null) {
+                        String secret = pendingUsername == null ? null : totpSecrets.get(pendingUsername);
+                        if (secret != null && !mfaHandled) {
+                            mfaHandled = true;
+                            int[] r = boundsOf(mfaInput);
+                            String code = Totp.freshCode(secret);
+                            System.out.println("[MFA] Authenticator prompt; entering TOTP code");
+                            clickAndInputText((r[0] + r[2]) / 2, (r[1] + r[3]) / 2, code);
+                            submitMfa(els);
+                            lastMfaOutcome = "totp-entered";
+                            goneSince = -1;
+                            continue;
+                        } else if (secret == null) {
+                            System.out.println("[MFA] MFA prompt reached without an authenticator secret (MFACodePending)");
+                            lastMfaOutcome = "pending";
+                            return -3;
+                        }
                     }
                     boolean progressShown = false;
                     for (UIElement e : els) {
@@ -430,7 +450,49 @@ public class UIManager {
     private boolean usernameEnteredInStep1 = false;
     private List<UIElement> lastScanElements = null;
 
-    public void setPendingUsername(String u) { pendingUsername = u; usernameEnteredInStep1 = false; }
+    public void setPendingUsername(String u) { pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; }
+
+    // FIX(v1): MFA support. Authenticator-app accounts get a TOTP code; other accounts stop at the
+    // MFA prompt (MFACodePending), which is a legitimate login state, not a completed login.
+    private java.util.Map<String, String> totpSecrets = new java.util.HashMap<>();
+    private boolean mfaHandled = false;
+    public void setTotpSecrets(java.util.Map<String, String> m) { if (m != null) totpSecrets = m; }
+
+    private static final java.util.regex.Pattern MFA_HINT = java.util.regex.Pattern.compile(
+        "(?i)(two[- ]?factor|2fa|authenticator|verification code|one[- ]?time|\\botp\\b|security code|enter (the )?code|6[- ]digit|recovery code)");
+
+    /** Returns the MFA code input on screen, or null if this is not an MFA prompt. */
+    private UIElement findMfaInput(List<UIElement> els) {
+        if (findPasswordAnchor(els) != null) return null;
+        boolean hint = false; UIElement input = null; int inputs = 0;
+        for (UIElement e : els) {
+            if (e.text != null && MFA_HINT.matcher(e.text).find()) hint = true;
+            if (e.resourceId != null && MFA_HINT.matcher(e.resourceId.replace('_', ' ')).find()) hint = true;
+            if (isInputClass(e.className) && boundsOf(e) != null) { inputs++; if (input == null) input = e; }
+        }
+        return (hint && inputs >= 1) ? input : null;
+    }
+
+    private void submitMfa(List<UIElement> els) {
+        try {
+            new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_ENTER").redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+            Thread.sleep(3000);
+            List<UIElement> now = getAllUIElements();
+            if (findMfaInput(now) == null) return;
+            for (UIElement e : now) {
+                if (e.text == null || boundsOf(e) == null) continue;
+                if (e.text.trim().toLowerCase().matches("(verify|continue|next|submit|confirm|done|log ?in|sign ?in)")) {
+                    int[] r = boundsOf(e);
+                    new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf((r[0] + r[2]) / 2), String.valueOf((r[1] + r[3]) / 2))
+                        .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+                    return;
+                }
+            }
+        } catch (Exception ignored) { }
+    }
+
+    private String lastMfaOutcome = null;   // null | "totp-entered" | "pending"
+    public String getLastMfaOutcome() { return lastMfaOutcome; }
 
     /** If the screen shows a single identifier input and no password field, type the username into it. */
     private void maybeFillIdentifierStep() {

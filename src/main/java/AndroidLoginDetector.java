@@ -722,6 +722,17 @@ public class AndroidLoginDetector {
             }
         }
         logInfo("Loaded " + validPairs.size() + " valid credential pair(s)");
+        // FIX(v1): authenticator secrets for MFA accounts (totp_secrets.csv: username,base32secret)
+        java.util.Map<String, String> totp = new java.util.HashMap<>();
+        java.util.List<String> totpLines = readLinesFromFile(new java.io.File(credDir, "totp_secrets.csv").getPath());
+        if (totpLines != null) {
+            for (String l : totpLines) {
+                int c = l.indexOf(',');
+                if (!l.startsWith("#") && c > 0) totp.put(l.substring(0, c).trim(), l.substring(c + 1).trim());
+            }
+        }
+        if (uiManager != null) uiManager.setTotpSecrets(totp);
+        logInfo("Loaded " + totp.size() + " TOTP secret(s)");
 
         logInfo("Loaded credential pools:");
         logInfo("  - Standard accounts: " + accountPool.size());
@@ -1019,6 +1030,8 @@ public class AndroidLoginDetector {
                     gone = uiManager.waitForLoginPageGone(35000);
                     if (gone > 0) {
                         timeoutDetector.recordLoginAttempt(clickTime, gone, true);
+                    } else if (gone == -3) {
+                        logInfo("Login stopped at the MFA prompt (MFACodePending); no authenticator secret for this account");
                     } else if (gone == -2) {
                         logInfo("Login rejected with message: '" + uiManager.getLastLoginErrorText() + "' (validPair=" + usedValidPair + ")");
                     } else if (usedValidPair) {
