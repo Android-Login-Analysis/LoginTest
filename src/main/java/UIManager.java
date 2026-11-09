@@ -1104,8 +1104,20 @@ public class UIManager {
     /**
      * Click login button (separate from input for screenshot purposes)
      */
+    /** FIX(v1): hide the soft keyboard only if it is shown (BACK would otherwise leave the screen). */
+    public void hideKeyboardIfShown() {
+        try {
+            String ime = AppLauncher.run("adb", "shell", "dumpsys", "input_method");
+            if (ime.contains("mInputShown=true") || ime.contains("isInputViewShown=true")) {
+                new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_BACK").start().waitFor(5, java.util.concurrent.TimeUnit.SECONDS);
+                Thread.sleep(800);
+            }
+        } catch (Exception ignored) { }
+    }
+
     public boolean clickLoginButton() {
         try {
+            hideKeyboardIfShown();   // FIX(v1): the keyboard shifts or hides the submit button
             // Find and click login button
             UIElement loginButton = findLoginButton();
             if (loginButton == null) {
@@ -2218,7 +2230,7 @@ public class UIManager {
                 if (inputs != 1) { System.out.println("[ROTATION] Not on a credential form; skipping"); return findings; }
                 int[] ic = extractCoordinates(idField.bounds);
                 clickAndInputText(ic[0], ic[1], username);
-                try { new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_BACK").start().waitFor(5, java.util.concurrent.TimeUnit.SECONDS); } catch (Exception ignored) { }
+                hideKeyboardIfShown();
                 Thread.sleep(800);
                 boolean before = false;
                 for (UIElement e : getAllUIElements()) if (isInputClass(e.className) && textOf(e).contains(username)) before = true;
@@ -2243,7 +2255,7 @@ public class UIManager {
             if (user != null) { int[] c = extractCoordinates(user.bounds); clickAndInputText(c[0], c[1], username); }
             int[] pc = extractCoordinates(pw.bounds);
             clickAndInputText(pc[0], pc[1], password);
-            try { new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_BACK").start().waitFor(5, java.util.concurrent.TimeUnit.SECONDS); } catch (Exception ignored) { }
+            hideKeyboardIfShown();
             Thread.sleep(800);
             els = getAllUIElements();
             boolean userBefore = user != null && textOf(findUsernameField()).contains(username);
@@ -2289,7 +2301,7 @@ public class UIManager {
             if (pwNow != null && textOf(pwNow).equals(pwHint)) {        // re-fill if A cleared it
                 int[] c2 = extractCoordinates(pwNow.bounds);
                 clickAndInputText(c2[0], c2[1], password);
-                try { new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_BACK").start().waitFor(5, java.util.concurrent.TimeUnit.SECONDS); } catch (Exception ignored) { }
+                hideKeyboardIfShown();
                 Thread.sleep(600);
             }
             UIElement btn = findLoginButton();
