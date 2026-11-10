@@ -289,7 +289,7 @@ public class LoginDetectionEnhancer {
             try {
                 screenshotCount++;
                 String filename = String.format("screenshot_%03d_%s.png", screenshotCount, tag);
-                String devicePath = "/sdcard/screenshot_temp.png";
+                String devicePath = "/data/local/tmp/screenshot_temp.png";
                 String localPath = new File(baseDir, filename).getAbsolutePath();
                 
                 // Capture screenshot

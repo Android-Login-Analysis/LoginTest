@@ -155,8 +155,8 @@ public class DeviceRotationTester {
      */
     private boolean checkCredentialsRetained() throws IOException, InterruptedException {
         // Dump UI hierarchy
-        executeAdbCommand("adb shell uiautomator dump /sdcard/window_dump.xml");
-        executeAdbCommand("adb pull /sdcard/window_dump.xml /tmp/rotation_ui_dump.xml");
+        executeAdbCommand("adb shell uiautomator dump /data/local/tmp/window_dump.xml");
+        executeAdbCommand("adb pull /data/local/tmp/window_dump.xml /tmp/rotation_ui_dump.xml");
         
         // Read the XML file
         File dumpFile = new File("/tmp/rotation_ui_dump.xml");

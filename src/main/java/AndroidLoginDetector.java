@@ -2195,7 +2195,7 @@ public class AndroidLoginDetector {
             new ProcessBuilder("adb", "shell", "settings", "put", "system", "show_touches", "1")
                     .redirectErrorStream(true).start().waitFor();
 
-            String onDevicePng = "/sdcard/als_step_" + step + ".png";
+            String onDevicePng = "/data/local/tmp/als_step_" + step + ".png";
             int s1 = new ProcessBuilder("adb", "shell", "screencap", "-p", onDevicePng)
                     .redirectErrorStream(true).start().waitFor();
             if (s1 != 0) {
@@ -2240,7 +2240,7 @@ public class AndroidLoginDetector {
             ensureDirExists(uiDir);
             File uiOut = new File(uiDir, "step_" + step + ".xml");
             String abs = uiOut.getAbsolutePath();
-            String onDeviceXml = "/sdcard/als_uidump_" + step + ".xml";
+            String onDeviceXml = "/data/local/tmp/als_uidump_" + step + ".xml";
             int d1 = new ProcessBuilder("adb", "shell", "uiautomator", "dump", onDeviceXml)
                     .redirectErrorStream(true).start().waitFor();
             if (d1 != 0) {

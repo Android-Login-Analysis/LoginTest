@@ -356,12 +356,12 @@ public class UIManager {
         try {
             // Dump UI to a temporary file on device
             Process dumpProcess = Runtime.getRuntime().exec(
-                "adb shell uiautomator dump /sdcard/ui_dump_temp.xml");
+                "adb shell uiautomator dump /data/local/tmp/ui_dump_temp.xml");
             dumpProcess.waitFor();
             
             // Read the dump file
             Process catProcess = Runtime.getRuntime().exec(
-                "adb shell cat /sdcard/ui_dump_temp.xml");
+                "adb shell cat /data/local/tmp/ui_dump_temp.xml");
             
             BufferedReader reader = new BufferedReader(
                 new InputStreamReader(catProcess.getInputStream()));
@@ -373,7 +373,7 @@ public class UIManager {
             reader.close();
             
             // Clean up temp file
-            Runtime.getRuntime().exec("adb shell rm /sdcard/ui_dump_temp.xml");
+            Runtime.getRuntime().exec("adb shell rm /data/local/tmp/ui_dump_temp.xml");
             
             return result.toString();
         } catch (Exception e) {
@@ -1566,7 +1566,7 @@ public class UIManager {
         dumpProcess.waitFor();
 
         // Read the entire dump file content
-        Process catProcess = Runtime.getRuntime().exec("adb shell cat /sdcard/window_dump.xml");
+        Process catProcess = Runtime.getRuntime().exec("adb shell cat /data/local/tmp/window_dump.xml");
         BufferedReader reader = new BufferedReader(new InputStreamReader(catProcess.getInputStream()));
         StringBuilder xml = new StringBuilder();
         String line;
@@ -2161,7 +2161,7 @@ public class UIManager {
             
             if (focusLine != null && focusLine.contains(appPackage)) {
                 // Get the UI dump and find the focused element
-                Process dumpProcess = Runtime.getRuntime().exec("adb shell cat /sdcard/window_dump.xml");
+                Process dumpProcess = Runtime.getRuntime().exec("adb shell cat /data/local/tmp/window_dump.xml");
                 BufferedReader dumpReader = new BufferedReader(new InputStreamReader(dumpProcess.getInputStream()));
                 String line;
                 boolean foundFocusedElement = false;
@@ -2218,7 +2218,7 @@ public class UIManager {
             Process dumpProc = Runtime.getRuntime().exec("adb shell uiautomator dump");
             dumpProc.waitFor();
 
-            Process cat = Runtime.getRuntime().exec("adb shell cat /sdcard/window_dump.xml");
+            Process cat = Runtime.getRuntime().exec("adb shell cat /data/local/tmp/window_dump.xml");
             BufferedReader br = new BufferedReader(new InputStreamReader(cat.getInputStream()));
             String line;
             while ((line = br.readLine()) != null) {

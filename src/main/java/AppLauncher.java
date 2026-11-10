@@ -47,8 +47,8 @@ public final class AppLauncher {
         boolean handled = false;
         for (int i = 0; i < 4; i++) {
             if (!topActivityLine().contains("permissioncontroller")) break;
-            run("adb", "shell", "uiautomator", "dump", "/sdcard/perm_dump.xml");
-            String xml = run("adb", "shell", "cat", "/sdcard/perm_dump.xml");
+            run("adb", "shell", "uiautomator", "dump", "/data/local/tmp/perm_dump.xml");
+            String xml = run("adb", "shell", "cat", "/data/local/tmp/perm_dump.xml");
             String[] ids = {
                 "com.android.permissioncontroller:id/permission_allow_button",
                 "com.android.permissioncontroller:id/permission_allow_foreground_only_button",
