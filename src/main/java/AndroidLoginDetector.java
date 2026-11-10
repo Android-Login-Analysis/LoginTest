@@ -1104,6 +1104,24 @@ public class AndroidLoginDetector {
                         if (gone == -3) logInfo("Login stopped at the MFA prompt after invalid credentials");
                     }
                 }
+                // FIX(v1): the most common credential error is a wrong password for an existing account; when a real
+                // account is known, the invalid round also tries it once with a wrong password, so the differential
+                // oracle has the app's wrong-password message to compare network failures against
+                if (!usedValidPair && invalidCandidates.size() > 0 && "normal".equals(roundCondition) && loginSuccess
+                        && (gone == -2 || (gone == -1 && !uiManager.lastWaitEndedInProgress()))) {
+                    String realUser = uiManager.isFacebookLoginDetected() ? realAccount(facebookEmailPool)
+                        : uiManager.isGoogleLoginDetected() ? realAccount(googleEmailPool)
+                        : (validPairs.isEmpty() ? null : validPairs.get(0)[0]);
+                    if (realUser != null) {
+                        String wrongPw = "Wrong" + (100000 + new Random().nextInt(900000)) + "x";
+                        logInfo("Invalid round: existing account with a wrong password");
+                        username = realUser;
+                        loginSuccess = inputCredentialsWithUI(realUser, wrongPw);
+                        clickTime = uiManager.getLoginButtonClickTime();
+                        gone = (loginSuccess && clickTime > 0) ? uiManager.waitForLoginPageGone(35000) : -1;
+                        if (gone == -2) recordFailureMessage(uiManager.getLastLoginErrorText(), false);
+                    }
+                }
                 invalidCandidates = new java.util.ArrayList<>();
                 // FIX(v1): loginSuccess only means "credentials entered and login clicked". Authentication
                 // is considered successful only if the login page went away; with a valid pair we expect
