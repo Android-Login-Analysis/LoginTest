@@ -59,3 +59,17 @@ reports/screenshot/*
 # captured logged-in app sessions (never commit)
 pools/*/loggedin.tgz
 *.tgz
+
+### LIFTDroid run outputs (curated results live in reproduction/) ###
+logs/*
+!logs/.gitkeep
+reports/*
+!reports/.gitkeep
+.fvenv/
+venv/
+.venv/
+.claude/
+apps/*.apk
+apps/seeded/
+reproduction/apks/*.apk
+reproduction/seeded/apks/*.apk
