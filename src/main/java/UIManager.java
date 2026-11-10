@@ -57,10 +57,26 @@ public class UIManager {
     /** Tap the first visible element whose text matches the regex; returns its text or null. */
     public String tapText(String regex) {
         try {
-            for (UIElement e : getAllUIElements()) {
+            List<UIElement> all = getAllUIElements();
+            for (UIElement e : all) {
                 if (e.text == null || !e.visible || boundsOf(e) == null) continue;
                 if (!e.text.trim().toLowerCase().matches(regex)) continue;
                 int[] r = boundsOf(e);
+                // FIX(v1): labels are often not the click target (Compose chips: icon above, label below); use the
+                // clickable element that contains the label, else the nearest clickable one directly above/below it
+                if (e.className == null || !e.className.contains("[clickable]")) {
+                    int cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2;
+                    int[] best = null; int bestD = Integer.MAX_VALUE;
+                    for (UIElement c : all) {
+                        int[] b = boundsOf(c);
+                        if (b == null || c.className == null || !c.className.contains("[clickable]")) continue;
+                        if ((b[2] - b[0]) > 900 && (b[3] - b[1]) > 900) continue;   // full-screen containers
+                        if (cx < b[0] || cx > b[2]) continue;
+                        int d = (cy >= b[1] && cy <= b[3]) ? 0 : Math.min(Math.abs(cy - b[1]), Math.abs(cy - b[3]));
+                        if (d < bestD && d < 250) { bestD = d; best = b; }
+                    }
+                    if (best != null) r = best;
+                }
                 new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf((r[0] + r[2]) / 2), String.valueOf((r[1] + r[3]) / 2))
                     .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
                 return e.text.trim();
