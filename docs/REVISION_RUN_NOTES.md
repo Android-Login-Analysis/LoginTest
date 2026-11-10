@@ -66,6 +66,12 @@ Reproduces Table V exactly (Standard Notes: 98,531 methods, 3,974 hooked, 96.0% 
 | 33 | App crashes in `GenericJniMethodEnd` after a few thousand calls (OuterTune, likely Notesnook/Tasks/InnerTune earlier) | Auto-unhook of hot methods raced with calls inside the hook trampoline | Hot methods pass through instead of being unhooked; crash-derived hook blacklist |
 | 34 | Rotation never tested on Google identifier screens (Aurora #1436) | Navigation filled the identifier and moved on | Rotation phase stops at identifier-only web forms |
 
+### Google sign-in on redroid
+
+Google asks for a phone approval ("Verify it's you") the first time; after one approval (2026-11-10) the same
+device signs in directly. The app data right after the login is kept as `pools/<app>/loggedin.tgz` (git-ignored,
+600) and restored in the tool's logged-in phase for post-login oracles.
+
 ### Per-bug detection status (targeted runs, current code)
 
 | App | Issue | Status | Oracle / evidence |
@@ -75,16 +81,18 @@ Reproduces Table V exactly (Standard Notes: 98,531 methods, 3,974 hooked, 96.0% 
 | Standard Notes | #4031, #3908, #3909 | open | "already signed in" / ANR not observed yet |
 | Organic Maps | #11668, #11669, #11670 | detected | rotation A/B, differential error message |
 | Nora | #106 | detected | DOM rotation B (submit busy -> idle) |
-| Nora | #107 | blocked | Facebook now answers wrong passwords with a captcha from this IP |
+| Nora | #107 | blocked | needs a real Facebook account (pool accounts are placeholders) |
 | NewsBlur | #1996 | detected | |
 | AuroraStore | #1435 | detected | plaintext `auth` / `PREFERENCE_AUTH_DATA` in SharedPreferences after Anonymous login |
 | AuroraStore | #1436 | detected | typed Google identifier lost on rotation |
-| AuroraStore | #1437 | pending | limited/offline Anonymous login rounds |
+| AuroraStore | #1437 | needs Google token exchange under failure | Anonymous login times out after ~50 s with an error (no hang); the hang is in `buildGoogleAuthData` after a Google login |
 | OuterTune | #964 | partial | rotation reloads the Google login WebView (password -> identifier step, input lost); no crash in release 0.10.0 (issue used a debug build) |
-| OuterTune | #965 | needs Google login | |
+| OuterTune | #965 | detected | after Google login: `innerTubeCookie` (YouTube session), `visitorData`, `dataSyncId` in plaintext DataStore |
 | Notesnook | #6640, #6647 | not reproducible | both fixed upstream; 3.0.18 (affected version) logs in but its post-login sync never finishes against today's server, blocking the 2FA settings flow; the login MFA prompt is dismissable |
-| InnerTune | #1830 | pending | |
-| InnerTune | #1831, #1860, #1861 | need Google login | |
+| InnerTune | #1830 | trigger reached, no ANR | offline round reaches Google's error page with 'Restart'; the tool taps it; no ANR observed (issue says 'sometimes') |
+| InnerTune | #1861 | detected | after Google login: `innerTubeCookie` in plaintext DataStore (every successful login) |
+| InnerTune | #1860 | not reproduced | account page restored from a real session shows content (18-19 nodes) |
+| InnerTune | #1831 | open | needs a Google-side sign-out scenario |
 | Tasks | #3962 | needs Google Play services image | |
 | OpenTune | #345, #346 | unavailable | repository taken down (HTTP 451) |
 
