@@ -1000,6 +1000,16 @@ public class AndroidLoginDetector {
             // (normal, limited, offline); the invalid round and the rotation phase use the credential form
             uiManager.setPreferGuestLogin(ROUND_VALIDITY[(round - 1) % ROUND_VALIDITY.length]);
             boolean loginPageDetected = detectLoginPageWithUI();
+            // FIX(v1): the app died during navigation (often instrumentation-induced): relaunch, re-attach and retry once
+            if (!loginPageDetected && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null
+                    && System.currentTimeMillis() - stateMachineManager.getBugDetectionManager().getCrashDetector().lastCrashMillis() < 40000) {
+                logInfo("App crashed during navigation; relaunching, re-attaching Frida and retrying the login page detection");
+                AppLauncher.launch(appPackage);
+                restartFridaMonitoring();
+                try { TimeUnit.SECONDS.sleep(8); } catch (InterruptedException ignored) { }
+                uiManager.setPendingUsername(roundUsername);
+                loginPageDetected = detectLoginPageWithUI();
+            }
             // FIX(v1): pages that need the network to render the form (e.g. web logins) cannot be reached
             // offline; load the form on a working network, then re-apply the round condition before submitting
             if (!loginPageDetected && !"normal".equals(roundCondition) && networkChaosManager != null

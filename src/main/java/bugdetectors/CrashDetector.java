@@ -12,6 +12,9 @@ import java.io.*;
 public class CrashDetector implements BugDetector {
     
     private List<CrashEvent> crashes = new ArrayList<>();
+    private volatile long lastCrashMillis = 0;
+    /** Wall-clock time of the most recent crash of the target app (0 if none). */
+    public long lastCrashMillis() { return lastCrashMillis; }
     private Process logcatProcess;
     private boolean monitoring = false;
     
@@ -96,6 +99,7 @@ public class CrashDetector implements BugDetector {
         String text = block.toString();
         if (belongsToTarget(text)) {
             crashes.add(new CrashEvent(ts, type, text, "Unknown"));
+            lastCrashMillis = System.currentTimeMillis();
             System.out.println("[CRASH_DETECTOR] Crash recorded: " + type);
         } else {
             String first = text.split("\n")[0];
@@ -124,7 +128,8 @@ public class CrashDetector implements BugDetector {
                         if (belongsToTarget(block.toString())) {
                             recorded = new CrashEvent(ts, type, block.toString(), "Unknown");
                             crashes.add(recorded);
-                            System.out.println("[CRASH_DETECTOR] Crash recorded: " + type);
+                            lastCrashMillis = System.currentTimeMillis();
+            System.out.println("[CRASH_DETECTOR] Crash recorded: " + type);
                         } else {
                             System.out.println("[CRASH_DETECTOR] Ignored crash of another process: " + line.trim());
                         }
