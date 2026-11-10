@@ -2149,7 +2149,7 @@ public class UIManager {
     public boolean checkFocusedLoginField() {
         try {
             // Get the currently focused element
-            Process process = Runtime.getRuntime().exec("adb shell uiautomator dump");
+            Process process = Runtime.getRuntime().exec("adb shell uiautomator dump /data/local/tmp/window_dump.xml");
             process.waitFor();
             
             // Get the focused element bounds
@@ -2215,7 +2215,7 @@ public class UIManager {
      */
     public FocusType getFocusedElementType() {
         try {
-            Process dumpProc = Runtime.getRuntime().exec("adb shell uiautomator dump");
+            Process dumpProc = Runtime.getRuntime().exec("adb shell uiautomator dump /data/local/tmp/window_dump.xml");
             dumpProc.waitFor();
 
             Process cat = Runtime.getRuntime().exec("adb shell cat /data/local/tmp/window_dump.xml");
