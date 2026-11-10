@@ -82,6 +82,13 @@ public class UIManager {
         return n;
     }
 
+    /** Text for logs: values of input fields (possibly typed credentials) are reduced to their length. */
+    private String logSafe(String text, String className) {
+        if (text == null) return "";
+        if (className != null && (className.contains("[password]") || isInputClass(className))) return "[input, " + text.length() + " chars]";
+        return text;
+    }
+
     private boolean recoveryTried = false;
     /** Click a visible Restart / Try again / Retry control on a web error page; true if one was used. */
     private boolean tryWebRecovery() {
@@ -973,13 +980,13 @@ public class UIManager {
                     // Check username field
                     if (!usernameFieldDetected && matchesUsernamePattern(element.text, element.resourceId, element.className)) {
                         usernameFieldDetected = true;
-                        System.out.println("Username field detected: " + element.text + " (ID: " + element.resourceId + ")");
+                        System.out.println("Username field detected: " + logSafe(element.text, element.className) + " (ID: " + element.resourceId + ")");
                     }
 
                     // Check password field
                     if (!passwordFieldDetected && matchesPasswordPattern(element.text, element.resourceId, element.className)) {
                         passwordFieldDetected = true;
-                        System.out.println("Password field detected: " + element.text + " (ID: " + element.resourceId + ")");
+                        System.out.println("Password field detected: " + logSafe(element.text, element.className) + " (ID: " + element.resourceId + ")");
                     }
 
                     // Check login button
@@ -1180,13 +1187,13 @@ public class UIManager {
                 if (!usernameFieldDetected
                         && matchesUsernamePattern(element.text, element.resourceId, element.className)) {
                     usernameFieldDetected = true;
-                    System.out.println("Real-time detection of username field: " + element.text);
+                    System.out.println("Real-time detection of username field: " + logSafe(element.text, element.className));
                 }
 
                 if (!passwordFieldDetected
                         && matchesPasswordPattern(element.text, element.resourceId, element.className)) {
                     passwordFieldDetected = true;
-                    System.out.println("Real-time detection of password field: " + element.text);
+                    System.out.println("Real-time detection of password field: " + logSafe(element.text, element.className));
                 }
             }
 
@@ -1548,14 +1555,14 @@ public class UIManager {
             // Check and cache username field
             if (matchesUsernamePattern(e.text, e.resourceId, e.className)) {
                 cache.setUsernameField(convertToCache(e));
-                System.out.println("[Match] Username field: " + e.text + " (id: " + e.resourceId + ")");
+                System.out.println("[Match] Username field: " + logSafe(e.text, e.className) + " (id: " + e.resourceId + ")");
                 matched = true;
             }
             
             // Check and cache password field
             if (matchesPasswordPattern(e.text, e.resourceId, e.className)) {
                 cache.setPasswordField(convertToCache(e));
-                System.out.println("[Match] Password field: " + e.text + " (id: " + e.resourceId + ")");
+                System.out.println("[Match] Password field: " + logSafe(e.text, e.className) + " (id: " + e.resourceId + ")");
                 matched = true;
             }
             
