@@ -228,11 +228,8 @@ public class CrashDetector implements BugDetector {
         if (crash.stackTrace != null && (crash.stackTrace.contains("re.frida") || crash.stackTrace.contains("frida-agent"))) return true;
         if (!"NATIVE_CRASH".equals(crash.exceptionType)) return false;
         try {
-            Process p = new ProcessBuilder("adb", "shell",
-                "f=$(ls -t /data/tombstones/ 2>/dev/null | grep -v pb | head -1); [ -n \"$f\" ] && cat /data/tombstones/$f")
-                .redirectErrorStream(true).start();
-            String t = new String(p.getInputStream().readAllBytes());
-            p.waitFor();
+            String t = BoundedExec.run(30, "adb", "shell",
+                "f=$(ls -t /data/tombstones/ 2>/dev/null | grep -v pb | head -1); [ -n \"$f\" ] && cat /data/tombstones/$f");
             if (targetPackage != null && !t.contains("Cmdline: " + targetPackage)) return false;
             int b = t.indexOf("backtrace:");
             if (b < 0) return false;

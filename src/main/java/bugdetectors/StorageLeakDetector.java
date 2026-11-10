@@ -19,10 +19,7 @@ public class StorageLeakDetector implements BugDetector {
 
     private static String sh(String cmd) {
         try {
-            Process p = new ProcessBuilder("adb", "shell", cmd).redirectErrorStream(true).start();
-            String out = new String(p.getInputStream().readAllBytes());
-            p.waitFor(60, TimeUnit.SECONDS);
-            return out;
+            return BoundedExec.run(60, "adb", "shell", cmd);
         } catch (Exception e) { return ""; }
     }
 

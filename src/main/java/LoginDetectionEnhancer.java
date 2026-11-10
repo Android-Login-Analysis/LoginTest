@@ -341,17 +341,13 @@ public class LoginDetectionEnhancer {
 
         private static void runQuiet(String... cmd) {
             try {
-                Process p = new ProcessBuilder(cmd).redirectErrorStream(true).start();
-                p.getInputStream().readAllBytes();
-                p.waitFor(30, TimeUnit.SECONDS);
+                bugdetectors.BoundedExec.run(30, cmd);
             } catch (Exception ignored) { }
         }
 
         private void grantRequestedPermissions() {
             try {
-                Process p = new ProcessBuilder("adb", "shell", "dumpsys", "package", appPackage).redirectErrorStream(true).start();
-                String out = new String(p.getInputStream().readAllBytes());
-                p.waitFor(30, TimeUnit.SECONDS);
+                String out = bugdetectors.BoundedExec.run(30, "adb", "shell", "dumpsys", "package", appPackage);
                 java.util.regex.Matcher m = java.util.regex.Pattern.compile("(android\\.permission\\.[A-Z_]+)").matcher(out);
                 java.util.Set<String> perms = new java.util.LinkedHashSet<>();
                 while (m.find()) perms.add(m.group(1));
