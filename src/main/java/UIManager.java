@@ -1562,7 +1562,7 @@ public class UIManager {
      */
     private List<UIElement> getAllUIElements() throws Exception {
         // Use uiautomator dump to get UI hierarchy
-        Process dumpProcess = Runtime.getRuntime().exec("adb shell uiautomator dump");
+        Process dumpProcess = Runtime.getRuntime().exec("adb shell uiautomator dump /data/local/tmp/window_dump.xml");
         dumpProcess.waitFor();
 
         // Read the entire dump file content
