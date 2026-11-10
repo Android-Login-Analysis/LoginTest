@@ -943,8 +943,11 @@ public class UIManager {
     private final java.util.Set<String> tappedEntries = new java.util.HashSet<>();
     private String lastLoginEntryKey = null;
 
+    private boolean loadErrorProbed = false;
+
     public boolean detectLoginPage() {
         tappedEntries.clear();
+        loadErrorProbed = false;
         for (int hop = 0; hop <= 6; hop++) {
             lastLoginEntryBounds = null; lastLoginEntryPriority = 99; lastGuestBounds = null; lastLoginEntryKey = null;
             if (detectLoginPageOnce()) return true;
@@ -1178,6 +1181,13 @@ public class UIManager {
                 if (!wm.isEmpty()) {
                     System.out.println("[WEBVIEW] page: " + wm);
                     adoptServiceAccount(wm.getOrDefault("url", ""));
+                    // FIX(v1): a main-frame load failure is where apps run their error handling; make a blocked UI
+                    // thread observable (ANR) with one responsiveness probe per navigation
+                    if (wm.getOrDefault("url", "").startsWith("chrome-error:") && !loadErrorProbed) {
+                        loadErrorProbed = true;
+                        System.out.println("[WEBVIEW] Main-frame load failed; probing UI responsiveness");
+                        probeResponsiveness();
+                    }
                     if (!"0".equals(wm.get("pw"))) {
                         webMode = true;
                         System.out.println("[WEBVIEW] Login form found in WebView DOM");
