@@ -9,12 +9,22 @@ import java.util.concurrent.TimeUnit;
 public final class AppLauncher {
     private AppLauncher() {}
 
+    // FIX(v1): commands are bounded by a timeout (an `am start -W` that never returns hung a whole run)
     static String run(String... cmd) {
         try {
             Process p = new ProcessBuilder(cmd).redirectErrorStream(true).start();
-            String out = new String(p.getInputStream().readAllBytes());
-            p.waitFor(30, TimeUnit.SECONDS);
-            return out;
+            java.io.ByteArrayOutputStream buf = new java.io.ByteArrayOutputStream();
+            Thread reader = new Thread(() -> {
+                try { p.getInputStream().transferTo(buf); } catch (Exception ignored) { }
+            });
+            reader.setDaemon(true);
+            reader.start();
+            if (!p.waitFor(45, TimeUnit.SECONDS)) {
+                p.destroyForcibly();
+                System.out.println("[LAUNCH] Command timed out: " + String.join(" ", cmd));
+            }
+            reader.join(2000);
+            return buf.toString();
         } catch (Exception e) {
             return "";
         }
