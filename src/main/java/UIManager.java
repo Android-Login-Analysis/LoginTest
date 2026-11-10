@@ -137,7 +137,7 @@ public class UIManager {
                     if (!"0".equals(m.getOrDefault("pw", "0"))) return null;
                     if (url.matches("(?i).*(/login|/signin|/recover|/checkpoint|/challenge|two_step|captcha|identify).*")) return null;
                     String text = web().eval("(document.body&&document.body.innerText||'').replace(/\\s+/g,' ').slice(0,150)");
-                    if (text != null && ERR_LINE.matcher(text).find()) return null;
+                    if (text != null && (ERR_LINE.matcher(text).find() || CHALLENGE_TEXT.matcher(text).find())) return null;
                     return "url=" + url + " page='" + text + "'";
                 }
             }
@@ -150,6 +150,9 @@ public class UIManager {
     private String webErrorSeen = null;
     private static final java.util.regex.Pattern ERR_LINE = java.util.regex.Pattern.compile(
         "(?i)(incorrect|isn.t connected|not connected to an account|wrong|invalid|couldn.t|could not|not recogni[sz]ed|doesn.t match|did not match|no account|failed|unable|went wrong|try again later|denied|too many)");
+    // verification/challenge pages (captcha, "confirm it's you", checkpoints): neither a login nor a rejection
+    private static final java.util.regex.Pattern CHALLENGE_TEXT = java.util.regex.Pattern.compile(
+        "(?i)(enter the characters|captcha|real human|security check|verify (it.s|that it.s) you|confirm (it.s|that it.s) you|confirm your identity|suspicious|unusual activity|checkpoint)");
     private static final java.util.regex.Pattern NETWORK_ERR = java.util.regex.Pattern.compile(
         "(?i)(network|connection|internet|offline|went wrong|timed? ?out|unable to (reach|connect|load)|couldn.t (load|connect|reach)|try again later|no response|failed to fetch|err_)");
 
@@ -204,6 +207,13 @@ public class UIManager {
                     System.out.println("[LOGIN_RESULT] MFA prompt in page after web login: '" + domText.substring(a, b < 0 ? domText.length() : b).trim() + "'");
                     return -3;
                 }
+            }
+            if (domText != null && CHALLENGE_TEXT.matcher(domText).find()
+                    && (webLoginDomText == null || !CHALLENGE_TEXT.matcher(webLoginDomText).find())) {
+                // not an MFA step of the app: provider anti-abuse checks are expected after repeated attempts
+                lastMfaOutcome = "challenge";
+                System.out.println("[LOGIN_RESULT] Verification challenge after web login (captcha/identity check)");
+                return -3;
             }
             Map<String, String> m = web().inspect();
             if (m.isEmpty()) {
