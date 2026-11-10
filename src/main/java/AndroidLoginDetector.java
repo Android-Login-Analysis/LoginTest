@@ -990,6 +990,7 @@ public class AndroidLoginDetector {
             uiManager.setServiceAccounts(realAccount(googleEmailPool), realAccount(facebookEmailPool));
             // FIX(v1): deterministic network condition for the whole login (navigation, MFA, submit)
             final String roundCondition = ROUND_CONDITIONS[(round - 1) % ROUND_CONDITIONS.length];
+            uiManager.setRoundCondition(roundCondition);
             final boolean chaosWasRunning = networkChaosManager != null && (networkChaosManager.isRunning() || chaosEnabledForRun);
             if (networkChaosManager != null) {
                 if (networkChaosManager.isRunning()) networkChaosManager.stop();
@@ -1016,12 +1017,14 @@ public class AndroidLoginDetector {
                     && !"pending".equals(uiManager.getLastMfaOutcome())) {
                 logInfo("Login page not reached under '" + roundCondition + "'; loading it on a normal network first");
                 networkChaosManager.applyCondition("normal");
+                uiManager.setRoundCondition("normal");
                 // pages that failed to load while offline (e.g. WebView error pages) do not reload by themselves
                 AppLauncher.run("adb", "shell", "am", "force-stop", appPackage);
                 AppLauncher.launch(appPackage);
                 uiManager.setPendingUsername(roundUsername);
                 loginPageDetected = detectLoginPageWithUI();
                 networkChaosManager.applyCondition(roundCondition);
+                uiManager.setRoundCondition(roundCondition);
                 if (loginPageDetected) logInfo("Login page loaded; round condition '" + roundCondition + "' re-applied before submitting");
             }
             boolean mfaPendingRound = "pending".equals(uiManager.getLastMfaOutcome());
@@ -1247,6 +1250,7 @@ public class AndroidLoginDetector {
             }
 
             // FIX(v1): restore the network after the login phase
+            uiManager.setRoundCondition("normal");
             if (networkChaosManager != null) {
                 networkChaosManager.applyCondition("normal");
                 if (chaosWasRunning) networkChaosManager.start();

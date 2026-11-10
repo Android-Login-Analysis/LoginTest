@@ -960,6 +960,8 @@ public class UIManager {
     private String lastLoginEntryKey = null;
 
     private boolean loadErrorProbed = false;
+    private String roundCondition = "normal";
+    public void setRoundCondition(String c) { roundCondition = c == null ? "normal" : c; }
 
     public boolean detectLoginPage() {
         tappedEntries.clear();
@@ -996,6 +998,11 @@ public class UIManager {
             int cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2;
             System.out.println("[LOGIN_ENTRY] No credential form yet; tapping login entry at (" + cx + "," + cy + ")");
             if (lastLoginEntryKey != null) tappedEntries.add(lastLoginEntryKey);
+            // FIX(v1): on a degraded network a page opened by this tap may fail at once and the app's error handling
+            // runs right away; probe responsiveness while it runs (an observation afterwards would be too late)
+            if (!"normal".equals(roundCondition) && lastLoginEntryPriority >= 1) {
+                new Thread(() -> { try { Thread.sleep(1500); probeResponsiveness(); } catch (Exception ignored) { } }).start();
+            }
             try {
                 new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf(cx), String.valueOf(cy))
                     .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
