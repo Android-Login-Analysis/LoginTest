@@ -1000,7 +1000,7 @@ public class UIManager {
                 // FIX(v1): a user must be able to back out of an MFA prompt (#6647-style), whether or not they have
                 // the code: test it once per round before answering. A prompt that closes lets navigation continue.
                 // only on a working network: on a degraded one the app may close the prompt by itself (failed request)
-                if (!mfaDismissChecked && "normal".equals(roundCondition)) {
+                if (!mfaDismissChecked && "normal".equals(scheduledCondition) && "normal".equals(roundCondition)) {
                     mfaDismissChecked = true;
                     String prompt = currentMfaPromptText();
                     Boolean dismissed = tryDismissMfaPrompt();
@@ -1098,6 +1098,8 @@ public class UIManager {
 
     private String lastMfaOutcome = null;   // null | "totp-entered" | "pending"
     private boolean mfaDismissChecked = false;
+    private String scheduledCondition = "normal";   // the round's planned condition (fallbacks do not change it)
+    public void setScheduledCondition(String c) { scheduledCondition = c == null ? "normal" : c; }
     private String mfaNotDismissable = null;
     /** Prompt text of an MFA prompt found not dismissable since the last call (null if none). */
     public String takeMfaNotDismissable() { String t = mfaNotDismissable; mfaNotDismissable = null; return t; }

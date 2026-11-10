@@ -1018,6 +1018,8 @@ public class AndroidLoginDetector {
             uiManager.setRoundValid(System.getenv("LIFT_VALID_PROB") != null ? roundUsedValidPair
                 : ROUND_VALIDITY[(round - 1) % ROUND_VALIDITY.length]);
             uiManager.setServiceAccounts(realAccount(googleEmailPool), realAccount(facebookEmailPool));
+            // the MFA dismissal check needs a round that is on a working network from start to end
+            uiManager.setScheduledCondition(ROUND_CONDITIONS[(round - 1) % ROUND_CONDITIONS.length]);
             // FIX(v1): deterministic network condition for the whole login (navigation, MFA, submit)
             final String roundCondition = ROUND_CONDITIONS[(round - 1) % ROUND_CONDITIONS.length];
             uiManager.setRoundCondition(roundCondition);
