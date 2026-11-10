@@ -1136,9 +1136,10 @@ public class AndroidLoginDetector {
                 // oracle has the app's wrong-password message to compare network failures against
                 if (!usedValidPair && invalidCandidates.size() > 0 && "normal".equals(roundCondition) && loginSuccess
                         && (gone == -2 || (gone == -1 && !uiManager.lastWaitEndedInProgress()))) {
-                    String realUser = uiManager.isFacebookLoginDetected() ? realAccount(facebookEmailPool)
-                        : uiManager.isGoogleLoginDetected() ? realAccount(googleEmailPool)
-                        : (validPairs.isEmpty() ? null : validPairs.get(0)[0]);
+                    // only the app's own test account: repeated wrong passwords on identity providers (Google,
+                    // Facebook) trigger their anti-abuse checks and can lock the real account
+                    String realUser = (uiManager.isFacebookLoginDetected() || uiManager.isGoogleLoginDetected()
+                        || validPairs.isEmpty()) ? null : validPairs.get(0)[0];
                     if (realUser != null) {
                         String wrongPw = "Wrong" + (100000 + new Random().nextInt(900000)) + "x";
                         logInfo("Invalid round: existing account with a wrong password");
