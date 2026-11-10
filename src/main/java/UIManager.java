@@ -106,6 +106,30 @@ public class UIManager {
         } catch (Exception ignored) { }
     }
 
+    /**
+     * FIX(v1): confirmation for "invalid credentials accepted": after a short wait the app must still be past the
+     * login (no password field, no login/recovery/checkpoint URL, no error text). Returns null when not confirmed,
+     * otherwise evidence (URL and page text) for manual review.
+     */
+    public String confirmLeftLogin() {
+        try { Thread.sleep(6000); } catch (InterruptedException ignored) { }
+        try {
+            if (webMode) {
+                Map<String, String> m = web().inspect();
+                if (!m.isEmpty()) {
+                    String url = m.getOrDefault("url", "");
+                    if (!"0".equals(m.getOrDefault("pw", "0"))) return null;
+                    if (url.matches("(?i).*(/login|/signin|/recover|/checkpoint|/challenge|two_step|captcha|identify).*")) return null;
+                    String text = web().eval("(document.body&&document.body.innerText||'').replace(/\\s+/g,' ').slice(0,150)");
+                    if (text != null && ERR_LINE.matcher(text).find()) return null;
+                    return "url=" + url + " page='" + text + "'";
+                }
+            }
+            if (findPasswordAnchor(getAllUIElements()) != null) return null;
+            return "screen=" + AppLauncher.topActivityLine().trim();
+        } catch (Exception e) { return null; }
+    }
+
     private boolean recoveryTried = false;
     private String webErrorSeen = null;
     private static final java.util.regex.Pattern ERR_LINE = java.util.regex.Pattern.compile(

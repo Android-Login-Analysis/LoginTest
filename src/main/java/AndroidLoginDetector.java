@@ -1164,9 +1164,15 @@ public class AndroidLoginDetector {
                             "Invalid credentials advanced the login to the MFA step",
                             "username '" + username + "' (invalid) reached the MFA prompt under '" + roundCondition + "' network");
                     } else if (authenticated) {
-                        observed.record("INCORRECT_NAVIGATION", "INVALID_CREDENTIALS_ACCEPTED",
-                            "The login screen was left although the credentials were invalid",
-                            "username '" + username + "' (invalid); screen after login: " + AppLauncher.topActivityLine().trim());
+                        String evidence = uiManager.confirmLeftLogin();
+                        if (evidence != null) {
+                            observed.record("INCORRECT_NAVIGATION", "INVALID_CREDENTIALS_ACCEPTED",
+                                "The login screen was left although the credentials were invalid",
+                                "username '" + username + "' (invalid); after login: " + evidence);
+                        } else {
+                            logInfo("Login page left after invalid credentials, but a login/error/recovery page followed: not an acceptance");
+                            authenticated = false;
+                        }
                     }
                 }
                 if (authenticated && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
