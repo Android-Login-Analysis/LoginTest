@@ -160,7 +160,8 @@ public class UIManager {
                 Thread.sleep(6000);
             }
             // 3) choose a code-by-message method
-            if (tapText("(set up using email|set ?up (via|with) email|use email|email|send code via email|e-mail|set up using sms|sms)") == null) {
+            if (tapText("(set up using email|set ?up (via|with) email|use email|email|send code via email|e-mail)") == null
+                    && tapText("(set up using sms|set ?up (via|with) sms|use sms|sms|text message)") == null) {
                 System.out.println("[MFA_SETUP] no email/SMS method offered");
                 return null;
             }
