@@ -54,6 +54,34 @@ public class UIManager {
     private boolean lastWaitEndedInProgress = false;
     public boolean lastWaitEndedInProgress() { return lastWaitEndedInProgress; }
 
+    /** Tap the first visible element whose text matches the regex; returns its text or null. */
+    public String tapText(String regex) {
+        try {
+            for (UIElement e : getAllUIElements()) {
+                if (e.text == null || !e.visible || boundsOf(e) == null) continue;
+                if (!e.text.trim().toLowerCase().matches(regex)) continue;
+                int[] r = boundsOf(e);
+                new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf((r[0] + r[2]) / 2), String.valueOf((r[1] + r[3]) / 2))
+                    .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+                return e.text.trim();
+            }
+        } catch (Exception ignored) { }
+        return null;
+    }
+
+    /** Number of visible text/description nodes of the app below the toolbar (content of the current page). */
+    public int contentNodeCount() {
+        int n = 0;
+        try {
+            for (UIElement e : getAllUIElements()) {
+                int[] r = boundsOf(e);
+                if (r == null || !e.visible || r[1] < 260) continue;
+                if (e.text != null && !e.text.trim().isEmpty() && !isWebViewClass(e.className)) n++;
+            }
+        } catch (Exception ignored) { }
+        return n;
+    }
+
     private boolean recoveryTried = false;
     /** Click a visible Restart / Try again / Retry control on a web error page; true if one was used. */
     private boolean tryWebRecovery() {

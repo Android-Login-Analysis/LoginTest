@@ -666,6 +666,9 @@ public class AndroidLoginDetector {
         } else {
             logInfo("Using credential pool directory: " + credDir.getPath());
         }
+        // FIX(v1): app data captured right after a completed login (e.g. after an SSO approval on the user's phone)
+        java.io.File snap = new java.io.File(credDir, "loggedin.tgz");
+        if (snap.isFile()) { loggedInSnapshot = snap.getPath(); logInfo("Logged-in snapshot available: " + snap.getPath()); }
 
         // Primary paths (from selected directory)
         String primaryAccounts = new java.io.File(credDir, "accounts.txt").getPath();
@@ -1287,6 +1290,8 @@ public class AndroidLoginDetector {
             }
         }
 
+        runLoggedInPhase();
+
         // Generate final report
         generateFinalReport();
         
@@ -1420,6 +1425,46 @@ public class AndroidLoginDetector {
             fridaManager.startFrida(appPackage);
         } catch (Exception e) {
             logError("Error restarting Frida: " + e.getMessage());
+        }
+    }
+
+    private String loggedInSnapshot = null;
+
+    /**
+     * FIX(v1): post-login oracles on a restored logged-in session. Logins that need an out-of-band approval
+     * (Google "Verify it's you") cannot be completed in every round; their app data is captured once after the
+     * approval and restored here, so storage and post-login navigation oracles still run on a real session.
+     */
+    private void runLoggedInPhase() {
+        if (loggedInSnapshot == null || stateMachineManager == null || stateMachineManager.getBugDetectionManager() == null) return;
+        logInfo("=== Logged-in phase: restoring the captured session ===");
+        try {
+            networkChaosManager.applyCondition("normal");
+            AppLauncher.run("adb", "push", loggedInSnapshot, "/data/local/tmp/lift_loggedin.tgz");
+            String pkg = appPackage;
+            AppLauncher.run("adb", "shell", "am force-stop " + pkg + "; u=$(stat -c %u /data/data/" + pkg + "); rm -rf /data/data/" + pkg
+                + "/*; cd /data/data && tar xzf /data/local/tmp/lift_loggedin.tgz && chown -R $u:$u /data/data/" + pkg
+                + " && restorecon -R /data/data/" + pkg + "; rm -f /data/local/tmp/lift_loggedin.tgz");
+            AppLauncher.launch(pkg);
+            Thread.sleep(8000);
+            var bdm = stateMachineManager.getBugDetectionManager();
+            bdm.getStorageDetector().scan(pkg, null, null);
+            // account page right after login: an empty page is an incorrect post-login navigation (#1860-style)
+            String hit = uiManager.tapText("(account|my account|profile|accounts)");
+            if (hit != null) {
+                Thread.sleep(7000);
+                int n = uiManager.contentNodeCount();
+                logInfo("Logged-in phase: '" + hit + "' page shows " + n + " content node(s)");
+                if (n == 0 && AppLauncher.isInForeground(pkg)) {
+                    bdm.getObservedDetector().record("INCORRECT_NAVIGATION", "BLANK_PAGE_AFTER_LOGIN",
+                        "The account page is blank after a successful login",
+                        "Page opened via '" + hit + "' shows no content; top=" + AppLauncher.topActivityLine().trim());
+                }
+            }
+            logInfo("[LOGGED-IN PHASE] storage findings: " + bdm.getStorageDetector().detectBugs().size()
+                + ", observed findings: " + bdm.getObservedDetector().detectBugs().size());
+        } catch (Exception e) {
+            logError("Logged-in phase failed: " + e.getMessage());
         }
     }
 

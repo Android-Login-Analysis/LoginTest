@@ -55,3 +55,7 @@ known_login_apks/*.apk
 reports/*.txt
 reports/screenshot/*
 
+
+# captured logged-in app sessions (never commit)
+pools/*/loggedin.tgz
+*.tgz
