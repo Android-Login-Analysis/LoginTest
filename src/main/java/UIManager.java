@@ -90,6 +90,22 @@ public class UIManager {
     }
 
     private boolean recoveryTried = false;
+    private String webErrorSeen = null;
+    private static final java.util.regex.Pattern ERR_LINE = java.util.regex.Pattern.compile(
+        "(?i)(incorrect|isn.t connected|not connected to an account|wrong|invalid|couldn.t|could not|not recogni[sz]ed|doesn.t match|did not match|no account|failed|unable|went wrong|try again later|denied|too many)");
+    private static final java.util.regex.Pattern NETWORK_ERR = java.util.regex.Pattern.compile(
+        "(?i)(network|connection|internet|offline|went wrong|timed? ?out|unable to (reach|connect|load)|couldn.t (load|connect|reach)|try again later|no response)");
+
+    /** First line of the page text that is new since the submit and reads like an error message. */
+    private String newErrorLine(String domText) {
+        if (domText == null || webLoginDomText == null) return null;
+        for (String line : domText.split("\\n")) {
+            String l = line.trim();
+            if (l.length() < 8 || l.length() > 220 || webLoginDomText.contains(l)) continue;
+            if (ERR_LINE.matcher(l).find()) return l;
+        }
+        return null;
+    }
     /** Click a visible Restart / Try again / Retry control on a web error page; true if one was used. */
     private boolean tryWebRecovery() {
         String page = web().eval("(document.body&&document.body.innerText||'').replace(/\\s+/g,' ').slice(0,200)");
@@ -102,6 +118,7 @@ public class UIManager {
 
     private long waitForWebLogin(long timeoutMs) {
         recoveryTried = false;
+        webErrorSeen = null;
         long deadline = System.currentTimeMillis() + timeoutMs;
         int goneStreak = 0;
         while (System.currentTimeMillis() < deadline) {
@@ -141,8 +158,22 @@ public class UIManager {
             }
             else {
                 String err = m.getOrDefault("err", "");
-                // FIX(v1): a user facing an error page with a recovery control (Restart / Try again) uses it once
-                if (!recoveryTried && tryWebRecovery()) { recoveryTried = true; continue; }
+                // FIX(v1): error text that appeared after the submit, wherever it is rendered (dialogs, plain divs)
+                String curUrl = m.getOrDefault("url", "").replaceAll("#.*$", "");
+                boolean samePage = !"0".equals(m.getOrDefault("pw", "0"))
+                    || (webLoginUrl != null && curUrl.equals(webLoginUrl.replaceAll("#.*$", "")));
+                String newErr = samePage ? newErrorLine(domText) : null;
+                if (err.isEmpty() && newErr != null) err = newErr;
+                boolean networkErr = !err.isEmpty() && NETWORK_ERR.matcher(err).find();
+                if (!err.isEmpty() && !networkErr) {
+                    // a credential/account error: record it as the rejection, never dismiss it
+                    lastLoginErrorText = err;
+                    System.out.println("[LOGIN_RESULT] Web error after login: '" + err + "'");
+                    return -2;
+                }
+                if (networkErr && webErrorSeen == null) { webErrorSeen = err; System.out.println("[LOGIN_RESULT] Web network error after login: '" + err + "'"); }
+                // FIX(v1): a user facing a network error page with a recovery control (Restart / Try again) uses it once
+                if (!recoveryTried && (networkErr || m.getOrDefault("url", "").startsWith("chrome-error:")) && tryWebRecovery()) { recoveryTried = true; continue; }
                 if (!err.isEmpty() && !"0".equals(m.getOrDefault("pw", "0"))) {
                     lastLoginErrorText = err;
                     System.out.println("[LOGIN_RESULT] Web error after login: '" + err + "'");
@@ -172,6 +203,7 @@ public class UIManager {
             }
             try { Thread.sleep(1500); } catch (InterruptedException ignored) { }
         }
+        if (webErrorSeen != null) { lastLoginErrorText = webErrorSeen; return -2; }
         return -1;
     }
 
