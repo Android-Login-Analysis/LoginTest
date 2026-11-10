@@ -725,6 +725,29 @@ public class AndroidLoginDetector {
         if (tmp == null || tmp.isEmpty()) tmp = readLinesFromFile(globalFacebookPasswords);
         facebookPasswordPool = (tmp != null) ? tmp : new java.util.ArrayList<>();
 
+        // FIX(v1): real service accounts (google_valid_pairs.csv / facebook_valid_pairs.csv: email,password) come first,
+        // line-aligned with their passwords, so they are preferred over the generic (placeholder) account lists
+        googleEmailPool = new java.util.ArrayList<>(googleEmailPool);
+        googlePasswordPool = new java.util.ArrayList<>(googlePasswordPool);
+        facebookEmailPool = new java.util.ArrayList<>(facebookEmailPool);
+        facebookPasswordPool = new java.util.ArrayList<>(facebookPasswordPool);
+        for (String[] svc : new String[][]{{"google_valid_pairs.csv", "g"}, {"facebook_valid_pairs.csv", "f"}}) {
+            java.util.List<String> lines = readLinesFromFile(new java.io.File(credDir, svc[0]).getPath());
+            if (lines == null) continue;
+            int at = 0;
+            for (String l : lines) {
+                String t = l.trim();
+                int c = t.indexOf(',');
+                if (t.isEmpty() || t.startsWith("#") || t.toLowerCase().startsWith("username,") || t.toLowerCase().startsWith("email,") || c <= 0) continue;
+                java.util.List<String> emails = "g".equals(svc[1]) ? googleEmailPool : facebookEmailPool;
+                java.util.List<String> pws = "g".equals(svc[1]) ? googlePasswordPool : facebookPasswordPool;
+                emails.add(at, t.substring(0, c).trim());
+                serviceRealAccounts.add(t.substring(0, c).trim());
+                pws.add(Math.min(at, pws.size()), t.substring(c + 1).trim());
+                at++;
+            }
+        }
+
         // FIX(v1): load tester-supplied valid credential pairs (valid_pairs.csv: username,password)
         validPairs.clear();
         java.util.List<String> pairLines = readLinesFromFile(new java.io.File(credDir, "valid_pairs.csv").getPath());
@@ -2632,8 +2655,15 @@ public class AndroidLoginDetector {
             if (i >= 0 && i < passwords.size()) return passwords.get(i);
         }
         List<String> pool = wantPassword ? passwords : accounts;
+        // never pair a real (user-supplied) service account with a random password: no wrong-password attempts on it
+        if (!wantPassword) {
+            List<String> safe = new java.util.ArrayList<>();
+            for (String a : accounts) if (!serviceRealAccounts.contains(a)) safe.add(a);
+            pool = safe;
+        }
         return pool.isEmpty() ? fallback : pool.get(new Random().nextInt(pool.size()));
     }
+    private final java.util.Set<String> serviceRealAccounts = new java.util.HashSet<>();
 
     private String getRandomGoogleAccount() { return pickService(googleEmailPool, googlePasswordPool, false, "testuser@gmail.com"); }
     private String getRandomGooglePassword() { return pickService(googleEmailPool, googlePasswordPool, true, "googlepass123"); }
