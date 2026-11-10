@@ -122,13 +122,18 @@ public class UIManager {
         try {
             // 1) reach the 2FA settings page
             boolean reached = false, accountTried = false, settingsTried = false, drawerTried = false;
-            for (int step = 0; step < 6 && !reached; step++) {
-                seen.addAll(screenTexts(getAllUIElements()));
-                if (tapText(TWO_FA_ENTRY) != null) { reached = true; break; }
-                if (!accountTried && tapText(ACCOUNT_ENTRY) != null) accountTried = true;
-                else if (!settingsTried && tapText("(settings|preferences)") != null) settingsTried = true;
-                else if (!drawerTried && tapTopLeftIcon()) drawerTried = true;
-                else break;
+            for (int step = 0; step < 8 && !reached; step++) {
+                // wait for a readable, populated screen (loading skeletons and sync sheets keep the UI busy)
+                List<UIElement> now = getAllUIElements();
+                for (int w = 0; w < 6 && (lastDumpFailed || screenTexts(now).size() < 3); w++) { Thread.sleep(4000); now = getAllUIElements(); }
+                seen.addAll(screenTexts(now));
+                String hit;
+                if ((hit = tapText(TWO_FA_ENTRY)) != null) { reached = true; System.out.println("[MFA_SETUP] step " + step + ": '" + hit + "'"); break; }
+                if (!accountTried && (hit = tapText(ACCOUNT_ENTRY)) != null) accountTried = true;
+                else if (!settingsTried && (hit = tapText("(settings|preferences)")) != null) settingsTried = true;
+                else if (!drawerTried && tapTopLeftIcon()) { drawerTried = true; hit = "(top-left icon)"; }
+                else { System.out.println("[MFA_SETUP] step " + step + ": nothing to open (" + screenTexts(now).size() + " texts, dumpFailed=" + lastDumpFailed + ")"); break; }
+                System.out.println("[MFA_SETUP] step " + step + ": '" + hit + "'");
                 Thread.sleep(3000);
             }
             if (!reached) { System.out.println("[MFA_SETUP] 2FA settings not found"); return null; }
