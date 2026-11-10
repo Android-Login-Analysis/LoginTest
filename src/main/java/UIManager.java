@@ -229,6 +229,7 @@ public class UIManager {
     private static final String GOOGLE_BUTTON = "(sign in with google|continue with google|log ?in with google|sign in with google account|google sign[- ]in|google|google tasks)";
     private boolean googleButtonMode = false;
     private long googleBackSince = -1;
+    private long googleGoneSince = -1;
     private boolean gmsOnTop() {
         String top = AppLauncher.topActivityLine();
         return top.contains("com.google.android.gms") || top.contains("ChooseTypeAndAccountActivity") || top.contains("android/.accounts.");
@@ -573,10 +574,10 @@ public class UIManager {
                         boolean buttonShown = false;
                         for (UIElement e : els) if (textOf(e).trim().toLowerCase().matches(GOOGLE_BUTTON)) buttonShown = true;
                         if (gmsOnTop() || lastDumpFailed || progressVisible(els)) {   // picker, consent or "Authenticating..."
-                            goneSince = -1; googleBackSince = -1; lastWaitEndedInProgress = true; Thread.sleep(1500); continue;
+                            goneSince = -1; googleBackSince = -1; googleGoneSince = -1; lastWaitEndedInProgress = true; Thread.sleep(1500); continue;
                         }
                         if (buttonShown) {   // back on the sign-in screen and idle
-                            lastWaitEndedInProgress = false; goneSince = -1;
+                            lastWaitEndedInProgress = false; goneSince = -1; googleGoneSince = -1;
                             if (googleBackSince < 0) googleBackSince = pollStart;
                             else if (pollStart - googleBackSince >= 20000) {
                                 System.out.println("[GOOGLE] Back on the sign-in screen, idle, with no result");
@@ -586,6 +587,11 @@ public class UIManager {
                             Thread.sleep(1500); continue;
                         }
                         googleBackSince = -1;
+                        // the sign-in screen must stay away (transitions briefly show neither the button nor a spinner)
+                        lastWaitEndedInProgress = false;
+                        if (googleGoneSince < 0) googleGoneSince = pollStart;
+                        if (pollStart - googleGoneSince >= 10000) { long t = googleGoneSince; googleGoneSince = -1; return t; }
+                        Thread.sleep(1500); continue;
                     }
                     String topNow = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
                     boolean activityChanged = !loginActivity.isEmpty() && !topNow.equals(loginActivity);
