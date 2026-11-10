@@ -1494,6 +1494,7 @@ public class AndroidLoginDetector {
     }
 
     private String loggedInSnapshot = null;
+    private final java.util.Set<String> crashingDirectActivities = new java.util.HashSet<>();
     private boolean chaosEnabledForRun = false;
 
     /**
@@ -1858,10 +1859,18 @@ public class AndroidLoginDetector {
             java.util.List<String> candidates = AppLauncher.findLoginActivities(appPath, appPackage);
             logInfo("Manifest login activity candidates: " + candidates);
             for (String cls : candidates) {
+                if (crashingDirectActivities.contains(cls)) continue;
                 logInfo("Trying direct launch of login activity: " + cls);
                 long launchStart = System.currentTimeMillis();
                 boolean launched = AppLauncher.launchActivity(appPackage, cls);
                 bugdetectors.CrashDetector.markToolInducedWindow(launchStart, System.currentTimeMillis() + 10000);
+                // FIX(v1): an activity that crashes when started without its expected extras is not retried
+                if (stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null
+                        && stateMachineManager.getBugDetectionManager().getCrashDetector().lastCrashMillis() >= launchStart) {
+                    crashingDirectActivities.add(cls);
+                    logInfo("Direct launch of " + cls + " crashed (missing extras); not retried in this run");
+                    continue;
+                }
                 if (launched && detectLoginPageWithUI()) {
                     logInfo("Login page reached via direct activity launch: " + cls);
                     return true;
