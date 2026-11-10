@@ -1,0 +1,2244 @@
+[2026-11-09 20:35:49.473] [INFO] === AndroidLoginDetector Started ===
+[2026-11-09 20:35:49.480] [INFO] Log file: logs/android_login_detector_20261109_203549.log
+[2026-11-09 20:35:49.480] [INFO] Timestamp: 2026-11-09 20:35:49.480
+StateMachineManager: Loaded 45 states from regex patterns
+[BUG_DETECTION] Initialized 7 symptom-based bug detectors
+[BUG_DETECTION]   1. ErrorMessageMismatchDetector (Symptom 7)
+[BUG_DETECTION]   2. LifecycleDataLossDetector (Lifecycle)
+[BUG_DETECTION]   3. CrashDetector (Symptom 1)
+[BUG_DETECTION]   4. LoginTimeoutDetector (Symptom 2)
+[BUG_DETECTION]   5. NavigationFlowDetector (Symptom 3)
+StateMachineManager: Bug detection initialized
+StateMachineManager: initialization complete with 45 state transitions
+[2026-11-09 20:35:49.507] [INFO] App configuration loaded:
+[2026-11-09 20:35:49.508] [INFO]   - Package: com.standardnotes
+[2026-11-09 20:35:49.508] [INFO]   - Activity: com.standardnotes.MainActivity'
+[2026-11-09 20:35:49.508] [INFO]   - APK Path: apps/com.standardnotes_3003169.apk
+[2026-11-09 20:35:49.508] [INFO]   - Emulator Snapshot (auto-generated): snap_com_standardnotes_login
+[2026-11-09 20:35:49.508] [INFO] Initializing static analyzer...
+[2026-11-09 20:35:49.509] [INFO] Static analysis result found and up-to-date: reports/static_analysis/com.standardnotes_3003169_1.json
+[2026-11-09 20:35:49.509] [INFO] Initializing Frida manager with static analysis results...
+FridaManager: State InitializingSync has 38 method signatures
+FridaManager: State SendingCredentials has 150 method signatures
+FridaManager: State PreparingAuth has 2 method signatures
+FridaManager: State IR_LoginEvidence has 3543 method signatures
+FridaManager: State InvalidCredentials has 29 method signatures
+FridaManager: State IR_WebViewEvidence has 111 method signatures
+FridaManager: State WebViewLoginCandidate has 1 method signatures
+FridaManager: State Authenticating has 29 method signatures
+FridaManager: State AwaitingResponse has 32 method signatures
+FridaManager: State CheckingToken has 4 method signatures
+FridaManager: State OAuth_TokenExchange has 32 method signatures
+FridaManager: State UserLogout has 3 method signatures
+FridaManager: Loaded 12 states from static analysis result
+FridaManager: Using static analysis result: reports/static_analysis/com.standardnotes_3003169.json
+FridaManager: State InitializingSync has 38 method signatures
+FridaManager: State SendingCredentials has 150 method signatures
+FridaManager: State PreparingAuth has 2 method signatures
+FridaManager: State IR_LoginEvidence has 3543 method signatures
+FridaManager: State InvalidCredentials has 29 method signatures
+FridaManager: State IR_WebViewEvidence has 111 method signatures
+FridaManager: State WebViewLoginCandidate has 1 method signatures
+FridaManager: State Authenticating has 29 method signatures
+FridaManager: State AwaitingResponse has 32 method signatures
+FridaManager: State CheckingToken has 4 method signatures
+FridaManager: State OAuth_TokenExchange has 32 method signatures
+FridaManager: State UserLogout has 3 method signatures
+FridaManager: Loaded 12 states from static analysis result
+FridaManager: Static analysis results loaded from: reports/static_analysis/com.standardnotes_3003169_1.json
+[2026-11-09 20:35:49.735] [INFO] Frida manager configured with static analysis results
+[2026-11-09 20:35:49.736] [INFO] ApiLogAnalyzer initialized with 12 patterns from static analysis
+[2026-11-09 20:35:49.770] [INFO] Using credential pool directory: pools/com.standardnotes_3003169
+[2026-11-09 20:35:49.771] [INFO] Loaded 1 valid credential pair(s)
+[2026-11-09 20:35:49.772] [ERROR] Error reading file pools/com.standardnotes_3003169/totp_secrets.csv: pools/com.standardnotes_3003169/totp_secrets.csv (No such file or directory)
+[2026-11-09 20:35:49.773] [INFO] Loaded 0 TOTP secret(s)
+[2026-11-09 20:35:49.773] [INFO] Loaded credential pools:
+[2026-11-09 20:35:49.773] [INFO]   - Standard accounts: 12
+[2026-11-09 20:35:49.773] [INFO]   - Standard passwords: 15
+[2026-11-09 20:35:49.774] [INFO]   - Google accounts: 5
+[2026-11-09 20:35:49.774] [INFO]   - Google passwords: 5
+[2026-11-09 20:35:49.774] [INFO]   - Facebook accounts: 5
+[2026-11-09 20:35:49.775] [INFO]   - Facebook passwords: 5
+[2026-11-09 20:35:49.775] [INFO] State machine initialized with 45 states
+=== State machine information ===
+Provider_Okta -> Provider_Okta
+Provider_Auth0 -> Provider_Auth0
+AppMainScreen -> AppMainScreen, UserLogout, InitialState
+ParsingResponse -> ParsingResponse
+CheckingMFASettings -> CheckingMFASettings, MFACodePending, LoggedIn_NoMFA
+AwaitingResponse -> AwaitingResponse
+CheckingToken -> CheckingToken, LoggedIn_Via_Token, CredentialInput
+OAuth_TokenExchange -> OAuth_TokenExchange
+ValidatingCredentials -> ValidatingCredentials
+Unknown -> Unknown
+ShowingError -> ShowingError
+SendingMFACode -> SendingMFACode, MFAVerification
+RetrievingFeeds -> RetrievingFeeds
+LoadingProfile -> LoadingProfile
+Authenticating -> Authenticating, CheckingCredentials, LoginFailure, NetworkError, CredentialInput, CredentialFormatError
+ServiceUnavailable_Auth -> ServiceUnavailable_Auth, CredentialInput, InitialState
+VerifyingMFA -> VerifyingMFA, MFAError, LoggedIn_WithMFA
+LoggedIn_Via_Token -> LoggedIn_Via_Token, AppMainScreen
+ClickingLoginButton -> ClickingLoginButton
+InitializingSync -> InitializingSync
+AuthHeader_Bearer -> AuthHeader_Bearer
+PreparingAuth -> PreparingAuth
+checkAuthToken -> checkAuthToken
+NetworkError -> NetworkError, CredentialInput, LoginFailure, Authenticating
+InvalidCredentials -> InvalidCredentials, CredentialInput
+Provider_MSAL -> Provider_MSAL
+checkStoredCredentials -> checkStoredCredentials
+LoggedIn -> LoggedIn
+ReturnToLogin -> ReturnToLogin
+OAuth_BeginAuth -> OAuth_BeginAuth
+UserLogout -> UserLogout, InitialState, CredentialInput
+MFACodePending -> MFACodePending, SendingMFACode
+InitialState -> InitialState, CheckingToken, CredentialInput
+SendingCredentials -> SendingCredentials
+LoggedIn_NoMFA -> LoggedIn_NoMFA, AppMainScreen
+Provider_FacebookLogin -> Provider_FacebookLogin
+Provider_Cognito -> Provider_Cognito
+MFAVerification -> MFAVerification, VerifyingMFA
+LoginFailure -> LoginFailure, CredentialInput, NetworkError
+MFAError -> MFAError, MFACodePending
+Provider_GoogleSignIn -> Provider_GoogleSignIn
+CredentialFormatError -> CredentialFormatError, CredentialInput
+LoggedIn_WithMFA -> LoggedIn_WithMFA, AppMainScreen
+CheckingCredentials -> CheckingCredentials, ServiceUnavailable_Auth, InvalidCredentials, CheckingMFASettings
+CredentialInput -> CredentialInput, CredentialFormatError, Authenticating, LoginFailure
+==================
+[SNAPSHOT] LIFT_RESET_MODE=app: using app-level reset instead of emulator snapshots
+[TaintAnalyzer] Configuration loaded from: src/main/resources/taint_config.json
+[2026-11-09 20:35:49.780] [INFO] Taint analyzer initialized
+[2026-11-09 20:35:49.780] [INFO] Starting Frida monitoring with static analysis results for package: com.standardnotes
+FridaManager: Starting Frida monitoring for package: com.standardnotes
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.standardnotes src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 20:35:50.818] [INFO] Frida monitoring started successfully
+Configuration validation passed
+=== Configuration Summary ===
+Test Rounds: 4
+Duration per Round: 300000ms
+Round Interval: 3s
+Login Timeout: 120s
+Monkey Events: 1000
+Monkey Delay: 500ms
+Frida Timeout: 120s
+Frida Retry Count: 5
+==================
+[2026-11-09 20:35:50.823] [INFO] === Starting AndroidLoginDetector Test with Static Analysis ===
+[2026-11-09 20:35:50.823] [INFO] Target app: com.standardnotes
+[2026-11-09 20:35:50.823] [INFO] Test rounds: 4
+[2026-11-09 20:35:50.823] [INFO] Static analysis results: reports/static_analysis/com.standardnotes_3003169_1.json
+[2026-11-09 20:35:50.823] [INFO] Unified error report: reports/errors/test_errors_20261109_203550.txt
+[2026-11-09 20:35:50.823] [INFO] Starting global taint tracking...
+[TaintAnalyzer] Taint tracking prepared for: com.standardnotes
+[TaintAnalyzer] Note: Taint analysis requires custom Frida integration
+[2026-11-09 20:35:50.824] [INFO] ✓ Taint tracking active for all rounds
+[2026-11-09 20:35:50.824] [INFO] Checking Docker environment compatibility...
+[2026-11-09 20:35:50.829] [INFO] ADB device found: 127.0.0.1:5555	device
+[2026-11-09 20:35:50.829] [INFO] ADB device found: 127.0.0.1:5556	device
+[2026-11-09 20:35:50.829] [INFO] ADB device found: 127.0.0.1:5557	device
+[2026-11-09 20:35:50.847] [INFO] Emulator Android version: 14
+[2026-11-09 20:35:51.053] [INFO] Frida version: 16.7.19
+[2026-11-09 20:35:51.053] [INFO] All required files found
+[2026-11-09 20:35:51.054] [INFO] Docker environment check passed
+ADB device ready: 127.0.0.1:5555 (provisioned)
+UI manager started successfully
+[2026-11-09 20:35:51.115] [INFO] Starting network chaos testing (emulator is ready)...
+[2026-11-09 20:35:51.115] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 20:35:51.115] [INFO] Mode: random
+[2026-11-09 20:35:51.118] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 20:35:51.118] [INFO] Switch Interval: 60 seconds
+[2026-11-09 20:35:51.118] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 20:35:51.118] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:35:51.254] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:35:51.292] [INFO] Network disruption interface: eth0
+[2026-11-09 20:35:51.312] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 20:35:51.314] [INFO] ================================================================================
+[2026-11-09 20:35:51.315] [INFO] ROUND 1 STARTED
+[2026-11-09 20:35:51.315] [INFO] Round timestamp: 2026-11-09 20:35:51.315
+[2026-11-09 20:35:51.315] [INFO] ================================================================================
+[2026-11-09 20:35:51.315] [INFO] Round 1: Starting fresh without snapshot restore
+[2026-11-09 20:35:51.316] [INFO] Appended Frida round marker for round 1
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_203551/round_1/screenshot_001_round_1_start.png
+[SNAPSHOT] App-level reset: com.standardnotes
+[2026-11-09 20:36:01.458] [INFO] Baseline snapshot restored successfully
+[2026-11-09 20:36:51.315] [INFO] 🔴 Inducing BAD network state: DISABLE_DATA for 10 seconds
+[2026-11-09 20:36:51.459] [INFO] Emulator snapshot operation completed
+[2026-11-09 20:36:51.459] [INFO] Starting Frida monitoring with static analysis results for package: com.standardnotes
+FridaManager: Starting Frida monitoring for package: com.standardnotes
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.standardnotes src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 20:36:54.531] [INFO] Frida monitoring started successfully
+[CRASH_DETECTOR] Started monitoring for crashes of com.standardnotes
+[2026-11-09 20:36:54.534] [INFO] ✓ Crash detector monitoring started for package: com.standardnotes
+[2026-11-09 20:36:54.535] [INFO] Credential choice: VALID pair
+[2026-11-09 20:36:54.535] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 20:36:54.535] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:36:54.682] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:36:54.722] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 20:36:54.723] [INFO] Total good network periods: 2
+[2026-11-09 20:36:54.723] [INFO] Total bad network periods: 1
+[2026-11-09 20:36:54.723] [INFO] Total disruptions: 3
+[2026-11-09 20:36:54.723] [INFO] Actual good:bad ratio: 2:1
+[2026-11-09 20:36:54.723] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:36:54.865] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:36:54.912] [INFO] Round network condition for login: normal
+[2026-11-09 20:36:54.912] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching com.standardnotes
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Cache] New login method discovered: normal
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=2, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[WEBVIEW] Tapped web login entry 'Sign in'
+Using ADB to detect login page...
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): false
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 20:37:28.250] [INFO] UI manager detected login page
+[2026-11-09 20:37:28.251] [INFO]   - Google login: false
+[2026-11-09 20:37:28.251] [INFO]   - Facebook login: false
+[2026-11-09 20:37:28.251] [INFO]   - Username field: true
+[2026-11-09 20:37:28.251] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_203551/round_1/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 1)
+[2026-11-09 20:37:28.574] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_203551/round_1/screenshot_003_baseline_login_page.png
+[2026-11-09 20:37:28.916] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 20:37:28.917] [INFO] Selected username: jasonzixuzhou@gmail.com
+[2026-11-09 20:37:28.917] [INFO] Selected password: [13 chars]
+[2026-11-09 20:37:28.917] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Sign in'
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_203551/round_1/screenshot_004_credentials_input_complete.png
+[2026-11-09 20:37:32.316] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[TIMEOUT_DETECTOR] Login attempt: 6084ms (normal, success=true)
+[STORAGE] Password too short or part of the package name; skipping verbatim check
+[2026-11-09 20:37:43.183] [INFO] Login outcome: inputOk=true, loginPageGone=true, validPair=true
+[2026-11-09 20:37:43.183] [INFO] Login process completed successfully
+[NAV_DETECTOR] Login succeeded at 1794256663183
+[2026-11-09 20:37:43.183] [INFO] ✓ Navigation detector: recorded login success
+[NAV_DETECTOR] Navigation: null → com.standardnotes/com.standardnotes.MainActivity
+[2026-11-09 20:37:43.216] [INFO] ✓ Navigation detector: current activity = com.standardnotes/com.standardnotes.MainActivity
+[2026-11-09 20:37:43.216] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:37:43.345] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:37:43.382] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 20:37:43.382] [INFO] Mode: random
+[2026-11-09 20:37:43.383] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 20:37:43.383] [INFO] Switch Interval: 60 seconds
+[2026-11-09 20:37:43.383] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 20:37:43.383] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:37:43.514] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:37:43.553] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 20:37:43.553] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 20:37:46.364] [INFO] Captured 13 API calls in current round
+Add observed state: CredentialInput (total: 1, compressed: 1)
+[2026-11-09 20:37:46.369] [INFO] Known states from Frida: 9/13
+State machine validation passed (single state): CredentialInput
+[2026-11-09 20:37:46.369] [INFO] State machine validation passed
+[2026-11-09 20:37:46.404] [INFO] [TAINT] Extracting taint flows for Round 1
+[2026-11-09 20:37:46.404] [INFO] Extracting taint analysis results for Round 1
+[TaintAnalyzer] Warning: Taint report is stale (age: 7877s)
+[2026-11-09 20:37:46.405] [INFO] [TAINT] Round 1: No violations detected
+[TaintAnalyzer] Warning: Taint report is stale (age: 7877s)
+[TaintAnalyzer] Report saved to: reports/taint/round_1_taint.txt
+[2026-11-09 20:37:46.406] [INFO] [TAINT] Round report saved to: reports/taint/round_1_taint.txt
+[2026-11-09 20:37:46.406] [INFO] === Rotation (lifecycle) checks, round 1 ===
+[2026-11-09 20:37:46.406] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 20:37:46.406] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:37:46.547] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:37:46.587] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 20:37:46.587] [INFO] Total good network periods: 6
+[2026-11-09 20:37:46.587] [INFO] Total bad network periods: 1
+[2026-11-09 20:37:46.587] [INFO] Total disruptions: 7
+[2026-11-09 20:37:46.587] [INFO] Actual good:bad ratio: 6:1
+[SNAPSHOT] App-level reset: com.standardnotes
+[2026-11-09 20:37:55.743] [INFO] Starting Frida monitoring with static analysis results for package: com.standardnotes
+FridaManager: Starting Frida monitoring for package: com.standardnotes
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.standardnotes src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 20:37:58.808] [INFO] Frida monitoring started successfully
+[2026-11-09 20:38:06.809] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=2, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[WEBVIEW] Tapped web login entry 'Sign in'
+Using ADB to detect login page...
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): false
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 20:38:34.214] [INFO] UI manager detected login page
+[2026-11-09 20:38:34.215] [INFO]   - Google login: false
+[2026-11-09 20:38:34.215] [INFO]   - Facebook login: false
+[2026-11-09 20:38:34.215] [INFO]   - Username field: true
+[2026-11-09 20:38:34.215] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_203551/round_1/screenshot_005_baseline_ui_manager_detection.png
+[ROTATION] A(web): before {idval=6, err=, pw=1, busy=false, pwval=12, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[ROTATION] A(web): after {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[WEBVIEW] trusted click on 'Sign in'
+[ROTATION] B(web): in-flight {idval=6, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html} -> after rotation {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[ROTATION] Finding: ROTATION_INPUT_LOST - Web login input lost on rotation (WebView reloaded or state not restored): before=6/12 after=0/0
+[2026-11-09 20:39:09.514] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-09 20:39:09.514] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 20:39:09.514] [INFO] Mode: random
+[2026-11-09 20:39:09.514] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 20:39:09.514] [INFO] Switch Interval: 60 seconds
+[2026-11-09 20:39:09.514] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 20:39:09.515] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:39:09.666] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:39:09.713] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 20:39:09.713] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 20:39:11.782] [INFO] Frida monitoring stopped
+[2026-11-09 20:39:11.782] [INFO] [BUG_DETECTION] Running bug detectors for Round 1
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 1
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: true
+[NAV_DETECTOR] Current activity: com.standardnotes/com.standardnotes.MainActivity
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 1
+[NAV_DETECTOR] Stuck check: onLoginActivity=false, inLoginState=false, enoughTimePassed=true → stuck=false
+[NAV_DETECTOR] ✓ Navigation flow appears correct
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 1
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 20:39:11.788] [INFO] ⚠️  Detected 1 potential bug(s) in Round 1
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_1_20261109_203911.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 1
+
+By Severity:
+  HIGH: 1
+
+By Category:
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_203911.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 1
+Unique Bug Types: 1
+Deduplication Rate: 0.0%
+========================================
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:39:09 UTC 2026
+Description: Login state lost on device rotation...
+
+
+[2026-11-09 20:39:11.808] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 20:39:11.808] [INFO] ROUND 1 COMPLETED
+[2026-11-09 20:39:11.808] [INFO] Round duration: 200494ms
+[2026-11-09 20:39:11.808] [INFO] Total attempts: 1
+[2026-11-09 20:39:11.808] [INFO] Successful logins: 1
+[2026-11-09 20:39:11.808] [INFO] Failed logins: 0
+[2026-11-09 20:39:11.808] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_203551/round_1/screenshot_006_round_1_end.png
+[2026-11-09 20:39:16.083] [INFO] ================================================================================
+[2026-11-09 20:39:16.083] [INFO] ROUND 2 STARTED
+[2026-11-09 20:39:16.083] [INFO] Round timestamp: 2026-11-09 20:39:16.083
+[2026-11-09 20:39:16.083] [INFO] ================================================================================
+[2026-11-09 20:39:16.083] [INFO] Round 2: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: com.standardnotes
+[2026-11-09 20:39:25.120] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=2, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[WEBVIEW] Tapped web login entry 'Sign in'
+Using ADB to detect login page...
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): false
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 20:39:54.367] [INFO] Verified: App restored to login page
+[2026-11-09 20:39:54.368] [INFO] Appended Frida round marker for round 2
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_203954/round_2/screenshot_001_round_2_start.png
+[SNAPSHOT] App-level reset: com.standardnotes
+[2026-11-09 20:40:03.878] [INFO] Baseline snapshot restored successfully
+[2026-11-09 20:40:09.713] [INFO] 🔴 Inducing BAD network state: DISABLE_DATA for 20 seconds
+[2026-11-09 20:40:29.865] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:40:30.014] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:40:53.879] [INFO] Emulator snapshot operation completed
+[2026-11-09 20:40:53.879] [INFO] Starting Frida monitoring with static analysis results for package: com.standardnotes
+FridaManager: Starting Frida monitoring for package: com.standardnotes
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.standardnotes src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 20:40:54.921] [INFO] Frida monitoring started successfully
+[2026-11-09 20:40:54.922] [INFO] Credential choice: invalid, special-character username
+[2026-11-09 20:40:54.922] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 20:40:54.922] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:40:55.060] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:40:55.099] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 20:40:55.100] [INFO] Total good network periods: 9
+[2026-11-09 20:40:55.100] [INFO] Total bad network periods: 2
+[2026-11-09 20:40:55.100] [INFO] Total disruptions: 11
+[2026-11-09 20:40:55.100] [INFO] Actual good:bad ratio: 9:2
+[2026-11-09 20:40:55.100] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:40:55.236] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:40:55.277] [INFO] Round network condition for login: normal
+[2026-11-09 20:40:55.277] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching com.standardnotes
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=2, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[WEBVIEW] Tapped web login entry 'Sign in'
+Using ADB to detect login page...
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): false
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 20:41:28.403] [INFO] UI manager detected login page
+[2026-11-09 20:41:28.403] [INFO]   - Google login: false
+[2026-11-09 20:41:28.403] [INFO]   - Facebook login: false
+[2026-11-09 20:41:28.403] [INFO]   - Username field: true
+[2026-11-09 20:41:28.403] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_203954/round_2/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 2)
+[2026-11-09 20:41:28.750] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_203954/round_2/screenshot_003_baseline_login_page.png
+[2026-11-09 20:41:29.092] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 20:41:29.092] [INFO] Selected username: $0`(X{M,]8@@
+[2026-11-09 20:41:29.092] [INFO] Selected password: [12 chars]
+[2026-11-09 20:41:29.092] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Sign in'
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_203954/round_2/screenshot_004_credentials_input_complete.png
+[2026-11-09 20:41:32.443] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Authenticate (id: )
+[Match] Normal login button: Please authenticate with your hardware security key. (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[LOGIN_RESULT] MFA prompt after web login: 'Please authenticate with your hardware security key.'
+[2026-11-09 20:41:34.574] [INFO] Login stopped at the MFA prompt (MFACodePending); no authenticator secret for this account
+[FINDING] MFA_AFTER_INVALID_CREDENTIALS - username '$0`(X{M,]8@@' (invalid) reached the MFA prompt under 'normal' network
+[2026-11-09 20:41:34.576] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=false
+[2026-11-09 20:41:34.576] [INFO] Login rejected with invalid credentials (expected); login page still shown
+[2026-11-09 20:41:34.576] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:41:34.710] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:41:34.753] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 20:41:34.753] [INFO] Mode: random
+[2026-11-09 20:41:34.753] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 20:41:34.753] [INFO] Switch Interval: 60 seconds
+[2026-11-09 20:41:34.753] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 20:41:34.753] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:41:34.891] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:41:34.930] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 20:41:34.930] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 20:41:37.635] [INFO] Captured 95 API calls in current round
+Add observed state: CredentialInput (total: 1, compressed: 1)
+Add observed state: Authenticating (total: 37, compressed: 2)
+Add observed state: AwaitingResponse (total: 39, compressed: 3)
+Add observed state: CredentialInput (total: 40, compressed: 4)
+[BUG_DETECTOR] Recorded error state: InvalidCredentials
+[BUG_DETECTOR] Recorded error state: InvalidCredentials
+Add observed state: InvalidCredentials (total: 67, compressed: 5)
+Add observed state: CredentialInput (total: 68, compressed: 6)
+[2026-11-09 20:41:37.639] [INFO] Known states from Frida: 83/95
+NAVIGATION_FLOW_ERROR: Invalid state transition detected
+  Details: Invalid transition: Authenticating -> AwaitingResponse
+  Position: Transition 1
+  Compressed sequence (up to error): CredentialInput (×36, 0.0s) -> Authenticating (×2) -> AwaitingResponse [INVALID]
+  Original states: 83, Compressed: 6
+[2026-11-09 20:41:37.640] [ERROR] LOGIN BUG DETECTED: Navigation flow error
+[2026-11-09 20:41:37.640] [ERROR]   - NAVIGATION_FLOW_ERROR: Invalid state transition detected
+  Details: Invalid transition: Authenticating -> AwaitingResponse
+  Position: Transition 1
+  Compressed sequence (up to error): CredentialInput (×36, 0.0s) -> Authenticating (×2) -> AwaitingResponse [INVALID]
+  Original states: 83, Compressed: 6
+LOGIN BUG DETECTED: Invalid state transition detected
+[2026-11-09 20:41:37.641] NAVIGATION_FLOW_ERROR: Invalid state transition detected
+Details: Invalid transition: NAVIGATION_FLOW_ERROR: Invalid state transition detected
+  Details: Invalid transition: Authenticating -> AwaitingResponse
+  Position: Transition 1
+  Compressed sequence (up to error): CredentialInput (×36, 0.0s) -> Authenticating (×2) -> AwaitingResponse [INVALID]
+  Original states: 83, Compressed: 6
+Full sequence: CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> Authenticating -> Authenticating -> AwaitingResponse -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> InvalidCredentials -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput
+Credentials: Current credentials
+[2026-11-09 20:41:37.682] [INFO] [TAINT] Extracting taint flows for Round 2
+[2026-11-09 20:41:37.683] [INFO] Extracting taint analysis results for Round 2
+[TaintAnalyzer] Warning: Taint report is stale (age: 8108s)
+[2026-11-09 20:41:37.683] [INFO] [TAINT] Round 2: No violations detected
+[TaintAnalyzer] Warning: Taint report is stale (age: 8108s)
+[TaintAnalyzer] Report saved to: reports/taint/round_2_taint.txt
+[2026-11-09 20:41:37.683] [INFO] [TAINT] Round report saved to: reports/taint/round_2_taint.txt
+[2026-11-09 20:41:37.684] [INFO] === Rotation (lifecycle) checks, round 2 ===
+[2026-11-09 20:41:37.684] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 20:41:37.684] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:41:37.827] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:41:37.869] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 20:41:37.869] [INFO] Total good network periods: 13
+[2026-11-09 20:41:37.869] [INFO] Total bad network periods: 2
+[2026-11-09 20:41:37.869] [INFO] Total disruptions: 15
+[2026-11-09 20:41:37.869] [INFO] Actual good:bad ratio: 13:2
+[SNAPSHOT] App-level reset: com.standardnotes
+[2026-11-09 20:41:46.914] [INFO] Starting Frida monitoring with static analysis results for package: com.standardnotes
+FridaManager: Starting Frida monitoring for package: com.standardnotes
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.standardnotes src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 20:41:49.981] [INFO] Frida monitoring started successfully
+[2026-11-09 20:41:57.981] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=2, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[WEBVIEW] Tapped web login entry 'Sign in'
+Using ADB to detect login page...
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): false
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 20:42:30.377] [INFO] UI manager detected login page
+[2026-11-09 20:42:30.377] [INFO]   - Google login: false
+[2026-11-09 20:42:30.377] [INFO]   - Facebook login: false
+[2026-11-09 20:42:30.377] [INFO]   - Username field: true
+[2026-11-09 20:42:30.377] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_203954/round_2/screenshot_005_baseline_ui_manager_detection.png
+[ROTATION] A(web): before {idval=10, err=, pw=1, busy=false, pwval=12, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[ROTATION] A(web): after {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[WEBVIEW] trusted click on 'Sign in'
+[ROTATION] B(web): in-flight {idval=10, err=, pw=1, busy=false, pwval=12, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html} -> after rotation {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[ROTATION] Finding: ROTATION_INPUT_LOST - Web login input lost on rotation (WebView reloaded or state not restored): before=10/12 after=0/0
+[2026-11-09 20:43:05.731] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-09 20:43:05.732] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 20:43:05.732] [INFO] Mode: random
+[2026-11-09 20:43:05.732] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 20:43:05.732] [INFO] Switch Interval: 60 seconds
+[2026-11-09 20:43:05.732] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 20:43:05.732] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:43:05.874] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:43:05.916] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 20:43:05.916] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 20:43:07.976] [INFO] Frida monitoring stopped
+[2026-11-09 20:43:07.977] [INFO] [BUG_DETECTION] Running bug detectors for Round 2
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 0
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] ObservedFindingsDetector found 1 bug(s)
+[BUG_DETECTION] Total bugs detected: 2
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 20:43:07.977] [INFO] ⚠️  Detected 2 potential bug(s) in Round 2
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_2_20261109_204307.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 2
+
+By Severity:
+  HIGH: 1
+  MEDIUM: 1
+
+By Category:
+  LIFECYCLE_INTERFERENCE: 1
+  INCORRECT_LOGIN_FLOW: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_204307.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 3
+Unique Bug Types: 3
+Deduplication Rate: 0.0%
+========================================
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:39:09 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:43:05 UTC 2026
+Description: Login state lost on device rotation...
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[1x] MFA_AFTER_INVALID_CREDENTIALS
+Severity: MEDIUM
+Occurrences: 1
+First seen: Mon Nov 09 20:41:34 UTC 2026
+Description: Invalid credentials advanced the login to the MFA step...
+
+
+[2026-11-09 20:43:07.980] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 20:43:07.980] [INFO] ROUND 2 COMPLETED
+[2026-11-09 20:43:07.980] [INFO] Round duration: 231897ms
+[2026-11-09 20:43:07.980] [INFO] Total attempts: 2
+[2026-11-09 20:43:07.980] [INFO] Successful logins: 1
+[2026-11-09 20:43:07.980] [INFO] Failed logins: 1
+[2026-11-09 20:43:07.980] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_203954/round_2/screenshot_006_round_2_end.png
+[2026-11-09 20:43:12.178] [INFO] ================================================================================
+[2026-11-09 20:43:12.178] [INFO] ROUND 3 STARTED
+[2026-11-09 20:43:12.178] [INFO] Round timestamp: 2026-11-09 20:43:12.178
+[2026-11-09 20:43:12.178] [INFO] ================================================================================
+[2026-11-09 20:43:12.178] [INFO] Round 3: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: com.standardnotes
+[2026-11-09 20:43:21.217] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=2, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[WEBVIEW] Tapped web login entry 'Sign in'
+Using ADB to detect login page...
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): false
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 20:43:50.640] [INFO] Verified: App restored to login page
+[2026-11-09 20:43:50.640] [INFO] Appended Frida round marker for round 3
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_204350/round_3/screenshot_001_round_3_start.png
+[SNAPSHOT] App-level reset: com.standardnotes
+[2026-11-09 20:44:00.338] [INFO] Baseline snapshot restored successfully
+[2026-11-09 20:44:50.339] [INFO] Emulator snapshot operation completed
+[2026-11-09 20:44:50.339] [INFO] Starting Frida monitoring with static analysis results for package: com.standardnotes
+FridaManager: Starting Frida monitoring for package: com.standardnotes
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.standardnotes src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 20:44:51.386] [INFO] Frida monitoring started successfully
+[2026-11-09 20:44:51.386] [INFO] Credential choice: VALID pair
+[2026-11-09 20:44:51.386] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 20:44:51.386] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:44:51.516] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:44:51.556] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 20:44:51.557] [INFO] Total good network periods: 15
+[2026-11-09 20:44:51.557] [INFO] Total bad network periods: 2
+[2026-11-09 20:44:51.557] [INFO] Total disruptions: 17
+[2026-11-09 20:44:51.557] [INFO] Actual good:bad ratio: 15:2
+[2026-11-09 20:44:51.557] [INFO] 🟠 Round condition: LIMITED (2.5s latency, 25% loss)
+[2026-11-09 20:44:51.645] [INFO] Round network condition for login: limited
+[2026-11-09 20:44:51.645] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching com.standardnotes
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=2, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[WEBVIEW] Tapped web login entry 'Sign in'
+Using ADB to detect login page...
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): false
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 20:45:24.640] [INFO] UI manager detected login page
+[2026-11-09 20:45:24.641] [INFO]   - Google login: false
+[2026-11-09 20:45:24.641] [INFO]   - Facebook login: false
+[2026-11-09 20:45:24.641] [INFO]   - Username field: true
+[2026-11-09 20:45:24.641] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_204350/round_3/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 3)
+[2026-11-09 20:45:24.961] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_204350/round_3/screenshot_003_baseline_login_page.png
+[2026-11-09 20:45:25.282] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 20:45:25.282] [INFO] Selected username: jasonzixuzhou@gmail.com
+[2026-11-09 20:45:25.282] [INFO] Selected password: [13 chars]
+[2026-11-09 20:45:25.282] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Sign in'
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_204350/round_3/screenshot_004_credentials_input_complete.png
+[2026-11-09 20:45:28.602] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[2026-11-09 20:45:57.182] [INFO] Login completed under 'limited' network in 27884 ms (not a delay sample)
+[STORAGE] Password too short or part of the package name; skipping verbatim check
+[2026-11-09 20:46:01.256] [INFO] Login outcome: inputOk=true, loginPageGone=true, validPair=true
+[2026-11-09 20:46:01.256] [INFO] Login process completed successfully
+[NAV_DETECTOR] Login succeeded at 1794257161257
+[2026-11-09 20:46:01.257] [INFO] ✓ Navigation detector: recorded login success
+[NAV_DETECTOR] Navigation: null → com.standardnotes/com.standardnotes.MainActivity
+[2026-11-09 20:46:01.287] [INFO] ✓ Navigation detector: current activity = com.standardnotes/com.standardnotes.MainActivity
+[2026-11-09 20:46:01.288] [INFO] ✓ Navigation detector: current state = CredentialInput
+[2026-11-09 20:46:01.288] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:46:01.427] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:46:01.467] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 20:46:01.468] [INFO] Mode: random
+[2026-11-09 20:46:01.468] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 20:46:01.468] [INFO] Switch Interval: 60 seconds
+[2026-11-09 20:46:01.468] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 20:46:01.468] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:46:01.603] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:46:01.654] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 20:46:01.655] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 20:46:04.436] [INFO] Captured 72 API calls in current round
+Add observed state: CredentialInput (total: 1, compressed: 1)
+[2026-11-09 20:46:04.438] [INFO] Known states from Frida: 64/72
+State machine validation passed (single state): CredentialInput
+[2026-11-09 20:46:04.438] [INFO] State machine validation passed
+[2026-11-09 20:46:04.478] [INFO] [TAINT] Extracting taint flows for Round 3
+[2026-11-09 20:46:04.478] [INFO] Extracting taint analysis results for Round 3
+[TaintAnalyzer] Warning: Taint report is stale (age: 8375s)
+[2026-11-09 20:46:04.479] [INFO] [TAINT] Round 3: No violations detected
+[TaintAnalyzer] Warning: Taint report is stale (age: 8375s)
+[TaintAnalyzer] Report saved to: reports/taint/round_3_taint.txt
+[2026-11-09 20:46:04.479] [INFO] [TAINT] Round report saved to: reports/taint/round_3_taint.txt
+[2026-11-09 20:46:04.479] [INFO] === Rotation (lifecycle) checks, round 3 ===
+[2026-11-09 20:46:04.479] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 20:46:04.479] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:46:04.616] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:46:04.656] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 20:46:04.656] [INFO] Total good network periods: 18
+[2026-11-09 20:46:04.656] [INFO] Total bad network periods: 2
+[2026-11-09 20:46:04.656] [INFO] Total disruptions: 20
+[2026-11-09 20:46:04.656] [INFO] Actual good:bad ratio: 18:2
+[SNAPSHOT] App-level reset: com.standardnotes
+[2026-11-09 20:46:13.733] [INFO] Starting Frida monitoring with static analysis results for package: com.standardnotes
+FridaManager: Starting Frida monitoring for package: com.standardnotes
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.standardnotes src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 20:46:16.800] [INFO] Frida monitoring started successfully
+[2026-11-09 20:46:24.800] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=2, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[WEBVIEW] Tapped web login entry 'Sign in'
+Using ADB to detect login page...
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): false
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 20:46:52.116] [INFO] UI manager detected login page
+[2026-11-09 20:46:52.116] [INFO]   - Google login: false
+[2026-11-09 20:46:52.116] [INFO]   - Facebook login: false
+[2026-11-09 20:46:52.116] [INFO]   - Username field: true
+[2026-11-09 20:46:52.116] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_204350/round_3/screenshot_005_baseline_ui_manager_detection.png
+[ROTATION] A(web): before {idval=23, err=, pw=1, busy=false, pwval=12, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[ROTATION] A(web): after {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[WEBVIEW] trusted click on 'Sign in'
+[ROTATION] B(web): in-flight {idval=23, err=, pw=1, busy=false, pwval=12, id=4, btn=Submit, url=file:///android_asset/Web.bundle/src/index.html} -> after rotation {idval=0, err=, pw=1, busy=false, pwval=0, id=4, btn=Submit, url=file:///android_asset/Web.bundle/src/index.html}
+[ROTATION] Finding: ROTATION_INPUT_LOST - Web login input lost on rotation (WebView reloaded or state not restored): before=23/12 after=0/0
+[2026-11-09 20:47:27.467] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-09 20:47:27.468] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 20:47:27.468] [INFO] Mode: random
+[2026-11-09 20:47:27.468] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 20:47:27.468] [INFO] Switch Interval: 60 seconds
+[2026-11-09 20:47:27.468] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 20:47:27.468] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:47:27.626] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:47:27.676] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 20:47:27.676] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 20:47:29.746] [INFO] Frida monitoring stopped
+[2026-11-09 20:47:29.746] [INFO] [BUG_DETECTION] Running bug detectors for Round 3
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 0
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: true
+[NAV_DETECTOR] Current activity: com.standardnotes/com.standardnotes.MainActivity
+[NAV_DETECTOR] Current state: CredentialInput
+[NAV_DETECTOR] Navigation events: 1
+[NAV_DETECTOR] Stuck check: onLoginActivity=false, inLoginState=false, enoughTimePassed=true → stuck=false
+[NAV_DETECTOR] ✓ Navigation flow appears correct
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 1
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 20:47:29.746] [INFO] ⚠️  Detected 1 potential bug(s) in Round 3
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_3_20261109_204729.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 1
+
+By Severity:
+  HIGH: 1
+
+By Category:
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_204729.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 4
+Unique Bug Types: 4
+Deduplication Rate: 0.0%
+========================================
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:39:09 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:43:05 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:47:27 UTC 2026
+Description: Login state lost on device rotation...
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[1x] MFA_AFTER_INVALID_CREDENTIALS
+Severity: MEDIUM
+Occurrences: 1
+First seen: Mon Nov 09 20:41:34 UTC 2026
+Description: Invalid credentials advanced the login to the MFA step...
+
+
+[2026-11-09 20:47:29.749] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 20:47:29.749] [INFO] ROUND 3 COMPLETED
+[2026-11-09 20:47:29.750] [INFO] Round duration: 257571ms
+[2026-11-09 20:47:29.750] [INFO] Total attempts: 3
+[2026-11-09 20:47:29.750] [INFO] Successful logins: 2
+[2026-11-09 20:47:29.750] [INFO] Failed logins: 1
+[2026-11-09 20:47:29.750] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_204350/round_3/screenshot_006_round_3_end.png
+[2026-11-09 20:47:34.042] [INFO] ================================================================================
+[2026-11-09 20:47:34.042] [INFO] ROUND 4 STARTED
+[2026-11-09 20:47:34.042] [INFO] Round timestamp: 2026-11-09 20:47:34.042
+[2026-11-09 20:47:34.042] [INFO] ================================================================================
+[2026-11-09 20:47:34.042] [INFO] Round 4: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: com.standardnotes
+[2026-11-09 20:47:43.191] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=2, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[WEBVIEW] Tapped web login entry 'Sign in'
+Using ADB to detect login page...
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): false
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 20:48:12.555] [INFO] Verified: App restored to login page
+[2026-11-09 20:48:12.556] [INFO] Appended Frida round marker for round 4
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_204812/round_4/screenshot_001_round_4_start.png
+[SNAPSHOT] App-level reset: com.standardnotes
+[2026-11-09 20:48:22.065] [INFO] Baseline snapshot restored successfully
+[2026-11-09 20:49:12.066] [INFO] Emulator snapshot operation completed
+[2026-11-09 20:49:12.066] [INFO] Starting Frida monitoring with static analysis results for package: com.standardnotes
+FridaManager: Starting Frida monitoring for package: com.standardnotes
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.standardnotes src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 20:49:13.110] [INFO] Frida monitoring started successfully
+[2026-11-09 20:49:13.110] [INFO] Credential choice: VALID pair
+[2026-11-09 20:49:13.110] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 20:49:13.110] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:49:13.248] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:49:13.288] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 20:49:13.288] [INFO] Total good network periods: 20
+[2026-11-09 20:49:13.288] [INFO] Total bad network periods: 2
+[2026-11-09 20:49:13.288] [INFO] Total disruptions: 22
+[2026-11-09 20:49:13.288] [INFO] Actual good:bad ratio: 20:2
+[2026-11-09 20:49:13.288] [INFO] 🔴 Round condition: OFFLINE (default route removed: connections fail fast, like airplane mode)
+[2026-11-09 20:49:13.396] [INFO] Round network condition for login: offline
+[2026-11-09 20:49:13.396] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching com.standardnotes
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=2, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[WEBVIEW] Tapped web login entry 'Sign in'
+Using ADB to detect login page...
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): false
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 20:49:46.560] [INFO] UI manager detected login page
+[2026-11-09 20:49:46.560] [INFO]   - Google login: false
+[2026-11-09 20:49:46.560] [INFO]   - Facebook login: false
+[2026-11-09 20:49:46.560] [INFO]   - Username field: true
+[2026-11-09 20:49:46.560] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_204812/round_4/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 4)
+[2026-11-09 20:49:46.907] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_204812/round_4/screenshot_003_baseline_login_page.png
+[2026-11-09 20:49:47.256] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 20:49:47.256] [INFO] Selected username: jasonzixuzhou@gmail.com
+[2026-11-09 20:49:47.256] [INFO] Selected password: [13 chars]
+[2026-11-09 20:49:47.256] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Sign in'
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_204812/round_4/screenshot_004_credentials_input_complete.png
+[2026-11-09 20:49:50.533] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[TIMEOUT_DETECTOR] Login attempt: 38470ms (timeout, success=false)
+[2026-11-09 20:50:27.588] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[2026-11-09 20:50:27.589] [INFO] Login with valid credentials did not complete under 'offline' network; login page still shown
+[2026-11-09 20:50:27.589] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:50:27.816] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 20:50:27.816] [INFO] Mode: random
+[2026-11-09 20:50:27.816] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 20:50:27.817] [INFO] Switch Interval: 60 seconds
+[2026-11-09 20:50:27.817] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 20:50:27.817] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:50:27.945] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:50:27.983] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 20:50:27.983] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 20:50:30.796] [INFO] Captured 84 API calls in current round
+Add observed state: CredentialInput (total: 1, compressed: 1)
+Add observed state: Authenticating (total: 28, compressed: 2)
+Add observed state: AwaitingResponse (total: 30, compressed: 3)
+Add observed state: CredentialInput (total: 31, compressed: 4)
+[2026-11-09 20:50:30.798] [INFO] Known states from Frida: 76/84
+NAVIGATION_FLOW_ERROR: Invalid state transition detected
+  Details: Invalid transition: Authenticating -> AwaitingResponse
+  Position: Transition 1
+  Compressed sequence (up to error): CredentialInput (×27, 0.0s) -> Authenticating (×2) -> AwaitingResponse [INVALID]
+  Original states: 76, Compressed: 4
+[2026-11-09 20:50:30.798] [ERROR] LOGIN BUG DETECTED: Navigation flow error
+[2026-11-09 20:50:30.799] [ERROR]   - NAVIGATION_FLOW_ERROR: Invalid state transition detected
+  Details: Invalid transition: Authenticating -> AwaitingResponse
+  Position: Transition 1
+  Compressed sequence (up to error): CredentialInput (×27, 0.0s) -> Authenticating (×2) -> AwaitingResponse [INVALID]
+  Original states: 76, Compressed: 4
+LOGIN BUG DETECTED: Invalid state transition detected
+[2026-11-09 20:50:30.799] NAVIGATION_FLOW_ERROR: Invalid state transition detected
+Details: Invalid transition: NAVIGATION_FLOW_ERROR: Invalid state transition detected
+  Details: Invalid transition: Authenticating -> AwaitingResponse
+  Position: Transition 1
+  Compressed sequence (up to error): CredentialInput (×27, 0.0s) -> Authenticating (×2) -> AwaitingResponse [INVALID]
+  Original states: 76, Compressed: 4
+Full sequence: CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> Authenticating -> Authenticating -> AwaitingResponse -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput -> CredentialInput
+Credentials: Current credentials
+[2026-11-09 20:50:30.846] [INFO] [TAINT] Extracting taint flows for Round 4
+[2026-11-09 20:50:30.847] [INFO] Extracting taint analysis results for Round 4
+[TaintAnalyzer] Warning: Taint report is stale (age: 8641s)
+[2026-11-09 20:50:30.847] [INFO] [TAINT] Round 4: No violations detected
+[TaintAnalyzer] Warning: Taint report is stale (age: 8641s)
+[TaintAnalyzer] Report saved to: reports/taint/round_4_taint.txt
+[2026-11-09 20:50:30.848] [INFO] [TAINT] Round report saved to: reports/taint/round_4_taint.txt
+[2026-11-09 20:50:30.848] [INFO] === Rotation (lifecycle) checks, round 4 ===
+[2026-11-09 20:50:30.848] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 20:50:30.848] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:50:30.985] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:50:31.026] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 20:50:31.026] [INFO] Total good network periods: 23
+[2026-11-09 20:50:31.026] [INFO] Total bad network periods: 2
+[2026-11-09 20:50:31.026] [INFO] Total disruptions: 25
+[2026-11-09 20:50:31.026] [INFO] Actual good:bad ratio: 23:2
+[SNAPSHOT] App-level reset: com.standardnotes
+[2026-11-09 20:50:40.062] [INFO] Starting Frida monitoring with static analysis results for package: com.standardnotes
+FridaManager: Starting Frida monitoring for package: com.standardnotes
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.standardnotes src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 20:50:43.146] [INFO] Frida monitoring started successfully
+[2026-11-09 20:50:51.146] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: You’re offline. Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption. (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=2, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[WEBVIEW] Tapped web login entry 'Sign in'
+Using ADB to detect login page...
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Go to items list (ID: )
+Username field detected: [masked] (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: com.standardnotes/.MainActivity
+[Match] Normal login button: Go to items list (id: )
+[Match] Normal login button: Go to account menu (id: )
+[Match] Normal login button: Go to preferences (id: )
+[Match] Normal login button: Go to vaults menu (id: )
+[Match] Normal login button: Sign in or register to sync your notes to your other devices with end-to-end encryption. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Done (id: )
+[Match] Normal login button: Go back (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: com.standardnotes/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): false
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 20:51:18.525] [INFO] UI manager detected login page
+[2026-11-09 20:51:18.525] [INFO]   - Google login: false
+[2026-11-09 20:51:18.525] [INFO]   - Facebook login: false
+[2026-11-09 20:51:18.525] [INFO]   - Username field: true
+[2026-11-09 20:51:18.525] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_204812/round_4/screenshot_005_baseline_ui_manager_detection.png
+[ROTATION] A(web): before {idval=8, err=, pw=1, busy=false, pwval=12, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[ROTATION] A(web): after {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[WEBVIEW] trusted click on 'Sign in'
+[ROTATION] B(web): in-flight {idval=8, err=, pw=1, busy=false, pwval=12, id=3, btn=, url=file:///android_asset/Web.bundle/src/index.html} -> after rotation {idval=0, err=, pw=1, busy=false, pwval=0, id=3, btn=Sign in, url=file:///android_asset/Web.bundle/src/index.html}
+[ROTATION] Finding: ROTATION_INPUT_LOST - Web login input lost on rotation (WebView reloaded or state not restored): before=8/12 after=0/0
+[2026-11-09 20:51:53.904] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-09 20:51:53.904] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 20:51:53.904] [INFO] Mode: random
+[2026-11-09 20:51:53.905] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 20:51:53.905] [INFO] Switch Interval: 60 seconds
+[2026-11-09 20:51:53.905] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 20:51:53.905] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:51:54.070] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:51:54.117] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 20:51:54.117] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 20:51:56.186] [INFO] Frida monitoring stopped
+[2026-11-09 20:51:56.186] [INFO] [BUG_DETECTION] Running bug detectors for Round 4
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 1
+[TIMEOUT_DETECTOR] Timeouts: 1, Delays: 0
+[BUG_DETECTION] LoginTimeoutDetector found 1 bug(s)
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: CredentialInput
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 2
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 20:51:56.187] [INFO] ⚠️  Detected 2 potential bug(s) in Round 4
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_4_20261109_205156.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 2
+
+By Severity:
+  HIGH: 2
+
+By Category:
+  LOGIN_TIMEOUT: 1
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_205156.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 6
+Unique Bug Types: 6
+Deduplication Rate: 0.0%
+========================================
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:39:09 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:43:05 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:47:27 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:51:53 UTC 2026
+Description: Login state lost on device rotation...
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[1x] MFA_AFTER_INVALID_CREDENTIALS
+Severity: MEDIUM
+Occurrences: 1
+First seen: Mon Nov 09 20:41:34 UTC 2026
+Description: Invalid credentials advanced the login to the MFA step...
+
+Category: LOGIN_TIMEOUT
+----------------------------------------
+
+[1x] LOGIN_TIMEOUT
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:51:56 UTC 2026
+Description: Login process exceeds acceptable time limits...
+
+
+[2026-11-09 20:51:56.190] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 20:51:56.190] [INFO] ROUND 4 COMPLETED
+[2026-11-09 20:51:56.190] [INFO] Round duration: 262148ms
+[2026-11-09 20:51:56.190] [INFO] Total attempts: 4
+[2026-11-09 20:51:56.190] [INFO] Successful logins: 2
+[2026-11-09 20:51:56.190] [INFO] Failed logins: 2
+[2026-11-09 20:51:56.190] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/com.standardnotes/20261109_204812/round_4/screenshot_006_round_4_end.png
+[2026-11-09 20:51:57.503] [INFO] === Test Execution Summary ===
+[2026-11-09 20:51:57.503] [INFO] Total Login Attempts: 4
+[2026-11-09 20:51:57.503] [INFO] Successful Logins: 2
+[2026-11-09 20:51:57.503] [INFO] Failed Logins: 2
+[2026-11-09 20:51:57.505] [INFO] Success Rate: 50.0%
+[2026-11-09 20:51:57.506] [INFO] Detailed report written to: reports/login_test_report_2026-11-09_20-35-49.txt
+[2026-11-09 20:51:57.506] [INFO] === Generating Final Taint Analysis Report ===
+[TaintAnalyzer] Warning: Taint report is stale (age: 8728s)
+[2026-11-09 20:51:57.506] [INFO] 
+================================================================================
+TAINT ANALYSIS REPORT
+================================================================================
+Application: com.standardnotes
+Total Taints: 0
+Total Flows: 0
+Violations: 0
+================================================================================
+
+[TaintAnalyzer] Warning: Taint report is stale (age: 8728s)
+[TaintAnalyzer] Report saved to: reports/taint/final_taint_analysis.txt
+[2026-11-09 20:51:57.507] [INFO] [TAINT] Final comprehensive report saved to: reports/taint/final_taint_analysis.txt
+[TaintAnalyzer] Warning: Taint report is stale (age: 8728s)
+[2026-11-09 20:51:57.507] [INFO] [TAINT] Total taints tracked: 0
+[2026-11-09 20:51:57.507] [INFO] [TAINT] Total flows detected: 0
+[2026-11-09 20:51:57.507] [INFO] [TAINT] Total violations: 0
+[2026-11-09 20:51:57.508] [INFO] Final summary appended to unified error report: reports/errors/test_errors_20261109_203550.txt
+[CRASH_DETECTOR] Stopped monitoring
+[2026-11-09 20:51:57.508] [INFO] ✓ Crash detector monitoring stopped
+UI manager closed
+[2026-11-09 20:51:57.509] [INFO] Monkey stopped
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+[2026-11-09 20:51:57.510] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 20:51:57.510] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:51:57.644] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:51:57.684] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 20:51:57.684] [INFO] Total good network periods: 25
+[2026-11-09 20:51:57.684] [INFO] Total bad network periods: 2
+[2026-11-09 20:51:57.684] [INFO] Total disruptions: 27
+[2026-11-09 20:51:57.684] [INFO] Actual good:bad ratio: 25:2
+[2026-11-09 20:51:57.688] [INFO] Network disruption report saved to: reports/network/network_disruptions_20261109_205157.txt
+[2026-11-09 20:51:57.688] [INFO] Network disruption report saved to: reports/network/network_disruptions_20261109_205157.txt
+[2026-11-09 20:51:57.688] [INFO] AndroidLoginDetector cleanup completed
+EXIT 0

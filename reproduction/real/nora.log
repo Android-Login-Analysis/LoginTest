@@ -1,0 +1,2564 @@
+[2026-11-09 23:16:42.531] [INFO] === AndroidLoginDetector Started ===
+[2026-11-09 23:16:42.538] [INFO] Log file: logs/android_login_detector_20261109_231642.log
+[2026-11-09 23:16:42.539] [INFO] Timestamp: 2026-11-09 23:16:42.539
+StateMachineManager: Loaded 45 states from regex patterns
+[BUG_DETECTION] Initialized 7 symptom-based bug detectors
+[BUG_DETECTION]   1. ErrorMessageMismatchDetector (Symptom 7)
+[BUG_DETECTION]   2. LifecycleDataLossDetector (Lifecycle)
+[BUG_DETECTION]   3. CrashDetector (Symptom 1)
+[BUG_DETECTION]   4. LoginTimeoutDetector (Symptom 2)
+[BUG_DETECTION]   5. NavigationFlowDetector (Symptom 3)
+StateMachineManager: Bug detection initialized
+StateMachineManager: initialization complete with 45 state transitions
+[2026-11-09 23:16:42.569] [INFO] App configuration loaded:
+[2026-11-09 23:16:42.570] [INFO]   - Package: jp.nonbili.nora
+[2026-11-09 23:16:42.570] [INFO]   - Activity: jp.nonbili.nora.MainActivity'
+[2026-11-09 23:16:42.570] [INFO]   - APK Path: apps/jp.nonbili.nora_v0.4.4.apk
+[2026-11-09 23:16:42.570] [INFO]   - Emulator Snapshot (auto-generated): snap_nonbili_nora_login
+[2026-11-09 23:16:42.570] [INFO] Initializing static analyzer...
+[2026-11-09 23:16:42.571] [INFO] Static analysis result found and up-to-date: reports/static_analysis/jp.nonbili.nora_v0.4.4_1.json
+[2026-11-09 23:16:42.571] [INFO] Initializing Frida manager with static analysis results...
+FridaManager: State InitializingSync has 30 method signatures
+FridaManager: State SendingCredentials has 1 method signatures
+FridaManager: State PreparingAuth has 2 method signatures
+FridaManager: State IR_LoginEvidence has 6177 method signatures
+FridaManager: State InvalidCredentials has 9 method signatures
+FridaManager: State IR_WebViewEvidence has 19 method signatures
+FridaManager: State Authenticating has 22 method signatures
+FridaManager: State AwaitingResponse has 36 method signatures
+FridaManager: State OAuth_TokenExchange has 32 method signatures
+FridaManager: State UserLogout has 1 method signatures
+FridaManager: Loaded 10 states from static analysis result
+FridaManager: Using static analysis result: reports/static_analysis/jp.nonbili.nora_v0.4.4.json
+FridaManager: State InitializingSync has 30 method signatures
+FridaManager: State SendingCredentials has 1 method signatures
+FridaManager: State PreparingAuth has 2 method signatures
+FridaManager: State IR_LoginEvidence has 6177 method signatures
+FridaManager: State InvalidCredentials has 9 method signatures
+FridaManager: State IR_WebViewEvidence has 19 method signatures
+FridaManager: State Authenticating has 22 method signatures
+FridaManager: State AwaitingResponse has 36 method signatures
+FridaManager: State OAuth_TokenExchange has 32 method signatures
+FridaManager: State UserLogout has 1 method signatures
+FridaManager: Loaded 10 states from static analysis result
+FridaManager: Static analysis results loaded from: reports/static_analysis/jp.nonbili.nora_v0.4.4_1.json
+[2026-11-09 23:16:42.930] [INFO] Frida manager configured with static analysis results
+[2026-11-09 23:16:42.932] [INFO] ApiLogAnalyzer initialized with 10 patterns from static analysis
+[2026-11-09 23:16:42.968] [INFO] No per-app credential directory found for 'jp.nonbili.nora', will use global pools if available
+[2026-11-09 23:16:42.970] [ERROR] Error reading file pools/jp.nonbili.nora/accounts.txt: pools/jp.nonbili.nora/accounts.txt (No such file or directory)
+[2026-11-09 23:16:42.970] [ERROR] Error reading file pools/jp.nonbili.nora/passwords.txt: pools/jp.nonbili.nora/passwords.txt (No such file or directory)
+[2026-11-09 23:16:42.971] [ERROR] Error reading file pools/jp.nonbili.nora/google_accounts.txt: pools/jp.nonbili.nora/google_accounts.txt (No such file or directory)
+[2026-11-09 23:16:42.971] [ERROR] Error reading file pools/jp.nonbili.nora/google_passwords.txt: pools/jp.nonbili.nora/google_passwords.txt (No such file or directory)
+[2026-11-09 23:16:42.971] [ERROR] Error reading file pools/jp.nonbili.nora/facebook_accounts.txt: pools/jp.nonbili.nora/facebook_accounts.txt (No such file or directory)
+[2026-11-09 23:16:42.972] [ERROR] Error reading file pools/jp.nonbili.nora/facebook_passwords.txt: pools/jp.nonbili.nora/facebook_passwords.txt (No such file or directory)
+[2026-11-09 23:16:42.972] [ERROR] Error reading file pools/jp.nonbili.nora/valid_pairs.csv: pools/jp.nonbili.nora/valid_pairs.csv (No such file or directory)
+[2026-11-09 23:16:42.972] [INFO] Loaded 0 valid credential pair(s)
+[2026-11-09 23:16:42.972] [ERROR] Error reading file pools/jp.nonbili.nora/totp_secrets.csv: pools/jp.nonbili.nora/totp_secrets.csv (No such file or directory)
+[2026-11-09 23:16:42.973] [INFO] Loaded 0 TOTP secret(s)
+[2026-11-09 23:16:42.973] [INFO] Loaded credential pools:
+[2026-11-09 23:16:42.973] [INFO]   - Standard accounts: 17
+[2026-11-09 23:16:42.974] [INFO]   - Standard passwords: 15
+[2026-11-09 23:16:42.974] [INFO]   - Google accounts: 5
+[2026-11-09 23:16:42.974] [INFO]   - Google passwords: 5
+[2026-11-09 23:16:42.975] [INFO]   - Facebook accounts: 5
+[2026-11-09 23:16:42.975] [INFO]   - Facebook passwords: 5
+[2026-11-09 23:16:42.975] [INFO] State machine initialized with 45 states
+=== State machine information ===
+Provider_Okta -> Provider_Okta
+Provider_Auth0 -> Provider_Auth0
+AppMainScreen -> AppMainScreen, UserLogout, InitialState
+ParsingResponse -> ParsingResponse
+CheckingMFASettings -> CheckingMFASettings, MFACodePending, LoggedIn_NoMFA
+AwaitingResponse -> AwaitingResponse
+CheckingToken -> CheckingToken, LoggedIn_Via_Token, CredentialInput
+OAuth_TokenExchange -> OAuth_TokenExchange
+ValidatingCredentials -> ValidatingCredentials
+Unknown -> Unknown
+ShowingError -> ShowingError
+SendingMFACode -> SendingMFACode, MFAVerification
+RetrievingFeeds -> RetrievingFeeds
+LoadingProfile -> LoadingProfile
+Authenticating -> Authenticating, CheckingCredentials, LoginFailure, NetworkError, CredentialInput, CredentialFormatError
+ServiceUnavailable_Auth -> ServiceUnavailable_Auth, CredentialInput, InitialState
+VerifyingMFA -> VerifyingMFA, MFAError, LoggedIn_WithMFA
+LoggedIn_Via_Token -> LoggedIn_Via_Token, AppMainScreen
+ClickingLoginButton -> ClickingLoginButton
+InitializingSync -> InitializingSync
+AuthHeader_Bearer -> AuthHeader_Bearer
+PreparingAuth -> PreparingAuth
+checkAuthToken -> checkAuthToken
+NetworkError -> NetworkError, CredentialInput, LoginFailure, Authenticating
+InvalidCredentials -> InvalidCredentials, CredentialInput
+Provider_MSAL -> Provider_MSAL
+checkStoredCredentials -> checkStoredCredentials
+LoggedIn -> LoggedIn
+ReturnToLogin -> ReturnToLogin
+OAuth_BeginAuth -> OAuth_BeginAuth
+UserLogout -> UserLogout, InitialState, CredentialInput
+MFACodePending -> MFACodePending, SendingMFACode
+InitialState -> InitialState, CheckingToken, CredentialInput
+SendingCredentials -> SendingCredentials
+LoggedIn_NoMFA -> LoggedIn_NoMFA, AppMainScreen
+Provider_FacebookLogin -> Provider_FacebookLogin
+Provider_Cognito -> Provider_Cognito
+MFAVerification -> MFAVerification, VerifyingMFA
+LoginFailure -> LoginFailure, CredentialInput, NetworkError
+MFAError -> MFAError, MFACodePending
+Provider_GoogleSignIn -> Provider_GoogleSignIn
+CredentialFormatError -> CredentialFormatError, CredentialInput
+LoggedIn_WithMFA -> LoggedIn_WithMFA, AppMainScreen
+CheckingCredentials -> CheckingCredentials, ServiceUnavailable_Auth, InvalidCredentials, CheckingMFASettings
+CredentialInput -> CredentialInput, CredentialFormatError, Authenticating, LoginFailure
+==================
+[SNAPSHOT] LIFT_RESET_MODE=app: using app-level reset instead of emulator snapshots
+[TaintAnalyzer] Configuration loaded from: src/main/resources/taint_config.json
+[2026-11-09 23:16:42.981] [INFO] Taint analyzer initialized
+[2026-11-09 23:16:42.981] [INFO] Starting Frida monitoring with static analysis results for package: jp.nonbili.nora
+FridaManager: Starting Frida monitoring for package: jp.nonbili.nora
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py jp.nonbili.nora src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 23:16:44.025] [INFO] Frida monitoring started successfully
+Configuration validation passed
+=== Configuration Summary ===
+Test Rounds: 5
+Duration per Round: 300000ms
+Round Interval: 3s
+Login Timeout: 120s
+Monkey Events: 1000
+Monkey Delay: 500ms
+Frida Timeout: 120s
+Frida Retry Count: 5
+==================
+[2026-11-09 23:16:44.030] [INFO] === Starting AndroidLoginDetector Test with Static Analysis ===
+[2026-11-09 23:16:44.030] [INFO] Target app: jp.nonbili.nora
+[2026-11-09 23:16:44.030] [INFO] Test rounds: 5
+[2026-11-09 23:16:44.030] [INFO] Static analysis results: reports/static_analysis/jp.nonbili.nora_v0.4.4_1.json
+[2026-11-09 23:16:44.030] [INFO] Unified error report: reports/errors/test_errors_20261109_231644.txt
+[2026-11-09 23:16:44.030] [INFO] Starting global taint tracking...
+[TaintAnalyzer] Taint tracking prepared for: jp.nonbili.nora
+[TaintAnalyzer] Note: Taint analysis requires custom Frida integration
+[2026-11-09 23:16:44.030] [INFO] ✓ Taint tracking active for all rounds
+[2026-11-09 23:16:44.031] [INFO] Checking Docker environment compatibility...
+[2026-11-09 23:16:44.035] [INFO] ADB device found: 127.0.0.1:5555	device
+[2026-11-09 23:16:44.035] [INFO] ADB device found: 127.0.0.1:5556	device
+[2026-11-09 23:16:44.035] [INFO] ADB device found: 127.0.0.1:5557	device
+[2026-11-09 23:16:44.055] [INFO] Emulator Android version: 14
+[2026-11-09 23:16:44.281] [INFO] Frida version: 16.7.19
+[2026-11-09 23:16:44.282] [INFO] All required files found
+[2026-11-09 23:16:44.282] [INFO] Docker environment check passed
+ADB device ready: 127.0.0.1:5555 (provisioned)
+UI manager started successfully
+[2026-11-09 23:16:44.355] [INFO] Starting network chaos testing (emulator is ready)...
+[2026-11-09 23:16:44.355] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 23:16:44.356] [INFO] Mode: random
+[2026-11-09 23:16:44.358] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 23:16:44.359] [INFO] Switch Interval: 60 seconds
+[2026-11-09 23:16:44.359] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 23:16:44.359] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:16:44.504] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:16:44.546] [INFO] Network disruption interface: eth0
+[2026-11-09 23:16:44.571] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 23:16:44.573] [INFO] ================================================================================
+[2026-11-09 23:16:44.573] [INFO] ROUND 1 STARTED
+[2026-11-09 23:16:44.574] [INFO] Round timestamp: 2026-11-09 23:16:44.573
+[2026-11-09 23:16:44.574] [INFO] ================================================================================
+[2026-11-09 23:16:44.574] [INFO] Round 1: Starting fresh without snapshot restore
+[2026-11-09 23:16:44.575] [INFO] Appended Frida round marker for round 1
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_231644/round_1/screenshot_001_round_1_start.png
+[SNAPSHOT] App-level reset: jp.nonbili.nora
+[2026-11-09 23:16:55.758] [INFO] Baseline snapshot restored successfully
+[2026-11-09 23:17:45.759] [INFO] Emulator snapshot operation completed
+[2026-11-09 23:17:45.760] [INFO] Starting Frida monitoring with static analysis results for package: jp.nonbili.nora
+FridaManager: Starting Frida monitoring for package: jp.nonbili.nora
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py jp.nonbili.nora src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 23:17:48.866] [INFO] Frida monitoring started successfully
+[CRASH_DETECTOR] Started monitoring for crashes of jp.nonbili.nora
+[2026-11-09 23:17:48.870] [INFO] ✓ Crash detector monitoring started for package: jp.nonbili.nora
+[2026-11-09 23:17:48.870] [INFO] Credential choice: random (likely invalid / special characters)
+[2026-11-09 23:17:48.871] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 23:17:48.872] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:17:49.014] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:17:49.056] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 23:17:49.057] [INFO] Total good network periods: 2
+[2026-11-09 23:17:49.057] [INFO] Total bad network periods: 0
+[2026-11-09 23:17:49.057] [INFO] Total disruptions: 2
+[2026-11-09 23:17:49.057] [INFO] Actual good:bad ratio: 2:0
+[2026-11-09 23:17:49.057] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:17:49.184] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:17:49.222] [INFO] Round network condition for login: normal
+[2026-11-09 23:17:49.222] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching jp.nonbili.nora
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (273,535)
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Cache] New login method discovered: normal
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✗ Password: ✓
+Login button detected: Facebook - log in or sign up (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✗ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1coOR55vioF6UqWx7}
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: true
+  - Username field: false
+  - Password field: true
+  - Login button: true
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 23:19:32.179] [INFO] UI manager detected login page
+[2026-11-09 23:19:32.180] [INFO]   - Google login: false
+[2026-11-09 23:19:32.180] [INFO]   - Facebook login: true
+[2026-11-09 23:19:32.180] [INFO]   - Username field: false
+[2026-11-09 23:19:32.180] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_231644/round_1/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 1)
+[2026-11-09 23:19:32.773] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_231644/round_1/screenshot_003_baseline_login_page.png
+[2026-11-09 23:19:33.305] [INFO] Facebook login detected, using Facebook account: testuser2@facebook.com
+[2026-11-09 23:19:33.305] [INFO] Facebook login detected, using Facebook password: [13 chars]
+[2026-11-09 23:19:33.305] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 23:19:33.305] [INFO] Selected username: testuser2@facebook.com
+[2026-11-09 23:19:33.306] [INFO] Selected password: [13 chars]
+[2026-11-09 23:19:33.306] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Log in'
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_231644/round_1/screenshot_004_credentials_input_complete.png
+[2026-11-09 23:19:37.087] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: It looks like testuser2@facebook.com isn't connected to an account but we can help you find your account and log in. (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Error page offered 'Try again'; using it like a user would
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[TIMEOUT_DETECTOR] Login attempt: 39675ms (timeout, success=false)
+[2026-11-09 23:20:14.967] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[2026-11-09 23:20:14.967] [INFO] Login process completed successfully
+[NAV_DETECTOR] Login succeeded at 1794266414967
+[2026-11-09 23:20:14.967] [INFO] ✓ Navigation detector: recorded login success
+[NAV_DETECTOR] Navigation: null → jp.nonbili.nora/jp.nonbili.nora.MainActivity
+[2026-11-09 23:20:15.003] [INFO] ✓ Navigation detector: current activity = jp.nonbili.nora/jp.nonbili.nora.MainActivity
+[2026-11-09 23:20:15.003] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:20:15.153] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:20:15.202] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 23:20:15.202] [INFO] Mode: random
+[2026-11-09 23:20:15.202] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 23:20:15.202] [INFO] Switch Interval: 60 seconds
+[2026-11-09 23:20:15.202] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 23:20:15.202] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:20:15.351] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:20:15.394] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 23:20:15.394] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 23:20:18.114] [INFO] Captured 109 API calls in current round
+[2026-11-09 23:20:18.116] [INFO] Known states from Frida: 0/109
+[2026-11-09 23:20:18.116] [INFO] State machine validation passed
+[2026-11-09 23:20:18.171] [INFO] [TAINT] Extracting taint flows for Round 1
+[2026-11-09 23:20:18.172] [INFO] Extracting taint analysis results for Round 1
+[TaintAnalyzer] Warning: Taint report is stale (age: 6345s)
+[2026-11-09 23:20:18.173] [INFO] [TAINT] Round 1: No violations detected
+[TaintAnalyzer] Warning: Taint report is stale (age: 6345s)
+[TaintAnalyzer] Report saved to: reports/taint/round_1_taint.txt
+[2026-11-09 23:20:18.174] [INFO] [TAINT] Round report saved to: reports/taint/round_1_taint.txt
+[2026-11-09 23:20:18.174] [INFO] === Rotation (lifecycle) checks, round 1 ===
+[2026-11-09 23:20:18.174] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 23:20:18.174] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:20:18.316] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:20:18.356] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 23:20:18.356] [INFO] Total good network periods: 6
+[2026-11-09 23:20:18.356] [INFO] Total bad network periods: 0
+[2026-11-09 23:20:18.356] [INFO] Total disruptions: 6
+[2026-11-09 23:20:18.356] [INFO] Actual good:bad ratio: 6:0
+[SNAPSHOT] App-level reset: jp.nonbili.nora
+[2026-11-09 23:20:27.688] [INFO] Starting Frida monitoring with static analysis results for package: jp.nonbili.nora
+FridaManager: Starting Frida monitoring for package: jp.nonbili.nora
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py jp.nonbili.nora src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 23:20:30.758] [INFO] Frida monitoring started successfully
+[2026-11-09 23:20:38.758] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (273,535)
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Facebook - log in or sign up (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1v27RoYaU6Pi7efhN}
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: true
+  - Username field: false
+  - Password field: true
+  - Login button: true
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 23:22:15.026] [INFO] UI manager detected login page
+[2026-11-09 23:22:15.026] [INFO]   - Google login: false
+[2026-11-09 23:22:15.026] [INFO]   - Facebook login: true
+[2026-11-09 23:22:15.026] [INFO]   - Username field: false
+[2026-11-09 23:22:15.026] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_231644/round_1/screenshot_005_baseline_ui_manager_detection.png
+[ROTATION] A(web): before {idval=11, err=, pw=1, busy=false, pwval=12, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1v27RoYaU6Pi7efhN}
+[ROTATION] A(web): after {idval=11, err=, pw=1, busy=false, pwval=12, id=1, btn=, url=https://m.facebook.com/?wtsid=rdr_1v27RoYaU6Pi7efhN}
+[WEBVIEW] trusted click on 'Log in'
+[ROTATION] B(web): in-flight {idval=11, err=, pw=1, busy=true, pwval=12, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1v27RoYaU6Pi7efhN} -> after rotation {idval=11, err=, pw=1, busy=false, pwval=12, id=1, btn=, url=https://m.facebook.com/?wtsid=rdr_1v27RoYaU6Pi7efhN}
+[ROTATION] Finding: ROTATION_LOGIN_STATE_RESET - Web login was in progress (submit busy) when the device rotated; afterwards the form is idle with no result
+[2026-11-09 23:22:50.326] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-09 23:22:50.326] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 23:22:50.326] [INFO] Mode: random
+[2026-11-09 23:22:50.326] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 23:22:50.326] [INFO] Switch Interval: 60 seconds
+[2026-11-09 23:22:50.326] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 23:22:50.326] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:22:50.465] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:22:50.505] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 23:22:50.505] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 23:22:52.571] [INFO] Frida monitoring stopped
+[2026-11-09 23:22:52.572] [INFO] [BUG_DETECTION] Running bug detectors for Round 1
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 1
+[TIMEOUT_DETECTOR] Timeouts: 1, Delays: 0
+[BUG_DETECTION] LoginTimeoutDetector found 1 bug(s)
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: true
+[NAV_DETECTOR] Current activity: jp.nonbili.nora/jp.nonbili.nora.MainActivity
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 1
+[NAV_DETECTOR] Stuck check: onLoginActivity=false, inLoginState=false, enoughTimePassed=true → stuck=false
+[NAV_DETECTOR] ✓ Navigation flow appears correct
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 2
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 23:22:52.580] [INFO] ⚠️  Detected 2 potential bug(s) in Round 1
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_1_20261109_232252.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 2
+
+By Severity:
+  HIGH: 2
+
+By Category:
+  LOGIN_TIMEOUT: 1
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_232252.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 2
+Unique Bug Types: 2
+Deduplication Rate: 0.0%
+========================================
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:22:50 UTC 2026
+Description: Login state lost on device rotation...
+
+Category: LOGIN_TIMEOUT
+----------------------------------------
+
+[1x] LOGIN_TIMEOUT
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:22:52 UTC 2026
+Description: Login process exceeds acceptable time limits...
+
+
+[2026-11-09 23:22:52.608] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 23:22:52.608] [INFO] ROUND 1 COMPLETED
+[2026-11-09 23:22:52.608] [INFO] Round duration: 368035ms
+[2026-11-09 23:22:52.608] [INFO] Total attempts: 1
+[2026-11-09 23:22:52.608] [INFO] Successful logins: 0
+[2026-11-09 23:22:52.608] [INFO] Failed logins: 0
+[2026-11-09 23:22:52.609] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_231644/round_1/screenshot_006_round_1_end.png
+[2026-11-09 23:22:57.658] [INFO] ================================================================================
+[2026-11-09 23:22:57.659] [INFO] ROUND 2 STARTED
+[2026-11-09 23:22:57.659] [INFO] Round timestamp: 2026-11-09 23:22:57.659
+[2026-11-09 23:22:57.659] [INFO] ================================================================================
+[2026-11-09 23:22:57.659] [INFO] Round 2: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: jp.nonbili.nora
+[2026-11-09 23:23:06.871] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (273,535)
+[2026-11-09 23:23:50.506] [INFO] 🔴 Inducing BAD network state: DISABLE_DATA for 17 seconds
+[2026-11-09 23:24:07.643] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:24:07.783] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Facebook - log in or sign up (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1NKPVz9qM43lofCyK}
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: true
+  - Username field: false
+  - Password field: true
+  - Login button: true
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 23:24:44.578] [INFO] Verified: App restored to login page
+[2026-11-09 23:24:44.579] [INFO] Appended Frida round marker for round 2
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_232444/round_2/screenshot_001_round_2_start.png
+[SNAPSHOT] App-level reset: jp.nonbili.nora
+[2026-11-09 23:24:50.505] [INFO] 🔴 Inducing BAD network state: SLOW_NETWORK for 16 seconds
+[2026-11-09 23:24:55.297] [INFO] Baseline snapshot restored successfully
+[2026-11-09 23:25:06.606] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:25:06.742] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:25:45.297] [INFO] Emulator snapshot operation completed
+[2026-11-09 23:25:45.298] [INFO] Starting Frida monitoring with static analysis results for package: jp.nonbili.nora
+FridaManager: Starting Frida monitoring for package: jp.nonbili.nora
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py jp.nonbili.nora src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 23:25:46.342] [INFO] Frida monitoring started successfully
+[2026-11-09 23:25:46.343] [INFO] Credential choice: invalid, special-character username
+[2026-11-09 23:25:46.343] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 23:25:46.343] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:25:46.481] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:25:46.519] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 23:25:46.519] [INFO] Total good network periods: 10
+[2026-11-09 23:25:46.519] [INFO] Total bad network periods: 2
+[2026-11-09 23:25:46.519] [INFO] Total disruptions: 12
+[2026-11-09 23:25:46.519] [INFO] Actual good:bad ratio: 10:2
+[2026-11-09 23:25:46.519] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:25:46.644] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:25:46.682] [INFO] Round network condition for login: normal
+[2026-11-09 23:25:46.683] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching jp.nonbili.nora
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (273,535)
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Facebook - log in or sign up (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1OR2dd0bcRMQ3Rl0x}
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: true
+  - Username field: false
+  - Password field: true
+  - Login button: true
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 23:27:28.306] [INFO] UI manager detected login page
+[2026-11-09 23:27:28.307] [INFO]   - Google login: false
+[2026-11-09 23:27:28.307] [INFO]   - Facebook login: true
+[2026-11-09 23:27:28.307] [INFO]   - Username field: false
+[2026-11-09 23:27:28.307] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_232444/round_2/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 2)
+[2026-11-09 23:27:28.818] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_232444/round_2/screenshot_003_baseline_login_page.png
+[2026-11-09 23:27:29.170] [INFO] Facebook login detected, using Facebook account: testuser1@facebook.com
+[2026-11-09 23:27:29.171] [INFO] Facebook login detected, using Facebook password: [13 chars]
+[2026-11-09 23:27:29.171] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 23:27:29.171] [INFO] Selected username: testuser1@facebook.com
+[2026-11-09 23:27:29.171] [INFO] Selected password: [13 chars]
+[2026-11-09 23:27:29.171] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Log in'
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_232444/round_2/screenshot_004_credentials_input_complete.png
+[2026-11-09 23:27:32.609] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: It looks like testuser1@facebook.com isn't connected to an account but we can help you find your account and log in. (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Error page offered 'Try again'; using it like a user would
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[2026-11-09 23:28:10.576] [INFO] Login page still shown after invalid credentials; not a delay sample
+[2026-11-09 23:28:10.576] [INFO] Invalid credentials rejected; retrying with the next special-character username: $0`(X{M,]8@@
+[2026-11-09 23:28:10.576] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Log in'
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: It looks like $0`(X{M,]8@@ isn't connected to an account but we can help you find your account and log in. (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Error page offered 'Try again'; using it like a user would
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[2026-11-09 23:28:50.306] [INFO] Invalid credentials rejected; retrying with the next special-character username: <redacted>
+[2026-11-09 23:28:50.306] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Log in'
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: It looks like <redacted> isn't connected to an account but we can help you find your account and log in. (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Error page offered 'Try again'; using it like a user would
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[2026-11-09 23:29:30.065] [INFO] Invalid credentials rejected; retrying with the next special-character username: <redacted>
+[2026-11-09 23:29:30.065] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Log in'
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: It looks like <redacted> isn't connected to an account but we can help you find your account and log in. (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Error page offered 'Try again'; using it like a user would
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[2026-11-09 23:30:09.676] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=false
+[2026-11-09 23:30:09.676] [INFO] Login rejected with invalid credentials (expected); login page still shown
+[2026-11-09 23:30:09.676] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:30:09.831] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:30:09.872] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 23:30:09.873] [INFO] Mode: random
+[2026-11-09 23:30:09.873] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 23:30:09.873] [INFO] Switch Interval: 60 seconds
+[2026-11-09 23:30:09.873] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 23:30:09.873] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:30:10.016] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:30:10.060] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 23:30:10.060] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 23:30:12.730] [INFO] Captured 2 API calls in current round
+[2026-11-09 23:30:12.730] [INFO] Known states from Frida: 0/2
+[2026-11-09 23:30:12.730] [INFO] State machine validation passed
+[2026-11-09 23:30:12.800] [INFO] [TAINT] Extracting taint flows for Round 2
+[2026-11-09 23:30:12.800] [INFO] Extracting taint analysis results for Round 2
+[TaintAnalyzer] Warning: Taint report is stale (age: 6939s)
+[2026-11-09 23:30:12.801] [INFO] [TAINT] Round 2: No violations detected
+[TaintAnalyzer] Warning: Taint report is stale (age: 6939s)
+[TaintAnalyzer] Report saved to: reports/taint/round_2_taint.txt
+[2026-11-09 23:30:12.801] [INFO] [TAINT] Round report saved to: reports/taint/round_2_taint.txt
+[2026-11-09 23:30:12.801] [INFO] === Rotation (lifecycle) checks, round 2 ===
+[2026-11-09 23:30:12.801] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 23:30:12.801] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:30:12.941] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:30:12.979] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 23:30:12.980] [INFO] Total good network periods: 14
+[2026-11-09 23:30:12.980] [INFO] Total bad network periods: 2
+[2026-11-09 23:30:12.980] [INFO] Total disruptions: 16
+[2026-11-09 23:30:12.980] [INFO] Actual good:bad ratio: 14:2
+[SNAPSHOT] App-level reset: jp.nonbili.nora
+[2026-11-09 23:30:22.345] [INFO] Starting Frida monitoring with static analysis results for package: jp.nonbili.nora
+FridaManager: Starting Frida monitoring for package: jp.nonbili.nora
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py jp.nonbili.nora src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 23:30:25.417] [INFO] Frida monitoring started successfully
+[2026-11-09 23:30:33.418] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (273,535)
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Facebook - log in or sign up (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1M3wX65fVu97X2TXb}
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: true
+  - Username field: false
+  - Password field: true
+  - Login button: true
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 23:32:09.730] [INFO] UI manager detected login page
+[2026-11-09 23:32:09.730] [INFO]   - Google login: false
+[2026-11-09 23:32:09.730] [INFO]   - Facebook login: true
+[2026-11-09 23:32:09.730] [INFO]   - Username field: false
+[2026-11-09 23:32:09.730] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_232444/round_2/screenshot_005_baseline_ui_manager_detection.png
+[ROTATION] A(web): before {idval=8, err=, pw=1, busy=false, pwval=12, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1M3wX65fVu97X2TXb}
+[ROTATION] A(web): after {idval=8, err=, pw=1, busy=false, pwval=12, id=1, btn=, url=https://m.facebook.com/?wtsid=rdr_1M3wX65fVu97X2TXb}
+[WEBVIEW] trusted click on 'Log in'
+[ROTATION] B(web): in-flight {idval=8, err=, pw=1, busy=true, pwval=12, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1M3wX65fVu97X2TXb} -> after rotation {idval=8, err=, pw=1, busy=false, pwval=12, id=1, btn=, url=https://m.facebook.com/?wtsid=rdr_1M3wX65fVu97X2TXb#}
+[ROTATION] Finding: ROTATION_LOGIN_STATE_RESET - Web login was in progress (submit busy) when the device rotated; afterwards the form is idle with no result
+[2026-11-09 23:32:44.867] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-09 23:32:44.868] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 23:32:44.868] [INFO] Mode: random
+[2026-11-09 23:32:44.868] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 23:32:44.868] [INFO] Switch Interval: 60 seconds
+[2026-11-09 23:32:44.868] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 23:32:44.868] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:32:45.012] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:32:45.052] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 23:32:45.052] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 23:32:47.118] [INFO] Frida monitoring stopped
+[2026-11-09 23:32:47.119] [INFO] [BUG_DETECTION] Running bug detectors for Round 2
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 0
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 1
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 23:32:47.119] [INFO] ⚠️  Detected 1 potential bug(s) in Round 2
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_2_20261109_233247.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 1
+
+By Severity:
+  HIGH: 1
+
+By Category:
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_233247.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 3
+Unique Bug Types: 3
+Deduplication Rate: 0.0%
+========================================
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:22:50 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:32:44 UTC 2026
+Description: Login state lost on device rotation...
+
+Category: LOGIN_TIMEOUT
+----------------------------------------
+
+[1x] LOGIN_TIMEOUT
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:22:52 UTC 2026
+Description: Login process exceeds acceptable time limits...
+
+
+[2026-11-09 23:32:47.122] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 23:32:47.123] [INFO] ROUND 2 COMPLETED
+[2026-11-09 23:32:47.123] [INFO] Round duration: 589464ms
+[2026-11-09 23:32:47.123] [INFO] Total attempts: 2
+[2026-11-09 23:32:47.123] [INFO] Successful logins: 0
+[2026-11-09 23:32:47.123] [INFO] Failed logins: 1
+[2026-11-09 23:32:47.123] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_232444/round_2/screenshot_006_round_2_end.png
+[2026-11-09 23:32:51.370] [INFO] ================================================================================
+[2026-11-09 23:32:51.370] [INFO] ROUND 3 STARTED
+[2026-11-09 23:32:51.370] [INFO] Round timestamp: 2026-11-09 23:32:51.370
+[2026-11-09 23:32:51.370] [INFO] ================================================================================
+[2026-11-09 23:32:51.370] [INFO] Round 3: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: jp.nonbili.nora
+[2026-11-09 23:33:00.619] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (273,535)
+[2026-11-09 23:33:45.052] [INFO] 🔴 Inducing BAD network state: SLOW_NETWORK for 26 seconds
+[2026-11-09 23:34:11.144] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:34:11.286] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Facebook - log in or sign up (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1TIrDlKIIJDsuCaDL}
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: true
+  - Username field: false
+  - Password field: true
+  - Login button: true
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 23:34:38.169] [INFO] Verified: App restored to login page
+[2026-11-09 23:34:38.170] [INFO] Appended Frida round marker for round 3
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_233438/round_3/screenshot_001_round_3_start.png
+[SNAPSHOT] App-level reset: jp.nonbili.nora
+[2026-11-09 23:34:47.890] [INFO] Baseline snapshot restored successfully
+[2026-11-09 23:35:37.890] [INFO] Emulator snapshot operation completed
+[2026-11-09 23:35:37.891] [INFO] Starting Frida monitoring with static analysis results for package: jp.nonbili.nora
+FridaManager: Starting Frida monitoring for package: jp.nonbili.nora
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py jp.nonbili.nora src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 23:35:38.939] [INFO] Frida monitoring started successfully
+[2026-11-09 23:35:38.939] [INFO] Credential choice: random (likely invalid / special characters)
+[2026-11-09 23:35:38.939] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 23:35:38.939] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:35:39.076] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:35:39.116] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 23:35:39.116] [INFO] Total good network periods: 17
+[2026-11-09 23:35:39.116] [INFO] Total bad network periods: 3
+[2026-11-09 23:35:39.116] [INFO] Total disruptions: 20
+[2026-11-09 23:35:39.116] [INFO] Actual good:bad ratio: 17:3
+[2026-11-09 23:35:39.116] [INFO] 🟠 Round condition: LIMITED (2.5s latency, 25% loss)
+[2026-11-09 23:35:39.209] [INFO] Round network condition for login: limited
+[2026-11-09 23:35:39.209] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching jp.nonbili.nora
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (273,535)
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Facebook - log in or sign up (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1jty9w89p7srlN72f}
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: true
+  - Username field: false
+  - Password field: true
+  - Login button: true
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 23:38:06.999] [INFO] UI manager detected login page
+[2026-11-09 23:38:06.999] [INFO]   - Google login: false
+[2026-11-09 23:38:06.999] [INFO]   - Facebook login: true
+[2026-11-09 23:38:06.999] [INFO]   - Username field: false
+[2026-11-09 23:38:06.999] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_233438/round_3/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 3)
+[2026-11-09 23:38:07.340] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_233438/round_3/screenshot_003_baseline_login_page.png
+[2026-11-09 23:38:07.692] [INFO] Facebook login detected, using Facebook account: testuser2@facebook.com
+[2026-11-09 23:38:07.692] [INFO] Facebook login detected, using Facebook password: [15 chars]
+[2026-11-09 23:38:07.692] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 23:38:07.692] [INFO] Selected username: testuser2@facebook.com
+[2026-11-09 23:38:07.692] [INFO] Selected password: [15 chars]
+[2026-11-09 23:38:07.692] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Log in'
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_233438/round_3/screenshot_004_credentials_input_complete.png
+[2026-11-09 23:38:11.113] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Error page offered 'Try again'; using it like a user would
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[TIMEOUT_DETECTOR] Login attempt: 94114ms (timeout, success=false)
+[2026-11-09 23:39:43.729] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[2026-11-09 23:39:43.730] [INFO] Login with valid credentials did not complete under 'limited' network; login page still shown
+[2026-11-09 23:39:43.731] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:39:43.873] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:39:43.915] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 23:39:43.915] [INFO] Mode: random
+[2026-11-09 23:39:43.915] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 23:39:43.915] [INFO] Switch Interval: 60 seconds
+[2026-11-09 23:39:43.915] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 23:39:43.915] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:39:44.051] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:39:44.093] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 23:39:44.093] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 23:39:46.671] [INFO] Captured 2 API calls in current round
+[2026-11-09 23:39:46.671] [INFO] Known states from Frida: 0/2
+[2026-11-09 23:39:46.672] [INFO] State machine validation passed
+[2026-11-09 23:39:46.737] [INFO] [TAINT] Extracting taint flows for Round 3
+[2026-11-09 23:39:46.738] [INFO] Extracting taint analysis results for Round 3
+[TaintAnalyzer] Warning: Taint report is stale (age: 7513s)
+[2026-11-09 23:39:46.738] [INFO] [TAINT] Round 3: No violations detected
+[TaintAnalyzer] Warning: Taint report is stale (age: 7513s)
+[TaintAnalyzer] Report saved to: reports/taint/round_3_taint.txt
+[2026-11-09 23:39:46.738] [INFO] [TAINT] Round report saved to: reports/taint/round_3_taint.txt
+[2026-11-09 23:39:46.738] [INFO] === Rotation (lifecycle) checks, round 3 ===
+[2026-11-09 23:39:46.739] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 23:39:46.739] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:39:46.874] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:39:46.912] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 23:39:46.912] [INFO] Total good network periods: 20
+[2026-11-09 23:39:46.912] [INFO] Total bad network periods: 3
+[2026-11-09 23:39:46.912] [INFO] Total disruptions: 23
+[2026-11-09 23:39:46.912] [INFO] Actual good:bad ratio: 20:3
+[SNAPSHOT] App-level reset: jp.nonbili.nora
+[2026-11-09 23:39:56.348] [INFO] Starting Frida monitoring with static analysis results for package: jp.nonbili.nora
+FridaManager: Starting Frida monitoring for package: jp.nonbili.nora
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py jp.nonbili.nora src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 23:39:59.421] [INFO] Frida monitoring started successfully
+[2026-11-09 23:40:07.421] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (273,535)
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Facebook - log in or sign up (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1lWhzShMCtHbAud1i}
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: true
+  - Username field: false
+  - Password field: true
+  - Login button: true
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 23:41:43.474] [INFO] UI manager detected login page
+[2026-11-09 23:41:43.474] [INFO]   - Google login: false
+[2026-11-09 23:41:43.474] [INFO]   - Facebook login: true
+[2026-11-09 23:41:43.474] [INFO]   - Username field: false
+[2026-11-09 23:41:43.474] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_233438/round_3/screenshot_005_baseline_ui_manager_detection.png
+[ROTATION] A(web): before {idval=12, err=, pw=1, busy=false, pwval=12, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1lWhzShMCtHbAud1i}
+[ROTATION] A(web): after {idval=12, err=, pw=1, busy=false, pwval=12, id=1, btn=, url=https://m.facebook.com/?wtsid=rdr_1lWhzShMCtHbAud1i}
+[WEBVIEW] trusted click on 'Log in'
+[ROTATION] B(web): in-flight {idval=12, err=, pw=1, busy=true, pwval=12, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1lWhzShMCtHbAud1i} -> after rotation {idval=12, err=, pw=1, busy=false, pwval=12, id=1, btn=, url=https://m.facebook.com/?wtsid=rdr_1lWhzShMCtHbAud1i#}
+[ROTATION] Finding: ROTATION_LOGIN_STATE_RESET - Web login was in progress (submit busy) when the device rotated; afterwards the form is idle with no result
+[2026-11-09 23:42:18.581] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-09 23:42:18.581] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 23:42:18.581] [INFO] Mode: random
+[2026-11-09 23:42:18.581] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 23:42:18.581] [INFO] Switch Interval: 60 seconds
+[2026-11-09 23:42:18.581] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 23:42:18.581] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:42:18.731] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:42:18.772] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 23:42:18.772] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 23:42:20.835] [INFO] Frida monitoring stopped
+[2026-11-09 23:42:20.835] [INFO] [BUG_DETECTION] Running bug detectors for Round 3
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 1
+[TIMEOUT_DETECTOR] Timeouts: 1, Delays: 0
+[BUG_DETECTION] LoginTimeoutDetector found 1 bug(s)
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 2
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 23:42:20.836] [INFO] ⚠️  Detected 2 potential bug(s) in Round 3
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_3_20261109_234220.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 2
+
+By Severity:
+  HIGH: 2
+
+By Category:
+  LOGIN_TIMEOUT: 1
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_234220.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 5
+Unique Bug Types: 4
+Deduplication Rate: 20.0%
+========================================
+
+Category: LOGIN_TIMEOUT
+----------------------------------------
+
+[2x] LOGIN_TIMEOUT
+Severity: HIGH
+Occurrences: 2
+First seen: Mon Nov 09 23:22:52 UTC 2026
+Last seen: Mon Nov 09 23:42:20 UTC 2026
+Description: Login process exceeds acceptable time limits...
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:22:50 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:32:44 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:42:18 UTC 2026
+Description: Login state lost on device rotation...
+
+
+[2026-11-09 23:42:20.838] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 23:42:20.838] [INFO] ROUND 3 COMPLETED
+[2026-11-09 23:42:20.838] [INFO] Round duration: 569468ms
+[2026-11-09 23:42:20.838] [INFO] Total attempts: 3
+[2026-11-09 23:42:20.838] [INFO] Successful logins: 0
+[2026-11-09 23:42:20.838] [INFO] Failed logins: 2
+[2026-11-09 23:42:20.838] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_233438/round_3/screenshot_006_round_3_end.png
+[2026-11-09 23:42:25.086] [INFO] ================================================================================
+[2026-11-09 23:42:25.087] [INFO] ROUND 4 STARTED
+[2026-11-09 23:42:25.087] [INFO] Round timestamp: 2026-11-09 23:42:25.087
+[2026-11-09 23:42:25.087] [INFO] ================================================================================
+[2026-11-09 23:42:25.087] [INFO] Round 4: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: jp.nonbili.nora
+[2026-11-09 23:42:34.349] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (273,535)
+[2026-11-09 23:43:18.772] [INFO] 🔴 Inducing BAD network state: SLOW_NETWORK for 18 seconds
+[2026-11-09 23:43:36.865] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:43:36.999] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Facebook - log in or sign up (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1TfbEGyJrfbDHzwT2}
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: true
+  - Username field: false
+  - Password field: true
+  - Login button: true
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 23:44:12.301] [INFO] Verified: App restored to login page
+[2026-11-09 23:44:12.302] [INFO] Appended Frida round marker for round 4
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_234412/round_4/screenshot_001_round_4_start.png
+[SNAPSHOT] App-level reset: jp.nonbili.nora
+[2026-11-09 23:44:18.772] [INFO] 🔴 Inducing BAD network state: DISABLE_DATA for 30 seconds
+[2026-11-09 23:44:21.996] [INFO] Baseline snapshot restored successfully
+[2026-11-09 23:44:48.903] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:44:49.036] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:45:11.997] [INFO] Emulator snapshot operation completed
+[2026-11-09 23:45:11.997] [INFO] Starting Frida monitoring with static analysis results for package: jp.nonbili.nora
+FridaManager: Starting Frida monitoring for package: jp.nonbili.nora
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py jp.nonbili.nora src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 23:45:13.039] [INFO] Frida monitoring started successfully
+[2026-11-09 23:45:13.039] [INFO] Credential choice: random (likely invalid / special characters)
+[2026-11-09 23:45:13.040] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 23:45:13.040] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:45:13.175] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:45:13.214] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 23:45:13.214] [INFO] Total good network periods: 24
+[2026-11-09 23:45:13.214] [INFO] Total bad network periods: 5
+[2026-11-09 23:45:13.214] [INFO] Total disruptions: 29
+[2026-11-09 23:45:13.214] [INFO] Actual good:bad ratio: 24:5
+[2026-11-09 23:45:13.214] [INFO] 🔴 Round condition: OFFLINE (default route removed: connections fail fast, like airplane mode)
+[2026-11-09 23:45:13.325] [INFO] Round network condition for login: offline
+[2026-11-09 23:45:13.325] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching jp.nonbili.nora
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (273,535)
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (957,130)
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[2026-11-09 23:55:27.165] [INFO] UI manager did not detect login page
+[2026-11-09 23:55:27.166] [INFO] Login page not reached under 'offline'; loading it on a normal network first
+[2026-11-09 23:55:27.166] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:55:33.277] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Facebook - log in or sign up (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1hO1N0xPKlu4YzBwk}
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: true
+  - Username field: false
+  - Password field: true
+  - Login button: true
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 23:55:42.880] [INFO] UI manager detected login page
+[2026-11-09 23:55:42.880] [INFO]   - Google login: false
+[2026-11-09 23:55:42.880] [INFO]   - Facebook login: true
+[2026-11-09 23:55:42.880] [INFO]   - Username field: false
+[2026-11-09 23:55:42.880] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_234412/round_4/screenshot_002_baseline_ui_manager_detection.png
+[2026-11-09 23:55:43.405] [INFO] 🔴 Round condition: OFFLINE (default route removed: connections fail fast, like airplane mode)
+[2026-11-09 23:55:43.517] [INFO] Login page loaded; round condition 'offline' re-applied before submitting
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 4)
+[2026-11-09 23:55:43.517] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_234412/round_4/screenshot_003_baseline_login_page.png
+[2026-11-09 23:55:44.034] [INFO] Facebook login detected, using Facebook account: demo.user@facebook.com
+[2026-11-09 23:55:44.034] [INFO] Facebook login detected, using Facebook password: [15 chars]
+[2026-11-09 23:55:44.034] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 23:55:44.034] [INFO] Selected username: demo.user@facebook.com
+[2026-11-09 23:55:44.034] [INFO] Selected password: [15 chars]
+[2026-11-09 23:55:44.034] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Log in'
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_234412/round_4/screenshot_004_credentials_input_complete.png
+[2026-11-09 23:55:47.664] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Match] Normal login button: Unable to log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[TIMEOUT_DETECTOR] Login attempt: 95285ms (timeout, success=false)
+[2026-11-09 23:57:21.233] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[2026-11-09 23:57:21.233] [INFO] Login with valid credentials did not complete under 'offline' network; login page still shown
+[2026-11-09 23:57:21.233] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:57:21.440] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 23:57:21.440] [INFO] Mode: random
+[2026-11-09 23:57:21.440] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 23:57:21.440] [INFO] Switch Interval: 60 seconds
+[2026-11-09 23:57:21.440] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 23:57:21.440] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:57:21.568] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:57:21.608] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 23:57:21.608] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 23:57:23.821] [INFO] Captured 2 API calls in current round
+[2026-11-09 23:57:23.821] [INFO] Known states from Frida: 0/2
+[2026-11-09 23:57:23.821] [INFO] State machine validation passed
+[2026-11-09 23:57:23.897] [INFO] [TAINT] Extracting taint flows for Round 4
+[2026-11-09 23:57:23.897] [INFO] Extracting taint analysis results for Round 4
+[TaintAnalyzer] Warning: Taint report is stale (age: 8571s)
+[2026-11-09 23:57:23.897] [INFO] [TAINT] Round 4: No violations detected
+[TaintAnalyzer] Warning: Taint report is stale (age: 8571s)
+[TaintAnalyzer] Report saved to: reports/taint/round_4_taint.txt
+[2026-11-09 23:57:23.898] [INFO] [TAINT] Round report saved to: reports/taint/round_4_taint.txt
+[2026-11-09 23:57:23.898] [INFO] === Rotation (lifecycle) checks, round 4 ===
+[2026-11-09 23:57:23.898] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 23:57:23.898] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:57:24.026] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:57:24.064] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 23:57:24.064] [INFO] Total good network periods: 28
+[2026-11-09 23:57:24.064] [INFO] Total bad network periods: 5
+[2026-11-09 23:57:24.064] [INFO] Total disruptions: 33
+[2026-11-09 23:57:24.064] [INFO] Actual good:bad ratio: 28:5
+[SNAPSHOT] App-level reset: jp.nonbili.nora
+[2026-11-09 23:57:33.356] [INFO] Starting Frida monitoring with static analysis results for package: jp.nonbili.nora
+FridaManager: Starting Frida monitoring for package: jp.nonbili.nora
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py jp.nonbili.nora src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 23:57:36.424] [INFO] Frida monitoring started successfully
+[2026-11-09 23:57:44.424] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (273,535)
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Facebook - log in or sign up (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1xUVkbdIiEwAg7xN9}
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: true
+  - Username field: false
+  - Password field: true
+  - Login button: true
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-09 23:59:20.528] [INFO] UI manager detected login page
+[2026-11-09 23:59:20.528] [INFO]   - Google login: false
+[2026-11-09 23:59:20.528] [INFO]   - Facebook login: true
+[2026-11-09 23:59:20.528] [INFO]   - Username field: false
+[2026-11-09 23:59:20.528] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_234412/round_4/screenshot_005_baseline_ui_manager_detection.png
+[ROTATION] A(web): before {idval=8, err=, pw=1, busy=false, pwval=9, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1xUVkbdIiEwAg7xN9}
+[ROTATION] A(web): after {idval=8, err=, pw=1, busy=false, pwval=9, id=1, btn=, url=https://m.facebook.com/?wtsid=rdr_1xUVkbdIiEwAg7xN9}
+[WEBVIEW] trusted click on 'Log in'
+[ROTATION] B(web): in-flight {idval=8, err=, pw=1, busy=true, pwval=9, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1xUVkbdIiEwAg7xN9} -> after rotation {idval=8, err=, pw=1, busy=false, pwval=9, id=1, btn=, url=https://m.facebook.com/?wtsid=rdr_1xUVkbdIiEwAg7xN9#}
+[ROTATION] Finding: ROTATION_LOGIN_STATE_RESET - Web login was in progress (submit busy) when the device rotated; afterwards the form is idle with no result
+[2026-11-09 23:59:55.568] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-09 23:59:55.568] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 23:59:55.568] [INFO] Mode: random
+[2026-11-09 23:59:55.568] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 23:59:55.568] [INFO] Switch Interval: 60 seconds
+[2026-11-09 23:59:55.568] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 23:59:55.568] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 23:59:55.710] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 23:59:55.758] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 23:59:55.758] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 23:59:57.825] [INFO] Frida monitoring stopped
+[2026-11-09 23:59:57.825] [INFO] [BUG_DETECTION] Running bug detectors for Round 4
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 1
+[TIMEOUT_DETECTOR] Timeouts: 1, Delays: 0
+[BUG_DETECTION] LoginTimeoutDetector found 1 bug(s)
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 2
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 23:59:57.826] [INFO] ⚠️  Detected 2 potential bug(s) in Round 4
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_4_20261109_235957.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 2
+
+By Severity:
+  HIGH: 2
+
+By Category:
+  LOGIN_TIMEOUT: 1
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_235957.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 7
+Unique Bug Types: 5
+Deduplication Rate: 28.6%
+========================================
+
+Category: LOGIN_TIMEOUT
+----------------------------------------
+
+[3x] LOGIN_TIMEOUT
+Severity: HIGH
+Occurrences: 3
+First seen: Mon Nov 09 23:22:52 UTC 2026
+Last seen: Mon Nov 09 23:59:57 UTC 2026
+Description: Login process exceeds acceptable time limits...
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:22:50 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:32:44 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:42:18 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:59:55 UTC 2026
+Description: Login state lost on device rotation...
+
+
+[2026-11-09 23:59:57.828] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 23:59:57.828] [INFO] ROUND 4 COMPLETED
+[2026-11-09 23:59:57.829] [INFO] Round duration: 1052742ms
+[2026-11-09 23:59:57.829] [INFO] Total attempts: 4
+[2026-11-09 23:59:57.829] [INFO] Successful logins: 0
+[2026-11-09 23:59:57.829] [INFO] Failed logins: 3
+[2026-11-09 23:59:57.829] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261109_234412/round_4/screenshot_006_round_4_end.png
+[2026-11-10 00:00:02.175] [INFO] ================================================================================
+[2026-11-10 00:00:02.175] [INFO] ROUND 5 STARTED
+[2026-11-10 00:00:02.175] [INFO] Round timestamp: 2026-11-10 00:00:02.175
+[2026-11-10 00:00:02.175] [INFO] ================================================================================
+[2026-11-10 00:00:02.175] [INFO] Round 5: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: jp.nonbili.nora
+[2026-11-10 00:00:12.464] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (273,535)
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Facebook - log in or sign up (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1wxpmeAcu6kiuhvKK}
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: true
+  - Username field: false
+  - Password field: true
+  - Login button: true
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-10 00:01:50.149] [INFO] Verified: App restored to login page
+[2026-11-10 00:01:50.150] [INFO] Appended Frida round marker for round 5
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261110_000150/round_5/screenshot_001_round_5_start.png
+[SNAPSHOT] App-level reset: jp.nonbili.nora
+[2026-11-10 00:01:55.758] [INFO] 🔴 Inducing BAD network state: DISABLE_DATA for 26 seconds
+[2026-11-10 00:02:00.080] [INFO] Baseline snapshot restored successfully
+[2026-11-10 00:02:21.894] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 00:02:22.044] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 00:02:50.081] [INFO] Emulator snapshot operation completed
+[2026-11-10 00:02:50.081] [INFO] Starting Frida monitoring with static analysis results for package: jp.nonbili.nora
+FridaManager: Starting Frida monitoring for package: jp.nonbili.nora
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py jp.nonbili.nora src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-10 00:02:51.125] [INFO] Frida monitoring started successfully
+[2026-11-10 00:02:51.125] [INFO] Credential choice: random (likely invalid / special characters)
+[2026-11-10 00:02:51.126] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-10 00:02:51.126] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 00:02:51.271] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 00:02:51.316] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-10 00:02:51.316] [INFO] Total good network periods: 31
+[2026-11-10 00:02:51.316] [INFO] Total bad network periods: 6
+[2026-11-10 00:02:51.316] [INFO] Total disruptions: 37
+[2026-11-10 00:02:51.317] [INFO] Actual good:bad ratio: 31:6
+[2026-11-10 00:02:51.317] [INFO] 🔴 Round condition: UNRESPONSIVE (DNS works, TCP packets dropped: servers never answer)
+[2026-11-10 00:02:51.471] [INFO] Round network condition for login: unresponsive
+[2026-11-10 00:02:51.471] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching jp.nonbili.nora
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (273,535)
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (957,130)
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=0, btn=, url=about:blank}
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[2026-11-10 00:10:25.605] [INFO] UI manager did not detect login page
+[2026-11-10 00:10:25.605] [INFO] Login page not reached under 'unresponsive'; loading it on a normal network first
+[2026-11-10 00:10:25.605] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 00:10:25.758] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 00:10:31.875] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Facebook - log in or sign up (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1hV03HXLbHes20Eun}
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: true
+  - Username field: false
+  - Password field: true
+  - Login button: true
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-10 00:10:41.590] [INFO] UI manager detected login page
+[2026-11-10 00:10:41.590] [INFO]   - Google login: false
+[2026-11-10 00:10:41.590] [INFO]   - Facebook login: true
+[2026-11-10 00:10:41.590] [INFO]   - Username field: false
+[2026-11-10 00:10:41.590] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261110_000150/round_5/screenshot_002_baseline_ui_manager_detection.png
+[2026-11-10 00:10:42.136] [INFO] 🔴 Round condition: UNRESPONSIVE (DNS works, TCP packets dropped: servers never answer)
+[2026-11-10 00:10:42.276] [INFO] Login page loaded; round condition 'unresponsive' re-applied before submitting
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 5)
+[2026-11-10 00:10:42.276] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261110_000150/round_5/screenshot_003_baseline_login_page.png
+[2026-11-10 00:10:42.785] [INFO] Facebook login detected, using Facebook account: testfbuser@facebook.com
+[2026-11-10 00:10:42.785] [INFO] Facebook login detected, using Facebook password: [10 chars]
+[2026-11-10 00:10:42.785] [INFO] === Starting Credential Input Phase ===
+[2026-11-10 00:10:42.785] [INFO] Selected username: testfbuser@facebook.com
+[2026-11-10 00:10:42.785] [INFO] Selected password: [10 chars]
+[2026-11-10 00:10:42.785] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Log in'
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261110_000150/round_5/screenshot_004_credentials_input_complete.png
+[2026-11-10 00:10:46.377] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Username field: [masked] (id: )
+[Match] Password field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[TIMEOUT_DETECTOR] Login attempt: 91811ms (timeout, success=false)
+[2026-11-10 00:12:16.507] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[2026-11-10 00:12:16.508] [INFO] Login with valid credentials did not complete under 'unresponsive' network; login page still shown
+[2026-11-10 00:12:16.508] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 00:12:16.643] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 00:12:16.688] [INFO] === Starting Network Chaos Testing ===
+[2026-11-10 00:12:16.689] [INFO] Mode: random
+[2026-11-10 00:12:16.689] [INFO] Good:Bad Ratio: 40:60
+[2026-11-10 00:12:16.689] [INFO] Switch Interval: 60 seconds
+[2026-11-10 00:12:16.689] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-10 00:12:16.689] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 00:12:16.824] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 00:12:16.864] [INFO] Network chaos scheduler started in random mode
+[2026-11-10 00:12:16.864] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-10 00:12:19.219] [INFO] Captured 2 API calls in current round
+[2026-11-10 00:12:19.219] [INFO] Known states from Frida: 0/2
+[2026-11-10 00:12:19.219] [INFO] State machine validation passed
+[2026-11-10 00:12:19.299] [INFO] [TAINT] Extracting taint flows for Round 5
+[2026-11-10 00:12:19.299] [INFO] Extracting taint analysis results for Round 5
+[TaintAnalyzer] Warning: Taint report is stale (age: 9466s)
+[2026-11-10 00:12:19.299] [INFO] [TAINT] Round 5: No violations detected
+[TaintAnalyzer] Warning: Taint report is stale (age: 9466s)
+[TaintAnalyzer] Report saved to: reports/taint/round_5_taint.txt
+[2026-11-10 00:12:19.300] [INFO] [TAINT] Round report saved to: reports/taint/round_5_taint.txt
+[2026-11-10 00:12:19.300] [INFO] === Rotation (lifecycle) checks, round 5 ===
+[2026-11-10 00:12:19.300] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-10 00:12:19.300] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 00:12:19.438] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 00:12:19.478] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-10 00:12:19.478] [INFO] Total good network periods: 35
+[2026-11-10 00:12:19.478] [INFO] Total bad network periods: 6
+[2026-11-10 00:12:19.478] [INFO] Total disruptions: 41
+[2026-11-10 00:12:19.478] [INFO] Actual good:bad ratio: 35:6
+[SNAPSHOT] App-level reset: jp.nonbili.nora
+[2026-11-10 00:12:28.683] [INFO] Starting Frida monitoring with static analysis results for package: jp.nonbili.nora
+FridaManager: Starting Frida monitoring for package: jp.nonbili.nora
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py jp.nonbili.nora src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-10 00:12:31.768] [INFO] Frida monitoring started successfully
+[2026-11-10 00:12:39.768] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (273,535)
+[WEBVIEW] Page stayed blank after opening the service; relaunching the app
+Using ADB to detect login page...
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button detected: Facebook - log in or sign up (ID: )
+Password field detected: [masked] (ID: )
+Activity hint matched for login: jp.nonbili.nora/.MainActivity
+[Match] Normal login button: Facebook - log in or sign up (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Log in (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Credential form is in a WebView; using DOM mode {idval=0, err=, pw=1, busy=false, pwval=0, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1ybMsmSprzdQ5ndFx}
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: true
+  - Username field: false
+  - Password field: true
+  - Login button: true
+  - Current activity: jp.nonbili.nora/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: true
+[2026-11-10 00:14:15.865] [INFO] UI manager detected login page
+[2026-11-10 00:14:15.865] [INFO]   - Google login: false
+[2026-11-10 00:14:15.865] [INFO]   - Facebook login: true
+[2026-11-10 00:14:15.865] [INFO]   - Username field: false
+[2026-11-10 00:14:15.865] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261110_000150/round_5/screenshot_005_baseline_ui_manager_detection.png
+[ROTATION] A(web): before {idval=8, err=, pw=1, busy=false, pwval=12, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1ybMsmSprzdQ5ndFx}
+[ROTATION] A(web): after {idval=8, err=, pw=1, busy=false, pwval=12, id=1, btn=, url=https://m.facebook.com/?wtsid=rdr_1ybMsmSprzdQ5ndFx}
+[WEBVIEW] trusted click on 'Log in'
+[ROTATION] B(web): in-flight {idval=8, err=, pw=1, busy=true, pwval=12, id=1, btn=Log in, url=https://m.facebook.com/?wtsid=rdr_1ybMsmSprzdQ5ndFx} -> after rotation {idval=8, err=, pw=1, busy=false, pwval=12, id=1, btn=, url=https://m.facebook.com/?wtsid=rdr_1ybMsmSprzdQ5ndFx#}
+[ROTATION] Finding: ROTATION_LOGIN_STATE_RESET - Web login was in progress (submit busy) when the device rotated; afterwards the form is idle with no result
+[2026-11-10 00:14:50.931] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-10 00:14:50.932] [INFO] === Starting Network Chaos Testing ===
+[2026-11-10 00:14:50.932] [INFO] Mode: random
+[2026-11-10 00:14:50.932] [INFO] Good:Bad Ratio: 40:60
+[2026-11-10 00:14:50.932] [INFO] Switch Interval: 60 seconds
+[2026-11-10 00:14:50.932] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-10 00:14:50.932] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 00:14:51.073] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 00:14:51.118] [INFO] Network chaos scheduler started in random mode
+[2026-11-10 00:14:51.118] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-10 00:14:53.187] [INFO] Frida monitoring stopped
+[2026-11-10 00:14:53.187] [INFO] [BUG_DETECTION] Running bug detectors for Round 5
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 1
+[TIMEOUT_DETECTOR] Timeouts: 1, Delays: 0
+[BUG_DETECTION] LoginTimeoutDetector found 1 bug(s)
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 2
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-10 00:14:53.188] [INFO] ⚠️  Detected 2 potential bug(s) in Round 5
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_5_20261110_001453.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 2
+
+By Severity:
+  HIGH: 2
+
+By Category:
+  LOGIN_TIMEOUT: 1
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261110_001453.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 9
+Unique Bug Types: 6
+Deduplication Rate: 33.3%
+========================================
+
+Category: LOGIN_TIMEOUT
+----------------------------------------
+
+[4x] LOGIN_TIMEOUT
+Severity: HIGH
+Occurrences: 4
+First seen: Mon Nov 09 23:22:52 UTC 2026
+Last seen: Tue Nov 10 00:14:53 UTC 2026
+Description: Login process exceeds acceptable time limits...
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:22:50 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:32:44 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:42:18 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 23:59:55 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 00:14:50 UTC 2026
+Description: Login state lost on device rotation...
+
+
+[2026-11-10 00:14:53.190] [INFO] --------------------------------------------------------------------------------
+[2026-11-10 00:14:53.190] [INFO] ROUND 5 COMPLETED
+[2026-11-10 00:14:53.190] [INFO] Round duration: 891015ms
+[2026-11-10 00:14:53.190] [INFO] Total attempts: 5
+[2026-11-10 00:14:53.190] [INFO] Successful logins: 0
+[2026-11-10 00:14:53.190] [INFO] Failed logins: 4
+[2026-11-10 00:14:53.190] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/jp.nonbili.nora/20261110_000150/round_5/screenshot_006_round_5_end.png
+[2026-11-10 00:14:54.426] [INFO] === Test Execution Summary ===
+[2026-11-10 00:14:54.427] [INFO] Total Login Attempts: 5
+[2026-11-10 00:14:54.427] [INFO] Successful Logins: 0
+[2026-11-10 00:14:54.427] [INFO] Failed Logins: 4
+[2026-11-10 00:14:54.429] [INFO] Success Rate: 0.0%
+[2026-11-10 00:14:54.430] [INFO] Detailed report written to: reports/login_test_report_2026-11-09_23-16-42.txt
+[2026-11-10 00:14:54.430] [INFO] === Generating Final Taint Analysis Report ===
+[TaintAnalyzer] Warning: Taint report is stale (age: 9621s)
+[2026-11-10 00:14:54.431] [INFO] 
+================================================================================
+TAINT ANALYSIS REPORT
+================================================================================
+Application: jp.nonbili.nora
+Total Taints: 0
+Total Flows: 0
+Violations: 0
+================================================================================
+
+[TaintAnalyzer] Warning: Taint report is stale (age: 9621s)
+[TaintAnalyzer] Report saved to: reports/taint/final_taint_analysis.txt
+[2026-11-10 00:14:54.431] [INFO] [TAINT] Final comprehensive report saved to: reports/taint/final_taint_analysis.txt
+[TaintAnalyzer] Warning: Taint report is stale (age: 9621s)
+[2026-11-10 00:14:54.431] [INFO] [TAINT] Total taints tracked: 0
+[2026-11-10 00:14:54.431] [INFO] [TAINT] Total flows detected: 0
+[2026-11-10 00:14:54.432] [INFO] [TAINT] Total violations: 0
+[2026-11-10 00:14:54.432] [INFO] Final summary appended to unified error report: reports/errors/test_errors_20261109_231644.txt
+[CRASH_DETECTOR] Stopped monitoring
+[2026-11-10 00:14:54.432] [INFO] ✓ Crash detector monitoring stopped
+UI manager closed
+[2026-11-10 00:14:54.434] [INFO] Monkey stopped
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+[2026-11-10 00:14:54.434] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-10 00:14:54.434] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 00:14:54.569] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 00:14:54.609] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-10 00:14:54.609] [INFO] Total good network periods: 37
+[2026-11-10 00:14:54.609] [INFO] Total bad network periods: 6
+[2026-11-10 00:14:54.609] [INFO] Total disruptions: 43
+[2026-11-10 00:14:54.609] [INFO] Actual good:bad ratio: 37:6
+[2026-11-10 00:14:54.614] [INFO] Network disruption report saved to: reports/network/network_disruptions_20261110_001454.txt
+[2026-11-10 00:14:54.615] [INFO] Network disruption report saved to: reports/network/network_disruptions_20261110_001454.txt
+[2026-11-10 00:14:54.615] [INFO] AndroidLoginDetector cleanup completed
+EXIT 0

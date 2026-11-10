@@ -1,0 +1,2962 @@
+[2026-11-09 20:54:20.156] [INFO] === AndroidLoginDetector Started ===
+[2026-11-09 20:54:20.163] [INFO] Log file: logs/android_login_detector_20261109_205420.log
+[2026-11-09 20:54:20.163] [INFO] Timestamp: 2026-11-09 20:54:20.163
+StateMachineManager: Loaded 45 states from regex patterns
+[BUG_DETECTION] Initialized 7 symptom-based bug detectors
+[BUG_DETECTION]   1. ErrorMessageMismatchDetector (Symptom 7)
+[BUG_DETECTION]   2. LifecycleDataLossDetector (Lifecycle)
+[BUG_DETECTION]   3. CrashDetector (Symptom 1)
+[BUG_DETECTION]   4. LoginTimeoutDetector (Symptom 2)
+[BUG_DETECTION]   5. NavigationFlowDetector (Symptom 3)
+StateMachineManager: Bug detection initialized
+StateMachineManager: initialization complete with 45 state transitions
+[2026-11-09 20:54:20.191] [INFO] App configuration loaded:
+[2026-11-09 20:54:20.191] [INFO]   - Package: app.organicmaps
+[2026-11-09 20:54:20.191] [INFO]   - Activity: 
+[2026-11-09 20:54:20.192] [INFO]   - APK Path: apps/app.organicmaps_25080604.apk
+[2026-11-09 20:54:20.192] [INFO]   - Emulator Snapshot (auto-generated): snap_app_organicmaps_login
+[2026-11-09 20:54:20.192] [INFO] Initializing static analyzer...
+[2026-11-09 20:54:20.192] [INFO] Static analysis result found and up-to-date: reports/static_analysis/app.organicmaps_25080604_1.json
+[2026-11-09 20:54:20.192] [INFO] Initializing Frida manager with static analysis results...
+FridaManager: State InitialState has 4 method signatures
+FridaManager: State InitializingSync has 7 method signatures
+FridaManager: State PreparingAuth has 1 method signatures
+FridaManager: State IR_LoginEvidence has 232 method signatures
+FridaManager: State IR_WebViewEvidence has 15 method signatures
+FridaManager: State Provider_GoogleSignIn has 106 method signatures
+FridaManager: State Authenticating has 4 method signatures
+FridaManager: State CheckingCredentials has 24 method signatures
+FridaManager: State AwaitingResponse has 5 method signatures
+FridaManager: State UserLogout has 1 method signatures
+FridaManager: Loaded 10 states from static analysis result
+FridaManager: Using static analysis result: reports/static_analysis/app.organicmaps_25080604.json
+FridaManager: State InitialState has 4 method signatures
+FridaManager: State InitializingSync has 7 method signatures
+FridaManager: State PreparingAuth has 1 method signatures
+FridaManager: State IR_LoginEvidence has 232 method signatures
+FridaManager: State IR_WebViewEvidence has 15 method signatures
+FridaManager: State Provider_GoogleSignIn has 106 method signatures
+FridaManager: State Authenticating has 4 method signatures
+FridaManager: State CheckingCredentials has 24 method signatures
+FridaManager: State AwaitingResponse has 5 method signatures
+FridaManager: State UserLogout has 1 method signatures
+FridaManager: Loaded 10 states from static analysis result
+FridaManager: Static analysis results loaded from: reports/static_analysis/app.organicmaps_25080604_1.json
+[2026-11-09 20:54:20.259] [INFO] Frida manager configured with static analysis results
+[2026-11-09 20:54:20.260] [INFO] ApiLogAnalyzer initialized with 10 patterns from static analysis
+[2026-11-09 20:54:20.291] [INFO] Using credential pool directory: pools/app.organicmaps_25080604
+[2026-11-09 20:54:20.292] [INFO] Loaded 1 valid credential pair(s)
+[2026-11-09 20:54:20.293] [ERROR] Error reading file pools/app.organicmaps_25080604/totp_secrets.csv: pools/app.organicmaps_25080604/totp_secrets.csv (No such file or directory)
+[2026-11-09 20:54:20.293] [INFO] Loaded 0 TOTP secret(s)
+[2026-11-09 20:54:20.293] [INFO] Loaded credential pools:
+[2026-11-09 20:54:20.294] [INFO]   - Standard accounts: 13
+[2026-11-09 20:54:20.294] [INFO]   - Standard passwords: 15
+[2026-11-09 20:54:20.294] [INFO]   - Google accounts: 5
+[2026-11-09 20:54:20.294] [INFO]   - Google passwords: 5
+[2026-11-09 20:54:20.295] [INFO]   - Facebook accounts: 5
+[2026-11-09 20:54:20.295] [INFO]   - Facebook passwords: 5
+[2026-11-09 20:54:20.295] [INFO] State machine initialized with 45 states
+=== State machine information ===
+Provider_Okta -> Provider_Okta
+Provider_Auth0 -> Provider_Auth0
+AppMainScreen -> AppMainScreen, UserLogout, InitialState
+ParsingResponse -> ParsingResponse
+CheckingMFASettings -> CheckingMFASettings, MFACodePending, LoggedIn_NoMFA
+AwaitingResponse -> AwaitingResponse
+CheckingToken -> CheckingToken, LoggedIn_Via_Token, CredentialInput
+OAuth_TokenExchange -> OAuth_TokenExchange
+ValidatingCredentials -> ValidatingCredentials
+Unknown -> Unknown
+ShowingError -> ShowingError
+SendingMFACode -> SendingMFACode, MFAVerification
+RetrievingFeeds -> RetrievingFeeds
+LoadingProfile -> LoadingProfile
+Authenticating -> Authenticating, CheckingCredentials, LoginFailure, NetworkError, CredentialInput, CredentialFormatError
+ServiceUnavailable_Auth -> ServiceUnavailable_Auth, CredentialInput, InitialState
+VerifyingMFA -> VerifyingMFA, MFAError, LoggedIn_WithMFA
+LoggedIn_Via_Token -> LoggedIn_Via_Token, AppMainScreen
+ClickingLoginButton -> ClickingLoginButton
+InitializingSync -> InitializingSync
+AuthHeader_Bearer -> AuthHeader_Bearer
+PreparingAuth -> PreparingAuth
+checkAuthToken -> checkAuthToken
+NetworkError -> NetworkError, CredentialInput, LoginFailure, Authenticating
+InvalidCredentials -> InvalidCredentials, CredentialInput
+Provider_MSAL -> Provider_MSAL
+checkStoredCredentials -> checkStoredCredentials
+LoggedIn -> LoggedIn
+ReturnToLogin -> ReturnToLogin
+OAuth_BeginAuth -> OAuth_BeginAuth
+UserLogout -> UserLogout, InitialState, CredentialInput
+MFACodePending -> MFACodePending, SendingMFACode
+InitialState -> InitialState, CheckingToken, CredentialInput
+SendingCredentials -> SendingCredentials
+LoggedIn_NoMFA -> LoggedIn_NoMFA, AppMainScreen
+Provider_FacebookLogin -> Provider_FacebookLogin
+Provider_Cognito -> Provider_Cognito
+MFAVerification -> MFAVerification, VerifyingMFA
+LoginFailure -> LoginFailure, CredentialInput, NetworkError
+MFAError -> MFAError, MFACodePending
+Provider_GoogleSignIn -> Provider_GoogleSignIn
+CredentialFormatError -> CredentialFormatError, CredentialInput
+LoggedIn_WithMFA -> LoggedIn_WithMFA, AppMainScreen
+CheckingCredentials -> CheckingCredentials, ServiceUnavailable_Auth, InvalidCredentials, CheckingMFASettings
+CredentialInput -> CredentialInput, CredentialFormatError, Authenticating, LoginFailure
+==================
+[SNAPSHOT] LIFT_RESET_MODE=app: using app-level reset instead of emulator snapshots
+[TaintAnalyzer] Configuration loaded from: src/main/resources/taint_config.json
+[2026-11-09 20:54:20.300] [INFO] Taint analyzer initialized
+[2026-11-09 20:54:20.300] [INFO] Starting Frida monitoring with static analysis results for package: app.organicmaps
+FridaManager: Starting Frida monitoring for package: app.organicmaps
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py app.organicmaps src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 20:54:21.344] [INFO] Frida monitoring started successfully
+Configuration validation passed
+=== Configuration Summary ===
+Test Rounds: 4
+Duration per Round: 300000ms
+Round Interval: 3s
+Login Timeout: 120s
+Monkey Events: 1000
+Monkey Delay: 500ms
+Frida Timeout: 120s
+Frida Retry Count: 5
+==================
+[2026-11-09 20:54:21.348] [INFO] === Starting AndroidLoginDetector Test with Static Analysis ===
+[2026-11-09 20:54:21.349] [INFO] Target app: app.organicmaps
+[2026-11-09 20:54:21.349] [INFO] Test rounds: 4
+[2026-11-09 20:54:21.349] [INFO] Static analysis results: reports/static_analysis/app.organicmaps_25080604_1.json
+[2026-11-09 20:54:21.349] [INFO] Unified error report: reports/errors/test_errors_20261109_205421.txt
+[2026-11-09 20:54:21.349] [INFO] Starting global taint tracking...
+[TaintAnalyzer] Taint tracking prepared for: app.organicmaps
+[TaintAnalyzer] Note: Taint analysis requires custom Frida integration
+[2026-11-09 20:54:21.349] [INFO] ✓ Taint tracking active for all rounds
+[2026-11-09 20:54:21.350] [INFO] Checking Docker environment compatibility...
+[2026-11-09 20:54:21.353] [INFO] ADB device found: 127.0.0.1:5555	device
+[2026-11-09 20:54:21.353] [INFO] ADB device found: 127.0.0.1:5556	device
+[2026-11-09 20:54:21.354] [INFO] ADB device found: 127.0.0.1:5557	device
+[2026-11-09 20:54:21.370] [INFO] Emulator Android version: 14
+[2026-11-09 20:54:21.635] [INFO] Frida version: 16.7.19
+[2026-11-09 20:54:21.636] [INFO] All required files found
+[2026-11-09 20:54:21.636] [INFO] Docker environment check passed
+ADB device ready: 127.0.0.1:5555 (provisioned)
+UI manager started successfully
+[2026-11-09 20:54:21.710] [INFO] Starting network chaos testing (emulator is ready)...
+[2026-11-09 20:54:21.710] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 20:54:21.710] [INFO] Mode: random
+[2026-11-09 20:54:21.712] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 20:54:21.713] [INFO] Switch Interval: 60 seconds
+[2026-11-09 20:54:21.713] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 20:54:21.713] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:54:21.847] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:54:21.888] [INFO] Network disruption interface: eth0
+[2026-11-09 20:54:21.908] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 20:54:21.910] [INFO] ================================================================================
+[2026-11-09 20:54:21.910] [INFO] ROUND 1 STARTED
+[2026-11-09 20:54:21.910] [INFO] Round timestamp: 2026-11-09 20:54:21.910
+[2026-11-09 20:54:21.910] [INFO] ================================================================================
+[2026-11-09 20:54:21.911] [INFO] Round 1: Starting fresh without snapshot restore
+[2026-11-09 20:54:21.912] [INFO] Appended Frida round marker for round 1
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205421/round_1/screenshot_001_round_1_start.png
+[SNAPSHOT] App-level reset: app.organicmaps
+[2026-11-09 20:54:32.160] [INFO] Baseline snapshot restored successfully
+[2026-11-09 20:55:21.911] [INFO] 🔴 Inducing BAD network state: SLOW_NETWORK for 15 seconds
+[2026-11-09 20:55:22.161] [INFO] Emulator snapshot operation completed
+[2026-11-09 20:55:22.161] [INFO] Starting Frida monitoring with static analysis results for package: app.organicmaps
+FridaManager: Starting Frida monitoring for package: app.organicmaps
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py app.organicmaps src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 20:55:25.231] [INFO] Frida monitoring started successfully
+[CRASH_DETECTOR] Started monitoring for crashes of app.organicmaps
+[2026-11-09 20:55:25.234] [INFO] ✓ Crash detector monitoring started for package: app.organicmaps
+[2026-11-09 20:55:25.234] [INFO] Credential choice: VALID pair
+[2026-11-09 20:55:25.234] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 20:55:25.234] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:55:25.385] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:55:25.428] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 20:55:25.429] [INFO] Total good network periods: 2
+[2026-11-09 20:55:25.429] [INFO] Total bad network periods: 1
+[2026-11-09 20:55:25.430] [INFO] Total disruptions: 3
+[2026-11-09 20:55:25.430] [INFO] Actual good:bad ratio: 2:1
+[2026-11-09 20:55:25.430] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:55:25.572] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:55:25.619] [INFO] Round network condition for login: normal
+[2026-11-09 20:55:25.620] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching app.organicmaps
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Login page detection result: false
+  - Votes(username,password,button): 0/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: app.organicmaps/.DownloadResourcesLegacyActivity (match: false)
+[2026-11-09 20:55:41.859] [INFO] UI manager did not detect login page
+[2026-11-09 20:55:41.868] [INFO] Manifest login activity candidates: [app.organicmaps.editor.OsmLoginActivity]
+[2026-11-09 20:55:41.868] [INFO] Trying direct launch of login activity: app.organicmaps.editor.OsmLoginActivity
+[2026-11-09 20:55:46.226] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Cache] New login method discovered: normal
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Password field detected: [masked] (ID: app.organicmaps:id/osm_password)
+Activity hint matched for login: app.organicmaps/.editor.OsmLoginActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: app.organicmaps/.editor.OsmLoginActivity (match: true)
+[2026-11-09 20:55:50.725] [INFO] UI manager detected login page
+[2026-11-09 20:55:50.725] [INFO]   - Google login: false
+[2026-11-09 20:55:50.725] [INFO]   - Facebook login: false
+[2026-11-09 20:55:50.726] [INFO]   - Username field: true
+[2026-11-09 20:55:50.726] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205421/round_1/screenshot_002_baseline_ui_manager_detection.png
+[2026-11-09 20:55:51.099] [INFO] Login page reached via direct activity launch: app.organicmaps.editor.OsmLoginActivity
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 1)
+[2026-11-09 20:55:51.100] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205421/round_1/screenshot_003_baseline_login_page.png
+[2026-11-09 20:55:51.501] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 20:55:51.501] [INFO] Selected username: jasonzixuzhou@gmail.com
+[2026-11-09 20:55:51.501] [INFO] Selected password: [13 chars]
+[2026-11-09 20:55:51.501] [INFO] === Starting Enhanced Credential Input Process ===
+[2026-11-09 20:55:51.501] [INFO] Username to input: jasonzixuzhou@gmail.com
+[2026-11-09 20:55:51.501] [INFO] Password length: 13 characters
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205421/round_1/screenshot_004_before_credential_input.png
+Using ADB to input credentials (without clicking button)...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[CREDENTIAL_INPUT] Found username field at (540,865)
+[CREDENTIAL_INPUT] Input username: jasonzixuzhou@gmail.com
+[INPUT] Clicking at (540, 865) to focus field
+[INPUT] Inputting text char-by-char (length: 23)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[CREDENTIAL_INPUT] Found password field at (540,1062)
+[CREDENTIAL_INPUT] Input password: [13 chars]
+[INPUT] Clicking at (540, 1062) to focus field
+[INPUT] Inputting text char-by-char (length: 13)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[CREDENTIAL_INPUT] Credentials inputted successfully (button NOT clicked)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205421/round_1/screenshot_005_after_credential_input.png
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Click element: LOGIN TO OPENSTREETMAP position: (540, 1188)
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1794257768283
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login button disappeared, timestamp: 1794257773920
+Login duration: 5637ms
+[2026-11-09 20:56:16.017] [INFO] === Verifying Credential Input ===
+[2026-11-09 20:56:16.017] [INFO] UI changed after input: true
+[2026-11-09 20:56:16.018] [INFO] Username visible in UI: false
+[2026-11-09 20:56:16.018] [INFO] Password field appears filled: true
+[2026-11-09 20:56:16.018] [INFO] Input focus changed: true
+[2026-11-09 20:56:16.018] [INFO] Has input indicators: true
+[2026-11-09 20:56:16.018] [INFO] === Input Verification Result: VERIFIED ===
+[2026-11-09 20:56:16.018] [INFO] ✅ UI manager credentials input successful and verified
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205421/round_1/screenshot_006_credentials_input_complete.png
+[2026-11-09 20:56:17.353] [INFO] ✅ Credential input phase completed successfully
+[TIMEOUT_DETECTOR] Login attempt: 9070ms (normal, success=true)
+[STORAGE] Plaintext auth value 'OsmOAuth2Token' in /data/data/app.organicmaps/shared_prefs/OrganicMapsPrefs.xml
+[2026-11-09 20:56:23.731] [INFO] Login outcome: inputOk=true, loginPageGone=true, validPair=true
+[2026-11-09 20:56:23.731] [INFO] Login process completed successfully
+[NAV_DETECTOR] Login succeeded at 1794257783731
+[2026-11-09 20:56:23.732] [INFO] ✓ Navigation detector: recorded login success
+[NAV_DETECTOR] Navigation: null → app.organicmaps/app.organicmaps.DownloadResourcesLegacyActivity
+[2026-11-09 20:56:23.764] [INFO] ✓ Navigation detector: current activity = app.organicmaps/app.organicmaps.DownloadResourcesLegacyActivity
+[2026-11-09 20:56:23.764] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:56:23.902] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:56:23.943] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 20:56:23.943] [INFO] Mode: random
+[2026-11-09 20:56:23.943] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 20:56:23.943] [INFO] Switch Interval: 60 seconds
+[2026-11-09 20:56:23.944] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 20:56:23.944] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:56:24.088] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:56:24.134] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 20:56:24.135] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 20:56:27.100] [INFO] Captured 12 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[BUG_DETECTOR] Recorded error state: NetworkError
+[BUG_DETECTOR] Recorded error state: NetworkError
+Add observed state: NetworkError (total: 4, compressed: 2)
+Add observed state: Authenticating (total: 5, compressed: 3)
+[BUG_DETECTOR] Recorded error state: NetworkError
+[BUG_DETECTOR] Recorded error state: NetworkError
+Add observed state: NetworkError (total: 6, compressed: 4)
+Add observed state: Authenticating (total: 7, compressed: 5)
+[2026-11-09 20:56:27.103] [INFO] Known states from Frida: 9/12
+State machine: Stopped analysis at error state: NetworkError
+State machine validation passed (stopped at error)
+  Compressed sequence: Authenticating (×3, 0.0s) -> NetworkError [ERROR - STOPPED]
+  Original states: 9, Compressed: 5
+[2026-11-09 20:56:27.104] [INFO] State machine validation passed
+[2026-11-09 20:56:27.149] [INFO] [TAINT] Extracting taint flows for Round 1
+[2026-11-09 20:56:27.149] [INFO] Extracting taint analysis results for Round 1
+[2026-11-09 20:56:27.150] [INFO] [TAINT] Round 1: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_1_taint.txt
+[2026-11-09 20:56:27.151] [INFO] [TAINT] Round report saved to: reports/taint/round_1_taint.txt
+[2026-11-09 20:56:27.151] [INFO] === Rotation (lifecycle) checks, round 1 ===
+[2026-11-09 20:56:27.151] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 20:56:27.151] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:56:27.290] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:56:27.327] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 20:56:27.328] [INFO] Total good network periods: 6
+[2026-11-09 20:56:27.328] [INFO] Total bad network periods: 1
+[2026-11-09 20:56:27.328] [INFO] Total disruptions: 7
+[2026-11-09 20:56:27.328] [INFO] Actual good:bad ratio: 6:1
+[SNAPSHOT] App-level reset: app.organicmaps
+[2026-11-09 20:56:36.484] [INFO] Starting Frida monitoring with static analysis results for package: app.organicmaps
+FridaManager: Starting Frida monitoring for package: app.organicmaps
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py app.organicmaps src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 20:56:39.558] [INFO] Frida monitoring started successfully
+[2026-11-09 20:56:47.559] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Login page detection result: false
+  - Votes(username,password,button): 0/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: app.organicmaps/.DownloadResourcesLegacyActivity (match: false)
+[2026-11-09 20:56:58.071] [INFO] UI manager did not detect login page
+[2026-11-09 20:56:58.079] [INFO] Manifest login activity candidates: [app.organicmaps.editor.OsmLoginActivity]
+[2026-11-09 20:56:58.079] [INFO] Trying direct launch of login activity: app.organicmaps.editor.OsmLoginActivity
+[2026-11-09 20:57:02.437] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Password field detected: [masked] (ID: app.organicmaps:id/osm_password)
+Activity hint matched for login: app.organicmaps/.editor.OsmLoginActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: app.organicmaps/.editor.OsmLoginActivity (match: true)
+[2026-11-09 20:57:06.914] [INFO] UI manager detected login page
+[2026-11-09 20:57:06.914] [INFO]   - Google login: false
+[2026-11-09 20:57:06.914] [INFO]   - Facebook login: false
+[2026-11-09 20:57:06.914] [INFO]   - Username field: true
+[2026-11-09 20:57:06.914] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205421/round_1/screenshot_007_baseline_ui_manager_detection.png
+[2026-11-09 20:57:07.294] [INFO] Login page reached via direct activity launch: app.organicmaps.editor.OsmLoginActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[INPUT] Clicking at (540, 865) to focus field
+[INPUT] Inputting text char-by-char (length: 8)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[INPUT] Clicking at (540, 1062) to focus field
+[INPUT] Inputting text char-by-char (length: 12)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] A: before rotation: username=true, passwordFilled=true
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] B: in-flight before rotation: progress=false, submitDisabled=false, formShown=false
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] B: after rotation: formShown=true, progress=false, submitDisabled=false, result=false
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] C: re-submitting to obtain an error message
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] C: error shown before rotating back: 'Login error.'
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] C: error after rotation: none
+[ROTATION] Finding: ROTATION_LOGIN_STATE_RESET - Login was in progress when the device rotated; afterwards the form is idle again (no progress, submit enabled) with no result shown
+[ROTATION] Finding: ROTATION_ERROR_MESSAGE_LOST - Error message 'Login error.' disappeared after rotation
+[2026-11-09 20:58:22.301] [INFO] Rotation checks finished with 2 finding(s)
+[2026-11-09 20:58:22.301] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 20:58:22.301] [INFO] Mode: random
+[2026-11-09 20:58:22.301] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 20:58:22.301] [INFO] Switch Interval: 60 seconds
+[2026-11-09 20:58:22.301] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 20:58:22.301] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:58:22.430] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:58:22.472] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 20:58:22.472] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 20:58:25.062] [INFO] Frida monitoring stopped
+[2026-11-09 20:58:25.062] [INFO] [BUG_DETECTION] Running bug detectors for Round 1
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 2 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 1
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: true
+[NAV_DETECTOR] Current activity: app.organicmaps/app.organicmaps.DownloadResourcesLegacyActivity
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 1
+[NAV_DETECTOR] Stuck check: onLoginActivity=false, inLoginState=false, enoughTimePassed=true → stuck=false
+[NAV_DETECTOR] ✓ Navigation flow appears correct
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] StorageLeakDetector found 1 bug(s)
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 3
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 20:58:25.063] [INFO] ⚠️  Detected 3 potential bug(s) in Round 1
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_1_20261109_205825.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 3
+
+By Severity:
+  HIGH: 2
+  MEDIUM: 1
+
+By Category:
+  LIFECYCLE_INTERFERENCE: 2
+  INCORRECT_LOGIN_FLOW: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_205825.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 3
+Unique Bug Types: 3
+Deduplication Rate: 0.0%
+========================================
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:58:22 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_ERROR_MESSAGE_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:58:22 UTC 2026
+Description: Login state lost on device rotation...
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[1x] PLAINTEXT_TOKEN_STORAGE
+Severity: MEDIUM
+Occurrences: 1
+First seen: Mon Nov 09 20:56:23 UTC 2026
+Description: Authentication token/credential stored in plaintext...
+
+
+[2026-11-09 20:58:25.085] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 20:58:25.086] [INFO] ROUND 1 COMPLETED
+[2026-11-09 20:58:25.086] [INFO] Round duration: 243175ms
+[2026-11-09 20:58:25.086] [INFO] Total attempts: 1
+[2026-11-09 20:58:25.086] [INFO] Successful logins: 1
+[2026-11-09 20:58:25.086] [INFO] Failed logins: 0
+[2026-11-09 20:58:25.086] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205421/round_1/screenshot_008_round_1_end.png
+[2026-11-09 20:58:29.407] [INFO] ================================================================================
+[2026-11-09 20:58:29.407] [INFO] ROUND 2 STARTED
+[2026-11-09 20:58:29.407] [INFO] Round timestamp: 2026-11-09 20:58:29.407
+[2026-11-09 20:58:29.407] [INFO] ================================================================================
+[2026-11-09 20:58:29.407] [INFO] Round 2: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: app.organicmaps
+[2026-11-09 20:58:38.479] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Login page detection result: false
+  - Votes(username,password,button): 0/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: app.organicmaps/.DownloadResourcesLegacyActivity (match: false)
+[2026-11-09 20:58:50.957] [INFO] Warning: App may not be on login page after restore
+[2026-11-09 20:58:50.959] [INFO] Appended Frida round marker for round 2
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205850/round_2/screenshot_001_round_2_start.png
+[SNAPSHOT] App-level reset: app.organicmaps
+[2026-11-09 20:59:00.518] [INFO] Baseline snapshot restored successfully
+[2026-11-09 20:59:50.519] [INFO] Emulator snapshot operation completed
+[2026-11-09 20:59:50.520] [INFO] Starting Frida monitoring with static analysis results for package: app.organicmaps
+FridaManager: Starting Frida monitoring for package: app.organicmaps
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py app.organicmaps src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 20:59:51.564] [INFO] Frida monitoring started successfully
+[2026-11-09 20:59:51.565] [INFO] Credential choice: invalid, special-character username
+[2026-11-09 20:59:51.565] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 20:59:51.565] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:59:51.704] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:59:51.744] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 20:59:51.745] [INFO] Total good network periods: 8
+[2026-11-09 20:59:51.745] [INFO] Total bad network periods: 1
+[2026-11-09 20:59:51.745] [INFO] Total disruptions: 9
+[2026-11-09 20:59:51.745] [INFO] Actual good:bad ratio: 8:1
+[2026-11-09 20:59:51.745] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 20:59:51.879] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 20:59:51.926] [INFO] Round network condition for login: normal
+[2026-11-09 20:59:51.926] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching app.organicmaps
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Login page detection result: false
+  - Votes(username,password,button): 0/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: app.organicmaps/.DownloadResourcesLegacyActivity (match: false)
+[2026-11-09 21:00:08.062] [INFO] UI manager did not detect login page
+[2026-11-09 21:00:08.072] [INFO] Manifest login activity candidates: [app.organicmaps.editor.OsmLoginActivity]
+[2026-11-09 21:00:08.072] [INFO] Trying direct launch of login activity: app.organicmaps.editor.OsmLoginActivity
+[2026-11-09 21:00:12.455] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Password field detected: [masked] (ID: app.organicmaps:id/osm_password)
+Activity hint matched for login: app.organicmaps/.editor.OsmLoginActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: app.organicmaps/.editor.OsmLoginActivity (match: true)
+[2026-11-09 21:00:16.942] [INFO] UI manager detected login page
+[2026-11-09 21:00:16.942] [INFO]   - Google login: false
+[2026-11-09 21:00:16.942] [INFO]   - Facebook login: false
+[2026-11-09 21:00:16.942] [INFO]   - Username field: true
+[2026-11-09 21:00:16.942] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205850/round_2/screenshot_002_baseline_ui_manager_detection.png
+[2026-11-09 21:00:17.351] [INFO] Login page reached via direct activity launch: app.organicmaps.editor.OsmLoginActivity
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 2)
+[2026-11-09 21:00:17.351] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205850/round_2/screenshot_003_baseline_login_page.png
+[2026-11-09 21:00:17.754] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 21:00:17.754] [INFO] Selected username: $0`(X{M,]8@@
+[2026-11-09 21:00:17.755] [INFO] Selected password: [12 chars]
+[2026-11-09 21:00:17.755] [INFO] === Starting Enhanced Credential Input Process ===
+[2026-11-09 21:00:17.755] [INFO] Username to input: $0`(X{M,]8@@
+[2026-11-09 21:00:17.755] [INFO] Password length: 12 characters
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205850/round_2/screenshot_004_before_credential_input.png
+Using ADB to input credentials (without clicking button)...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[CREDENTIAL_INPUT] Found username field at (540,865)
+[CREDENTIAL_INPUT] Input username: $0`(X{M,]8@@
+[INPUT] Clicking at (540, 865) to focus field
+[INPUT] Inputting text char-by-char (length: 12)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[CREDENTIAL_INPUT] Found password field at (540,1062)
+[CREDENTIAL_INPUT] Input password: [12 chars]
+[INPUT] Clicking at (540, 1062) to focus field
+[INPUT] Inputting text char-by-char (length: 12)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[CREDENTIAL_INPUT] Credentials inputted successfully (button NOT clicked)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205850/round_2/screenshot_005_after_credential_input.png
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Click element: LOGIN TO OPENSTREETMAP position: (540, 1188)
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1794258033832
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[2026-11-09 21:00:50.332] [INFO] === Verifying Credential Input ===
+[2026-11-09 21:00:50.332] [INFO] UI changed after input: true
+[2026-11-09 21:00:50.333] [INFO] Username visible in UI: false
+[2026-11-09 21:00:50.333] [INFO] Password field appears filled: true
+[2026-11-09 21:00:50.333] [INFO] Input focus changed: true
+[2026-11-09 21:00:50.333] [INFO] Has input indicators: true
+[2026-11-09 21:00:50.333] [INFO] === Input Verification Result: VERIFIED ===
+[2026-11-09 21:00:50.333] [INFO] ✅ UI manager credentials input successful and verified
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205850/round_2/screenshot_006_credentials_input_complete.png
+[2026-11-09 21:00:51.691] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[LOGIN_RESULT] Error dialog after login: 'Login error.'
+[2026-11-09 21:00:53.840] [INFO] Login rejected with message: 'Login error.' (validPair=false)
+[2026-11-09 21:00:53.840] [INFO] Invalid credentials rejected; retrying with the next special-character username: <redacted>
+[2026-11-09 21:00:53.840] [INFO] === Starting Enhanced Credential Input Process ===
+[2026-11-09 21:00:53.840] [INFO] Username to input: <redacted>
+[2026-11-09 21:00:53.840] [INFO] Password length: 12 characters
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205850/round_2/screenshot_007_before_credential_input.png
+Using ADB to input credentials (without clicking button)...
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[CREDENTIAL_INPUT] Found username field at (540,1117)
+[CREDENTIAL_INPUT] Input username: <redacted>
+[INPUT] Clicking at (540, 1117) to focus field
+[INPUT] Inputting text char-by-char (length: 12)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[CREDENTIAL_INPUT] Password field not found!
+[2026-11-09 21:01:03.190] [ERROR] Failed to input credentials
+[2026-11-09 21:01:03.191] [INFO] Login outcome: inputOk=false, loginPageGone=false, validPair=false
+[2026-11-09 21:01:03.192] [ERROR] Login process failed
+[2026-11-09 21:01:03.192] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:01:03.329] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 21:01:03.366] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 21:01:03.366] [INFO] Mode: random
+[2026-11-09 21:01:03.366] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 21:01:03.366] [INFO] Switch Interval: 60 seconds
+[2026-11-09 21:01:03.366] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 21:01:03.366] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:01:03.492] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 21:01:03.534] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 21:01:03.534] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 21:01:06.367] [INFO] Captured 6 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[BUG_DETECTOR] Recorded error state: NetworkError
+[BUG_DETECTOR] Recorded error state: NetworkError
+Add observed state: NetworkError (total: 4, compressed: 2)
+[2026-11-09 21:01:06.368] [INFO] Known states from Frida: 4/6
+State machine: Stopped analysis at error state: NetworkError
+State machine validation passed (stopped at error)
+  Compressed sequence: Authenticating (×3, 0.0s) -> NetworkError [ERROR - STOPPED]
+  Original states: 4, Compressed: 2
+[2026-11-09 21:01:06.368] [INFO] State machine validation passed
+[2026-11-09 21:01:06.414] [INFO] [TAINT] Extracting taint flows for Round 2
+[2026-11-09 21:01:06.415] [INFO] Extracting taint analysis results for Round 2
+[2026-11-09 21:01:06.415] [INFO] [TAINT] Round 2: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_2_taint.txt
+[2026-11-09 21:01:06.415] [INFO] [TAINT] Round report saved to: reports/taint/round_2_taint.txt
+[2026-11-09 21:01:06.416] [INFO] === Rotation (lifecycle) checks, round 2 ===
+[2026-11-09 21:01:06.416] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 21:01:06.416] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:01:06.545] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 21:01:06.585] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 21:01:06.585] [INFO] Total good network periods: 12
+[2026-11-09 21:01:06.585] [INFO] Total bad network periods: 1
+[2026-11-09 21:01:06.585] [INFO] Total disruptions: 13
+[2026-11-09 21:01:06.585] [INFO] Actual good:bad ratio: 12:1
+[SNAPSHOT] App-level reset: app.organicmaps
+[2026-11-09 21:01:15.752] [INFO] Starting Frida monitoring with static analysis results for package: app.organicmaps
+FridaManager: Starting Frida monitoring for package: app.organicmaps
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py app.organicmaps src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 21:01:18.819] [INFO] Frida monitoring started successfully
+[2026-11-09 21:01:26.819] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Login page detection result: false
+  - Votes(username,password,button): 0/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: app.organicmaps/.DownloadResourcesLegacyActivity (match: false)
+[2026-11-09 21:01:37.247] [INFO] UI manager did not detect login page
+[2026-11-09 21:01:37.254] [INFO] Manifest login activity candidates: [app.organicmaps.editor.OsmLoginActivity]
+[2026-11-09 21:01:37.254] [INFO] Trying direct launch of login activity: app.organicmaps.editor.OsmLoginActivity
+[2026-11-09 21:01:41.616] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Password field detected: [masked] (ID: app.organicmaps:id/osm_password)
+Activity hint matched for login: app.organicmaps/.editor.OsmLoginActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: app.organicmaps/.editor.OsmLoginActivity (match: true)
+[2026-11-09 21:01:46.056] [INFO] UI manager detected login page
+[2026-11-09 21:01:46.057] [INFO]   - Google login: false
+[2026-11-09 21:01:46.057] [INFO]   - Facebook login: false
+[2026-11-09 21:01:46.057] [INFO]   - Username field: true
+[2026-11-09 21:01:46.057] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205850/round_2/screenshot_008_baseline_ui_manager_detection.png
+[2026-11-09 21:01:46.374] [INFO] Login page reached via direct activity launch: app.organicmaps.editor.OsmLoginActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[INPUT] Clicking at (540, 865) to focus field
+[INPUT] Inputting text char-by-char (length: 25)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[INPUT] Clicking at (540, 1062) to focus field
+[INPUT] Inputting text char-by-char (length: 12)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] A: before rotation: username=true, passwordFilled=true
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] B: in-flight before rotation: progress=false, submitDisabled=false, formShown=false
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] B: after rotation: formShown=true, progress=false, submitDisabled=false, result=false
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] C: re-submitting to obtain an error message
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] C: error shown before rotating back: 'Login error.'
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] C: error after rotation: none
+[ROTATION] Finding: ROTATION_LOGIN_STATE_RESET - Login was in progress when the device rotated; afterwards the form is idle again (no progress, submit enabled) with no result shown
+[ROTATION] Finding: ROTATION_ERROR_MESSAGE_LOST - Error message 'Login error.' disappeared after rotation
+[2026-11-09 21:03:03.003] [INFO] Rotation checks finished with 2 finding(s)
+[2026-11-09 21:03:03.003] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 21:03:03.003] [INFO] Mode: random
+[2026-11-09 21:03:03.003] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 21:03:03.003] [INFO] Switch Interval: 60 seconds
+[2026-11-09 21:03:03.003] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 21:03:03.003] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:03:03.135] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 21:03:03.173] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 21:03:03.173] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 21:03:05.758] [INFO] Frida monitoring stopped
+[2026-11-09 21:03:05.758] [INFO] [BUG_DETECTION] Running bug detectors for Round 2
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 2 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 0
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 2
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 21:03:05.758] [INFO] ⚠️  Detected 2 potential bug(s) in Round 2
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_2_20261109_210305.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 2
+
+By Severity:
+  HIGH: 2
+
+By Category:
+  LIFECYCLE_INTERFERENCE: 2
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_210305.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 5
+Unique Bug Types: 5
+Deduplication Rate: 0.0%
+========================================
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:58:22 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_ERROR_MESSAGE_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:58:22 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 21:03:03 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_ERROR_MESSAGE_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 21:03:03 UTC 2026
+Description: Login state lost on device rotation...
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[1x] PLAINTEXT_TOKEN_STORAGE
+Severity: MEDIUM
+Occurrences: 1
+First seen: Mon Nov 09 20:56:23 UTC 2026
+Description: Authentication token/credential stored in plaintext...
+
+
+[2026-11-09 21:03:05.762] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 21:03:05.762] [INFO] ROUND 2 COMPLETED
+[2026-11-09 21:03:05.762] [INFO] Round duration: 276356ms
+[2026-11-09 21:03:05.762] [INFO] Total attempts: 2
+[2026-11-09 21:03:05.762] [INFO] Successful logins: 1
+[2026-11-09 21:03:05.762] [INFO] Failed logins: 1
+[2026-11-09 21:03:05.762] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_205850/round_2/screenshot_009_round_2_end.png
+[2026-11-09 21:03:09.986] [INFO] ================================================================================
+[2026-11-09 21:03:09.986] [INFO] ROUND 3 STARTED
+[2026-11-09 21:03:09.986] [INFO] Round timestamp: 2026-11-09 21:03:09.986
+[2026-11-09 21:03:09.986] [INFO] ================================================================================
+[2026-11-09 21:03:09.986] [INFO] Round 3: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: app.organicmaps
+[2026-11-09 21:03:19.145] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Login page detection result: false
+  - Votes(username,password,button): 0/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: app.organicmaps/.DownloadResourcesLegacyActivity (match: false)
+[2026-11-09 21:03:31.499] [INFO] Warning: App may not be on login page after restore
+[2026-11-09 21:03:31.500] [INFO] Appended Frida round marker for round 3
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210331/round_3/screenshot_001_round_3_start.png
+[SNAPSHOT] App-level reset: app.organicmaps
+[2026-11-09 21:03:40.990] [INFO] Baseline snapshot restored successfully
+[2026-11-09 21:04:30.990] [INFO] Emulator snapshot operation completed
+[2026-11-09 21:04:30.991] [INFO] Starting Frida monitoring with static analysis results for package: app.organicmaps
+FridaManager: Starting Frida monitoring for package: app.organicmaps
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py app.organicmaps src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 21:04:32.030] [INFO] Frida monitoring started successfully
+[2026-11-09 21:04:32.030] [INFO] Credential choice: VALID pair
+[2026-11-09 21:04:32.030] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 21:04:32.030] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:04:32.174] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 21:04:32.213] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 21:04:32.213] [INFO] Total good network periods: 14
+[2026-11-09 21:04:32.213] [INFO] Total bad network periods: 1
+[2026-11-09 21:04:32.213] [INFO] Total disruptions: 15
+[2026-11-09 21:04:32.213] [INFO] Actual good:bad ratio: 14:1
+[2026-11-09 21:04:32.213] [INFO] 🟠 Round condition: LIMITED (2.5s latency, 25% loss)
+[2026-11-09 21:04:32.304] [INFO] Round network condition for login: limited
+[2026-11-09 21:04:32.304] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching app.organicmaps
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Login page detection result: false
+  - Votes(username,password,button): 0/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: app.organicmaps/.DownloadResourcesLegacyActivity (match: false)
+[2026-11-09 21:04:48.324] [INFO] UI manager did not detect login page
+[2026-11-09 21:04:48.325] [INFO] Login page not reached under 'limited'; loading it on a normal network first
+[2026-11-09 21:04:48.325] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:04:48.457] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 21:04:54.180] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Login page detection result: false
+  - Votes(username,password,button): 0/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: app.organicmaps/.DownloadResourcesLegacyActivity (match: false)
+[2026-11-09 21:05:04.667] [INFO] UI manager did not detect login page
+[2026-11-09 21:05:04.667] [INFO] 🟠 Round condition: LIMITED (2.5s latency, 25% loss)
+[2026-11-09 21:05:04.771] [INFO] Manifest login activity candidates: [app.organicmaps.editor.OsmLoginActivity]
+[2026-11-09 21:05:04.771] [INFO] Trying direct launch of login activity: app.organicmaps.editor.OsmLoginActivity
+[2026-11-09 21:05:09.099] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Password field detected: [masked] (ID: app.organicmaps:id/osm_password)
+Activity hint matched for login: app.organicmaps/.editor.OsmLoginActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: app.organicmaps/.editor.OsmLoginActivity (match: true)
+[2026-11-09 21:05:13.577] [INFO] UI manager detected login page
+[2026-11-09 21:05:13.577] [INFO]   - Google login: false
+[2026-11-09 21:05:13.577] [INFO]   - Facebook login: false
+[2026-11-09 21:05:13.577] [INFO]   - Username field: true
+[2026-11-09 21:05:13.577] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210331/round_3/screenshot_002_baseline_ui_manager_detection.png
+[2026-11-09 21:05:13.997] [INFO] Login page reached via direct activity launch: app.organicmaps.editor.OsmLoginActivity
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 3)
+[2026-11-09 21:05:13.997] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210331/round_3/screenshot_003_baseline_login_page.png
+[2026-11-09 21:05:14.393] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 21:05:14.393] [INFO] Selected username: jasonzixuzhou@gmail.com
+[2026-11-09 21:05:14.393] [INFO] Selected password: [13 chars]
+[2026-11-09 21:05:14.393] [INFO] === Starting Enhanced Credential Input Process ===
+[2026-11-09 21:05:14.393] [INFO] Username to input: jasonzixuzhou@gmail.com
+[2026-11-09 21:05:14.393] [INFO] Password length: 13 characters
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210331/round_3/screenshot_004_before_credential_input.png
+Using ADB to input credentials (without clicking button)...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[CREDENTIAL_INPUT] Found username field at (540,865)
+[CREDENTIAL_INPUT] Input username: jasonzixuzhou@gmail.com
+[INPUT] Clicking at (540, 865) to focus field
+[INPUT] Inputting text char-by-char (length: 23)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[CREDENTIAL_INPUT] Found password field at (540,1062)
+[CREDENTIAL_INPUT] Input password: [13 chars]
+[INPUT] Clicking at (540, 1062) to focus field
+[INPUT] Inputting text char-by-char (length: 13)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[CREDENTIAL_INPUT] Credentials inputted successfully (button NOT clicked)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210331/round_3/screenshot_005_after_credential_input.png
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Click element: LOGIN TO OPENSTREETMAP position: (540, 1188)
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1794258331297
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[2026-11-09 21:05:46.633] [INFO] === Verifying Credential Input ===
+[2026-11-09 21:05:46.633] [INFO] UI changed after input: true
+[2026-11-09 21:05:46.633] [INFO] Username visible in UI: true
+[2026-11-09 21:05:46.633] [INFO] Password field appears filled: true
+[2026-11-09 21:05:46.633] [INFO] Input focus changed: true
+[2026-11-09 21:05:46.633] [INFO] Has input indicators: true
+[2026-11-09 21:05:46.633] [INFO] === Input Verification Result: VERIFIED ===
+[2026-11-09 21:05:46.633] [INFO] ✅ UI manager credentials input successful and verified
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210331/round_3/screenshot_006_credentials_input_complete.png
+[2026-11-09 21:05:48.014] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button:  (id: app.organicmaps:id/login)
+[Match] Normal login button:  (id: app.organicmaps:id/osm_login_progress)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[TIMEOUT_DETECTOR] Login attempt: 54667ms (timeout, success=false)
+[2026-11-09 21:06:25.965] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[2026-11-09 21:06:25.966] [INFO] Login with valid credentials did not complete under 'limited' network; login page still shown
+[2026-11-09 21:06:25.966] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:06:26.110] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 21:06:26.158] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 21:06:26.158] [INFO] Mode: random
+[2026-11-09 21:06:26.158] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 21:06:26.158] [INFO] Switch Interval: 60 seconds
+[2026-11-09 21:06:26.158] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 21:06:26.158] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:06:26.293] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 21:06:26.329] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 21:06:26.329] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 21:06:28.979] [INFO] Captured 27 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[BUG_DETECTOR] Recorded error state: NetworkError
+[BUG_DETECTOR] Recorded error state: NetworkError
+Add observed state: NetworkError (total: 4, compressed: 2)
+Add observed state: Authenticating (total: 5, compressed: 3)
+[BUG_DETECTOR] Recorded error state: NetworkError
+[BUG_DETECTOR] Recorded error state: NetworkError
+Add observed state: NetworkError (total: 10, compressed: 4)
+Add observed state: Authenticating (total: 11, compressed: 5)
+[BUG_DETECTOR] Recorded error state: NetworkError
+[BUG_DETECTOR] Recorded error state: NetworkError
+Add observed state: NetworkError (total: 14, compressed: 6)
+Add observed state: Authenticating (total: 15, compressed: 7)
+[2026-11-09 21:06:28.980] [INFO] Known states from Frida: 15/27
+State machine: Stopped analysis at error state: NetworkError
+State machine validation passed (stopped at error)
+  Compressed sequence: Authenticating (×3) -> NetworkError [ERROR - STOPPED]
+  Original states: 15, Compressed: 7
+[2026-11-09 21:06:28.980] [INFO] State machine validation passed
+[2026-11-09 21:06:29.038] [INFO] [TAINT] Extracting taint flows for Round 3
+[2026-11-09 21:06:29.038] [INFO] Extracting taint analysis results for Round 3
+[TaintAnalyzer] Warning: Taint report is stale (age: 102s)
+[2026-11-09 21:06:29.039] [INFO] [TAINT] Round 3: No violations detected
+[TaintAnalyzer] Warning: Taint report is stale (age: 102s)
+[TaintAnalyzer] Report saved to: reports/taint/round_3_taint.txt
+[2026-11-09 21:06:29.039] [INFO] [TAINT] Round report saved to: reports/taint/round_3_taint.txt
+[2026-11-09 21:06:29.039] [INFO] === Rotation (lifecycle) checks, round 3 ===
+[2026-11-09 21:06:29.039] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 21:06:29.039] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:06:29.184] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 21:06:29.224] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 21:06:29.224] [INFO] Total good network periods: 18
+[2026-11-09 21:06:29.224] [INFO] Total bad network periods: 1
+[2026-11-09 21:06:29.224] [INFO] Total disruptions: 19
+[2026-11-09 21:06:29.224] [INFO] Actual good:bad ratio: 18:1
+[SNAPSHOT] App-level reset: app.organicmaps
+[2026-11-09 21:06:38.335] [INFO] Starting Frida monitoring with static analysis results for package: app.organicmaps
+FridaManager: Starting Frida monitoring for package: app.organicmaps
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py app.organicmaps src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 21:06:39.374] [INFO] Frida monitoring started successfully
+[2026-11-09 21:06:47.374] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Login page detection result: false
+  - Votes(username,password,button): 0/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: app.organicmaps/.DownloadResourcesLegacyActivity (match: false)
+[2026-11-09 21:06:57.907] [INFO] UI manager did not detect login page
+[2026-11-09 21:06:57.915] [INFO] Manifest login activity candidates: [app.organicmaps.editor.OsmLoginActivity]
+[2026-11-09 21:06:57.915] [INFO] Trying direct launch of login activity: app.organicmaps.editor.OsmLoginActivity
+[2026-11-09 21:07:02.292] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Password field detected: [masked] (ID: app.organicmaps:id/osm_password)
+Activity hint matched for login: app.organicmaps/.editor.OsmLoginActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: app.organicmaps/.editor.OsmLoginActivity (match: true)
+[2026-11-09 21:07:06.752] [INFO] UI manager detected login page
+[2026-11-09 21:07:06.752] [INFO]   - Google login: false
+[2026-11-09 21:07:06.752] [INFO]   - Facebook login: false
+[2026-11-09 21:07:06.752] [INFO]   - Username field: true
+[2026-11-09 21:07:06.752] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210331/round_3/screenshot_007_baseline_ui_manager_detection.png
+[2026-11-09 21:07:07.085] [INFO] Login page reached via direct activity launch: app.organicmaps.editor.OsmLoginActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[INPUT] Clicking at (540, 865) to focus field
+[INPUT] Inputting text char-by-char (length: 23)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[INPUT] Clicking at (540, 1062) to focus field
+[INPUT] Inputting text char-by-char (length: 12)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] A: before rotation: username=true, passwordFilled=true
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] B: in-flight before rotation: progress=false, submitDisabled=false, formShown=false
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] B: after rotation: formShown=true, progress=false, submitDisabled=false, result=false
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] C: re-submitting to obtain an error message
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] C: error shown before rotating back: 'Login error.'
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] C: error after rotation: none
+[ROTATION] Finding: ROTATION_LOGIN_STATE_RESET - Login was in progress when the device rotated; afterwards the form is idle again (no progress, submit enabled) with no result shown
+[ROTATION] Finding: ROTATION_ERROR_MESSAGE_LOST - Error message 'Login error.' disappeared after rotation
+[2026-11-09 21:08:23.182] [INFO] Rotation checks finished with 2 finding(s)
+[2026-11-09 21:08:23.183] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 21:08:23.183] [INFO] Mode: random
+[2026-11-09 21:08:23.183] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 21:08:23.183] [INFO] Switch Interval: 60 seconds
+[2026-11-09 21:08:23.183] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 21:08:23.183] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:08:23.321] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 21:08:23.362] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 21:08:23.362] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 21:08:25.951] [INFO] Frida monitoring stopped
+[2026-11-09 21:08:25.951] [INFO] [BUG_DETECTION] Running bug detectors for Round 3
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 2 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 1
+[TIMEOUT_DETECTOR] Timeouts: 1, Delays: 0
+[BUG_DETECTION] LoginTimeoutDetector found 1 bug(s)
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 3
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 21:08:25.952] [INFO] ⚠️  Detected 3 potential bug(s) in Round 3
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_3_20261109_210825.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 3
+
+By Severity:
+  HIGH: 3
+
+By Category:
+  LOGIN_TIMEOUT: 1
+  LIFECYCLE_INTERFERENCE: 2
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_210825.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 8
+Unique Bug Types: 8
+Deduplication Rate: 0.0%
+========================================
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:58:22 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_ERROR_MESSAGE_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:58:22 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 21:03:03 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_ERROR_MESSAGE_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 21:03:03 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 21:08:23 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_ERROR_MESSAGE_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 21:08:23 UTC 2026
+Description: Login state lost on device rotation...
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[1x] PLAINTEXT_TOKEN_STORAGE
+Severity: MEDIUM
+Occurrences: 1
+First seen: Mon Nov 09 20:56:23 UTC 2026
+Description: Authentication token/credential stored in plaintext...
+
+Category: LOGIN_TIMEOUT
+----------------------------------------
+
+[1x] LOGIN_TIMEOUT
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 21:08:25 UTC 2026
+Description: Login process exceeds acceptable time limits...
+
+
+[2026-11-09 21:08:25.955] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 21:08:25.955] [INFO] ROUND 3 COMPLETED
+[2026-11-09 21:08:25.955] [INFO] Round duration: 315969ms
+[2026-11-09 21:08:25.955] [INFO] Total attempts: 3
+[2026-11-09 21:08:25.955] [INFO] Successful logins: 1
+[2026-11-09 21:08:25.955] [INFO] Failed logins: 2
+[2026-11-09 21:08:25.955] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210331/round_3/screenshot_008_round_3_end.png
+[2026-11-09 21:08:30.272] [INFO] ================================================================================
+[2026-11-09 21:08:30.272] [INFO] ROUND 4 STARTED
+[2026-11-09 21:08:30.272] [INFO] Round timestamp: 2026-11-09 21:08:30.272
+[2026-11-09 21:08:30.272] [INFO] ================================================================================
+[2026-11-09 21:08:30.272] [INFO] Round 4: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: app.organicmaps
+[2026-11-09 21:08:39.441] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Login page detection result: false
+  - Votes(username,password,button): 0/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: app.organicmaps/.DownloadResourcesLegacyActivity (match: false)
+[2026-11-09 21:08:51.886] [INFO] Warning: App may not be on login page after restore
+[2026-11-09 21:08:51.886] [INFO] Appended Frida round marker for round 4
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210851/round_4/screenshot_001_round_4_start.png
+[SNAPSHOT] App-level reset: app.organicmaps
+[2026-11-09 21:09:01.389] [INFO] Baseline snapshot restored successfully
+[2026-11-09 21:09:51.390] [INFO] Emulator snapshot operation completed
+[2026-11-09 21:09:51.390] [INFO] Starting Frida monitoring with static analysis results for package: app.organicmaps
+FridaManager: Starting Frida monitoring for package: app.organicmaps
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py app.organicmaps src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 21:09:52.431] [INFO] Frida monitoring started successfully
+[2026-11-09 21:09:52.431] [INFO] Credential choice: VALID pair
+[2026-11-09 21:09:52.431] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 21:09:52.431] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:09:52.563] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 21:09:52.600] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 21:09:52.600] [INFO] Total good network periods: 20
+[2026-11-09 21:09:52.600] [INFO] Total bad network periods: 1
+[2026-11-09 21:09:52.600] [INFO] Total disruptions: 21
+[2026-11-09 21:09:52.600] [INFO] Actual good:bad ratio: 20:1
+[2026-11-09 21:09:52.600] [INFO] 🔴 Round condition: OFFLINE (default route removed: connections fail fast, like airplane mode)
+[2026-11-09 21:09:52.708] [INFO] Round network condition for login: offline
+[2026-11-09 21:09:52.708] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching app.organicmaps
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Login page detection result: false
+  - Votes(username,password,button): 0/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: app.organicmaps/.DownloadResourcesLegacyActivity (match: false)
+[2026-11-09 21:10:08.791] [INFO] UI manager did not detect login page
+[2026-11-09 21:10:08.792] [INFO] Login page not reached under 'offline'; loading it on a normal network first
+[2026-11-09 21:10:08.792] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:10:14.641] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Login page detection result: false
+  - Votes(username,password,button): 0/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: app.organicmaps/.DownloadResourcesLegacyActivity (match: false)
+[2026-11-09 21:10:25.072] [INFO] UI manager did not detect login page
+[2026-11-09 21:10:25.072] [INFO] 🔴 Round condition: OFFLINE (default route removed: connections fail fast, like airplane mode)
+[2026-11-09 21:10:25.186] [INFO] Manifest login activity candidates: [app.organicmaps.editor.OsmLoginActivity]
+[2026-11-09 21:10:25.186] [INFO] Trying direct launch of login activity: app.organicmaps.editor.OsmLoginActivity
+[2026-11-09 21:10:29.583] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Password field detected: [masked] (ID: app.organicmaps:id/osm_password)
+Activity hint matched for login: app.organicmaps/.editor.OsmLoginActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: app.organicmaps/.editor.OsmLoginActivity (match: true)
+[2026-11-09 21:10:34.086] [INFO] UI manager detected login page
+[2026-11-09 21:10:34.086] [INFO]   - Google login: false
+[2026-11-09 21:10:34.086] [INFO]   - Facebook login: false
+[2026-11-09 21:10:34.086] [INFO]   - Username field: true
+[2026-11-09 21:10:34.086] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210851/round_4/screenshot_002_baseline_ui_manager_detection.png
+[2026-11-09 21:10:34.473] [INFO] Login page reached via direct activity launch: app.organicmaps.editor.OsmLoginActivity
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 4)
+[2026-11-09 21:10:34.473] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210851/round_4/screenshot_003_baseline_login_page.png
+[2026-11-09 21:10:34.865] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 21:10:34.865] [INFO] Selected username: jasonzixuzhou@gmail.com
+[2026-11-09 21:10:34.865] [INFO] Selected password: [13 chars]
+[2026-11-09 21:10:34.865] [INFO] === Starting Enhanced Credential Input Process ===
+[2026-11-09 21:10:34.865] [INFO] Username to input: jasonzixuzhou@gmail.com
+[2026-11-09 21:10:34.865] [INFO] Password length: 13 characters
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210851/round_4/screenshot_004_before_credential_input.png
+Using ADB to input credentials (without clicking button)...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[CREDENTIAL_INPUT] Found username field at (540,865)
+[CREDENTIAL_INPUT] Input username: jasonzixuzhou@gmail.com
+[INPUT] Clicking at (540, 865) to focus field
+[INPUT] Inputting text char-by-char (length: 23)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[CREDENTIAL_INPUT] Found password field at (540,1062)
+[CREDENTIAL_INPUT] Input password: [13 chars]
+[INPUT] Clicking at (540, 1062) to focus field
+[INPUT] Inputting text char-by-char (length: 13)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[CREDENTIAL_INPUT] Credentials inputted successfully (button NOT clicked)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210851/round_4/screenshot_005_after_credential_input.png
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Click element: LOGIN TO OPENSTREETMAP position: (540, 1188)
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1794258651785
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[2026-11-09 21:11:07.460] [INFO] === Verifying Credential Input ===
+[2026-11-09 21:11:07.460] [INFO] UI changed after input: true
+[2026-11-09 21:11:07.460] [INFO] Username visible in UI: false
+[2026-11-09 21:11:07.460] [INFO] Password field appears filled: true
+[2026-11-09 21:11:07.460] [INFO] Input focus changed: true
+[2026-11-09 21:11:07.460] [INFO] Has input indicators: true
+[2026-11-09 21:11:07.460] [INFO] === Input Verification Result: VERIFIED ===
+[2026-11-09 21:11:07.460] [INFO] ✅ UI manager credentials input successful and verified
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210851/round_4/screenshot_006_credentials_input_complete.png
+[2026-11-09 21:11:08.800] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[LOGIN_RESULT] Error dialog after login: 'Login error.'
+[2026-11-09 21:11:10.923] [INFO] Login rejected with message: 'Login error.' (validPair=true)
+[2026-11-09 21:11:10.924] [INFO] [ERROR_MSG] Same message for wrong credentials and network failure: 'login error.'
+[2026-11-09 21:11:10.925] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[2026-11-09 21:11:10.925] [INFO] Login with valid credentials did not complete under 'offline' network; login page still shown
+[2026-11-09 21:11:10.925] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:11:11.147] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 21:11:11.147] [INFO] Mode: random
+[2026-11-09 21:11:11.147] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 21:11:11.147] [INFO] Switch Interval: 60 seconds
+[2026-11-09 21:11:11.147] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 21:11:11.147] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:11:11.294] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 21:11:11.334] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 21:11:11.334] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 21:11:14.435] [INFO] Captured 21 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[BUG_DETECTOR] Recorded error state: NetworkError
+[BUG_DETECTOR] Recorded error state: NetworkError
+Add observed state: NetworkError (total: 6, compressed: 2)
+Add observed state: Authenticating (total: 7, compressed: 3)
+[BUG_DETECTOR] Recorded error state: NetworkError
+[BUG_DETECTOR] Recorded error state: NetworkError
+Add observed state: NetworkError (total: 10, compressed: 4)
+Add observed state: Authenticating (total: 11, compressed: 5)
+[2026-11-09 21:11:14.435] [INFO] Known states from Frida: 11/21
+State machine: Stopped analysis at error state: NetworkError
+State machine validation passed (stopped at error)
+  Compressed sequence: Authenticating (×5) -> NetworkError [ERROR - STOPPED]
+  Original states: 11, Compressed: 5
+[2026-11-09 21:11:14.436] [INFO] State machine validation passed
+[2026-11-09 21:11:14.488] [INFO] [TAINT] Extracting taint flows for Round 4
+[2026-11-09 21:11:14.488] [INFO] Extracting taint analysis results for Round 4
+[TaintAnalyzer] Warning: Taint report is stale (age: 67s)
+[2026-11-09 21:11:14.489] [INFO] [TAINT] Round 4: No violations detected
+[TaintAnalyzer] Warning: Taint report is stale (age: 67s)
+[TaintAnalyzer] Report saved to: reports/taint/round_4_taint.txt
+[2026-11-09 21:11:14.489] [INFO] [TAINT] Round report saved to: reports/taint/round_4_taint.txt
+[2026-11-09 21:11:14.489] [INFO] === Rotation (lifecycle) checks, round 4 ===
+[2026-11-09 21:11:14.489] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 21:11:14.489] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:11:14.624] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 21:11:14.666] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 21:11:14.666] [INFO] Total good network periods: 24
+[2026-11-09 21:11:14.666] [INFO] Total bad network periods: 1
+[2026-11-09 21:11:14.666] [INFO] Total disruptions: 25
+[2026-11-09 21:11:14.666] [INFO] Actual good:bad ratio: 24:1
+[SNAPSHOT] App-level reset: app.organicmaps
+[2026-11-09 21:11:23.785] [INFO] Starting Frida monitoring with static analysis results for package: app.organicmaps
+FridaManager: Starting Frida monitoring for package: app.organicmaps
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py app.organicmaps src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 21:11:24.825] [INFO] Frida monitoring started successfully
+[2026-11-09 21:11:32.826] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Activity hint not matched: app.organicmaps/.DownloadResourcesLegacyActivity
+Login page detection result: false
+  - Votes(username,password,button): 0/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: app.organicmaps/.DownloadResourcesLegacyActivity (match: false)
+[2026-11-09 21:11:43.276] [INFO] UI manager did not detect login page
+[2026-11-09 21:11:43.283] [INFO] Manifest login activity candidates: [app.organicmaps.editor.OsmLoginActivity]
+[2026-11-09 21:11:43.283] [INFO] Trying direct launch of login activity: app.organicmaps.editor.OsmLoginActivity
+[2026-11-09 21:11:47.611] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Password field detected: [masked] (ID: app.organicmaps:id/osm_password)
+Activity hint matched for login: app.organicmaps/.editor.OsmLoginActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: true
+  - Votes(username,password,button): 4/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: true
+  - Login button: true
+  - Current activity: app.organicmaps/.editor.OsmLoginActivity (match: true)
+[2026-11-09 21:11:52.010] [INFO] UI manager detected login page
+[2026-11-09 21:11:52.010] [INFO]   - Google login: false
+[2026-11-09 21:11:52.010] [INFO]   - Facebook login: false
+[2026-11-09 21:11:52.010] [INFO]   - Username field: true
+[2026-11-09 21:11:52.010] [INFO]   - Password field: true
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210851/round_4/screenshot_007_baseline_ui_manager_detection.png
+[2026-11-09 21:11:52.358] [INFO] Login page reached via direct activity launch: app.organicmaps.editor.OsmLoginActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[INPUT] Clicking at (540, 865) to focus field
+[INPUT] Inputting text char-by-char (length: 23)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[INPUT] Clicking at (540, 1062) to focus field
+[INPUT] Inputting text char-by-char (length: 12)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] A: before rotation: username=true, passwordFilled=true
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] B: in-flight before rotation: progress=false, submitDisabled=false, formShown=false
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] B: after rotation: formShown=true, progress=false, submitDisabled=false, result=false
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] C: re-submitting to obtain an error message
+[Match] Normal login button: Login error. (id: app.organicmaps:id/alertTitle)
+[Match] Username field: [masked] (id: app.organicmaps:id/alertTitle)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] C: error shown before rotating back: 'Login error.'
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Create an OpenStreetMap account or log in to publish your map edits to the world. (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/textView2)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_presentation)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_username)
+[Match] Username field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Password field: [masked] (id: app.organicmaps:id/osm_password)
+[Match] Normal login button: LOGIN TO OPENSTREETMAP (id: app.organicmaps:id/login)
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] C: error after rotation: none
+[ROTATION] Finding: ROTATION_LOGIN_STATE_RESET - Login was in progress when the device rotated; afterwards the form is idle again (no progress, submit enabled) with no result shown
+[ROTATION] Finding: ROTATION_ERROR_MESSAGE_LOST - Error message 'Login error.' disappeared after rotation
+[2026-11-09 21:13:08.482] [INFO] Rotation checks finished with 2 finding(s)
+[2026-11-09 21:13:08.483] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 21:13:08.483] [INFO] Mode: random
+[2026-11-09 21:13:08.483] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 21:13:08.483] [INFO] Switch Interval: 60 seconds
+[2026-11-09 21:13:08.483] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 21:13:08.483] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:13:08.626] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 21:13:08.671] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 21:13:08.671] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 21:13:11.267] [INFO] Frida monitoring stopped
+[2026-11-09 21:13:11.267] [INFO] [BUG_DETECTION] Running bug detectors for Round 4
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] ErrorMessageMismatchDetector found 1 bug(s)
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 2 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 0
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 3
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 21:13:11.267] [INFO] ⚠️  Detected 3 potential bug(s) in Round 4
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_4_20261109_211311.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 3
+
+By Severity:
+  HIGH: 2
+  MEDIUM: 1
+
+By Category:
+  IMPROPER_ERROR_STATE_HANDLING: 1
+  LIFECYCLE_INTERFERENCE: 2
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_211311.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 11
+Unique Bug Types: 11
+Deduplication Rate: 0.0%
+========================================
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:58:22 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_ERROR_MESSAGE_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 20:58:22 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 21:03:03 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_ERROR_MESSAGE_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 21:03:03 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 21:08:23 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_ERROR_MESSAGE_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 21:08:23 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_LOGIN_STATE_RESET
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 21:13:08 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_ERROR_MESSAGE_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 21:13:08 UTC 2026
+Description: Login state lost on device rotation...
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[1x] PLAINTEXT_TOKEN_STORAGE
+Severity: MEDIUM
+Occurrences: 1
+First seen: Mon Nov 09 20:56:23 UTC 2026
+Description: Authentication token/credential stored in plaintext...
+
+Category: LOGIN_TIMEOUT
+----------------------------------------
+
+[1x] LOGIN_TIMEOUT
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 21:08:25 UTC 2026
+Description: Login process exceeds acceptable time limits...
+
+Category: IMPROPER_ERROR_STATE_HANDLING
+----------------------------------------
+
+[1x] MISLEADING_ERROR_MESSAGE
+Severity: MEDIUM
+Occurrences: 1
+First seen: Mon Nov 09 21:11:10 UTC 2026
+Description: The same error message is shown for wrong credentials and for a network failure...
+
+
+[2026-11-09 21:13:11.270] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 21:13:11.270] [INFO] ROUND 4 COMPLETED
+[2026-11-09 21:13:11.270] [INFO] Round duration: 280998ms
+[2026-11-09 21:13:11.270] [INFO] Total attempts: 4
+[2026-11-09 21:13:11.270] [INFO] Successful logins: 1
+[2026-11-09 21:13:11.270] [INFO] Failed logins: 3
+[2026-11-09 21:13:11.270] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest/reports/screenshots/app.organicmaps/20261109_210851/round_4/screenshot_008_round_4_end.png
+[2026-11-09 21:13:12.551] [INFO] === Test Execution Summary ===
+[2026-11-09 21:13:12.551] [INFO] Total Login Attempts: 4
+[2026-11-09 21:13:12.551] [INFO] Successful Logins: 1
+[2026-11-09 21:13:12.552] [INFO] Failed Logins: 3
+[2026-11-09 21:13:12.553] [INFO] Success Rate: 25.0%
+[2026-11-09 21:13:12.554] [INFO] Detailed report written to: reports/login_test_report_2026-11-09_20-54-20.txt
+[2026-11-09 21:13:12.555] [INFO] === Generating Final Taint Analysis Report ===
+[2026-11-09 21:13:12.555] [INFO] 
+================================================================================
+TAINT ANALYSIS REPORT
+================================================================================
+Application: app.organicmaps
+Total Taints: 0
+Total Flows: 0
+Violations: 0
+================================================================================
+
+[TaintAnalyzer] Report saved to: reports/taint/final_taint_analysis.txt
+[2026-11-09 21:13:12.555] [INFO] [TAINT] Final comprehensive report saved to: reports/taint/final_taint_analysis.txt
+[2026-11-09 21:13:12.555] [INFO] [TAINT] Total taints tracked: 0
+[2026-11-09 21:13:12.555] [INFO] [TAINT] Total flows detected: 0
+[2026-11-09 21:13:12.556] [INFO] [TAINT] Total violations: 0
+[2026-11-09 21:13:12.556] [INFO] Final summary appended to unified error report: reports/errors/test_errors_20261109_205421.txt
+[CRASH_DETECTOR] Stopped monitoring
+[2026-11-09 21:13:12.556] [INFO] ✓ Crash detector monitoring stopped
+UI manager closed
+[2026-11-09 21:13:12.558] [INFO] Monkey stopped
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+[2026-11-09 21:13:12.558] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 21:13:12.558] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 21:13:12.694] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 21:13:12.738] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 21:13:12.738] [INFO] Total good network periods: 26
+[2026-11-09 21:13:12.738] [INFO] Total bad network periods: 1
+[2026-11-09 21:13:12.738] [INFO] Total disruptions: 27
+[2026-11-09 21:13:12.738] [INFO] Actual good:bad ratio: 26:1
+[2026-11-09 21:13:12.742] [INFO] Network disruption report saved to: reports/network/network_disruptions_20261109_211312.txt
+[2026-11-09 21:13:12.742] [INFO] Network disruption report saved to: reports/network/network_disruptions_20261109_211312.txt
+[2026-11-09 21:13:12.742] [INFO] AndroidLoginDetector cleanup completed
+EXIT 0

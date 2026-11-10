@@ -1,0 +1,2546 @@
+[2026-11-09 22:18:26.647] [INFO] === AndroidLoginDetector Started ===
+[2026-11-09 22:18:26.655] [INFO] Log file: logs/android_login_detector_20261109_221826.log
+[2026-11-09 22:18:26.656] [INFO] Timestamp: 2026-11-09 22:18:26.655
+StateMachineManager: Loaded 45 states from regex patterns
+[BUG_DETECTION] Initialized 7 symptom-based bug detectors
+[BUG_DETECTION]   1. ErrorMessageMismatchDetector (Symptom 7)
+[BUG_DETECTION]   2. LifecycleDataLossDetector (Lifecycle)
+[BUG_DETECTION]   3. CrashDetector (Symptom 1)
+[BUG_DETECTION]   4. LoginTimeoutDetector (Symptom 2)
+[BUG_DETECTION]   5. NavigationFlowDetector (Symptom 3)
+StateMachineManager: Bug detection initialized
+StateMachineManager: initialization complete with 45 state transitions
+[2026-11-09 22:18:26.684] [INFO] App configuration loaded:
+[2026-11-09 22:18:26.684] [INFO]   - Package: com.aurora.store
+[2026-11-09 22:18:26.685] [INFO]   - Activity: com.aurora.store.MainActivity'
+[2026-11-09 22:18:26.685] [INFO]   - APK Path: apps/com.aurora.store_4.7.5.apk
+[2026-11-09 22:18:26.685] [INFO]   - Emulator Snapshot (auto-generated): snap_aurora_store_login
+[2026-11-09 22:18:26.685] [INFO] Initializing static analyzer...
+[2026-11-09 22:18:26.685] [INFO] Static analysis result found and up-to-date: reports/static_analysis/com.aurora.store_4.7.5_1.json
+[2026-11-09 22:18:26.685] [INFO] Initializing Frida manager with static analysis results...
+FridaManager: State checkAuthToken has 2 method signatures
+FridaManager: State IR_LoginEvidence has 774 method signatures
+FridaManager: State LoadingProfile has 15 method signatures
+FridaManager: State IR_WebViewEvidence has 107 method signatures
+FridaManager: State WebViewLoginCandidate has 1 method signatures
+FridaManager: State AwaitingResponse has 6 method signatures
+FridaManager: State CheckingToken has 1 method signatures
+FridaManager: Loaded 7 states from static analysis result
+FridaManager: Using static analysis result: reports/static_analysis/com.aurora.store_4.7.5.json
+FridaManager: State checkAuthToken has 2 method signatures
+FridaManager: State IR_LoginEvidence has 774 method signatures
+FridaManager: State LoadingProfile has 15 method signatures
+FridaManager: State IR_WebViewEvidence has 107 method signatures
+FridaManager: State WebViewLoginCandidate has 1 method signatures
+FridaManager: State AwaitingResponse has 6 method signatures
+FridaManager: State CheckingToken has 1 method signatures
+FridaManager: Loaded 7 states from static analysis result
+FridaManager: Static analysis results loaded from: reports/static_analysis/com.aurora.store_4.7.5_1.json
+[2026-11-09 22:18:26.775] [INFO] Frida manager configured with static analysis results
+[2026-11-09 22:18:26.776] [INFO] ApiLogAnalyzer initialized with 7 patterns from static analysis
+[2026-11-09 22:18:26.811] [INFO] Using credential pool directory: pools/com.aurora.store_4.7.5
+[2026-11-09 22:18:26.812] [ERROR] Error reading file pools/com.aurora.store_4.7.5/accounts.txt: pools/com.aurora.store_4.7.5/accounts.txt (No such file or directory)
+[2026-11-09 22:18:26.812] [ERROR] Error reading file pools/com.aurora.store_4.7.5/passwords.txt: pools/com.aurora.store_4.7.5/passwords.txt (No such file or directory)
+[2026-11-09 22:18:26.813] [ERROR] Error reading file pools/com.aurora.store_4.7.5/facebook_accounts.txt: pools/com.aurora.store_4.7.5/facebook_accounts.txt (No such file or directory)
+[2026-11-09 22:18:26.813] [ERROR] Error reading file pools/com.aurora.store_4.7.5/facebook_passwords.txt: pools/com.aurora.store_4.7.5/facebook_passwords.txt (No such file or directory)
+[2026-11-09 22:18:26.814] [ERROR] Error reading file pools/com.aurora.store_4.7.5/valid_pairs.csv: pools/com.aurora.store_4.7.5/valid_pairs.csv (No such file or directory)
+[2026-11-09 22:18:26.814] [INFO] Loaded 0 valid credential pair(s)
+[2026-11-09 22:18:26.814] [ERROR] Error reading file pools/com.aurora.store_4.7.5/totp_secrets.csv: pools/com.aurora.store_4.7.5/totp_secrets.csv (No such file or directory)
+[2026-11-09 22:18:26.814] [INFO] Loaded 0 TOTP secret(s)
+[2026-11-09 22:18:26.815] [INFO] Loaded credential pools:
+[2026-11-09 22:18:26.815] [INFO]   - Standard accounts: 17
+[2026-11-09 22:18:26.815] [INFO]   - Standard passwords: 15
+[2026-11-09 22:18:26.815] [INFO]   - Google accounts: 1
+[2026-11-09 22:18:26.815] [INFO]   - Google passwords: 1
+[2026-11-09 22:18:26.816] [INFO]   - Facebook accounts: 5
+[2026-11-09 22:18:26.816] [INFO]   - Facebook passwords: 5
+[2026-11-09 22:18:26.816] [INFO] State machine initialized with 45 states
+=== State machine information ===
+Provider_Okta -> Provider_Okta
+Provider_Auth0 -> Provider_Auth0
+AppMainScreen -> AppMainScreen, UserLogout, InitialState
+ParsingResponse -> ParsingResponse
+CheckingMFASettings -> CheckingMFASettings, MFACodePending, LoggedIn_NoMFA
+AwaitingResponse -> AwaitingResponse
+CheckingToken -> CheckingToken, LoggedIn_Via_Token, CredentialInput
+OAuth_TokenExchange -> OAuth_TokenExchange
+ValidatingCredentials -> ValidatingCredentials
+Unknown -> Unknown
+ShowingError -> ShowingError
+SendingMFACode -> SendingMFACode, MFAVerification
+RetrievingFeeds -> RetrievingFeeds
+LoadingProfile -> LoadingProfile
+Authenticating -> Authenticating, CheckingCredentials, LoginFailure, NetworkError, CredentialInput, CredentialFormatError
+ServiceUnavailable_Auth -> ServiceUnavailable_Auth, CredentialInput, InitialState
+VerifyingMFA -> VerifyingMFA, MFAError, LoggedIn_WithMFA
+LoggedIn_Via_Token -> LoggedIn_Via_Token, AppMainScreen
+ClickingLoginButton -> ClickingLoginButton
+InitializingSync -> InitializingSync
+AuthHeader_Bearer -> AuthHeader_Bearer
+PreparingAuth -> PreparingAuth
+checkAuthToken -> checkAuthToken
+NetworkError -> NetworkError, CredentialInput, LoginFailure, Authenticating
+InvalidCredentials -> InvalidCredentials, CredentialInput
+Provider_MSAL -> Provider_MSAL
+checkStoredCredentials -> checkStoredCredentials
+LoggedIn -> LoggedIn
+ReturnToLogin -> ReturnToLogin
+OAuth_BeginAuth -> OAuth_BeginAuth
+UserLogout -> UserLogout, InitialState, CredentialInput
+MFACodePending -> MFACodePending, SendingMFACode
+InitialState -> InitialState, CheckingToken, CredentialInput
+SendingCredentials -> SendingCredentials
+LoggedIn_NoMFA -> LoggedIn_NoMFA, AppMainScreen
+Provider_FacebookLogin -> Provider_FacebookLogin
+Provider_Cognito -> Provider_Cognito
+MFAVerification -> MFAVerification, VerifyingMFA
+LoginFailure -> LoginFailure, CredentialInput, NetworkError
+MFAError -> MFAError, MFACodePending
+Provider_GoogleSignIn -> Provider_GoogleSignIn
+CredentialFormatError -> CredentialFormatError, CredentialInput
+LoggedIn_WithMFA -> LoggedIn_WithMFA, AppMainScreen
+CheckingCredentials -> CheckingCredentials, ServiceUnavailable_Auth, InvalidCredentials, CheckingMFASettings
+CredentialInput -> CredentialInput, CredentialFormatError, Authenticating, LoginFailure
+==================
+[SNAPSHOT] LIFT_RESET_MODE=app: using app-level reset instead of emulator snapshots
+[TaintAnalyzer] Configuration loaded from: src/main/resources/taint_config.json
+[2026-11-09 22:18:26.821] [INFO] Taint analyzer initialized
+[2026-11-09 22:18:26.822] [INFO] Starting Frida monitoring with static analysis results for package: com.aurora.store
+FridaManager: Starting Frida monitoring for package: com.aurora.store
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.aurora.store src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 22:18:27.859] [INFO] Frida monitoring started successfully
+Configuration validation passed
+=== Configuration Summary ===
+Test Rounds: 5
+Duration per Round: 300000ms
+Round Interval: 3s
+Login Timeout: 120s
+Monkey Events: 1000
+Monkey Delay: 500ms
+Frida Timeout: 120s
+Frida Retry Count: 5
+==================
+[2026-11-09 22:18:27.864] [INFO] === Starting AndroidLoginDetector Test with Static Analysis ===
+[2026-11-09 22:18:27.864] [INFO] Target app: com.aurora.store
+[2026-11-09 22:18:27.864] [INFO] Test rounds: 5
+[2026-11-09 22:18:27.864] [INFO] Static analysis results: reports/static_analysis/com.aurora.store_4.7.5_1.json
+[2026-11-09 22:18:27.865] [INFO] Unified error report: reports/errors/test_errors_20261109_221827.txt
+[2026-11-09 22:18:27.865] [INFO] Starting global taint tracking...
+[TaintAnalyzer] Taint tracking prepared for: com.aurora.store
+[TaintAnalyzer] Note: Taint analysis requires custom Frida integration
+[2026-11-09 22:18:27.865] [INFO] ✓ Taint tracking active for all rounds
+[2026-11-09 22:18:27.865] [INFO] Checking Docker environment compatibility...
+[2026-11-09 22:18:27.870] [INFO] ADB device found: 127.0.0.1:5555	device
+[2026-11-09 22:18:27.870] [INFO] ADB device found: 127.0.0.1:5556	device
+[2026-11-09 22:18:27.871] [INFO] ADB device found: 127.0.0.1:5557	device
+[2026-11-09 22:18:27.891] [INFO] Emulator Android version: 14
+[2026-11-09 22:18:28.125] [INFO] Frida version: 16.7.19
+[2026-11-09 22:18:28.126] [INFO] All required files found
+[2026-11-09 22:18:28.126] [INFO] Docker environment check passed
+ADB device ready: 127.0.0.1:5555 (provisioned)
+UI manager started successfully
+[2026-11-09 22:18:28.196] [INFO] Starting network chaos testing (emulator is ready)...
+[2026-11-09 22:18:28.196] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 22:18:28.197] [INFO] Mode: random
+[2026-11-09 22:18:28.199] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 22:18:28.199] [INFO] Switch Interval: 60 seconds
+[2026-11-09 22:18:28.199] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 22:18:28.199] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:18:28.334] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:18:28.375] [INFO] Network disruption interface: eth0
+[2026-11-09 22:18:28.397] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 22:18:28.399] [INFO] ================================================================================
+[2026-11-09 22:18:28.399] [INFO] ROUND 1 STARTED
+[2026-11-09 22:18:28.400] [INFO] Round timestamp: 2026-11-09 22:18:28.399
+[2026-11-09 22:18:28.400] [INFO] ================================================================================
+[2026-11-09 22:18:28.400] [INFO] Round 1: Starting fresh without snapshot restore
+[2026-11-09 22:18:28.402] [INFO] Appended Frida round marker for round 1
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_221828/round_1/screenshot_001_round_1_start.png
+[SNAPSHOT] App-level reset: com.aurora.store
+[2026-11-09 22:18:39.345] [INFO] Baseline snapshot restored successfully
+[2026-11-09 22:19:28.400] [INFO] 🔴 Inducing BAD network state: SLOW_NETWORK for 18 seconds
+[2026-11-09 22:19:29.346] [INFO] Emulator snapshot operation completed
+[2026-11-09 22:19:29.346] [INFO] Starting Frida monitoring with static analysis results for package: com.aurora.store
+FridaManager: Starting Frida monitoring for package: com.aurora.store
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.aurora.store src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 22:19:32.408] [INFO] Frida monitoring started successfully
+[CRASH_DETECTOR] Started monitoring for crashes of com.aurora.store
+[2026-11-09 22:19:32.411] [INFO] ✓ Crash detector monitoring started for package: com.aurora.store
+[2026-11-09 22:19:32.412] [INFO] Credential choice: random (likely invalid / special characters)
+[2026-11-09 22:19:32.412] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 22:19:32.412] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:19:32.554] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:19:32.595] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 22:19:32.595] [INFO] Total good network periods: 2
+[2026-11-09 22:19:32.595] [INFO] Total bad network periods: 1
+[2026-11-09 22:19:32.596] [INFO] Total disruptions: 3
+[2026-11-09 22:19:32.596] [INFO] Actual good:bad ratio: 2:1
+[2026-11-09 22:19:32.596] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:19:32.734] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:19:32.774] [INFO] Round network condition for login: normal
+[2026-11-09 22:19:32.774] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching com.aurora.store
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Cache] New login method discovered: normal
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/line2)
+Login button detected: Next (ID: com.aurora.store:id/btn_forward)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/txt_status)
+Login button detected: Please log in to your Google Play account (ID: com.aurora.store:id/txt_status)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] Credential-free login offered; using it as this round's login method
+[2026-11-09 22:20:06.808] [INFO] UI manager detected login page
+[2026-11-09 22:20:06.809] [INFO]   - Google login: false
+[2026-11-09 22:20:06.809] [INFO]   - Facebook login: false
+[2026-11-09 22:20:06.809] [INFO]   - Username field: true
+[2026-11-09 22:20:06.809] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_221828/round_1/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 1)
+[2026-11-09 22:20:07.139] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_221828/round_1/screenshot_003_baseline_login_page.png
+[2026-11-09 22:20:07.473] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 22:20:07.473] [INFO] Selected username: zixu.zhou@mail.mcgill.ca
+[2026-11-09 22:20:07.473] [INFO] Selected password: [17 chars]
+[2026-11-09 22:20:07.473] [INFO] Using the credential-free (anonymous/guest) login option
+[LOGIN] Tapped credential-free login option
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_221828/round_1/screenshot_004_credentials_input_complete.png
+[2026-11-09 22:20:08.863] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[TIMEOUT_DETECTOR] Login attempt: 5012ms (normal, success=true)
+[STORAGE] Plaintext auth value 'auth' in /data/data/com.aurora.store/shared_prefs/com.aurora.store_preferences.xml
+[STORAGE] Plaintext auth value 'PREFERENCE_AUTH_DATA' in /data/data/com.aurora.store/shared_prefs/com.aurora.store_preferences.xml
+[2026-11-09 22:20:22.162] [INFO] Login outcome: inputOk=true, loginPageGone=true, validPair=true
+[2026-11-09 22:20:22.162] [INFO] Login process completed successfully
+[NAV_DETECTOR] Login succeeded at 1794262822162
+[2026-11-09 22:20:22.162] [INFO] ✓ Navigation detector: recorded login success
+[NAV_DETECTOR] Navigation: null → com.aurora.store/com.aurora.store.MainActivity
+[2026-11-09 22:20:22.195] [INFO] ✓ Navigation detector: current activity = com.aurora.store/com.aurora.store.MainActivity
+[2026-11-09 22:20:22.196] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:20:22.329] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:20:22.368] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 22:20:22.369] [INFO] Mode: random
+[2026-11-09 22:20:22.369] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 22:20:22.369] [INFO] Switch Interval: 60 seconds
+[2026-11-09 22:20:22.369] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 22:20:22.369] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:20:22.503] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:20:22.541] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 22:20:22.541] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 22:20:25.129] [INFO] Captured 3 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[2026-11-09 22:20:25.133] [INFO] Known states from Frida: 1/3
+State machine validation passed (single state): Authenticating
+[2026-11-09 22:20:25.133] [INFO] State machine validation passed
+[2026-11-09 22:20:25.180] [INFO] [TAINT] Extracting taint flows for Round 1
+[2026-11-09 22:20:25.181] [INFO] Extracting taint analysis results for Round 1
+[2026-11-09 22:20:25.182] [INFO] [TAINT] Round 1: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_1_taint.txt
+[2026-11-09 22:20:25.183] [INFO] [TAINT] Round report saved to: reports/taint/round_1_taint.txt
+[2026-11-09 22:20:25.183] [INFO] === Rotation (lifecycle) checks, round 1 ===
+[2026-11-09 22:20:25.183] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 22:20:25.183] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:20:25.330] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:20:25.372] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 22:20:25.373] [INFO] Total good network periods: 6
+[2026-11-09 22:20:25.373] [INFO] Total bad network periods: 1
+[2026-11-09 22:20:25.373] [INFO] Total disruptions: 7
+[2026-11-09 22:20:25.373] [INFO] Actual good:bad ratio: 6:1
+[SNAPSHOT] App-level reset: com.aurora.store
+[2026-11-09 22:20:35.091] [INFO] Starting Frida monitoring with static analysis results for package: com.aurora.store
+FridaManager: Starting Frida monitoring for package: com.aurora.store
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.aurora.store src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 22:20:38.167] [INFO] Frida monitoring started successfully
+[2026-11-09 22:20:46.167] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/line2)
+Login button detected: Next (ID: com.aurora.store:id/btn_forward)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/txt_status)
+Login button detected: Please log in to your Google Play account (ID: com.aurora.store:id/txt_status)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (539,1825)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Sign in - Google Accounts (ID: )
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?flowName=EmbeddedSetupAndroid&continue=https://accounts.google.com/o/android/auth?lang%3Den%26cc%3DUS%26langCountry%3Den_US%26xoauth_display_name%3DAnd}
+[WEBVIEW] Google sign-in page: using the Google test account
+[WEBVIEW] Identifier-only web form reached (rotation checks run on it)
+[2026-11-09 22:21:27.478] [INFO] UI manager detected login page
+[2026-11-09 22:21:27.478] [INFO]   - Google login: true
+[2026-11-09 22:21:27.478] [INFO]   - Facebook login: false
+[2026-11-09 22:21:27.478] [INFO]   - Username field: true
+[2026-11-09 22:21:27.478] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_221828/round_1/screenshot_005_baseline_ui_manager_detection.png
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[INPUT] Clicking at (540, 892) to focus field
+[INPUT] Inputting text char-by-char (length: 11)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[ROTATION] A(identifier): before rotation: identifier=true
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[ROTATION] A(identifier): after rotation: identifier=false
+[ROTATION] Finding: ROTATION_INPUT_LOST - Typed identifier lost on rotation (screen reloaded or state not saved)
+[2026-11-09 22:21:43.818] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-09 22:21:43.818] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 22:21:43.819] [INFO] Mode: random
+[2026-11-09 22:21:43.819] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 22:21:43.819] [INFO] Switch Interval: 60 seconds
+[2026-11-09 22:21:43.819] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 22:21:43.819] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:21:43.960] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:21:44.002] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 22:21:44.002] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 22:21:46.064] [INFO] Frida monitoring stopped
+[2026-11-09 22:21:46.064] [INFO] [BUG_DETECTION] Running bug detectors for Round 1
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 1
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: true
+[NAV_DETECTOR] Current activity: com.aurora.store/com.aurora.store.MainActivity
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 1
+[NAV_DETECTOR] Stuck check: onLoginActivity=false, inLoginState=false, enoughTimePassed=true → stuck=false
+[NAV_DETECTOR] ✓ Navigation flow appears correct
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] StorageLeakDetector found 2 bug(s)
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 3
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 22:21:46.070] [INFO] ⚠️  Detected 3 potential bug(s) in Round 1
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_1_20261109_222146.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 3
+
+By Severity:
+  HIGH: 1
+  MEDIUM: 2
+
+By Category:
+  LIFECYCLE_INTERFERENCE: 1
+  INCORRECT_LOGIN_FLOW: 2
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_222146.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 3
+Unique Bug Types: 2
+Deduplication Rate: 33.3%
+========================================
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[2x] PLAINTEXT_TOKEN_STORAGE
+Severity: MEDIUM
+Occurrences: 2
+First seen: Mon Nov 09 22:20:22 UTC 2026
+Last seen: Mon Nov 09 22:20:22 UTC 2026
+Description: Authentication token/credential stored in plaintext...
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:21:43 UTC 2026
+Description: Login state lost on device rotation...
+
+
+[2026-11-09 22:21:46.089] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 22:21:46.090] [INFO] ROUND 1 COMPLETED
+[2026-11-09 22:21:46.090] [INFO] Round duration: 197690ms
+[2026-11-09 22:21:46.090] [INFO] Total attempts: 1
+[2026-11-09 22:21:46.090] [INFO] Successful logins: 1
+[2026-11-09 22:21:46.090] [INFO] Failed logins: 0
+[2026-11-09 22:21:46.090] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_221828/round_1/screenshot_006_round_1_end.png
+[2026-11-09 22:21:50.356] [INFO] ================================================================================
+[2026-11-09 22:21:50.356] [INFO] ROUND 2 STARTED
+[2026-11-09 22:21:50.356] [INFO] Round timestamp: 2026-11-09 22:21:50.356
+[2026-11-09 22:21:50.356] [INFO] ================================================================================
+[2026-11-09 22:21:50.357] [INFO] Round 2: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: com.aurora.store
+[2026-11-09 22:22:00.234] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/line2)
+Login button detected: Next (ID: com.aurora.store:id/btn_forward)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/txt_status)
+Login button detected: Please log in to your Google Play account (ID: com.aurora.store:id/txt_status)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (539,1825)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Sign in - Google Accounts (ID: )
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?flowName=EmbeddedSetupAndroid&continue=https://accounts.google.com/o/android/auth?lang%3Den%26cc%3DUS%26langCountry%3Den_US%26xoauth_display_name%3DAnd}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+[2026-11-09 22:22:44.002] [INFO] 🔴 Inducing BAD network state: DISABLE_DATA for 25 seconds
+[WEBVIEW] trusted click on 'Next'
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: true
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[2026-11-09 22:22:51.203] [INFO] Verified: App restored to login page
+[2026-11-09 22:22:51.203] [INFO] Appended Frida round marker for round 2
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_222251/round_2/screenshot_001_round_2_start.png
+[SNAPSHOT] App-level reset: com.aurora.store
+[2026-11-09 22:23:01.410] [INFO] Baseline snapshot restored successfully
+[2026-11-09 22:23:09.153] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:23:09.283] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:23:44.003] [INFO] 🔴 Inducing BAD network state: DISABLE_DATA for 21 seconds
+[2026-11-09 22:23:51.411] [INFO] Emulator snapshot operation completed
+[2026-11-09 22:23:51.411] [INFO] Starting Frida monitoring with static analysis results for package: com.aurora.store
+FridaManager: Starting Frida monitoring for package: com.aurora.store
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.aurora.store src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 22:23:52.464] [INFO] Frida monitoring started successfully
+[2026-11-09 22:23:52.465] [INFO] Credential choice: invalid, special-character username
+[2026-11-09 22:23:52.465] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 22:23:52.465] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:23:52.598] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:23:52.635] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 22:23:52.636] [INFO] Total good network periods: 9
+[2026-11-09 22:23:52.636] [INFO] Total bad network periods: 3
+[2026-11-09 22:23:52.636] [INFO] Total disruptions: 12
+[2026-11-09 22:23:52.636] [INFO] Actual good:bad ratio: 9:3
+[2026-11-09 22:23:52.636] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:23:52.765] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:23:52.804] [INFO] Round network condition for login: normal
+[2026-11-09 22:23:52.804] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching com.aurora.store
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/line2)
+Login button detected: Next (ID: com.aurora.store:id/btn_forward)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/txt_status)
+Login button detected: Please log in to your Google Play account (ID: com.aurora.store:id/txt_status)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (539,1825)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Sign in - Google Accounts (ID: )
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?flowName=EmbeddedSetupAndroid&continue=https://accounts.google.com/o/android/auth?lang%3Den%26cc%3DUS%26langCountry%3Den_US%26xoauth_display_name%3DAnd}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+[WEBVIEW] trusted click on 'Next'
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: true
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[2026-11-09 22:24:47.893] [INFO] UI manager detected login page
+[2026-11-09 22:24:47.893] [INFO]   - Google login: true
+[2026-11-09 22:24:47.893] [INFO]   - Facebook login: false
+[2026-11-09 22:24:47.893] [INFO]   - Username field: true
+[2026-11-09 22:24:47.893] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_222251/round_2/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 2)
+[2026-11-09 22:24:48.274] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_222251/round_2/screenshot_003_baseline_login_page.png
+[2026-11-09 22:24:48.649] [INFO] Google login detected, using Google account: zzxpersist@gmail.com
+[2026-11-09 22:24:48.649] [INFO] Google login detected, using Google password: [13 chars]
+[2026-11-09 22:24:48.649] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 22:24:48.649] [INFO] Selected username: zzxpersist@gmail.com
+[2026-11-09 22:24:48.649] [INFO] Selected password: [13 chars]
+[2026-11-09 22:24:48.649] [INFO] === Starting Enhanced Credential Input Process ===
+[2026-11-09 22:24:48.649] [INFO] Username to input: zzxpersist@gmail.com
+[2026-11-09 22:24:48.649] [INFO] Password length: 13 characters
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_222251/round_2/screenshot_004_before_credential_input.png
+Using ADB to input credentials (without clicking button)...
+[CREDENTIAL_INPUT] Username already entered on the identifier screen (two-step login)
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Enter a valid email or phone number (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[CREDENTIAL_INPUT] Password field not found!
+[2026-11-09 22:24:53.287] [ERROR] Failed to input credentials
+[2026-11-09 22:24:53.287] [INFO] ❌ Credential input phase failed
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_222251/round_2/screenshot_005_credentials_input_failed.png
+[2026-11-09 22:24:53.668] [INFO] Login outcome: inputOk=false, loginPageGone=false, validPair=false
+[2026-11-09 22:24:53.668] [ERROR] Login process failed
+[2026-11-09 22:24:53.668] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:24:53.806] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:24:53.844] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 22:24:53.844] [INFO] Mode: random
+[2026-11-09 22:24:53.844] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 22:24:53.844] [INFO] Switch Interval: 60 seconds
+[2026-11-09 22:24:53.844] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 22:24:53.844] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:24:53.978] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:24:54.021] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 22:24:54.021] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 22:24:56.773] [INFO] Captured 2 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[2026-11-09 22:24:56.774] [INFO] Known states from Frida: 1/2
+State machine validation passed (single state): Authenticating
+[2026-11-09 22:24:56.774] [INFO] State machine validation passed
+[2026-11-09 22:24:56.819] [INFO] [TAINT] Extracting taint flows for Round 2
+[2026-11-09 22:24:56.820] [INFO] Extracting taint analysis results for Round 2
+[2026-11-09 22:24:56.820] [INFO] [TAINT] Round 2: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_2_taint.txt
+[2026-11-09 22:24:56.821] [INFO] [TAINT] Round report saved to: reports/taint/round_2_taint.txt
+[2026-11-09 22:24:56.821] [INFO] === Rotation (lifecycle) checks, round 2 ===
+[2026-11-09 22:24:56.821] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 22:24:56.821] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:24:56.953] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:24:56.994] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 22:24:56.994] [INFO] Total good network periods: 13
+[2026-11-09 22:24:56.995] [INFO] Total bad network periods: 3
+[2026-11-09 22:24:56.995] [INFO] Total disruptions: 16
+[2026-11-09 22:24:56.995] [INFO] Actual good:bad ratio: 13:3
+[SNAPSHOT] App-level reset: com.aurora.store
+[2026-11-09 22:25:06.793] [INFO] Starting Frida monitoring with static analysis results for package: com.aurora.store
+FridaManager: Starting Frida monitoring for package: com.aurora.store
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.aurora.store src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 22:25:09.860] [INFO] Frida monitoring started successfully
+[2026-11-09 22:25:17.860] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/line2)
+Login button detected: Next (ID: com.aurora.store:id/btn_forward)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/txt_status)
+Login button detected: Please log in to your Google Play account (ID: com.aurora.store:id/txt_status)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (539,1825)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Sign in - Google Accounts (ID: )
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?flowName=EmbeddedSetupAndroid&continue=https://accounts.google.com/o/android/auth?lang%3Den%26cc%3DUS%26langCountry%3Den_US%26xoauth_display_name%3DAnd}
+[WEBVIEW] Identifier-only web form reached (rotation checks run on it)
+[2026-11-09 22:25:59.188] [INFO] UI manager detected login page
+[2026-11-09 22:25:59.189] [INFO]   - Google login: true
+[2026-11-09 22:25:59.189] [INFO]   - Facebook login: false
+[2026-11-09 22:25:59.189] [INFO]   - Username field: true
+[2026-11-09 22:25:59.189] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_222251/round_2/screenshot_006_baseline_ui_manager_detection.png
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[INPUT] Clicking at (540, 892) to focus field
+[INPUT] Inputting text char-by-char (length: 11)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[ROTATION] A(identifier): before rotation: identifier=true
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[ROTATION] A(identifier): after rotation: identifier=false
+[ROTATION] Finding: ROTATION_INPUT_LOST - Typed identifier lost on rotation (screen reloaded or state not saved)
+[2026-11-09 22:26:15.387] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-09 22:26:15.388] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 22:26:15.388] [INFO] Mode: random
+[2026-11-09 22:26:15.388] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 22:26:15.388] [INFO] Switch Interval: 60 seconds
+[2026-11-09 22:26:15.388] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 22:26:15.388] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:26:15.539] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:26:15.585] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 22:26:15.585] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 22:26:17.646] [INFO] Frida monitoring stopped
+[2026-11-09 22:26:17.646] [INFO] [BUG_DETECTION] Running bug detectors for Round 2
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 0
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 1
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 22:26:17.646] [INFO] ⚠️  Detected 1 potential bug(s) in Round 2
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_2_20261109_222617.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 1
+
+By Severity:
+  HIGH: 1
+
+By Category:
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_222617.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 4
+Unique Bug Types: 3
+Deduplication Rate: 25.0%
+========================================
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[2x] PLAINTEXT_TOKEN_STORAGE
+Severity: MEDIUM
+Occurrences: 2
+First seen: Mon Nov 09 22:20:22 UTC 2026
+Last seen: Mon Nov 09 22:20:22 UTC 2026
+Description: Authentication token/credential stored in plaintext...
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:21:43 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:26:15 UTC 2026
+Description: Login state lost on device rotation...
+
+
+[2026-11-09 22:26:17.649] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 22:26:17.650] [INFO] ROUND 2 COMPLETED
+[2026-11-09 22:26:17.650] [INFO] Round duration: 267293ms
+[2026-11-09 22:26:17.650] [INFO] Total attempts: 2
+[2026-11-09 22:26:17.650] [INFO] Successful logins: 1
+[2026-11-09 22:26:17.650] [INFO] Failed logins: 1
+[2026-11-09 22:26:17.650] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_222251/round_2/screenshot_007_round_2_end.png
+[2026-11-09 22:26:21.894] [INFO] ================================================================================
+[2026-11-09 22:26:21.894] [INFO] ROUND 3 STARTED
+[2026-11-09 22:26:21.894] [INFO] Round timestamp: 2026-11-09 22:26:21.894
+[2026-11-09 22:26:21.894] [INFO] ================================================================================
+[2026-11-09 22:26:21.895] [INFO] Round 3: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: com.aurora.store
+[2026-11-09 22:26:31.661] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/line2)
+Login button detected: Next (ID: com.aurora.store:id/btn_forward)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/txt_status)
+Login button detected: Please log in to your Google Play account (ID: com.aurora.store:id/txt_status)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (539,1825)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Sign in - Google Accounts (ID: )
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?flowName=EmbeddedSetupAndroid&continue=https://accounts.google.com/o/android/auth?lang%3Den%26cc%3DUS%26langCountry%3Den_US%26xoauth_display_name%3DAnd}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+[2026-11-09 22:27:15.585] [INFO] 🔴 Inducing BAD network state: DISABLE_DATA for 22 seconds
+[WEBVIEW] trusted click on 'Next'
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: true
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[2026-11-09 22:27:22.684] [INFO] Verified: App restored to login page
+[2026-11-09 22:27:22.684] [INFO] Appended Frida round marker for round 3
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_222722/round_3/screenshot_001_round_3_start.png
+[SNAPSHOT] App-level reset: com.aurora.store
+[2026-11-09 22:27:32.904] [INFO] Baseline snapshot restored successfully
+[2026-11-09 22:27:37.742] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:27:37.883] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:28:15.585] [INFO] 🔴 Inducing BAD network state: DISABLE_DATA for 20 seconds
+[2026-11-09 22:28:22.905] [INFO] Emulator snapshot operation completed
+[2026-11-09 22:28:22.905] [INFO] Starting Frida monitoring with static analysis results for package: com.aurora.store
+FridaManager: Starting Frida monitoring for package: com.aurora.store
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.aurora.store src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 22:28:23.947] [INFO] Frida monitoring started successfully
+[2026-11-09 22:28:23.947] [INFO] Credential choice: random (likely invalid / special characters)
+[2026-11-09 22:28:23.947] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 22:28:23.947] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:28:24.089] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:28:24.129] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 22:28:24.129] [INFO] Total good network periods: 16
+[2026-11-09 22:28:24.129] [INFO] Total bad network periods: 5
+[2026-11-09 22:28:24.130] [INFO] Total disruptions: 21
+[2026-11-09 22:28:24.130] [INFO] Actual good:bad ratio: 16:5
+[2026-11-09 22:28:24.130] [INFO] 🟠 Round condition: LIMITED (2.5s latency, 25% loss)
+[2026-11-09 22:28:24.222] [INFO] Round network condition for login: limited
+[2026-11-09 22:28:24.222] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching com.aurora.store
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/line2)
+Login button detected: Next (ID: com.aurora.store:id/btn_forward)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/txt_status)
+Login button detected: Please log in to your Google Play account (ID: com.aurora.store:id/txt_status)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] Credential-free login offered; using it as this round's login method
+[2026-11-09 22:28:57.772] [INFO] UI manager detected login page
+[2026-11-09 22:28:57.773] [INFO]   - Google login: false
+[2026-11-09 22:28:57.773] [INFO]   - Facebook login: false
+[2026-11-09 22:28:57.773] [INFO]   - Username field: true
+[2026-11-09 22:28:57.773] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_222722/round_3/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 3)
+[2026-11-09 22:28:58.107] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_222722/round_3/screenshot_003_baseline_login_page.png
+[2026-11-09 22:28:58.436] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 22:28:58.436] [INFO] Selected username: 93lbly7d
+[2026-11-09 22:28:58.436] [INFO] Selected password: [12 chars]
+[2026-11-09 22:28:58.436] [INFO] Using the credential-free (anonymous/guest) login option
+[LOGIN] Tapped credential-free login option
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_222722/round_3/screenshot_004_credentials_input_complete.png
+[2026-11-09 22:28:59.820] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[TIMEOUT_DETECTOR] Login attempt: 37828ms (timeout, success=false)
+[2026-11-09 22:29:36.294] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[2026-11-09 22:29:36.295] [INFO] Login with valid credentials did not complete under 'limited' network; login page still shown
+[2026-11-09 22:29:36.295] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:29:36.424] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:29:36.461] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 22:29:36.461] [INFO] Mode: random
+[2026-11-09 22:29:36.461] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 22:29:36.461] [INFO] Switch Interval: 60 seconds
+[2026-11-09 22:29:36.461] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 22:29:36.461] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:29:36.588] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:29:36.625] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 22:29:36.625] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 22:29:39.234] [INFO] Captured 2 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[2026-11-09 22:29:39.234] [INFO] Known states from Frida: 1/2
+State machine validation passed (single state): Authenticating
+[2026-11-09 22:29:39.234] [INFO] State machine validation passed
+[2026-11-09 22:29:39.276] [INFO] [TAINT] Extracting taint flows for Round 3
+[2026-11-09 22:29:39.277] [INFO] Extracting taint analysis results for Round 3
+[2026-11-09 22:29:39.277] [INFO] [TAINT] Round 3: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_3_taint.txt
+[2026-11-09 22:29:39.277] [INFO] [TAINT] Round report saved to: reports/taint/round_3_taint.txt
+[2026-11-09 22:29:39.278] [INFO] === Rotation (lifecycle) checks, round 3 ===
+[2026-11-09 22:29:39.278] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 22:29:39.278] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:29:39.407] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:29:39.444] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 22:29:39.444] [INFO] Total good network periods: 19
+[2026-11-09 22:29:39.444] [INFO] Total bad network periods: 5
+[2026-11-09 22:29:39.444] [INFO] Total disruptions: 24
+[2026-11-09 22:29:39.444] [INFO] Actual good:bad ratio: 19:5
+[SNAPSHOT] App-level reset: com.aurora.store
+[2026-11-09 22:29:49.243] [INFO] Starting Frida monitoring with static analysis results for package: com.aurora.store
+FridaManager: Starting Frida monitoring for package: com.aurora.store
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.aurora.store src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 22:29:50.296] [INFO] Frida monitoring started successfully
+[2026-11-09 22:29:58.296] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/line2)
+Login button detected: Next (ID: com.aurora.store:id/btn_forward)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/txt_status)
+Login button detected: Please log in to your Google Play account (ID: com.aurora.store:id/txt_status)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (539,1825)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Sign in - Google Accounts (ID: )
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?flowName=EmbeddedSetupAndroid&continue=https://accounts.google.com/o/android/auth?lang%3Den%26cc%3DUS%26langCountry%3Den_US%26xoauth_display_name%3DAnd}
+[WEBVIEW] Google sign-in page: using the Google test account
+[WEBVIEW] Identifier-only web form reached (rotation checks run on it)
+[2026-11-09 22:30:39.586] [INFO] UI manager detected login page
+[2026-11-09 22:30:39.586] [INFO]   - Google login: true
+[2026-11-09 22:30:39.587] [INFO]   - Facebook login: false
+[2026-11-09 22:30:39.587] [INFO]   - Username field: true
+[2026-11-09 22:30:39.587] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_222722/round_3/screenshot_005_baseline_ui_manager_detection.png
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[INPUT] Clicking at (540, 892) to focus field
+[INPUT] Inputting text char-by-char (length: 8)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[ROTATION] A(identifier): before rotation: identifier=true
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[ROTATION] A(identifier): after rotation: identifier=false
+[ROTATION] Finding: ROTATION_INPUT_LOST - Typed identifier lost on rotation (screen reloaded or state not saved)
+[2026-11-09 22:30:55.548] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-09 22:30:55.549] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 22:30:55.549] [INFO] Mode: random
+[2026-11-09 22:30:55.549] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 22:30:55.549] [INFO] Switch Interval: 60 seconds
+[2026-11-09 22:30:55.549] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 22:30:55.549] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:30:55.694] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:30:55.741] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 22:30:55.741] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 22:30:57.802] [INFO] Frida monitoring stopped
+[2026-11-09 22:30:57.802] [INFO] [BUG_DETECTION] Running bug detectors for Round 3
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 1
+[TIMEOUT_DETECTOR] Timeouts: 1, Delays: 0
+[BUG_DETECTION] LoginTimeoutDetector found 1 bug(s)
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 2
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 22:30:57.803] [INFO] ⚠️  Detected 2 potential bug(s) in Round 3
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_3_20261109_223057.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 2
+
+By Severity:
+  HIGH: 2
+
+By Category:
+  LOGIN_TIMEOUT: 1
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_223057.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 6
+Unique Bug Types: 5
+Deduplication Rate: 16.7%
+========================================
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[2x] PLAINTEXT_TOKEN_STORAGE
+Severity: MEDIUM
+Occurrences: 2
+First seen: Mon Nov 09 22:20:22 UTC 2026
+Last seen: Mon Nov 09 22:20:22 UTC 2026
+Description: Authentication token/credential stored in plaintext...
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:21:43 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:26:15 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:30:55 UTC 2026
+Description: Login state lost on device rotation...
+
+Category: LOGIN_TIMEOUT
+----------------------------------------
+
+[1x] LOGIN_TIMEOUT
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:30:57 UTC 2026
+Description: Login process exceeds acceptable time limits...
+
+
+[2026-11-09 22:30:57.806] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 22:30:57.806] [INFO] ROUND 3 COMPLETED
+[2026-11-09 22:30:57.806] [INFO] Round duration: 275912ms
+[2026-11-09 22:30:57.806] [INFO] Total attempts: 3
+[2026-11-09 22:30:57.806] [INFO] Successful logins: 1
+[2026-11-09 22:30:57.806] [INFO] Failed logins: 2
+[2026-11-09 22:30:57.806] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_222722/round_3/screenshot_006_round_3_end.png
+[2026-11-09 22:31:02.012] [INFO] ================================================================================
+[2026-11-09 22:31:02.012] [INFO] ROUND 4 STARTED
+[2026-11-09 22:31:02.012] [INFO] Round timestamp: 2026-11-09 22:31:02.012
+[2026-11-09 22:31:02.012] [INFO] ================================================================================
+[2026-11-09 22:31:02.012] [INFO] Round 4: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: com.aurora.store
+[2026-11-09 22:31:11.829] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/line2)
+Login button detected: Next (ID: com.aurora.store:id/btn_forward)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/txt_status)
+Login button detected: Please log in to your Google Play account (ID: com.aurora.store:id/txt_status)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (539,1825)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Sign in - Google Accounts (ID: )
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?flowName=EmbeddedSetupAndroid&continue=https://accounts.google.com/o/android/auth?lang%3Den%26cc%3DUS%26langCountry%3Den_US%26xoauth_display_name%3DAnd}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+[WEBVIEW] trusted click on 'Next'
+[2026-11-09 22:31:55.741] [INFO] 🔴 Inducing BAD network state: SLOW_NETWORK for 14 seconds
+[2026-11-09 22:32:02.555] [INFO] Verified: App restored to login page
+[2026-11-09 22:32:02.556] [INFO] Appended Frida round marker for round 4
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_223202/round_4/screenshot_001_round_4_start.png
+[SNAPSHOT] App-level reset: com.aurora.store
+[2026-11-09 22:32:09.834] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:32:09.970] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:32:12.856] [INFO] Baseline snapshot restored successfully
+[2026-11-09 22:32:55.742] [INFO] 🔴 Inducing BAD network state: SLOW_NETWORK for 20 seconds
+[2026-11-09 22:33:02.856] [INFO] Emulator snapshot operation completed
+[2026-11-09 22:33:02.857] [INFO] Starting Frida monitoring with static analysis results for package: com.aurora.store
+FridaManager: Starting Frida monitoring for package: com.aurora.store
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.aurora.store src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 22:33:03.900] [INFO] Frida monitoring started successfully
+[2026-11-09 22:33:03.900] [INFO] Credential choice: random (likely invalid / special characters)
+[2026-11-09 22:33:03.900] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 22:33:03.900] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:33:04.038] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:33:04.077] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 22:33:04.078] [INFO] Total good network periods: 22
+[2026-11-09 22:33:04.078] [INFO] Total bad network periods: 7
+[2026-11-09 22:33:04.078] [INFO] Total disruptions: 29
+[2026-11-09 22:33:04.078] [INFO] Actual good:bad ratio: 22:7
+[2026-11-09 22:33:04.078] [INFO] 🔴 Round condition: OFFLINE (default route removed: connections fail fast, like airplane mode)
+[2026-11-09 22:33:04.187] [INFO] Round network condition for login: offline
+[2026-11-09 22:33:04.187] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching com.aurora.store
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/line2)
+Login button detected: Next (ID: com.aurora.store:id/btn_forward)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/txt_status)
+Login button detected: Please log in to your Google Play account (ID: com.aurora.store:id/txt_status)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] Credential-free login offered; using it as this round's login method
+[2026-11-09 22:33:37.862] [INFO] UI manager detected login page
+[2026-11-09 22:33:37.862] [INFO]   - Google login: false
+[2026-11-09 22:33:37.862] [INFO]   - Facebook login: false
+[2026-11-09 22:33:37.862] [INFO]   - Username field: true
+[2026-11-09 22:33:37.862] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_223202/round_4/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 4)
+[2026-11-09 22:33:38.190] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_223202/round_4/screenshot_003_baseline_login_page.png
+[2026-11-09 22:33:38.503] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 22:33:38.503] [INFO] Selected username: fv0qqjde
+[2026-11-09 22:33:38.503] [INFO] Selected password: [15 chars]
+[2026-11-09 22:33:38.503] [INFO] Using the credential-free (anonymous/guest) login option
+[LOGIN] Tapped credential-free login option
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_223202/round_4/screenshot_004_credentials_input_complete.png
+[2026-11-09 22:33:39.883] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[TIMEOUT_DETECTOR] Login attempt: 37573ms (timeout, success=false)
+[2026-11-09 22:34:16.106] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[2026-11-09 22:34:16.106] [INFO] Login with valid credentials did not complete under 'offline' network; login page still shown
+[2026-11-09 22:34:16.106] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:34:16.317] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 22:34:16.317] [INFO] Mode: random
+[2026-11-09 22:34:16.317] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 22:34:16.317] [INFO] Switch Interval: 60 seconds
+[2026-11-09 22:34:16.317] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 22:34:16.317] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:34:16.453] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:34:16.494] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 22:34:16.494] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 22:34:19.045] [INFO] Captured 2 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[2026-11-09 22:34:19.046] [INFO] Known states from Frida: 1/2
+State machine validation passed (single state): Authenticating
+[2026-11-09 22:34:19.046] [INFO] State machine validation passed
+[2026-11-09 22:34:19.088] [INFO] [TAINT] Extracting taint flows for Round 4
+[2026-11-09 22:34:19.088] [INFO] Extracting taint analysis results for Round 4
+[2026-11-09 22:34:19.088] [INFO] [TAINT] Round 4: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_4_taint.txt
+[2026-11-09 22:34:19.088] [INFO] [TAINT] Round report saved to: reports/taint/round_4_taint.txt
+[2026-11-09 22:34:19.089] [INFO] === Rotation (lifecycle) checks, round 4 ===
+[2026-11-09 22:34:19.089] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 22:34:19.089] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:34:19.224] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:34:19.264] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 22:34:19.264] [INFO] Total good network periods: 25
+[2026-11-09 22:34:19.264] [INFO] Total bad network periods: 7
+[2026-11-09 22:34:19.264] [INFO] Total disruptions: 32
+[2026-11-09 22:34:19.264] [INFO] Actual good:bad ratio: 25:7
+[SNAPSHOT] App-level reset: com.aurora.store
+[2026-11-09 22:34:29.007] [INFO] Starting Frida monitoring with static analysis results for package: com.aurora.store
+FridaManager: Starting Frida monitoring for package: com.aurora.store
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.aurora.store src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 22:34:30.049] [INFO] Frida monitoring started successfully
+[2026-11-09 22:34:38.049] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/line2)
+Login button detected: Next (ID: com.aurora.store:id/btn_forward)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/txt_status)
+Login button detected: Please log in to your Google Play account (ID: com.aurora.store:id/txt_status)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (539,1825)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Sign in - Google Accounts (ID: )
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?flowName=EmbeddedSetupAndroid&continue=https://accounts.google.com/o/android/auth?lang%3Den%26cc%3DUS%26langCountry%3Den_US%26xoauth_display_name%3DAnd}
+[WEBVIEW] Google sign-in page: using the Google test account
+[WEBVIEW] Identifier-only web form reached (rotation checks run on it)
+[2026-11-09 22:35:19.167] [INFO] UI manager detected login page
+[2026-11-09 22:35:19.167] [INFO]   - Google login: true
+[2026-11-09 22:35:19.167] [INFO]   - Facebook login: false
+[2026-11-09 22:35:19.167] [INFO]   - Username field: true
+[2026-11-09 22:35:19.167] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_223202/round_4/screenshot_005_baseline_ui_manager_detection.png
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[INPUT] Clicking at (540, 892) to focus field
+[INPUT] Inputting text char-by-char (length: 8)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[ROTATION] A(identifier): before rotation: identifier=true
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[ROTATION] A(identifier): after rotation: identifier=false
+[ROTATION] Finding: ROTATION_INPUT_LOST - Typed identifier lost on rotation (screen reloaded or state not saved)
+[2026-11-09 22:35:35.125] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-09 22:35:35.126] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 22:35:35.126] [INFO] Mode: random
+[2026-11-09 22:35:35.126] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 22:35:35.126] [INFO] Switch Interval: 60 seconds
+[2026-11-09 22:35:35.126] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 22:35:35.126] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:35:35.276] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:35:35.318] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 22:35:35.318] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 22:35:37.373] [INFO] Frida monitoring stopped
+[2026-11-09 22:35:37.373] [INFO] [BUG_DETECTION] Running bug detectors for Round 4
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 1
+[TIMEOUT_DETECTOR] Timeouts: 1, Delays: 0
+[BUG_DETECTION] LoginTimeoutDetector found 1 bug(s)
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 2
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 22:35:37.374] [INFO] ⚠️  Detected 2 potential bug(s) in Round 4
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_4_20261109_223537.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 2
+
+By Severity:
+  HIGH: 2
+
+By Category:
+  LOGIN_TIMEOUT: 1
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_223537.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 8
+Unique Bug Types: 6
+Deduplication Rate: 25.0%
+========================================
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[2x] PLAINTEXT_TOKEN_STORAGE
+Severity: MEDIUM
+Occurrences: 2
+First seen: Mon Nov 09 22:20:22 UTC 2026
+Last seen: Mon Nov 09 22:20:22 UTC 2026
+Description: Authentication token/credential stored in plaintext...
+
+Category: LOGIN_TIMEOUT
+----------------------------------------
+
+[2x] LOGIN_TIMEOUT
+Severity: HIGH
+Occurrences: 2
+First seen: Mon Nov 09 22:30:57 UTC 2026
+Last seen: Mon Nov 09 22:35:37 UTC 2026
+Description: Login process exceeds acceptable time limits...
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:21:43 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:26:15 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:30:55 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:35:35 UTC 2026
+Description: Login state lost on device rotation...
+
+
+[2026-11-09 22:35:37.377] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 22:35:37.377] [INFO] ROUND 4 COMPLETED
+[2026-11-09 22:35:37.377] [INFO] Round duration: 275365ms
+[2026-11-09 22:35:37.377] [INFO] Total attempts: 4
+[2026-11-09 22:35:37.377] [INFO] Successful logins: 1
+[2026-11-09 22:35:37.377] [INFO] Failed logins: 3
+[2026-11-09 22:35:37.377] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_223202/round_4/screenshot_006_round_4_end.png
+[2026-11-09 22:35:41.551] [INFO] ================================================================================
+[2026-11-09 22:35:41.551] [INFO] ROUND 5 STARTED
+[2026-11-09 22:35:41.551] [INFO] Round timestamp: 2026-11-09 22:35:41.551
+[2026-11-09 22:35:41.551] [INFO] ================================================================================
+[2026-11-09 22:35:41.551] [INFO] Round 5: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: com.aurora.store
+[2026-11-09 22:35:51.275] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/line2)
+Login button detected: Next (ID: com.aurora.store:id/btn_forward)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/txt_status)
+Login button detected: Please log in to your Google Play account (ID: com.aurora.store:id/txt_status)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (539,1825)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Sign in - Google Accounts (ID: )
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?flowName=EmbeddedSetupAndroid&continue=https://accounts.google.com/o/android/auth?lang%3Den%26cc%3DUS%26langCountry%3Den_US%26xoauth_display_name%3DAnd}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+[WEBVIEW] trusted click on 'Next'
+[2026-11-09 22:36:42.094] [INFO] Verified: App restored to login page
+[2026-11-09 22:36:42.095] [INFO] Appended Frida round marker for round 5
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_223642/round_5/screenshot_001_round_5_start.png
+[SNAPSHOT] App-level reset: com.aurora.store
+[2026-11-09 22:36:52.556] [INFO] Baseline snapshot restored successfully
+[2026-11-09 22:37:35.318] [INFO] 🔴 Inducing BAD network state: SLOW_NETWORK for 27 seconds
+[2026-11-09 22:37:42.557] [INFO] Emulator snapshot operation completed
+[2026-11-09 22:37:42.557] [INFO] Starting Frida monitoring with static analysis results for package: com.aurora.store
+FridaManager: Starting Frida monitoring for package: com.aurora.store
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.aurora.store src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 22:37:43.602] [INFO] Frida monitoring started successfully
+[2026-11-09 22:37:43.602] [INFO] Credential choice: random (likely invalid / special characters)
+[2026-11-09 22:37:43.602] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 22:37:43.603] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:37:43.746] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:37:43.784] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 22:37:43.784] [INFO] Total good network periods: 27
+[2026-11-09 22:37:43.784] [INFO] Total bad network periods: 8
+[2026-11-09 22:37:43.784] [INFO] Total disruptions: 35
+[2026-11-09 22:37:43.784] [INFO] Actual good:bad ratio: 27:8
+[2026-11-09 22:37:43.784] [INFO] 🔴 Round condition: UNRESPONSIVE (DNS works, TCP packets dropped: servers never answer)
+[2026-11-09 22:37:43.926] [INFO] Round network condition for login: unresponsive
+[2026-11-09 22:37:43.926] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching com.aurora.store
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/line2)
+Login button detected: Next (ID: com.aurora.store:id/btn_forward)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/txt_status)
+Login button detected: Please log in to your Google Play account (ID: com.aurora.store:id/txt_status)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] Credential-free login offered; using it as this round's login method
+[2026-11-09 22:38:17.668] [INFO] UI manager detected login page
+[2026-11-09 22:38:17.668] [INFO]   - Google login: false
+[2026-11-09 22:38:17.668] [INFO]   - Facebook login: false
+[2026-11-09 22:38:17.668] [INFO]   - Username field: true
+[2026-11-09 22:38:17.668] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_223642/round_5/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 5)
+[2026-11-09 22:38:17.988] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_223642/round_5/screenshot_003_baseline_login_page.png
+[2026-11-09 22:38:18.330] [INFO] === Starting Credential Input Phase ===
+[2026-11-09 22:38:18.330] [INFO] Selected username: 93lbly7d
+[2026-11-09 22:38:18.330] [INFO] Selected password: [12 chars]
+[2026-11-09 22:38:18.330] [INFO] Using the credential-free (anonymous/guest) login option
+[LOGIN] Tapped credential-free login option
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_223642/round_5/screenshot_004_credentials_input_complete.png
+[2026-11-09 22:38:19.716] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[TIMEOUT_DETECTOR] Login attempt: 37585ms (timeout, success=false)
+[2026-11-09 22:38:55.945] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[2026-11-09 22:38:55.945] [INFO] Login with valid credentials did not complete under 'unresponsive' network; login page still shown
+[2026-11-09 22:38:55.945] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:38:56.075] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:38:56.112] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 22:38:56.113] [INFO] Mode: random
+[2026-11-09 22:38:56.113] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 22:38:56.113] [INFO] Switch Interval: 60 seconds
+[2026-11-09 22:38:56.113] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 22:38:56.113] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:38:56.244] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:38:56.283] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 22:38:56.283] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-09 22:38:58.740] [INFO] Captured 2 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[2026-11-09 22:38:58.740] [INFO] Known states from Frida: 1/2
+State machine validation passed (single state): Authenticating
+[2026-11-09 22:38:58.740] [INFO] State machine validation passed
+[2026-11-09 22:38:58.783] [INFO] [TAINT] Extracting taint flows for Round 5
+[2026-11-09 22:38:58.783] [INFO] Extracting taint analysis results for Round 5
+[2026-11-09 22:38:58.784] [INFO] [TAINT] Round 5: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_5_taint.txt
+[2026-11-09 22:38:58.784] [INFO] [TAINT] Round report saved to: reports/taint/round_5_taint.txt
+[2026-11-09 22:38:58.784] [INFO] === Rotation (lifecycle) checks, round 5 ===
+[2026-11-09 22:38:58.784] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 22:38:58.784] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:38:58.922] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:38:58.960] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 22:38:58.960] [INFO] Total good network periods: 30
+[2026-11-09 22:38:58.960] [INFO] Total bad network periods: 8
+[2026-11-09 22:38:58.960] [INFO] Total disruptions: 38
+[2026-11-09 22:38:58.960] [INFO] Actual good:bad ratio: 30:8
+[SNAPSHOT] App-level reset: com.aurora.store
+[2026-11-09 22:39:08.679] [INFO] Starting Frida monitoring with static analysis results for package: com.aurora.store
+FridaManager: Starting Frida monitoring for package: com.aurora.store
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.aurora.store src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-09 22:39:09.720] [INFO] Frida monitoring started successfully
+[2026-11-09 22:39:17.721] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/line2)
+Login button detected: Next (ID: com.aurora.store:id/btn_forward)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Username field: [masked] (id: com.aurora.store:id/line2)
+[Match] Normal login button: Next (id: com.aurora.store:id/btn_forward)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Activity hint matched for login: com.aurora.store/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (810,2200)
+Using ADB to detect login page...
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: com.aurora.store:id/txt_status)
+Login button detected: Please log in to your Google Play account (ID: com.aurora.store:id/txt_status)
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Please log in to your Google Play account (id: com.aurora.store:id/txt_status)
+[Match] Username field: [masked] (id: com.aurora.store:id/txt_status)
+[Match] Normal login button: Log in using (id: com.aurora.store:id/txt_action)
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.aurora.store/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (539,1825)
+Using ADB to detect login page...
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Sign in - Google Accounts (ID: )
+Activity hint matched for login: com.aurora.store/.MainActivity
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?flowName=EmbeddedSetupAndroid&continue=https://accounts.google.com/o/android/auth?lang%3Den%26cc%3DUS%26langCountry%3Den_US%26xoauth_display_name%3DAnd}
+[WEBVIEW] Google sign-in page: using the Google test account
+[WEBVIEW] Identifier-only web form reached (rotation checks run on it)
+[2026-11-09 22:39:59.003] [INFO] UI manager detected login page
+[2026-11-09 22:39:59.004] [INFO]   - Google login: true
+[2026-11-09 22:39:59.004] [INFO]   - Facebook login: false
+[2026-11-09 22:39:59.004] [INFO]   - Username field: true
+[2026-11-09 22:39:59.004] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_223642/round_5/screenshot_005_baseline_ui_manager_detection.png
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[INPUT] Clicking at (540, 892) to focus field
+[INPUT] Inputting text char-by-char (length: 8)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[ROTATION] A(identifier): before rotation: identifier=true
+[Match] Normal login button: Sign in - Google Accounts (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: Use your Google Account. The account will be added to this device and available to other Google apps. (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[ROTATION] A(identifier): after rotation: identifier=false
+[ROTATION] Finding: ROTATION_INPUT_LOST - Typed identifier lost on rotation (screen reloaded or state not saved)
+[2026-11-09 22:40:15.091] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-09 22:40:15.091] [INFO] === Starting Network Chaos Testing ===
+[2026-11-09 22:40:15.091] [INFO] Mode: random
+[2026-11-09 22:40:15.091] [INFO] Good:Bad Ratio: 40:60
+[2026-11-09 22:40:15.091] [INFO] Switch Interval: 60 seconds
+[2026-11-09 22:40:15.092] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-09 22:40:15.092] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:40:15.241] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:40:15.290] [INFO] Network chaos scheduler started in random mode
+[2026-11-09 22:40:15.290] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-09 22:40:17.353] [INFO] Frida monitoring stopped
+[2026-11-09 22:40:17.353] [INFO] [BUG_DETECTION] Running bug detectors for Round 5
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 1
+[TIMEOUT_DETECTOR] Timeouts: 1, Delays: 0
+[BUG_DETECTION] LoginTimeoutDetector found 1 bug(s)
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 2
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-09 22:40:17.354] [INFO] ⚠️  Detected 2 potential bug(s) in Round 5
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_5_20261109_224017.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 2
+
+By Severity:
+  HIGH: 2
+
+By Category:
+  LOGIN_TIMEOUT: 1
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261109_224017.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 10
+Unique Bug Types: 7
+Deduplication Rate: 30.0%
+========================================
+
+Category: LOGIN_TIMEOUT
+----------------------------------------
+
+[3x] LOGIN_TIMEOUT
+Severity: HIGH
+Occurrences: 3
+First seen: Mon Nov 09 22:30:57 UTC 2026
+Last seen: Mon Nov 09 22:40:17 UTC 2026
+Description: Login process exceeds acceptable time limits...
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[2x] PLAINTEXT_TOKEN_STORAGE
+Severity: MEDIUM
+Occurrences: 2
+First seen: Mon Nov 09 22:20:22 UTC 2026
+Last seen: Mon Nov 09 22:20:22 UTC 2026
+Description: Authentication token/credential stored in plaintext...
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:21:43 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:26:15 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:30:55 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:35:35 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Mon Nov 09 22:40:15 UTC 2026
+Description: Login state lost on device rotation...
+
+
+[2026-11-09 22:40:17.357] [INFO] --------------------------------------------------------------------------------
+[2026-11-09 22:40:17.357] [INFO] ROUND 5 COMPLETED
+[2026-11-09 22:40:17.357] [INFO] Round duration: 275806ms
+[2026-11-09 22:40:17.357] [INFO] Total attempts: 5
+[2026-11-09 22:40:17.357] [INFO] Successful logins: 1
+[2026-11-09 22:40:17.357] [INFO] Failed logins: 4
+[2026-11-09 22:40:17.357] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_223642/round_5/screenshot_006_round_5_end.png
+[2026-11-09 22:40:18.571] [INFO] === Test Execution Summary ===
+[2026-11-09 22:40:18.572] [INFO] Total Login Attempts: 5
+[2026-11-09 22:40:18.572] [INFO] Successful Logins: 1
+[2026-11-09 22:40:18.572] [INFO] Failed Logins: 4
+[2026-11-09 22:40:18.574] [INFO] Success Rate: 20.0%
+[2026-11-09 22:40:18.576] [INFO] Detailed report written to: reports/login_test_report_2026-11-09_22-18-26.txt
+[2026-11-09 22:40:18.576] [INFO] === Generating Final Taint Analysis Report ===
+[2026-11-09 22:40:18.576] [INFO] 
+================================================================================
+TAINT ANALYSIS REPORT
+================================================================================
+Application: com.aurora.store
+Total Taints: 0
+Total Flows: 0
+Violations: 0
+================================================================================
+
+[TaintAnalyzer] Report saved to: reports/taint/final_taint_analysis.txt
+[2026-11-09 22:40:18.577] [INFO] [TAINT] Final comprehensive report saved to: reports/taint/final_taint_analysis.txt
+[2026-11-09 22:40:18.577] [INFO] [TAINT] Total taints tracked: 0
+[2026-11-09 22:40:18.577] [INFO] [TAINT] Total flows detected: 0
+[2026-11-09 22:40:18.577] [INFO] [TAINT] Total violations: 0
+[2026-11-09 22:40:18.578] [INFO] Final summary appended to unified error report: reports/errors/test_errors_20261109_221827.txt
+[CRASH_DETECTOR] Stopped monitoring
+[2026-11-09 22:40:18.578] [INFO] ✓ Crash detector monitoring stopped
+UI manager closed
+[2026-11-09 22:40:18.580] [INFO] Monkey stopped
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+[2026-11-09 22:40:18.580] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-09 22:40:18.580] [INFO] 🟢 Restoring GOOD network state
+[2026-11-09 22:40:18.726] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-09 22:40:18.765] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-09 22:40:18.765] [INFO] Total good network periods: 32
+[2026-11-09 22:40:18.765] [INFO] Total bad network periods: 8
+[2026-11-09 22:40:18.765] [INFO] Total disruptions: 40
+[2026-11-09 22:40:18.765] [INFO] Actual good:bad ratio: 32:8
+[2026-11-09 22:40:18.771] [INFO] Network disruption report saved to: reports/network/network_disruptions_20261109_224018.txt
+[2026-11-09 22:40:18.771] [INFO] Network disruption report saved to: reports/network/network_disruptions_20261109_224018.txt
+[2026-11-09 22:40:18.771] [INFO] AndroidLoginDetector cleanup completed
+EXIT 0

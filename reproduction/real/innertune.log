@@ -1,0 +1,3097 @@
+[2026-11-10 00:59:18.983] [INFO] === AndroidLoginDetector Started ===
+[2026-11-10 00:59:18.991] [INFO] Log file: logs/android_login_detector_20261110_005918.log
+[2026-11-10 00:59:18.991] [INFO] Timestamp: 2026-11-10 00:59:18.991
+StateMachineManager: Loaded 45 states from regex patterns
+[BUG_DETECTION] Initialized 7 symptom-based bug detectors
+[BUG_DETECTION]   1. ErrorMessageMismatchDetector (Symptom 7)
+[BUG_DETECTION]   2. LifecycleDataLossDetector (Lifecycle)
+[BUG_DETECTION]   3. CrashDetector (Symptom 1)
+[BUG_DETECTION]   4. LoginTimeoutDetector (Symptom 2)
+[BUG_DETECTION]   5. NavigationFlowDetector (Symptom 3)
+StateMachineManager: Bug detection initialized
+StateMachineManager: initialization complete with 45 state transitions
+[2026-11-10 00:59:19.021] [INFO] App configuration loaded:
+[2026-11-10 00:59:19.021] [INFO]   - Package: com.zionhuang.music
+[2026-11-10 00:59:19.022] [INFO]   - Activity: com.zionhuang.music.MainActivity'
+[2026-11-10 00:59:19.022] [INFO]   - APK Path: apps/com.zionhuang.music_26.apk
+[2026-11-10 00:59:19.022] [INFO]   - Emulator Snapshot (auto-generated): snap_zionhuang_music_login
+[2026-11-10 00:59:19.022] [INFO] Initializing static analyzer...
+[2026-11-10 00:59:19.022] [INFO] Static analysis result found and up-to-date: reports/static_analysis/com.zionhuang.music_26_1.json
+[2026-11-10 00:59:19.022] [INFO] Initializing Frida manager with static analysis results...
+FridaManager: State InitializingSync has 2 method signatures
+FridaManager: State IR_LoginEvidence has 220 method signatures
+FridaManager: State IR_WebViewEvidence has 10 method signatures
+FridaManager: State WebViewLoginCandidate has 2 method signatures
+FridaManager: Loaded 4 states from static analysis result
+FridaManager: Using static analysis result: reports/static_analysis/com.zionhuang.music_26.json
+FridaManager: State InitializingSync has 2 method signatures
+FridaManager: State IR_LoginEvidence has 220 method signatures
+FridaManager: State IR_WebViewEvidence has 10 method signatures
+FridaManager: State WebViewLoginCandidate has 2 method signatures
+FridaManager: Loaded 4 states from static analysis result
+FridaManager: Static analysis results loaded from: reports/static_analysis/com.zionhuang.music_26_1.json
+[2026-11-10 00:59:19.066] [INFO] Frida manager configured with static analysis results
+[2026-11-10 00:59:19.067] [INFO] ApiLogAnalyzer initialized with 4 patterns from static analysis
+[2026-11-10 00:59:19.103] [INFO] Using credential pool directory: pools/com.zionhuang.music_26
+[2026-11-10 00:59:19.104] [INFO] Logged-in snapshot available: pools/com.zionhuang.music_26/loggedin.tgz
+[2026-11-10 00:59:19.105] [ERROR] Error reading file pools/com.zionhuang.music_26/valid_pairs.csv: pools/com.zionhuang.music_26/valid_pairs.csv (No such file or directory)
+[2026-11-10 00:59:19.106] [INFO] Loaded 0 valid credential pair(s)
+[2026-11-10 00:59:19.106] [ERROR] Error reading file pools/com.zionhuang.music_26/totp_secrets.csv: pools/com.zionhuang.music_26/totp_secrets.csv (No such file or directory)
+[2026-11-10 00:59:19.106] [INFO] Loaded 0 TOTP secret(s)
+[2026-11-10 00:59:19.106] [INFO] Loaded credential pools:
+[2026-11-10 00:59:19.107] [INFO]   - Standard accounts: 12
+[2026-11-10 00:59:19.107] [INFO]   - Standard passwords: 15
+[2026-11-10 00:59:19.108] [INFO]   - Google accounts: 1
+[2026-11-10 00:59:19.108] [INFO]   - Google passwords: 1
+[2026-11-10 00:59:19.108] [INFO]   - Facebook accounts: 5
+[2026-11-10 00:59:19.109] [INFO]   - Facebook passwords: 5
+[2026-11-10 00:59:19.109] [INFO] State machine initialized with 45 states
+=== State machine information ===
+Provider_Okta -> Provider_Okta
+Provider_Auth0 -> Provider_Auth0
+AppMainScreen -> AppMainScreen, UserLogout, InitialState
+ParsingResponse -> ParsingResponse
+CheckingMFASettings -> CheckingMFASettings, MFACodePending, LoggedIn_NoMFA
+AwaitingResponse -> AwaitingResponse
+CheckingToken -> CheckingToken, LoggedIn_Via_Token, CredentialInput
+OAuth_TokenExchange -> OAuth_TokenExchange
+ValidatingCredentials -> ValidatingCredentials
+Unknown -> Unknown
+ShowingError -> ShowingError
+SendingMFACode -> SendingMFACode, MFAVerification
+RetrievingFeeds -> RetrievingFeeds
+LoadingProfile -> LoadingProfile
+Authenticating -> Authenticating, CheckingCredentials, LoginFailure, NetworkError, CredentialInput, CredentialFormatError
+ServiceUnavailable_Auth -> ServiceUnavailable_Auth, CredentialInput, InitialState
+VerifyingMFA -> VerifyingMFA, MFAError, LoggedIn_WithMFA
+LoggedIn_Via_Token -> LoggedIn_Via_Token, AppMainScreen
+ClickingLoginButton -> ClickingLoginButton
+InitializingSync -> InitializingSync
+AuthHeader_Bearer -> AuthHeader_Bearer
+PreparingAuth -> PreparingAuth
+checkAuthToken -> checkAuthToken
+NetworkError -> NetworkError, CredentialInput, LoginFailure, Authenticating
+InvalidCredentials -> InvalidCredentials, CredentialInput
+Provider_MSAL -> Provider_MSAL
+checkStoredCredentials -> checkStoredCredentials
+LoggedIn -> LoggedIn
+ReturnToLogin -> ReturnToLogin
+OAuth_BeginAuth -> OAuth_BeginAuth
+UserLogout -> UserLogout, InitialState, CredentialInput
+MFACodePending -> MFACodePending, SendingMFACode
+InitialState -> InitialState, CheckingToken, CredentialInput
+SendingCredentials -> SendingCredentials
+LoggedIn_NoMFA -> LoggedIn_NoMFA, AppMainScreen
+Provider_FacebookLogin -> Provider_FacebookLogin
+Provider_Cognito -> Provider_Cognito
+MFAVerification -> MFAVerification, VerifyingMFA
+LoginFailure -> LoginFailure, CredentialInput, NetworkError
+MFAError -> MFAError, MFACodePending
+Provider_GoogleSignIn -> Provider_GoogleSignIn
+CredentialFormatError -> CredentialFormatError, CredentialInput
+LoggedIn_WithMFA -> LoggedIn_WithMFA, AppMainScreen
+CheckingCredentials -> CheckingCredentials, ServiceUnavailable_Auth, InvalidCredentials, CheckingMFASettings
+CredentialInput -> CredentialInput, CredentialFormatError, Authenticating, LoginFailure
+==================
+[SNAPSHOT] LIFT_RESET_MODE=app: using app-level reset instead of emulator snapshots
+[TaintAnalyzer] Configuration loaded from: src/main/resources/taint_config.json
+[2026-11-10 00:59:19.114] [INFO] Taint analyzer initialized
+[2026-11-10 00:59:19.114] [INFO] Starting Frida monitoring with static analysis results for package: com.zionhuang.music
+FridaManager: Starting Frida monitoring for package: com.zionhuang.music
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.zionhuang.music src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-10 00:59:20.161] [INFO] Frida monitoring started successfully
+Configuration validation passed
+=== Configuration Summary ===
+Test Rounds: 5
+Duration per Round: 300000ms
+Round Interval: 3s
+Login Timeout: 120s
+Monkey Events: 1000
+Monkey Delay: 500ms
+Frida Timeout: 120s
+Frida Retry Count: 5
+==================
+[2026-11-10 00:59:20.166] [INFO] === Starting AndroidLoginDetector Test with Static Analysis ===
+[2026-11-10 00:59:20.166] [INFO] Target app: com.zionhuang.music
+[2026-11-10 00:59:20.166] [INFO] Test rounds: 5
+[2026-11-10 00:59:20.166] [INFO] Static analysis results: reports/static_analysis/com.zionhuang.music_26_1.json
+[2026-11-10 00:59:20.167] [INFO] Unified error report: reports/errors/test_errors_20261110_005920.txt
+[2026-11-10 00:59:20.167] [INFO] Starting global taint tracking...
+[TaintAnalyzer] Taint tracking prepared for: com.zionhuang.music
+[TaintAnalyzer] Note: Taint analysis requires custom Frida integration
+[2026-11-10 00:59:20.167] [INFO] ✓ Taint tracking active for all rounds
+[2026-11-10 00:59:20.167] [INFO] Checking Docker environment compatibility...
+[2026-11-10 00:59:20.171] [INFO] ADB device found: 127.0.0.1:5555	device
+[2026-11-10 00:59:20.171] [INFO] ADB device found: 127.0.0.1:5556	device
+[2026-11-10 00:59:20.171] [INFO] ADB device found: 127.0.0.1:5557	device
+[2026-11-10 00:59:20.192] [INFO] Emulator Android version: 14
+[2026-11-10 00:59:20.483] [INFO] Frida version: 16.7.19
+[2026-11-10 00:59:20.483] [INFO] All required files found
+[2026-11-10 00:59:20.483] [INFO] Docker environment check passed
+ADB device ready: 127.0.0.1:5555 (provisioned)
+UI manager started successfully
+[2026-11-10 00:59:20.556] [INFO] Starting network chaos testing (emulator is ready)...
+[2026-11-10 00:59:20.556] [INFO] === Starting Network Chaos Testing ===
+[2026-11-10 00:59:20.556] [INFO] Mode: random
+[2026-11-10 00:59:20.559] [INFO] Good:Bad Ratio: 40:60
+[2026-11-10 00:59:20.559] [INFO] Switch Interval: 60 seconds
+[2026-11-10 00:59:20.560] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-10 00:59:20.560] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 00:59:20.700] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 00:59:20.743] [INFO] Network disruption interface: eth0
+[2026-11-10 00:59:20.763] [INFO] Network chaos scheduler started in random mode
+[2026-11-10 00:59:20.765] [INFO] ================================================================================
+[2026-11-10 00:59:20.766] [INFO] ROUND 1 STARTED
+[2026-11-10 00:59:20.766] [INFO] Round timestamp: 2026-11-10 00:59:20.766
+[2026-11-10 00:59:20.766] [INFO] ================================================================================
+[2026-11-10 00:59:20.766] [INFO] Round 1: Starting fresh without snapshot restore
+[2026-11-10 00:59:20.768] [INFO] Appended Frida round marker for round 1
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_005920/round_1/screenshot_001_round_1_start.png
+[SNAPSHOT] App-level reset: com.zionhuang.music
+[2026-11-10 00:59:31.182] [INFO] Baseline snapshot restored successfully
+[2026-11-10 01:00:21.184] [INFO] Emulator snapshot operation completed
+[2026-11-10 01:00:21.184] [INFO] Starting Frida monitoring with static analysis results for package: com.zionhuang.music
+FridaManager: Starting Frida monitoring for package: com.zionhuang.music
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.zionhuang.music src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-10 01:00:24.246] [INFO] Frida monitoring started successfully
+[CRASH_DETECTOR] Started monitoring for crashes of com.zionhuang.music
+[2026-11-10 01:00:24.250] [INFO] ✓ Crash detector monitoring started for package: com.zionhuang.music
+[2026-11-10 01:00:24.250] [INFO] Credential choice: random (likely invalid / special characters)
+[2026-11-10 01:00:24.251] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-10 01:00:24.251] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:00:24.381] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:00:24.421] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-10 01:00:24.421] [INFO] Total good network periods: 2
+[2026-11-10 01:00:24.422] [INFO] Total bad network periods: 0
+[2026-11-10 01:00:24.422] [INFO] Total disruptions: 2
+[2026-11-10 01:00:24.422] [INFO] Actual good:bad ratio: 2:0
+[2026-11-10 01:00:24.422] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:00:24.552] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:00:24.588] [INFO] Round network condition for login: normal
+[2026-11-10 01:00:24.589] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching com.zionhuang.music
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Cache] New login method discovered: normal
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?continue=https://www.youtube.com/signin?action_handle_signin%3Dtrue%26next%3Dhttps%253A%252F%252Fmusic.youtube.com%252F&ltmpl=music&passive=true&servic}
+[WEBVIEW] Google sign-in page: using the Google test account
+[WEBVIEW] Identifier-only web form; entering username and continuing
+[WEBVIEW] trusted click on 'Next'
+[2026-11-10 01:02:23.963] [INFO] UI manager detected login page
+[2026-11-10 01:02:23.964] [INFO]   - Google login: true
+[2026-11-10 01:02:23.964] [INFO]   - Facebook login: false
+[2026-11-10 01:02:23.964] [INFO]   - Username field: true
+[2026-11-10 01:02:23.964] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_005920/round_1/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 1)
+[2026-11-10 01:02:24.335] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_005920/round_1/screenshot_003_baseline_login_page.png
+[2026-11-10 01:02:24.735] [INFO] Google login detected, using Google account: zzxpersist@gmail.com
+[2026-11-10 01:02:24.735] [INFO] Google login detected, using Google password: [13 chars]
+[2026-11-10 01:02:24.735] [INFO] === Starting Credential Input Phase ===
+[2026-11-10 01:02:24.735] [INFO] Selected username: zzxpersist@gmail.com
+[2026-11-10 01:02:24.735] [INFO] Selected password: [13 chars]
+[2026-11-10 01:02:24.736] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Next'
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_005920/round_1/screenshot_004_credentials_input_complete.png
+[2026-11-10 01:02:27.976] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Kiss Me Good-Bye (featured in FINAL FANTASYXII) - Kiss Me good-Bye-featured in FINAL FANTASY V II (id: )
+[Match] Normal login button: Kiss Me Good-Bye (featured in FINAL FANTASYXII) - Kiss Me good-Bye-featured in FINAL FANTASY V II (id: )
+[Match] Normal login button: Kiss Me Good-Bye (featured in FINAL FANTASYXII) - Kiss Me good-Bye-featured in FINAL FANTASY V II (id: )
+[Match] Normal login button: Kiss Me Good-Bye (featured in FINAL FANTASYXII) - Kiss Me good-Bye-featured in FINAL FANTASY V II (id: )
+[Match] Normal login button: Kiss Me Good-Bye (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[TIMEOUT_DETECTOR] Login attempt: 5482ms (normal, success=true)
+[STORAGE] Plaintext auth value 'innerTubeCookie' in /data/data/com.zionhuang.music/files/datastore/settings.preferences_pb
+[2026-11-10 01:02:38.689] [INFO] Login outcome: inputOk=true, loginPageGone=true, validPair=true
+[2026-11-10 01:02:38.689] [INFO] Login process completed successfully
+[NAV_DETECTOR] Login succeeded at 1794272558689
+[2026-11-10 01:02:38.689] [INFO] ✓ Navigation detector: recorded login success
+[NAV_DETECTOR] Navigation: null → com.zionhuang.music/com.zionhuang.music.MainActivity
+[2026-11-10 01:02:38.724] [INFO] ✓ Navigation detector: current activity = com.zionhuang.music/com.zionhuang.music.MainActivity
+[2026-11-10 01:02:38.724] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:02:38.856] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:02:38.893] [INFO] === Starting Network Chaos Testing ===
+[2026-11-10 01:02:38.894] [INFO] Mode: random
+[2026-11-10 01:02:38.894] [INFO] Good:Bad Ratio: 40:60
+[2026-11-10 01:02:38.894] [INFO] Switch Interval: 60 seconds
+[2026-11-10 01:02:38.894] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-10 01:02:38.894] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:02:39.022] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:02:39.060] [INFO] Network chaos scheduler started in random mode
+[2026-11-10 01:02:39.061] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-10 01:02:42.074] [INFO] Captured 140 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+Add observed state: CredentialInput (total: 98, compressed: 2)
+Add observed state: Authenticating (total: 99, compressed: 3)
+Add observed state: CredentialInput (total: 100, compressed: 4)
+Add observed state: Authenticating (total: 103, compressed: 5)
+[BUG_DETECTOR] Recorded error state: NetworkError
+[BUG_DETECTOR] Recorded error state: NetworkError
+Add observed state: NetworkError (total: 115, compressed: 6)
+Add observed state: Authenticating (total: 116, compressed: 7)
+Add observed state: CredentialInput (total: 122, compressed: 8)
+Add observed state: Authenticating (total: 123, compressed: 9)
+Add observed state: CredentialInput (total: 136, compressed: 10)
+Add observed state: Authenticating (total: 137, compressed: 11)
+[2026-11-10 01:02:42.085] [INFO] Known states from Frida: 140/140
+State machine: Stopped analysis at error state: NetworkError
+State machine validation passed (stopped at error)
+  Compressed sequence: Authenticating (×97, 0.0s) -> CredentialInput -> Authenticating -> CredentialInput (×3) -> Authenticating (×12, 0.0s) -> NetworkError [ERROR - STOPPED]
+  Original states: 140, Compressed: 11
+[2026-11-10 01:02:42.086] [INFO] State machine validation passed
+[2026-11-10 01:02:42.130] [INFO] [TAINT] Extracting taint flows for Round 1
+[2026-11-10 01:02:42.130] [INFO] Extracting taint analysis results for Round 1
+[2026-11-10 01:02:42.131] [INFO] [TAINT] Round 1: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_1_taint.txt
+[2026-11-10 01:02:42.132] [INFO] [TAINT] Round report saved to: reports/taint/round_1_taint.txt
+[2026-11-10 01:02:42.132] [INFO] === Rotation (lifecycle) checks, round 1 ===
+[2026-11-10 01:02:42.132] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-10 01:02:42.132] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:02:42.277] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:02:42.322] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-10 01:02:42.322] [INFO] Total good network periods: 6
+[2026-11-10 01:02:42.322] [INFO] Total bad network periods: 0
+[2026-11-10 01:02:42.322] [INFO] Total disruptions: 6
+[2026-11-10 01:02:42.322] [INFO] Actual good:bad ratio: 6:0
+[SNAPSHOT] App-level reset: com.zionhuang.music
+[2026-11-10 01:02:51.445] [INFO] Starting Frida monitoring with static analysis results for package: com.zionhuang.music
+FridaManager: Starting Frida monitoring for package: com.zionhuang.music
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.zionhuang.music src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-10 01:02:54.505] [INFO] Frida monitoring started successfully
+[2026-11-10 01:03:02.506] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?continue=https://www.youtube.com/signin?action_handle_signin%3Dtrue%26next%3Dhttps%253A%252F%252Fmusic.youtube.com%252F&ltmpl=music&passive=true&servic}
+[WEBVIEW] Google sign-in page: using the Google test account
+[WEBVIEW] Identifier-only web form reached (rotation checks run on it)
+[2026-11-10 01:04:48.274] [INFO] UI manager detected login page
+[2026-11-10 01:04:48.274] [INFO]   - Google login: true
+[2026-11-10 01:04:48.274] [INFO]   - Facebook login: false
+[2026-11-10 01:04:48.274] [INFO]   - Username field: true
+[2026-11-10 01:04:48.274] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_005920/round_1/screenshot_005_baseline_ui_manager_detection.png
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[INPUT] Clicking at (540, 871) to focus field
+[INPUT] Inputting text char-by-char (length: 23)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[ROTATION] A(identifier): before rotation: identifier=true
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[ROTATION] A(identifier): after rotation: identifier=false
+[ROTATION] Finding: ROTATION_INPUT_LOST - Typed identifier lost on rotation (screen reloaded or state not saved)
+[2026-11-10 01:05:05.081] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-10 01:05:05.082] [INFO] === Starting Network Chaos Testing ===
+[2026-11-10 01:05:05.082] [INFO] Mode: random
+[2026-11-10 01:05:05.082] [INFO] Good:Bad Ratio: 40:60
+[2026-11-10 01:05:05.082] [INFO] Switch Interval: 60 seconds
+[2026-11-10 01:05:05.082] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-10 01:05:05.082] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:05:05.232] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:05:05.275] [INFO] Network chaos scheduler started in random mode
+[2026-11-10 01:05:05.275] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-10 01:05:07.872] [INFO] Frida monitoring stopped
+[2026-11-10 01:05:07.872] [INFO] [BUG_DETECTION] Running bug detectors for Round 1
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 1
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: true
+[NAV_DETECTOR] Current activity: com.zionhuang.music/com.zionhuang.music.MainActivity
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 1
+[NAV_DETECTOR] Stuck check: onLoginActivity=false, inLoginState=false, enoughTimePassed=true → stuck=false
+[NAV_DETECTOR] ✓ Navigation flow appears correct
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] StorageLeakDetector found 1 bug(s)
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 2
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-10 01:05:07.878] [INFO] ⚠️  Detected 2 potential bug(s) in Round 1
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_1_20261110_010507.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 2
+
+By Severity:
+  HIGH: 1
+  MEDIUM: 1
+
+By Category:
+  LIFECYCLE_INTERFERENCE: 1
+  INCORRECT_LOGIN_FLOW: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261110_010507.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 2
+Unique Bug Types: 2
+Deduplication Rate: 0.0%
+========================================
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:05:05 UTC 2026
+Description: Login state lost on device rotation...
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[1x] PLAINTEXT_TOKEN_STORAGE
+Severity: MEDIUM
+Occurrences: 1
+First seen: Tue Nov 10 01:02:38 UTC 2026
+Description: Authentication token/credential stored in plaintext...
+
+
+[2026-11-10 01:05:07.898] [INFO] --------------------------------------------------------------------------------
+[2026-11-10 01:05:07.898] [INFO] ROUND 1 COMPLETED
+[2026-11-10 01:05:07.898] [INFO] Round duration: 347133ms
+[2026-11-10 01:05:07.898] [INFO] Total attempts: 1
+[2026-11-10 01:05:07.898] [INFO] Successful logins: 1
+[2026-11-10 01:05:07.898] [INFO] Failed logins: 0
+[2026-11-10 01:05:07.898] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_005920/round_1/screenshot_006_round_1_end.png
+[2026-11-10 01:05:12.208] [INFO] ================================================================================
+[2026-11-10 01:05:12.209] [INFO] ROUND 2 STARTED
+[2026-11-10 01:05:12.209] [INFO] Round timestamp: 2026-11-10 01:05:12.209
+[2026-11-10 01:05:12.209] [INFO] ================================================================================
+[2026-11-10 01:05:12.209] [INFO] Round 2: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: com.zionhuang.music
+[2026-11-10 01:05:21.213] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[2026-11-10 01:07:05.278] [INFO] 🔴 Inducing BAD network state: SLOW_NETWORK for 18 seconds
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?continue=https://www.youtube.com/signin?action_handle_signin%3Dtrue%26next%3Dhttps%253A%252F%252Fmusic.youtube.com%252F&ltmpl=music&passive=true&servic}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+[WEBVIEW] trusted click on 'Next'
+[2026-11-10 01:07:16.937] [INFO] Verified: App restored to login page
+[2026-11-10 01:07:16.938] [INFO] Appended Frida round marker for round 2
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_010716/round_2/screenshot_001_round_2_start.png
+[SNAPSHOT] App-level reset: com.zionhuang.music
+[2026-11-10 01:07:23.382] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:07:23.542] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:07:26.506] [INFO] Baseline snapshot restored successfully
+[2026-11-10 01:08:05.276] [INFO] 🔴 Inducing BAD network state: DISABLE_DATA for 27 seconds
+[2026-11-10 01:08:16.507] [INFO] Emulator snapshot operation completed
+[2026-11-10 01:08:16.507] [INFO] Starting Frida monitoring with static analysis results for package: com.zionhuang.music
+FridaManager: Starting Frida monitoring for package: com.zionhuang.music
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.zionhuang.music src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-10 01:08:17.553] [INFO] Frida monitoring started successfully
+[2026-11-10 01:08:17.554] [INFO] Credential choice: invalid, special-character username
+[2026-11-10 01:08:17.554] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-10 01:08:17.554] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:08:17.692] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:08:17.731] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-10 01:08:17.731] [INFO] Total good network periods: 9
+[2026-11-10 01:08:17.731] [INFO] Total bad network periods: 2
+[2026-11-10 01:08:17.731] [INFO] Total disruptions: 11
+[2026-11-10 01:08:17.731] [INFO] Actual good:bad ratio: 9:2
+[2026-11-10 01:08:17.731] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:08:17.869] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:08:17.910] [INFO] Round network condition for login: normal
+[2026-11-10 01:08:17.911] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching com.zionhuang.music
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?continue=https://www.youtube.com/signin?action_handle_signin%3Dtrue%26next%3Dhttps%253A%252F%252Fmusic.youtube.com%252F&ltmpl=music&passive=true&servic}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+[WEBVIEW] trusted click on 'Next'
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: true
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[2026-11-10 01:10:16.564] [INFO] UI manager detected login page
+[2026-11-10 01:10:16.564] [INFO]   - Google login: true
+[2026-11-10 01:10:16.564] [INFO]   - Facebook login: false
+[2026-11-10 01:10:16.564] [INFO]   - Username field: true
+[2026-11-10 01:10:16.564] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_010716/round_2/screenshot_002_baseline_ui_manager_detection.png
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 2)
+[2026-11-10 01:10:16.911] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_010716/round_2/screenshot_003_baseline_login_page.png
+[2026-11-10 01:10:17.295] [INFO] Google login detected, using Google account: zzxpersist@gmail.com
+[2026-11-10 01:10:17.295] [INFO] Google login detected, using Google password: [13 chars]
+[2026-11-10 01:10:17.295] [INFO] === Starting Credential Input Phase ===
+[2026-11-10 01:10:17.295] [INFO] Selected username: zzxpersist@gmail.com
+[2026-11-10 01:10:17.295] [INFO] Selected password: [13 chars]
+[2026-11-10 01:10:17.295] [INFO] === Starting Enhanced Credential Input Process ===
+[2026-11-10 01:10:17.295] [INFO] Username to input: zzxpersist@gmail.com
+[2026-11-10 01:10:17.296] [INFO] Password length: 13 characters
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_010716/round_2/screenshot_004_before_credential_input.png
+Using ADB to input credentials (without clicking button)...
+[CREDENTIAL_INPUT] Username already entered on the identifier screen (two-step login)
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Enter a valid email or phone number (id: )
+[Match] Username field: [masked] (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[CREDENTIAL_INPUT] Password field not found!
+[2026-11-10 01:10:21.836] [ERROR] Failed to input credentials
+[2026-11-10 01:10:21.836] [INFO] ❌ Credential input phase failed
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_010716/round_2/screenshot_005_credentials_input_failed.png
+[2026-11-10 01:10:22.208] [INFO] Login outcome: inputOk=false, loginPageGone=false, validPair=false
+[2026-11-10 01:10:22.208] [ERROR] Login process failed
+[2026-11-10 01:10:22.208] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:10:22.344] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:10:22.383] [INFO] === Starting Network Chaos Testing ===
+[2026-11-10 01:10:22.383] [INFO] Mode: random
+[2026-11-10 01:10:22.384] [INFO] Good:Bad Ratio: 40:60
+[2026-11-10 01:10:22.384] [INFO] Switch Interval: 60 seconds
+[2026-11-10 01:10:22.384] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-10 01:10:22.384] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:10:22.520] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:10:22.563] [INFO] Network chaos scheduler started in random mode
+[2026-11-10 01:10:22.563] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-10 01:10:25.218] [INFO] Captured 125 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+Add observed state: CredentialInput (total: 95, compressed: 2)
+Add observed state: Authenticating (total: 96, compressed: 3)
+Add observed state: CredentialInput (total: 97, compressed: 4)
+Add observed state: Authenticating (total: 100, compressed: 5)
+[2026-11-10 01:10:25.221] [INFO] Known states from Frida: 125/125
+State machine validation passed (complete)
+  Compressed sequence: Authenticating (×94, 0.0s) -> CredentialInput -> Authenticating -> CredentialInput (×3) -> Authenticating (×26)
+  Original states: 125, Compressed: 5
+[2026-11-10 01:10:25.222] [INFO] State machine validation passed
+[2026-11-10 01:10:25.262] [INFO] [TAINT] Extracting taint flows for Round 2
+[2026-11-10 01:10:25.262] [INFO] Extracting taint analysis results for Round 2
+[2026-11-10 01:10:25.263] [INFO] [TAINT] Round 2: No violations detected
+[TaintAnalyzer] Report saved to: reports/taint/round_2_taint.txt
+[2026-11-10 01:10:25.263] [INFO] [TAINT] Round report saved to: reports/taint/round_2_taint.txt
+[2026-11-10 01:10:25.263] [INFO] === Rotation (lifecycle) checks, round 2 ===
+[2026-11-10 01:10:25.263] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-10 01:10:25.263] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:10:25.396] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:10:25.434] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-10 01:10:25.434] [INFO] Total good network periods: 13
+[2026-11-10 01:10:25.434] [INFO] Total bad network periods: 2
+[2026-11-10 01:10:25.434] [INFO] Total disruptions: 15
+[2026-11-10 01:10:25.434] [INFO] Actual good:bad ratio: 13:2
+[SNAPSHOT] App-level reset: com.zionhuang.music
+[2026-11-10 01:10:34.563] [INFO] Starting Frida monitoring with static analysis results for package: com.zionhuang.music
+FridaManager: Starting Frida monitoring for package: com.zionhuang.music
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.zionhuang.music src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-10 01:10:37.625] [INFO] Frida monitoring started successfully
+[2026-11-10 01:10:45.625] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?continue=https://www.youtube.com/signin?action_handle_signin%3Dtrue%26next%3Dhttps%253A%252F%252Fmusic.youtube.com%252F&ltmpl=music&passive=true&servic}
+[WEBVIEW] Identifier-only web form reached (rotation checks run on it)
+[2026-11-10 01:12:31.201] [INFO] UI manager detected login page
+[2026-11-10 01:12:31.201] [INFO]   - Google login: true
+[2026-11-10 01:12:31.201] [INFO]   - Facebook login: false
+[2026-11-10 01:12:31.201] [INFO]   - Username field: true
+[2026-11-10 01:12:31.201] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_010716/round_2/screenshot_006_baseline_ui_manager_detection.png
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[INPUT] Clicking at (540, 871) to focus field
+[INPUT] Inputting text char-by-char (length: 7)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[ROTATION] A(identifier): before rotation: identifier=true
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[ROTATION] A(identifier): after rotation: identifier=false
+[ROTATION] Finding: ROTATION_INPUT_LOST - Typed identifier lost on rotation (screen reloaded or state not saved)
+[2026-11-10 01:12:47.256] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-10 01:12:47.257] [INFO] === Starting Network Chaos Testing ===
+[2026-11-10 01:12:47.257] [INFO] Mode: random
+[2026-11-10 01:12:47.257] [INFO] Good:Bad Ratio: 40:60
+[2026-11-10 01:12:47.257] [INFO] Switch Interval: 60 seconds
+[2026-11-10 01:12:47.257] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-10 01:12:47.257] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:12:47.405] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:12:47.445] [INFO] Network chaos scheduler started in random mode
+[2026-11-10 01:12:47.445] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-10 01:12:50.030] [INFO] Frida monitoring stopped
+[2026-11-10 01:12:50.031] [INFO] [BUG_DETECTION] Running bug detectors for Round 2
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 0
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: null
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 1
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-10 01:12:50.032] [INFO] ⚠️  Detected 1 potential bug(s) in Round 2
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_2_20261110_011250.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 1
+
+By Severity:
+  HIGH: 1
+
+By Category:
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261110_011250.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 3
+Unique Bug Types: 3
+Deduplication Rate: 0.0%
+========================================
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:05:05 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:12:47 UTC 2026
+Description: Login state lost on device rotation...
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[1x] PLAINTEXT_TOKEN_STORAGE
+Severity: MEDIUM
+Occurrences: 1
+First seen: Tue Nov 10 01:02:38 UTC 2026
+Description: Authentication token/credential stored in plaintext...
+
+
+[2026-11-10 01:12:50.036] [INFO] --------------------------------------------------------------------------------
+[2026-11-10 01:12:50.036] [INFO] ROUND 2 COMPLETED
+[2026-11-10 01:12:50.036] [INFO] Round duration: 457828ms
+[2026-11-10 01:12:50.036] [INFO] Total attempts: 2
+[2026-11-10 01:12:50.036] [INFO] Successful logins: 1
+[2026-11-10 01:12:50.036] [INFO] Failed logins: 1
+[2026-11-10 01:12:50.036] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_010716/round_2/screenshot_007_round_2_end.png
+[2026-11-10 01:12:54.339] [INFO] ================================================================================
+[2026-11-10 01:12:54.339] [INFO] ROUND 3 STARTED
+[2026-11-10 01:12:54.339] [INFO] Round timestamp: 2026-11-10 01:12:54.339
+[2026-11-10 01:12:54.339] [INFO] ================================================================================
+[2026-11-10 01:12:54.340] [INFO] Round 3: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: com.zionhuang.music
+[2026-11-10 01:13:03.432] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[2026-11-10 01:14:47.446] [INFO] 🔴 Inducing BAD network state: DISABLE_DATA for 23 seconds
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?continue=https://www.youtube.com/signin?action_handle_signin%3Dtrue%26next%3Dhttps%253A%252F%252Fmusic.youtube.com%252F&ltmpl=music&passive=true&servic}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+[WEBVIEW] trusted click on 'Next'
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: true
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[2026-11-10 01:14:59.011] [INFO] Verified: App restored to login page
+[2026-11-10 01:14:59.012] [INFO] Appended Frida round marker for round 3
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_011459/round_3/screenshot_001_round_3_start.png
+[SNAPSHOT] App-level reset: com.zionhuang.music
+[2026-11-10 01:15:08.446] [INFO] Baseline snapshot restored successfully
+[2026-11-10 01:15:10.581] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:15:10.715] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:15:58.447] [INFO] Emulator snapshot operation completed
+[2026-11-10 01:15:58.447] [INFO] Starting Frida monitoring with static analysis results for package: com.zionhuang.music
+FridaManager: Starting Frida monitoring for package: com.zionhuang.music
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.zionhuang.music src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-10 01:15:59.495] [INFO] Frida monitoring started successfully
+[2026-11-10 01:15:59.495] [INFO] Credential choice: random (likely invalid / special characters)
+[2026-11-10 01:15:59.495] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-10 01:15:59.496] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:15:59.633] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:15:59.671] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-10 01:15:59.672] [INFO] Total good network periods: 16
+[2026-11-10 01:15:59.672] [INFO] Total bad network periods: 3
+[2026-11-10 01:15:59.672] [INFO] Total disruptions: 19
+[2026-11-10 01:15:59.672] [INFO] Actual good:bad ratio: 16:3
+[2026-11-10 01:15:59.672] [INFO] 🟠 Round condition: LIMITED (2.5s latency, 25% loss)
+[2026-11-10 01:15:59.760] [INFO] Round network condition for login: limited
+[2026-11-10 01:15:59.761] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching com.zionhuang.music
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=0, btn=, url=about:blank}
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (218,147)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=0, btn=, url=about:blank}
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[2026-11-10 01:18:01.551] [INFO] UI manager did not detect login page
+[2026-11-10 01:18:01.552] [INFO] Login page not reached under 'limited'; loading it on a normal network first
+[2026-11-10 01:18:01.552] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:18:01.697] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:18:07.370] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✗
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?continue=https://www.youtube.com/signin?action_handle_signin%3Dtrue%26next%3Dhttps%253A%252F%252Fmusic.youtube.com%252F&ltmpl=music&passive=true&servic}
+[WEBVIEW] Google sign-in page: using the Google test account
+[WEBVIEW] Identifier-only web form; entering username and continuing
+[WEBVIEW] trusted click on 'Next'
+[2026-11-10 01:20:00.861] [INFO] UI manager detected login page
+[2026-11-10 01:20:00.862] [INFO]   - Google login: true
+[2026-11-10 01:20:00.862] [INFO]   - Facebook login: false
+[2026-11-10 01:20:00.862] [INFO]   - Username field: true
+[2026-11-10 01:20:00.862] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_011459/round_3/screenshot_002_baseline_ui_manager_detection.png
+[2026-11-10 01:20:01.261] [INFO] 🟠 Round condition: LIMITED (2.5s latency, 25% loss)
+[2026-11-10 01:20:01.365] [INFO] Login page loaded; round condition 'limited' re-applied before submitting
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 3)
+[2026-11-10 01:20:01.365] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_011459/round_3/screenshot_003_baseline_login_page.png
+[2026-11-10 01:20:01.763] [INFO] Google login detected, using Google account: zzxpersist@gmail.com
+[2026-11-10 01:20:01.763] [INFO] Google login detected, using Google password: [13 chars]
+[2026-11-10 01:20:01.763] [INFO] === Starting Credential Input Phase ===
+[2026-11-10 01:20:01.763] [INFO] Selected username: zzxpersist@gmail.com
+[2026-11-10 01:20:01.763] [INFO] Selected password: [13 chars]
+[2026-11-10 01:20:01.763] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Next'
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_011459/round_3/screenshot_004_credentials_input_complete.png
+[2026-11-10 01:20:05.003] [INFO] ✅ Credential input phase completed successfully
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[2026-11-10 01:20:47.951] [INFO] Login completed under 'limited' network in 42156 ms (not a delay sample)
+[2026-11-10 01:20:52.098] [INFO] Login outcome: inputOk=true, loginPageGone=true, validPair=true
+[2026-11-10 01:20:52.098] [INFO] Login process completed successfully
+[NAV_DETECTOR] Login succeeded at 1794273652098
+[2026-11-10 01:20:52.098] [INFO] ✓ Navigation detector: recorded login success
+[NAV_DETECTOR] Navigation: null → com.zionhuang.music/com.zionhuang.music.MainActivity
+[2026-11-10 01:20:52.130] [INFO] ✓ Navigation detector: current activity = com.zionhuang.music/com.zionhuang.music.MainActivity
+[2026-11-10 01:20:52.130] [INFO] ✓ Navigation detector: current state = Authenticating
+[2026-11-10 01:20:52.130] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:20:52.264] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:20:52.312] [INFO] === Starting Network Chaos Testing ===
+[2026-11-10 01:20:52.312] [INFO] Mode: random
+[2026-11-10 01:20:52.312] [INFO] Good:Bad Ratio: 40:60
+[2026-11-10 01:20:52.312] [INFO] Switch Interval: 60 seconds
+[2026-11-10 01:20:52.312] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-10 01:20:52.312] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:20:52.462] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:20:52.508] [INFO] Network chaos scheduler started in random mode
+[2026-11-10 01:20:52.508] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-10 01:20:55.573] [INFO] Captured 153 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+[BUG_DETECTOR] Recorded error state: CredentialFormatError
+[BUG_DETECTOR] Recorded error state: CredentialFormatError
+Add observed state: CredentialFormatError (total: 35, compressed: 2)
+Add observed state: Authenticating (total: 36, compressed: 3)
+Add observed state: CredentialInput (total: 128, compressed: 4)
+Add observed state: Authenticating (total: 129, compressed: 5)
+Add observed state: CredentialInput (total: 130, compressed: 6)
+Add observed state: Authenticating (total: 131, compressed: 7)
+[2026-11-10 01:20:55.577] [INFO] Known states from Frida: 153/153
+State machine: Stopped analysis at error state: CredentialFormatError
+State machine validation passed (stopped at error)
+  Compressed sequence: Authenticating (×34) -> CredentialFormatError [ERROR - STOPPED]
+  Original states: 153, Compressed: 7
+[2026-11-10 01:20:55.577] [INFO] State machine validation passed
+[2026-11-10 01:20:55.643] [INFO] [TAINT] Extracting taint flows for Round 3
+[2026-11-10 01:20:55.644] [INFO] Extracting taint analysis results for Round 3
+[TaintAnalyzer] Warning: Taint report is stale (age: 176s)
+[2026-11-10 01:20:55.644] [INFO] [TAINT] Round 3: No violations detected
+[TaintAnalyzer] Warning: Taint report is stale (age: 176s)
+[TaintAnalyzer] Report saved to: reports/taint/round_3_taint.txt
+[2026-11-10 01:20:55.709] [INFO] [TAINT] Round report saved to: reports/taint/round_3_taint.txt
+[2026-11-10 01:20:55.709] [INFO] === Rotation (lifecycle) checks, round 3 ===
+[2026-11-10 01:20:55.709] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-10 01:20:55.709] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:20:55.851] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:20:55.895] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-10 01:20:55.895] [INFO] Total good network periods: 20
+[2026-11-10 01:20:55.895] [INFO] Total bad network periods: 3
+[2026-11-10 01:20:55.895] [INFO] Total disruptions: 23
+[2026-11-10 01:20:55.895] [INFO] Actual good:bad ratio: 20:3
+[SNAPSHOT] App-level reset: com.zionhuang.music
+[2026-11-10 01:21:05.901] [INFO] Starting Frida monitoring with static analysis results for package: com.zionhuang.music
+FridaManager: Starting Frida monitoring for package: com.zionhuang.music
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.zionhuang.music src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-10 01:21:06.949] [INFO] Frida monitoring started successfully
+[2026-11-10 01:21:14.949] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?continue=https://www.youtube.com/signin?action_handle_signin%3Dtrue%26next%3Dhttps%253A%252F%252Fmusic.youtube.com%252F&ltmpl=music&passive=true&servic}
+[WEBVIEW] Google sign-in page: using the Google test account
+[WEBVIEW] Identifier-only web form reached (rotation checks run on it)
+[2026-11-10 01:23:00.508] [INFO] UI manager detected login page
+[2026-11-10 01:23:00.508] [INFO]   - Google login: true
+[2026-11-10 01:23:00.509] [INFO]   - Facebook login: false
+[2026-11-10 01:23:00.509] [INFO]   - Username field: true
+[2026-11-10 01:23:00.509] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_011459/round_3/screenshot_005_baseline_ui_manager_detection.png
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[INPUT] Clicking at (540, 871) to focus field
+[INPUT] Inputting text char-by-char (length: 10)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] A(identifier): before rotation: identifier=true
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] A(identifier): after rotation: identifier=false
+[ROTATION] Finding: ROTATION_INPUT_LOST - Typed identifier lost on rotation (screen reloaded or state not saved)
+[2026-11-10 01:23:16.673] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-10 01:23:16.674] [INFO] === Starting Network Chaos Testing ===
+[2026-11-10 01:23:16.674] [INFO] Mode: random
+[2026-11-10 01:23:16.674] [INFO] Good:Bad Ratio: 40:60
+[2026-11-10 01:23:16.674] [INFO] Switch Interval: 60 seconds
+[2026-11-10 01:23:16.674] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-10 01:23:16.674] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:23:16.821] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:23:16.860] [INFO] Network chaos scheduler started in random mode
+[2026-11-10 01:23:16.861] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-10 01:23:19.444] [INFO] Frida monitoring stopped
+[2026-11-10 01:23:19.444] [INFO] [BUG_DETECTION] Running bug detectors for Round 3
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 0
+[TIMEOUT_DETECTOR] Timeouts: 0, Delays: 0
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: true
+[NAV_DETECTOR] Current activity: com.zionhuang.music/com.zionhuang.music.MainActivity
+[NAV_DETECTOR] Current state: Authenticating
+[NAV_DETECTOR] Navigation events: 1
+[NAV_DETECTOR] Stuck check: onLoginActivity=false, inLoginState=false, enoughTimePassed=true → stuck=false
+[NAV_DETECTOR] ✓ Navigation flow appears correct
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 1
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-10 01:23:19.445] [INFO] ⚠️  Detected 1 potential bug(s) in Round 3
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_3_20261110_012319.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 1
+
+By Severity:
+  HIGH: 1
+
+By Category:
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261110_012319.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 4
+Unique Bug Types: 4
+Deduplication Rate: 0.0%
+========================================
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:05:05 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:12:47 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:23:16 UTC 2026
+Description: Login state lost on device rotation...
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[1x] PLAINTEXT_TOKEN_STORAGE
+Severity: MEDIUM
+Occurrences: 1
+First seen: Tue Nov 10 01:02:38 UTC 2026
+Description: Authentication token/credential stored in plaintext...
+
+
+[2026-11-10 01:23:19.448] [INFO] --------------------------------------------------------------------------------
+[2026-11-10 01:23:19.448] [INFO] ROUND 3 COMPLETED
+[2026-11-10 01:23:19.448] [INFO] Round duration: 625109ms
+[2026-11-10 01:23:19.448] [INFO] Total attempts: 3
+[2026-11-10 01:23:19.448] [INFO] Successful logins: 2
+[2026-11-10 01:23:19.448] [INFO] Failed logins: 1
+[2026-11-10 01:23:19.448] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_011459/round_3/screenshot_006_round_3_end.png
+[2026-11-10 01:23:23.672] [INFO] ================================================================================
+[2026-11-10 01:23:23.672] [INFO] ROUND 4 STARTED
+[2026-11-10 01:23:23.672] [INFO] Round timestamp: 2026-11-10 01:23:23.672
+[2026-11-10 01:23:23.672] [INFO] ================================================================================
+[2026-11-10 01:23:23.672] [INFO] Round 4: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: com.zionhuang.music
+[2026-11-10 01:23:32.713] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+[2026-11-10 01:24:16.861] [INFO] 🔴 Inducing BAD network state: SLOW_NETWORK for 17 seconds
+[2026-11-10 01:24:33.956] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:24:34.092] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[2026-11-10 01:25:16.860] [INFO] 🔴 Inducing BAD network state: SLOW_NETWORK for 28 seconds
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?continue=https://www.youtube.com/signin?action_handle_signin%3Dtrue%26next%3Dhttps%253A%252F%252Fmusic.youtube.com%252F&ltmpl=music&passive=true&servic}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+[WEBVIEW] trusted click on 'Next'
+[2026-11-10 01:25:28.148] [INFO] Verified: App restored to login page
+[2026-11-10 01:25:28.148] [INFO] Appended Frida round marker for round 4
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_012528/round_4/screenshot_001_round_4_start.png
+[SNAPSHOT] App-level reset: com.zionhuang.music
+[2026-11-10 01:25:37.632] [INFO] Baseline snapshot restored successfully
+[2026-11-10 01:25:44.948] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:25:45.087] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:26:16.861] [INFO] 🔴 Inducing BAD network state: SLOW_NETWORK for 28 seconds
+[2026-11-10 01:26:27.632] [INFO] Emulator snapshot operation completed
+[2026-11-10 01:26:27.632] [INFO] Starting Frida monitoring with static analysis results for package: com.zionhuang.music
+FridaManager: Starting Frida monitoring for package: com.zionhuang.music
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.zionhuang.music src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-10 01:26:28.678] [INFO] Frida monitoring started successfully
+[2026-11-10 01:26:28.678] [INFO] Credential choice: random (likely invalid / special characters)
+[2026-11-10 01:26:28.678] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-10 01:26:28.679] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:26:28.817] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:26:28.856] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-10 01:26:28.856] [INFO] Total good network periods: 24
+[2026-11-10 01:26:28.856] [INFO] Total bad network periods: 6
+[2026-11-10 01:26:28.856] [INFO] Total disruptions: 30
+[2026-11-10 01:26:28.857] [INFO] Actual good:bad ratio: 24:6
+[2026-11-10 01:26:28.857] [INFO] 🔴 Round condition: OFFLINE (default route removed: connections fail fast, like airplane mode)
+[2026-11-10 01:26:28.967] [INFO] Round network condition for login: offline
+[2026-11-10 01:26:28.967] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching com.zionhuang.music
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=0, btn=, url=chrome-error://chromewebdata/}
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (218,147)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=0, btn=, url=chrome-error://chromewebdata/}
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[2026-11-10 01:28:30.447] [INFO] UI manager did not detect login page
+[2026-11-10 01:28:30.447] [INFO] Login page not reached under 'offline'; loading it on a normal network first
+[2026-11-10 01:28:30.447] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:28:36.337] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?continue=https://www.youtube.com/signin?action_handle_signin%3Dtrue%26next%3Dhttps%253A%252F%252Fmusic.youtube.com%252F&ltmpl=music&passive=true&servic}
+[WEBVIEW] Google sign-in page: using the Google test account
+[WEBVIEW] Identifier-only web form; entering username and continuing
+[WEBVIEW] trusted click on 'Next'
+[2026-11-10 01:30:29.993] [INFO] UI manager detected login page
+[2026-11-10 01:30:29.993] [INFO]   - Google login: true
+[2026-11-10 01:30:29.993] [INFO]   - Facebook login: false
+[2026-11-10 01:30:29.993] [INFO]   - Username field: true
+[2026-11-10 01:30:29.993] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_012528/round_4/screenshot_002_baseline_ui_manager_detection.png
+[2026-11-10 01:30:30.380] [INFO] 🔴 Round condition: OFFLINE (default route removed: connections fail fast, like airplane mode)
+[2026-11-10 01:30:30.488] [INFO] Login page loaded; round condition 'offline' re-applied before submitting
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 4)
+[2026-11-10 01:30:30.488] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_012528/round_4/screenshot_003_baseline_login_page.png
+[2026-11-10 01:30:30.855] [INFO] Google login detected, using Google account: zzxpersist@gmail.com
+[2026-11-10 01:30:30.855] [INFO] Google login detected, using Google password: [13 chars]
+[2026-11-10 01:30:30.855] [INFO] === Starting Credential Input Phase ===
+[2026-11-10 01:30:30.855] [INFO] Selected username: zzxpersist@gmail.com
+[2026-11-10 01:30:30.855] [INFO] Selected password: [13 chars]
+[2026-11-10 01:30:30.855] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Next'
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_012528/round_4/screenshot_004_credentials_input_complete.png
+[2026-11-10 01:30:34.052] [INFO] ✅ Credential input phase completed successfully
+[Match] Normal login button: Enter your password (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Enter your password (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Enter your password (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Enter your password (id: )
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] Error page offered 'Restart'; using it like a user would
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[TIMEOUT_DETECTOR] Login attempt: 94040ms (timeout, success=false)
+[2026-11-10 01:32:06.605] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[2026-11-10 01:32:06.606] [INFO] Login with valid credentials did not complete under 'offline' network; login page still shown
+[2026-11-10 01:32:06.606] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:32:06.826] [INFO] === Starting Network Chaos Testing ===
+[2026-11-10 01:32:06.826] [INFO] Mode: random
+[2026-11-10 01:32:06.826] [INFO] Good:Bad Ratio: 40:60
+[2026-11-10 01:32:06.826] [INFO] Switch Interval: 60 seconds
+[2026-11-10 01:32:06.826] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-10 01:32:06.826] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:32:06.956] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:32:06.994] [INFO] Network chaos scheduler started in random mode
+[2026-11-10 01:32:06.994] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-10 01:32:09.753] [INFO] Captured 116 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+Add observed state: CredentialInput (total: 89, compressed: 2)
+Add observed state: Authenticating (total: 90, compressed: 3)
+Add observed state: CredentialInput (total: 91, compressed: 4)
+Add observed state: Authenticating (total: 94, compressed: 5)
+[2026-11-10 01:32:09.757] [INFO] Known states from Frida: 116/116
+State machine validation passed (complete)
+  Compressed sequence: Authenticating (×88, 0.0s) -> CredentialInput -> Authenticating -> CredentialInput (×3) -> Authenticating (×23)
+  Original states: 116, Compressed: 5
+[2026-11-10 01:32:09.758] [INFO] State machine validation passed
+[2026-11-10 01:32:09.840] [INFO] [TAINT] Extracting taint flows for Round 4
+[2026-11-10 01:32:09.841] [INFO] Extracting taint analysis results for Round 4
+[TaintAnalyzer] Warning: Taint report is stale (age: 221s)
+[2026-11-10 01:32:09.841] [INFO] [TAINT] Round 4: No violations detected
+[TaintAnalyzer] Warning: Taint report is stale (age: 221s)
+[TaintAnalyzer] Report saved to: reports/taint/round_4_taint.txt
+[2026-11-10 01:32:09.842] [INFO] [TAINT] Round report saved to: reports/taint/round_4_taint.txt
+[2026-11-10 01:32:09.842] [INFO] === Rotation (lifecycle) checks, round 4 ===
+[2026-11-10 01:32:09.842] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-10 01:32:09.842] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:32:09.979] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:32:10.022] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-10 01:32:10.022] [INFO] Total good network periods: 28
+[2026-11-10 01:32:10.022] [INFO] Total bad network periods: 6
+[2026-11-10 01:32:10.022] [INFO] Total disruptions: 34
+[2026-11-10 01:32:10.022] [INFO] Actual good:bad ratio: 28:6
+[SNAPSHOT] App-level reset: com.zionhuang.music
+[2026-11-10 01:32:19.183] [INFO] Starting Frida monitoring with static analysis results for package: com.zionhuang.music
+FridaManager: Starting Frida monitoring for package: com.zionhuang.music
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.zionhuang.music src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-10 01:32:20.228] [INFO] Frida monitoring started successfully
+[2026-11-10 01:32:28.229] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?continue=https://www.youtube.com/signin?action_handle_signin%3Dtrue%26next%3Dhttps%253A%252F%252Fmusic.youtube.com%252F&ltmpl=music&passive=true&servic}
+[WEBVIEW] Google sign-in page: using the Google test account
+[WEBVIEW] Identifier-only web form reached (rotation checks run on it)
+[2026-11-10 01:34:13.997] [INFO] UI manager detected login page
+[2026-11-10 01:34:13.997] [INFO]   - Google login: true
+[2026-11-10 01:34:13.997] [INFO]   - Facebook login: false
+[2026-11-10 01:34:13.997] [INFO]   - Username field: true
+[2026-11-10 01:34:13.998] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_012528/round_4/screenshot_005_baseline_ui_manager_detection.png
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[INPUT] Clicking at (540, 871) to focus field
+[INPUT] Inputting text char-by-char (length: 10)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] A(identifier): before rotation: identifier=true
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] A(identifier): after rotation: identifier=false
+[ROTATION] Finding: ROTATION_INPUT_LOST - Typed identifier lost on rotation (screen reloaded or state not saved)
+[2026-11-10 01:34:30.160] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-10 01:34:30.161] [INFO] === Starting Network Chaos Testing ===
+[2026-11-10 01:34:30.161] [INFO] Mode: random
+[2026-11-10 01:34:30.161] [INFO] Good:Bad Ratio: 40:60
+[2026-11-10 01:34:30.161] [INFO] Switch Interval: 60 seconds
+[2026-11-10 01:34:30.161] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-10 01:34:30.161] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:34:30.295] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:34:30.334] [INFO] Network chaos scheduler started in random mode
+[2026-11-10 01:34:30.334] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-10 01:34:32.917] [INFO] Frida monitoring stopped
+[2026-11-10 01:34:32.918] [INFO] [BUG_DETECTION] Running bug detectors for Round 4
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 1
+[TIMEOUT_DETECTOR] Timeouts: 1, Delays: 0
+[BUG_DETECTION] LoginTimeoutDetector found 1 bug(s)
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: Authenticating
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 2
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-10 01:34:32.919] [INFO] ⚠️  Detected 2 potential bug(s) in Round 4
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_4_20261110_013432.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 2
+
+By Severity:
+  HIGH: 2
+
+By Category:
+  LOGIN_TIMEOUT: 1
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261110_013432.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 6
+Unique Bug Types: 6
+Deduplication Rate: 0.0%
+========================================
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:05:05 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:12:47 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:23:16 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:34:30 UTC 2026
+Description: Login state lost on device rotation...
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[1x] PLAINTEXT_TOKEN_STORAGE
+Severity: MEDIUM
+Occurrences: 1
+First seen: Tue Nov 10 01:02:38 UTC 2026
+Description: Authentication token/credential stored in plaintext...
+
+Category: LOGIN_TIMEOUT
+----------------------------------------
+
+[1x] LOGIN_TIMEOUT
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:34:32 UTC 2026
+Description: Login process exceeds acceptable time limits...
+
+
+[2026-11-10 01:34:32.922] [INFO] --------------------------------------------------------------------------------
+[2026-11-10 01:34:32.922] [INFO] ROUND 4 COMPLETED
+[2026-11-10 01:34:32.922] [INFO] Round duration: 669250ms
+[2026-11-10 01:34:32.922] [INFO] Total attempts: 4
+[2026-11-10 01:34:32.922] [INFO] Successful logins: 2
+[2026-11-10 01:34:32.922] [INFO] Failed logins: 2
+[2026-11-10 01:34:32.922] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_012528/round_4/screenshot_006_round_4_end.png
+[2026-11-10 01:34:37.271] [INFO] ================================================================================
+[2026-11-10 01:34:37.271] [INFO] ROUND 5 STARTED
+[2026-11-10 01:34:37.271] [INFO] Round timestamp: 2026-11-10 01:34:37.271
+[2026-11-10 01:34:37.271] [INFO] ================================================================================
+[2026-11-10 01:34:37.271] [INFO] Round 5: Restoring baseline snapshot to clean state
+[SNAPSHOT] App-level reset: com.zionhuang.music
+[2026-11-10 01:34:46.290] [INFO] Successfully restored baseline snapshot
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+[2026-11-10 01:35:30.334] [INFO] 🔴 Inducing BAD network state: SLOW_NETWORK for 18 seconds
+[2026-11-10 01:35:48.429] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:35:48.568] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[2026-11-10 01:36:30.334] [INFO] 🔴 Inducing BAD network state: DISABLE_DATA for 19 seconds
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?continue=https://www.youtube.com/signin?action_handle_signin%3Dtrue%26next%3Dhttps%253A%252F%252Fmusic.youtube.com%252F&ltmpl=music&passive=true&servic}
+[WEBVIEW] Identifier-only web form; entering username and continuing
+[WEBVIEW] trusted click on 'Next'
+Login page detection result: true
+  - Votes(username,password,button): 3/2
+  - Google login: true
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[2026-11-10 01:36:41.783] [INFO] Verified: App restored to login page
+[2026-11-10 01:36:41.783] [INFO] Appended Frida round marker for round 5
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_013641/round_5/screenshot_001_round_5_start.png
+[SNAPSHOT] App-level reset: com.zionhuang.music
+[2026-11-10 01:36:49.463] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:36:49.606] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:36:51.327] [INFO] Baseline snapshot restored successfully
+[2026-11-10 01:37:30.335] [INFO] 🔴 Inducing BAD network state: SLOW_NETWORK for 10 seconds
+[2026-11-10 01:37:40.426] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:37:40.563] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:37:41.327] [INFO] Emulator snapshot operation completed
+[2026-11-10 01:37:41.328] [INFO] Starting Frida monitoring with static analysis results for package: com.zionhuang.music
+FridaManager: Starting Frida monitoring for package: com.zionhuang.music
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.zionhuang.music src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-10 01:37:42.374] [INFO] Frida monitoring started successfully
+[2026-11-10 01:37:42.374] [INFO] Credential choice: random (likely invalid / special characters)
+[2026-11-10 01:37:42.374] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-10 01:37:42.374] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:37:42.511] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:37:42.549] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-10 01:37:42.549] [INFO] Total good network periods: 33
+[2026-11-10 01:37:42.549] [INFO] Total bad network periods: 9
+[2026-11-10 01:37:42.549] [INFO] Total disruptions: 42
+[2026-11-10 01:37:42.549] [INFO] Actual good:bad ratio: 33:9
+[2026-11-10 01:37:42.549] [INFO] 🔴 Round condition: UNRESPONSIVE (DNS works, TCP packets dropped: servers never answer)
+[2026-11-10 01:37:42.693] [INFO] Round network condition for login: unresponsive
+[2026-11-10 01:37:42.693] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+[FOREGROUND] App under test is not in foreground; relaunching com.zionhuang.music
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=0, btn=, url=about:blank}
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (218,147)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=false, pwval=0, id=0, btn=, url=about:blank}
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+  - WebView present: true
+  - WebView large(>60%): true
+  - Focused in WebView: false
+  - WebView id/class hints: false
+[2026-11-10 01:39:44.454] [INFO] UI manager did not detect login page
+[2026-11-10 01:39:44.454] [INFO] Login page not reached under 'unresponsive'; loading it on a normal network first
+[2026-11-10 01:39:44.454] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:39:44.601] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:39:50.344] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?continue=https://www.youtube.com/signin?action_handle_signin%3Dtrue%26next%3Dhttps%253A%252F%252Fmusic.youtube.com%252F&ltmpl=music&passive=true&servic}
+[WEBVIEW] Google sign-in page: using the Google test account
+[WEBVIEW] Identifier-only web form; entering username and continuing
+[WEBVIEW] trusted click on 'Next'
+[2026-11-10 01:41:44.300] [INFO] UI manager detected login page
+[2026-11-10 01:41:44.301] [INFO]   - Google login: true
+[2026-11-10 01:41:44.301] [INFO]   - Facebook login: false
+[2026-11-10 01:41:44.301] [INFO]   - Username field: true
+[2026-11-10 01:41:44.301] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_013641/round_5/screenshot_002_baseline_ui_manager_detection.png
+[2026-11-10 01:41:44.685] [INFO] 🔴 Round condition: UNRESPONSIVE (DNS works, TCP packets dropped: servers never answer)
+[2026-11-10 01:41:44.833] [INFO] Login page loaded; round condition 'unresponsive' re-applied before submitting
+[SNAPSHOT] Created (app-level marker): baseline (Login page baseline - Round 5)
+[2026-11-10 01:41:44.834] [INFO] Baseline snapshot created after detecting login page
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_013641/round_5/screenshot_003_baseline_login_page.png
+[2026-11-10 01:41:45.194] [INFO] Google login detected, using Google account: zzxpersist@gmail.com
+[2026-11-10 01:41:45.194] [INFO] Google login detected, using Google password: [13 chars]
+[2026-11-10 01:41:45.194] [INFO] === Starting Credential Input Phase ===
+[2026-11-10 01:41:45.194] [INFO] Selected username: zzxpersist@gmail.com
+[2026-11-10 01:41:45.194] [INFO] Selected password: [13 chars]
+[2026-11-10 01:41:45.194] [INFO] Login form is inside a WebView; using DevTools input
+[WEBVIEW] filled form (password field present): true
+[WEBVIEW] trusted click on 'Next'
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_013641/round_5/screenshot_004_credentials_input_complete.png
+[2026-11-10 01:41:48.473] [INFO] ✅ Credential input phase completed successfully
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Password field: [masked] (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[TIMEOUT_DETECTOR] Login attempt: 95025ms (timeout, success=false)
+[2026-11-10 01:43:21.961] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[2026-11-10 01:43:21.961] [INFO] Login with valid credentials did not complete under 'unresponsive' network; login page still shown
+[2026-11-10 01:43:21.961] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:43:22.104] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:43:22.144] [INFO] === Starting Network Chaos Testing ===
+[2026-11-10 01:43:22.144] [INFO] Mode: random
+[2026-11-10 01:43:22.144] [INFO] Good:Bad Ratio: 40:60
+[2026-11-10 01:43:22.144] [INFO] Switch Interval: 60 seconds
+[2026-11-10 01:43:22.144] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-10 01:43:22.144] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:43:22.281] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:43:22.319] [INFO] Network chaos scheduler started in random mode
+[2026-11-10 01:43:22.319] [INFO] Analyzing API logs and validating state machine...
+State sequence reset
+[2026-11-10 01:43:25.573] [INFO] Captured 135 API calls in current round
+Add observed state: Authenticating (total: 1, compressed: 1)
+Add observed state: CredentialInput (total: 110, compressed: 2)
+Add observed state: Authenticating (total: 111, compressed: 3)
+Add observed state: CredentialInput (total: 112, compressed: 4)
+Add observed state: Authenticating (total: 113, compressed: 5)
+[2026-11-10 01:43:25.575] [INFO] Known states from Frida: 135/135
+State machine validation passed (complete)
+  Compressed sequence: Authenticating (×109, 0.0s) -> CredentialInput -> Authenticating -> CredentialInput -> Authenticating (×23)
+  Original states: 135, Compressed: 5
+[2026-11-10 01:43:25.576] [INFO] State machine validation passed
+[2026-11-10 01:43:25.641] [INFO] [TAINT] Extracting taint flows for Round 5
+[2026-11-10 01:43:25.641] [INFO] Extracting taint analysis results for Round 5
+[TaintAnalyzer] Warning: Taint report is stale (age: 223s)
+[2026-11-10 01:43:25.642] [INFO] [TAINT] Round 5: No violations detected
+[TaintAnalyzer] Warning: Taint report is stale (age: 223s)
+[TaintAnalyzer] Report saved to: reports/taint/round_5_taint.txt
+[2026-11-10 01:43:25.642] [INFO] [TAINT] Round report saved to: reports/taint/round_5_taint.txt
+[2026-11-10 01:43:25.642] [INFO] === Rotation (lifecycle) checks, round 5 ===
+[2026-11-10 01:43:25.642] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-10 01:43:25.642] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:43:25.807] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:43:25.851] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-10 01:43:25.851] [INFO] Total good network periods: 37
+[2026-11-10 01:43:25.851] [INFO] Total bad network periods: 9
+[2026-11-10 01:43:25.851] [INFO] Total disruptions: 46
+[2026-11-10 01:43:25.851] [INFO] Actual good:bad ratio: 37:9
+[SNAPSHOT] App-level reset: com.zionhuang.music
+[2026-11-10 01:43:34.871] [INFO] Starting Frida monitoring with static analysis results for package: com.zionhuang.music
+FridaManager: Starting Frida monitoring for package: com.zionhuang.music
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+FridaManager: Using Frida script: src/main/resources/login_agent.js
+FridaManager: Executing command: python3 scripts/frida_controller.py com.zionhuang.music src/main/resources/login_agent.js
+FridaManager: Frida monitoring started successfully
+[2026-11-10 01:43:35.919] [INFO] Frida monitoring started successfully
+[2026-11-10 01:43:43.919] [INFO] Using UI manager to detect login page...
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (974,147)
+Using ADB to detect login page...
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+Login page detection result: false
+  - Votes(username,password,button): 1/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: false
+  - Password field: false
+  - Login button: false
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (235,451)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Login page detection result: false
+  - Votes(username,password,button): 3/2
+  - Google login: false
+  - Facebook login: false
+  - Username field: true
+  - Password field: false
+  - Login button: true
+  - Current activity: com.zionhuang.music/.MainActivity (match: true)
+[LOGIN_ENTRY] No credential form yet; tapping login entry at (213,304)
+Using ADB to detect login page...
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+Username field detected: [masked] (ID: )
+Login button detected: Login (ID: )
+Activity hint matched for login: com.zionhuang.music/.MainActivity
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[WEBVIEW] page: {idval=0, err=, pw=0, busy=true, pwval=0, id=1, btn=Next, url=https://accounts.google.com/v3/signin/identifier?continue=https://www.youtube.com/signin?action_handle_signin%3Dtrue%26next%3Dhttps%253A%252F%252Fmusic.youtube.com%252F&ltmpl=music&passive=true&servic}
+[WEBVIEW] Google sign-in page: using the Google test account
+[WEBVIEW] Identifier-only web form reached (rotation checks run on it)
+[2026-11-10 01:45:31.088] [INFO] UI manager detected login page
+[2026-11-10 01:45:31.088] [INFO]   - Google login: true
+[2026-11-10 01:45:31.088] [INFO]   - Facebook login: false
+[2026-11-10 01:45:31.088] [INFO]   - Username field: true
+[2026-11-10 01:45:31.088] [INFO]   - Password field: false
+[SNAPSHOT] Created (app-level marker): baseline (Login page detected via UI manager)
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_013641/round_5/screenshot_005_baseline_ui_manager_detection.png
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[INPUT] Clicking at (540, 871) to focus field
+[INPUT] Inputting text char-by-char (length: 10)
+[INPUT] All characters inputted successfully
+[INPUT] Text input completed successfully
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] A(identifier): before rotation: identifier=true
+[Match] Normal login button: Sign in (id: )
+[Match] Normal login button: to continue to YouTube Music (id: )
+[Match] Normal login button: Not your computer? Use Guest mode to sign in privately.  (id: )
+[Match] Normal login button: Next (id: )
+[Match] Normal login button: Open Google Account Help Center (external, opens in a new window) (id: )
+[Match] Normal login button: Login (id: )
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[ROTATION] A(identifier): after rotation: identifier=false
+[ROTATION] Finding: ROTATION_INPUT_LOST - Typed identifier lost on rotation (screen reloaded or state not saved)
+[2026-11-10 01:45:47.286] [INFO] Rotation checks finished with 1 finding(s)
+[2026-11-10 01:45:47.286] [INFO] === Starting Network Chaos Testing ===
+[2026-11-10 01:45:47.286] [INFO] Mode: random
+[2026-11-10 01:45:47.286] [INFO] Good:Bad Ratio: 40:60
+[2026-11-10 01:45:47.286] [INFO] Switch Interval: 60 seconds
+[2026-11-10 01:45:47.287] [INFO] Disruption Methods: disable_data, slow_network
+[2026-11-10 01:45:47.287] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:45:47.444] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:45:47.488] [INFO] Network chaos scheduler started in random mode
+[2026-11-10 01:45:47.488] [INFO] Stopping Frida monitoring...
+FridaManager: Attempting to stop Frida process...
+FridaManager: Frida process stopped.
+[2026-11-10 01:45:50.075] [INFO] Frida monitoring stopped
+[2026-11-10 01:45:50.075] [INFO] [BUG_DETECTION] Running bug detectors for Round 5
+
+[BUG_DETECTION] Running all bug detectors...
+[BUG_DETECTION] Running: ErrorMessageMismatchDetector
+[BUG_DETECTION] Running: LifecycleDataLossDetector
+[BUG_DETECTION] LifecycleDataLossDetector found 1 bug(s)
+[BUG_DETECTION] Running: CrashDetector
+[CRASH_DETECTOR] Checking for crashes...
+[CRASH_DETECTOR] Total crashes recorded: 0
+[BUG_DETECTION] Running: LoginTimeoutDetector
+[TIMEOUT_DETECTOR] Checking login timeouts...
+[TIMEOUT_DETECTOR] Total attempts: 1
+[TIMEOUT_DETECTOR] Timeouts: 1, Delays: 0
+[BUG_DETECTION] LoginTimeoutDetector found 1 bug(s)
+[BUG_DETECTION] Running: NavigationFlowDetector
+[NAV_DETECTOR] Checking navigation flow...
+[NAV_DETECTOR] Login succeeded: false
+[NAV_DETECTOR] Current activity: null
+[NAV_DETECTOR] Current state: Authenticating
+[NAV_DETECTOR] Navigation events: 0
+[NAV_DETECTOR] Login not successful, skipping navigation check
+[BUG_DETECTION] Running: StorageLeakDetector
+[BUG_DETECTION] Running: ObservedFindingsDetector
+[BUG_DETECTION] Total bugs detected: 2
+[CRASH_DETECTOR] Reset
+[TIMEOUT_DETECTOR] Reset
+[NAV_DETECTOR] Reset
+[BUG_DETECTION] All detectors reset after detection
+[2026-11-10 01:45:50.076] [INFO] ⚠️  Detected 2 potential bug(s) in Round 5
+[BUG_DETECTION] Report saved to: reports/bugs/bugs_round_5_20261110_014550.txt
+
+================================================================================
+BUG DETECTION SUMMARY
+================================================================================
+Total Bugs: 2
+
+By Severity:
+  HIGH: 2
+
+By Category:
+  LOGIN_TIMEOUT: 1
+  LIFECYCLE_INTERFERENCE: 1
+================================================================================
+
+[BUG_DETECTION] Deduplicated summary saved to: reports/bugs/DEDUPLICATED_SUMMARY_20261110_014550.txt
+
+
+========================================
+BUG DEDUPLICATION SUMMARY
+========================================
+Total Bugs: 8
+Unique Bug Types: 7
+Deduplication Rate: 12.5%
+========================================
+
+Category: LOGIN_TIMEOUT
+----------------------------------------
+
+[2x] LOGIN_TIMEOUT
+Severity: HIGH
+Occurrences: 2
+First seen: Tue Nov 10 01:34:32 UTC 2026
+Last seen: Tue Nov 10 01:45:50 UTC 2026
+Description: Login process exceeds acceptable time limits...
+
+Category: LIFECYCLE_INTERFERENCE
+----------------------------------------
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:05:05 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:12:47 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:23:16 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:34:30 UTC 2026
+Description: Login state lost on device rotation...
+
+[1x] ROTATION_INPUT_LOST
+Severity: HIGH
+Occurrences: 1
+First seen: Tue Nov 10 01:45:47 UTC 2026
+Description: Login state lost on device rotation...
+
+Category: INCORRECT_LOGIN_FLOW
+----------------------------------------
+
+[1x] PLAINTEXT_TOKEN_STORAGE
+Severity: MEDIUM
+Occurrences: 1
+First seen: Tue Nov 10 01:02:38 UTC 2026
+Description: Authentication token/credential stored in plaintext...
+
+
+[2026-11-10 01:45:50.079] [INFO] --------------------------------------------------------------------------------
+[2026-11-10 01:45:50.079] [INFO] ROUND 5 COMPLETED
+[2026-11-10 01:45:50.079] [INFO] Round duration: 672808ms
+[2026-11-10 01:45:50.079] [INFO] Total attempts: 5
+[2026-11-10 01:45:50.079] [INFO] Successful logins: 2
+[2026-11-10 01:45:50.079] [INFO] Failed logins: 3
+[2026-11-10 01:45:50.079] [INFO] --------------------------------------------------------------------------------
+[SCREENSHOT] Saved: /home/ubuntu/LoginTest_dbg/reports/screenshots/com.zionhuang.music/20261110_013641/round_5/screenshot_006_round_5_end.png
+[2026-11-10 01:45:51.377] [INFO] === Logged-in phase: restoring the captured session ===
+[2026-11-10 01:45:51.377] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:45:51.522] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[STORAGE] Password too short or part of the package name; skipping verbatim check
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[Match] Username field: [masked] (id: )
+[Cache Status] Normal: ✓ Google: ✗ Facebook: ✗ Username: ✓ Password: ✓
+[2026-11-10 01:46:16.834] [INFO] Logged-in phase: 'Account' page shows 18 content node(s)
+[2026-11-10 01:46:16.834] [INFO] [LOGGED-IN PHASE] storage findings: 0, observed findings: 0
+[2026-11-10 01:46:16.834] [INFO] === Test Execution Summary ===
+[2026-11-10 01:46:16.834] [INFO] Total Login Attempts: 5
+[2026-11-10 01:46:16.834] [INFO] Successful Logins: 2
+[2026-11-10 01:46:16.834] [INFO] Failed Logins: 3
+[2026-11-10 01:46:16.836] [INFO] Success Rate: 40.0%
+[2026-11-10 01:46:16.837] [INFO] Detailed report written to: reports/login_test_report_2026-11-10_00-59-19.txt
+[2026-11-10 01:46:16.837] [INFO] === Generating Final Taint Analysis Report ===
+[2026-11-10 01:46:16.838] [INFO] 
+================================================================================
+TAINT ANALYSIS REPORT
+================================================================================
+Application: com.zionhuang.music
+Total Taints: 0
+Total Flows: 0
+Violations: 0
+================================================================================
+
+[TaintAnalyzer] Report saved to: reports/taint/final_taint_analysis.txt
+[2026-11-10 01:46:16.838] [INFO] [TAINT] Final comprehensive report saved to: reports/taint/final_taint_analysis.txt
+[2026-11-10 01:46:16.838] [INFO] [TAINT] Total taints tracked: 0
+[2026-11-10 01:46:16.838] [INFO] [TAINT] Total flows detected: 0
+[2026-11-10 01:46:16.838] [INFO] [TAINT] Total violations: 0
+[2026-11-10 01:46:16.839] [INFO] Final summary appended to unified error report: reports/errors/test_errors_20261110_005920.txt
+[CRASH_DETECTOR] Stopped monitoring
+[2026-11-10 01:46:16.839] [INFO] ✓ Crash detector monitoring stopped
+UI manager closed
+[2026-11-10 01:46:16.841] [INFO] Monkey stopped
+FridaManager: Attempting to stop Frida process...
+FridaManager: No Frida process to stop.
+[2026-11-10 01:46:16.841] [INFO] === Stopping Network Chaos Testing ===
+[2026-11-10 01:46:16.841] [INFO] 🟢 Restoring GOOD network state
+[2026-11-10 01:46:16.982] [ERROR] ADB command failed (exit=1): cat /data/local/tmp/lift_saved_routes 2>/dev/null
+[2026-11-10 01:46:17.027] [INFO] === Network Chaos Testing Statistics ===
+[2026-11-10 01:46:17.028] [INFO] Total good network periods: 40
+[2026-11-10 01:46:17.028] [INFO] Total bad network periods: 9
+[2026-11-10 01:46:17.028] [INFO] Total disruptions: 49
+[2026-11-10 01:46:17.028] [INFO] Actual good:bad ratio: 40:9
+[2026-11-10 01:46:17.033] [INFO] Network disruption report saved to: reports/network/network_disruptions_20261110_014617.txt
+[2026-11-10 01:46:17.033] [INFO] Network disruption report saved to: reports/network/network_disruptions_20261110_014617.txt
+[2026-11-10 01:46:17.034] [INFO] AndroidLoginDetector cleanup completed
+EXIT 0
