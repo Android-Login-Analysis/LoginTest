@@ -1107,6 +1107,8 @@ public class AndroidLoginDetector {
                 boolean usedValidPair = lastCredentialChoiceValid || uiManager.isGuestMode()
                     || (uiManager.isServiceAccountAdopted() && uiManager.isRoundValid());
                 boolean loginSuccess = inputCredentialsWithUI(username, password);
+                // a device Google account chosen during the attempt (Google-button sign-in) is a valid credential
+                usedValidPair = usedValidPair || (uiManager.isServiceAccountAdopted() && uiManager.isRoundValid());
                 
                 // Additional verification after input
                 if (loginSuccess) {
