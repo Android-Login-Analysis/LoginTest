@@ -959,6 +959,21 @@ public class UIManager {
     private final java.util.Set<String> tappedEntries = new java.util.HashSet<>();
     private String lastLoginEntryKey = null;
 
+    /**
+     * FIX(v1): after the network is restored, reload a WebView page that failed to load (DevTools Page.reload);
+     * returns false when no WebView page is available (caller relaunches the app instead).
+     */
+    public boolean reloadFailedWebPage() {
+        try {
+            String url = web().visiblePageUrl();
+            if (url == null) return false;
+            if (web().call("Page.reload", "{\"ignoreCache\":true}") == null) return false;
+            System.out.println("[WEBVIEW] Reloaded the page after restoring the network (" + (url.isEmpty() ? "blank" : url.replaceAll("\\?.*", "")) + ")");
+            Thread.sleep(6000);
+            return true;
+        } catch (Exception e) { return false; }
+    }
+
     private boolean loadErrorProbed = false;
     private String roundCondition = "normal";
     public void setRoundCondition(String c) {

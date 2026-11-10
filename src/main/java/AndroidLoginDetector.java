@@ -1018,9 +1018,13 @@ public class AndroidLoginDetector {
                 logInfo("Login page not reached under '" + roundCondition + "'; loading it on a normal network first");
                 networkChaosManager.applyCondition("normal");
                 uiManager.setRoundCondition("normal");
-                // pages that failed to load while offline (e.g. WebView error pages) do not reload by themselves
-                AppLauncher.run("adb", "shell", "am", "force-stop", appPackage);
-                AppLauncher.launch(appPackage);
+                // pages that failed to load while offline (e.g. WebView error pages) do not reload by themselves:
+                // reload the page in place; relaunch only when there is no WebView page (a relaunch may restore a
+                // blank tab, e.g. Nora)
+                if (!uiManager.reloadFailedWebPage()) {
+                    AppLauncher.run("adb", "shell", "am", "force-stop", appPackage);
+                    AppLauncher.launch(appPackage);
+                }
                 uiManager.setPendingUsername(roundUsername);
                 loginPageDetected = detectLoginPageWithUI();
                 networkChaosManager.applyCondition(roundCondition);
