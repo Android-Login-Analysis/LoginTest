@@ -2526,33 +2526,23 @@ public class AndroidLoginDetector {
         return null;
     }
 
-    private String getRandomGoogleAccount() {
-        if (!googleEmailPool.isEmpty()) {
-            return googleEmailPool.get(new Random().nextInt(googleEmailPool.size()));
+    // FIX(v1): in valid rounds the real service account is used with the password on the same line of the pool;
+    // random pool entries (placeholders) are only used when no real account exists or the round is invalid
+    private String pickService(List<String> accounts, List<String> passwords, boolean wantPassword, String fallback) {
+        String real = realAccount(accounts);
+        if (real != null && uiManager.isRoundValid()) {
+            int i = accounts.indexOf(real);
+            if (!wantPassword) return real;
+            if (i >= 0 && i < passwords.size()) return passwords.get(i);
         }
-        return "testuser@gmail.com";
+        List<String> pool = wantPassword ? passwords : accounts;
+        return pool.isEmpty() ? fallback : pool.get(new Random().nextInt(pool.size()));
     }
 
-    private String getRandomGooglePassword() {
-        if (!googlePasswordPool.isEmpty()) {
-            return googlePasswordPool.get(new Random().nextInt(googlePasswordPool.size()));
-        }
-        return "googlepass123";
-    }
-
-    private String getRandomFacebookAccount() {
-        if (!facebookEmailPool.isEmpty()) {
-            return facebookEmailPool.get(new Random().nextInt(facebookEmailPool.size()));
-        }
-        return "testuser@facebook.com";
-    }
-
-    private String getRandomFacebookPassword() {
-        if (!facebookPasswordPool.isEmpty()) {
-            return facebookPasswordPool.get(new Random().nextInt(facebookPasswordPool.size()));
-        }
-        return "facebookpass123";
-    }
+    private String getRandomGoogleAccount() { return pickService(googleEmailPool, googlePasswordPool, false, "testuser@gmail.com"); }
+    private String getRandomGooglePassword() { return pickService(googleEmailPool, googlePasswordPool, true, "googlepass123"); }
+    private String getRandomFacebookAccount() { return pickService(facebookEmailPool, facebookPasswordPool, false, "testuser@facebook.com"); }
+    private String getRandomFacebookPassword() { return pickService(facebookEmailPool, facebookPasswordPool, true, "facebookpass123"); }
     
     /**
      * Extract error message from UI dump for better logging
