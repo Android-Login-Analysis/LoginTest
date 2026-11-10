@@ -191,7 +191,10 @@ rpc.exports = {
                     // hooking them crashed apps in ART's JNI trampoline and they carry no login logic.
                     'androidx.appcompat.', 'android.widget.', 'com.google.android.material.',
                     // React Native framework internals (per-frame rendering path); RN login logic lives in JS
-                    'com.facebook.react.', 'com.facebook.hermes.', 'com.facebook.yoga.'];
+                    'com.facebook.react.', 'com.facebook.hermes.', 'com.facebook.yoga.',
+                    // media playback frameworks: never part of a login, and they call into Java from native threads
+                    // with small stacks where a hook's JS dispatch overflows the stack (SIGSEGV in frida-agent)
+                    'android.support.v4.media.', 'androidx.media.', 'androidx.media3.', 'com.google.android.exoplayer2.'];
                 // FIX(v1): hot-method guard. A method invoked thousands of times is not a login state
                 // transition; keeping its hook exhausts the JNI global reference table and crashes the app.
                 const HOT_CALL_LIMIT = 2000;
