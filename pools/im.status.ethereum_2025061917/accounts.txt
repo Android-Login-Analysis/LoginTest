@@ -1,8 +1,8 @@
-testuser1@messenger.com
-testuser2@messenger.com
-testuser3@messenger.com
-testuser4@messenger.com
-testuser5@messenger.com
+testuser1@example.com
+testuser2@example.com
+testuser3@example.com
+testuser4@example.com
+testuser5@example.com
 gfdeg_gmail
 jijafj1gt4
 tefafm6fp

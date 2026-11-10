@@ -148,6 +148,7 @@ public class UIManager {
     }
 
     private boolean recoveryTried = false;
+    private boolean reopenTried = false;
     private String webErrorSeen = null;
     private static final java.util.regex.Pattern ERR_LINE = java.util.regex.Pattern.compile(
         "(?i)(incorrect|isn.t connected|not connected to an account|wrong|invalid|couldn.t|could not|not recogni[sz]ed|doesn.t match|did not match|no account|failed|unable|went wrong|try again later|denied|too many)");
@@ -179,6 +180,7 @@ public class UIManager {
 
     private long waitForWebLogin(long timeoutMs) {
         recoveryTried = false;
+        reopenTried = false;
         webErrorSeen = null;
         long deadline = System.currentTimeMillis() + timeoutMs;
         int goneStreak = 0;
@@ -245,7 +247,19 @@ public class UIManager {
                     probeResponsiveness();
                 }
                 // FIX(v1): a user facing a network error page with a recovery control (Restart / Try again) uses it once
-                if (!recoveryTried && (networkErr || m.getOrDefault("url", "").startsWith("chrome-error:")) && tryWebRecovery()) { recoveryTried = true; continue; }
+                if (!recoveryTried && (networkErr || m.getOrDefault("url", "").startsWith("chrome-error:"))) { recoveryTried = true; if (tryWebRecovery()) continue; }
+                // FIX(v1): a user who still sees a network error on a degraded network reopens the page once; this is a
+                // main-frame load under the degraded network, where apps run their load-error handling (onReceivedError).
+                // Probe responsiveness while that handling runs.
+                if ((networkErr || m.getOrDefault("url", "").startsWith("chrome-error:")) && recoveryTried && !reopenTried
+                        && !"normal".equals(roundCondition)) {
+                    reopenTried = true;
+                    System.out.println("[WEBVIEW] Network error persists under '" + roundCondition + "'; reopening the page once");
+                    new Thread(() -> { try { Thread.sleep(800); probeResponsiveness(); } catch (Exception ignored) { } }).start();
+                    web().call("Page.reload", "{\"ignoreCache\":true}");
+                    Thread.sleep(12000);
+                    continue;
+                }
                 if (!err.isEmpty() && !"0".equals(m.getOrDefault("pw", "0"))) {
                     lastLoginErrorText = err;
                     System.out.println("[LOGIN_RESULT] Web error after login: '" + err + "'");

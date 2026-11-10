@@ -1003,6 +1003,7 @@ public class AndroidLoginDetector {
             boolean loginPageDetected = detectLoginPageWithUI();
             // FIX(v1): the app died during navigation (often instrumentation-induced): relaunch, re-attach and retry once
             if (!loginPageDetected && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null
+                    && !"pending".equals(uiManager.getLastMfaOutcome())
                     && System.currentTimeMillis() - stateMachineManager.getBugDetectionManager().getCrashDetector().lastCrashMillis() < 40000) {
                 logInfo("App crashed during navigation; relaunching, re-attaching Frida and retrying the login page detection");
                 AppLauncher.launch(appPackage);
