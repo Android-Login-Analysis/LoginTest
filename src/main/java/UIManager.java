@@ -112,7 +112,7 @@ public class UIManager {
                 }
             } catch (Exception ignored) { }
             // ... or inside the page itself (an MFA code form replacing the credential form)
-            String domText = web().eval("(document.body&&document.body.innerText||'').slice(0,20000)");
+            String domText = web().eval("(document.body&&document.body.innerText||'').slice(0,5000)");
             if (domText != null) {
                 java.util.regex.Matcher mm = MFA_HINT.matcher(domText);
                 if (mm.find() && (webLoginDomText == null || !MFA_HINT.matcher(webLoginDomText).find())) {
@@ -679,7 +679,7 @@ public class UIManager {
         Map<String, String> m = web().inspect();
         if (m.isEmpty()) return false;
         webLoginUrl = m.get("url");
-        webLoginDomText = web().eval("(document.body&&document.body.innerText||'').slice(0,20000)");
+        webLoginDomText = web().eval("(document.body&&document.body.innerText||'').slice(0,5000)");
         boolean pwShown = !"0".equals(m.get("pw"));
         boolean filled = usernameEnteredInStep1 ? web().fillTrusted(null, password)
             : web().fillTrusted(username, pwShown ? password : null);

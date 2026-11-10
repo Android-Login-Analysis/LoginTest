@@ -49,7 +49,7 @@ public final class WebViewBridge {
             HttpRequest req = HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + "/json")).timeout(Duration.ofSeconds(5)).build();
             String body = http.send(req, HttpResponse.BodyHandlers.ofString()).body();
             String best = null;
-            Matcher m = Pattern.compile("\\{[^{}]*?\"description\":\\s*\"((?:[^\"\\\\]|\\\\.)*)\"[^{}]*?\"webSocketDebuggerUrl\":\\s*\"([^\"]+)\"[^{}]*?\\}", Pattern.DOTALL).matcher(body);
+            Matcher m = Pattern.compile("\\{[^{}]*?\"description\":\\s*\"((?:[^\"\\\\]++|\\\\.)*+)\"[^{}]*?\"webSocketDebuggerUrl\":\\s*\"([^\"]+)\"[^{}]*?\\}", Pattern.DOTALL).matcher(body);
             while (m.find()) {
                 String desc = m.group(1).replace("\\\"", "\"");
                 String ws = m.group(2);
@@ -72,7 +72,7 @@ public final class WebViewBridge {
     public synchronized String eval(String js) {
         String resp = call("Runtime.evaluate", "{\"expression\":" + jsonString(js) + ",\"returnByValue\":true,\"awaitPromise\":true}");
         if (resp == null) return null;
-        Matcher v = Pattern.compile("\"value\":\\s*\"((?:[^\"\\\\]|\\\\.)*)\"").matcher(resp);
+        Matcher v = Pattern.compile("\"value\":\\s*\"((?:[^\"\\\\]++|\\\\.)*+)\"").matcher(resp);
         if (v.find()) return unescape(v.group(1));
         Matcher b = Pattern.compile("\"value\":\\s*(true|false|-?[0-9.]+)").matcher(resp);
         return b.find() ? b.group(1) : null;
@@ -262,7 +262,7 @@ public final class WebViewBridge {
         try {
             HttpRequest req = HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + "/json")).timeout(Duration.ofSeconds(5)).build();
             String body = http.send(req, HttpResponse.BodyHandlers.ofString()).body();
-            Matcher m = Pattern.compile("\"description\":\\s*\"((?:[^\"\\\\]|\\\\.)*)\"[^{}]*?\"url\":\\s*\"([^\"]*)\"", Pattern.DOTALL).matcher(body);
+            Matcher m = Pattern.compile("\"description\":\\s*\"((?:[^\"\\\\]++|\\\\.)*+)\"[^{}]*?\"url\":\\s*\"([^\"]*)\"", Pattern.DOTALL).matcher(body);
             while (m.find()) if (m.group(1).contains("visible\\\":true")) return m.group(2);
             Matcher u = Pattern.compile("\"url\":\\s*\"([^\"]*)\"").matcher(body);
             return u.find() ? u.group(1) : null;
