@@ -1224,6 +1224,21 @@ public class AndroidLoginDetector {
                     try { Thread.sleep(4000); } catch (InterruptedException ignored) { }   // let the app persist the session
                     stateMachineManager.getBugDetectionManager().getStorageDetector().scan(appPackage, username, password);
                 }
+                // FIX(v1): account-security oracle (#6640-style) on the live session right after the first confirmed login
+                // with the app's own account (restored snapshots do not work for apps whose data is keystore-encrypted)
+                if (authenticated && lastCredentialChoiceValid && "normal".equals(roundCondition) && !mfaSetupChecked
+                        && !uiManager.isGoogleLoginDetected() && !uiManager.isFacebookLoginDetected() && !validPairs.isEmpty()
+                        && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+                    mfaSetupChecked = true;
+                    AppLauncher.run("adb", "shell", "am", "force-stop", appPackage);
+                    AppLauncher.launch(appPackage);
+                    try { Thread.sleep(8000); } catch (InterruptedException ignored) { }
+                    String ev = uiManager.checkMfaCodeRequestOffline(validPairs,
+                        () -> networkChaosManager.applyCondition("offline"), () -> networkChaosManager.applyCondition("normal"));
+                    logInfo("Post-login: MFA code request without network: " + (ev == null ? "no finding" : ev));
+                    if (ev != null) stateMachineManager.getBugDetectionManager().getObservedDetector().record("ACCOUNT_MANAGEMENT_BREAK",
+                        "MFA_CODE_PROMPT_WITHOUT_DELIVERY", "The MFA code could not be sent (no network) but the app reports nothing and asks for the code", ev);
+                }
                 // a valid login is only expected to succeed on a working network
                 boolean expectSuccess = authenticated || (usedValidPair && "normal".equals(roundCondition));
                 logInfo("Login outcome: inputOk=" + loginSuccess + ", loginPageGone=" + authenticated + ", validPair=" + usedValidPair);
@@ -1531,6 +1546,7 @@ public class AndroidLoginDetector {
     }
 
     private String loggedInSnapshot = null;
+    private boolean mfaSetupChecked = false;
     private final java.util.Set<String> crashingDirectActivities = new java.util.HashSet<>();
     private boolean chaosEnabledForRun = false;
 
@@ -1566,7 +1582,8 @@ public class AndroidLoginDetector {
                 }
             }
             // FIX(v1): account-security flow under a failed network (#6640-style)
-            if (!validPairs.isEmpty()) {
+            if (!validPairs.isEmpty() && !mfaSetupChecked) {
+                mfaSetupChecked = true;
                 AppLauncher.run("adb", "shell", "am", "force-stop", pkg);
                 AppLauncher.launch(pkg);
                 Thread.sleep(8000);
