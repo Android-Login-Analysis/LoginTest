@@ -1276,7 +1276,19 @@ public class AndroidLoginDetector {
                     uiManager.setPendingUsername(rUser);   // before navigation: it resets per-attempt state (incl. DOM mode)
                     uiManager.setPreferGuestLogin(false);   // rotation checks need a credential form
                     uiManager.setStopAtIdentifier(true);    // identifier-only screens are rotated too
-                    boolean onLogin = detectLoginPageWithUI() || tryDirectLoginActivities();
+                    boolean onLogin = detectLoginPageWithUI();
+                    if (!onLogin && stateMachineManager.getBugDetectionManager() != null
+                            && System.currentTimeMillis() - stateMachineManager.getBugDetectionManager().getCrashDetector().lastCrashMillis() < 40000) {
+                        logInfo("App crashed while reaching the login page for rotation checks; relaunching and retrying once");
+                        AppLauncher.launch(appPackage);
+                        restartFridaMonitoring();
+                        try { TimeUnit.SECONDS.sleep(8); } catch (InterruptedException ignored) { }
+                        uiManager.setPendingUsername(rUser);
+                        uiManager.setPreferGuestLogin(false);
+                        uiManager.setStopAtIdentifier(true);
+                        onLogin = detectLoginPageWithUI();
+                    }
+                    onLogin = onLogin || tryDirectLoginActivities();
                     uiManager.setStopAtIdentifier(false);
                     if (onLogin) {
                         List<String[]> findings = uiManager.runRotationChecks(rUser, rPass);
