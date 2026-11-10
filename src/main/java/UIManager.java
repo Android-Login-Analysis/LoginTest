@@ -494,6 +494,7 @@ public class UIManager {
 
     public long waitForLoginPageGone(long timeoutMs) {
         lastWaitEndedInProgress = false;
+        googleGoneSince = -1; googleBackSince = -1;
         if (webMode) { lastLoginErrorText = null; return waitForWebLogin(timeoutMs); }
         lastLoginErrorText = null;
         lastMfaOutcome = null;
