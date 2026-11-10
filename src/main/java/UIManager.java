@@ -257,7 +257,7 @@ public class UIManager {
                     System.out.println("[WEBVIEW] Network error persists under '" + roundCondition + "'; reopening the page once");
                     new Thread(() -> { try { Thread.sleep(800); probeResponsiveness(); } catch (Exception ignored) { } }).start();
                     web().call("Page.reload", "{\"ignoreCache\":true}");
-                    Thread.sleep(12000);
+                    try { Thread.sleep(12000); } catch (InterruptedException ie) { Thread.currentThread().interrupt(); }
                     continue;
                 }
                 if (!err.isEmpty() && !"0".equals(m.getOrDefault("pw", "0"))) {
