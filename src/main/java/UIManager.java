@@ -354,7 +354,11 @@ public class UIManager {
                             return -3;
                         }
                     }
-                    boolean progressShown = false, actionable = false;
+                    boolean progressShown = lastDumpFailed, actionable = false;   // an un-dumpable (never idle) screen is busy
+                    if (lastDumpFailed && System.currentTimeMillis() - lastDumpFailLog > 15000) {
+                        lastDumpFailLog = System.currentTimeMillis();
+                        System.out.println("[UI_DUMP] UI hierarchy unavailable (screen never idle, e.g. an animation); treating it as a busy screen");
+                    }
                     for (UIElement e : els) {
                         if (e.className != null && e.className.contains("ProgressBar") && boundsOf(e) != null) progressShown = true;
                         else if (e.className != null && e.className.contains("[clickable]") && !e.className.contains("[disabled]")
@@ -420,9 +424,7 @@ public class UIManager {
     public String getCurrentUIDump() {
         try {
             // Dump UI to a temporary file on device
-            Process dumpProcess = Runtime.getRuntime().exec(
-                "adb shell uiautomator dump /data/local/tmp/ui_dump_temp.xml");
-            dumpProcess.waitFor();
+            if (!dumpUi("/data/local/tmp/ui_dump_temp.xml")) return "";
             
             // Read the dump file
             Process catProcess = Runtime.getRuntime().exec(
@@ -1682,10 +1684,25 @@ public class UIManager {
     /**
      * Get all UI elements
      */
+    /** True when the last UI dump failed (the UI never became idle); the screen content is then unknown. */
+    private boolean lastDumpFailed = false;
+    private int dumpFailCount = 0;
+    private long lastDumpFailLog = 0;
+    /**
+     * FIX(v1): dump the UI hierarchy to {@code path}, removing any previous dump first. uiautomator cannot dump a UI
+     * that never becomes idle (continuous animations) and then leaves the old file behind; returns false in that case.
+     */
+    static boolean dumpUi(String path) {
+        String out = bugdetectors.BoundedExec.run(30, "adb", "shell", "rm -f " + path + "; uiautomator dump " + path);
+        boolean ok = out != null && out.contains("dumped to") && !out.contains("ERROR");
+        return ok;
+    }
+
     private List<UIElement> getAllUIElements() throws Exception {
         // Use uiautomator dump to get UI hierarchy
-        Process dumpProcess = Runtime.getRuntime().exec("adb shell uiautomator dump /data/local/tmp/window_dump.xml");
-        dumpProcess.waitFor();
+        // FIX(v1): a failed dump (UI never idle, e.g. a sync animation) must not leave the previous dump in place
+        lastDumpFailed = !dumpUi("/data/local/tmp/window_dump.xml");   // a failing dump already waits ~10 s for idle
+        if (lastDumpFailed) { dumpFailCount++; return new ArrayList<>(); }
 
         // Read the entire dump file content
         Process catProcess = Runtime.getRuntime().exec("adb shell cat /data/local/tmp/window_dump.xml");
@@ -2271,8 +2288,7 @@ public class UIManager {
     public boolean checkFocusedLoginField() {
         try {
             // Get the currently focused element
-            Process process = Runtime.getRuntime().exec("adb shell uiautomator dump /data/local/tmp/window_dump.xml");
-            process.waitFor();
+            if (!dumpUi("/data/local/tmp/window_dump.xml")) return false;
             
             // Get the focused element bounds
             Process focusProcess = Runtime.getRuntime().exec("adb shell dumpsys window windows | grep -E 'mCurrentFocus|mFocusedApp'");
@@ -2630,7 +2646,19 @@ public class UIManager {
         return findings;
     }
 
+    /** FIX(v1): rotation findings that compare UI dumps are only valid when every dump succeeded. */
     public List<String[]> runRotationChecks(String username, String password) {
+        int failsBefore = dumpFailCount;
+        List<String[]> findings = runRotationChecks0(username, password);
+        if (dumpFailCount != failsBefore) {
+            int n = findings.size();
+            findings.removeIf(f -> !"ROTATION_APP_EXIT".equals(f[0]));
+            if (n != findings.size()) System.out.println("[ROTATION] " + (n - findings.size()) + " finding(s) dropped: a UI dump failed during the check (screen never idle)");
+        }
+        return findings;
+    }
+
+    private List<String[]> runRotationChecks0(String username, String password) {
         if (webMode) return runWebRotationChecks(username, password);
         List<String[]> findings = new ArrayList<>();
         try {
