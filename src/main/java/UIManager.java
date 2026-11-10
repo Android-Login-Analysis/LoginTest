@@ -111,7 +111,7 @@ public class UIManager {
     private static final java.util.regex.Pattern ERR_LINE = java.util.regex.Pattern.compile(
         "(?i)(incorrect|isn.t connected|not connected to an account|wrong|invalid|couldn.t|could not|not recogni[sz]ed|doesn.t match|did not match|no account|failed|unable|went wrong|try again later|denied|too many)");
     private static final java.util.regex.Pattern NETWORK_ERR = java.util.regex.Pattern.compile(
-        "(?i)(network|connection|internet|offline|went wrong|timed? ?out|unable to (reach|connect|load)|couldn.t (load|connect|reach)|try again later|no response)");
+        "(?i)(network|connection|internet|offline|went wrong|timed? ?out|unable to (reach|connect|load)|couldn.t (load|connect|reach)|try again later|no response|failed to fetch|err_)");
 
     /** First line of the page text that is new since the submit and reads like an error message. */
     private String newErrorLine(String domText) {
