@@ -650,6 +650,7 @@ public class UIManager {
     public boolean ensureAppInForeground() {
         if (isAppInForeground()) return true;
         System.out.println("[FOREGROUND] App under test is not in foreground; relaunching " + appPackage);
+        tappedEntries.clear();   // the app restarted: earlier entries did not necessarily lead nowhere
         return AppLauncher.launch(appPackage);
     }
 
