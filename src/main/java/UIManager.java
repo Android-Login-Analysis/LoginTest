@@ -993,7 +993,8 @@ public class UIManager {
                 if (mfaHandled) return null;
                 // FIX(v1): a user must be able to back out of an MFA prompt (#6647-style), whether or not they have
                 // the code: test it once per round before answering. A prompt that closes lets navigation continue.
-                if (!mfaDismissChecked) {
+                // only on a working network: on a degraded one the app may close the prompt by itself (failed request)
+                if (!mfaDismissChecked && "normal".equals(roundCondition)) {
                     mfaDismissChecked = true;
                     String prompt = currentMfaPromptText();
                     Boolean dismissed = tryDismissMfaPrompt();
