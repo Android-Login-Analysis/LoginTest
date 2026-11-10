@@ -92,9 +92,10 @@ public class UIManager {
     private boolean recoveryTried = false;
     /** Click a visible Restart / Try again / Retry control on a web error page; true if one was used. */
     private boolean tryWebRecovery() {
+        String page = web().eval("(document.body&&document.body.innerText||'').replace(/\\s+/g,' ').slice(0,200)");
         String hit = web().clickText("^(restart|try again|retry|reload)$");
         if (hit == null) return false;
-        System.out.println("[WEBVIEW] Error page offered '" + hit + "'; using it like a user would");
+        System.out.println("[WEBVIEW] Error page offered '" + hit + "'; using it like a user would. Page: " + page);
         try { Thread.sleep(5000); } catch (InterruptedException ignored) { }
         return true;
     }
