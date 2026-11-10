@@ -1236,6 +1236,7 @@ public class UIManager {
         twoStepJustFilled = true;
     }
     private int lastLoginEntryPriority = 99;
+    private boolean lastSignInHeading = false;
 
     // entries already tapped during this navigation (an entry that leads nowhere is not tapped again)
     private final java.util.Set<String> tappedEntries = new java.util.HashSet<>();
@@ -1368,6 +1369,7 @@ public class UIManager {
                 // a sign-in page commonly offers a "Create account" link; only a sign-up text without a sign-in heading
                 // marks a registration form
                 if (pwInputs >= 2 || (signUpText && !signInHeading)) registrationForm = true;
+                lastSignInHeading = signInHeading;
 
                 // Iterate through all elements to check if they match the login element pattern
                 for (UIElement element : elements) {
@@ -1423,7 +1425,7 @@ public class UIManager {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 3;
                         } else if (lastLoginEntryPriority > 3 && t.matches("(get started|continue|next|skip|start|got it|let's go|lets go|finish|done|accept|agree|i agree)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 3;
-                        } else if (lastLoginEntryPriority > 4 && t.matches("(facebook|google)")) {
+                        } else if (lastLoginEntryPriority > 4 && t.matches("(facebook|google)( (tasks|account|sign[- ]?in|login))?")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 4;   // SSO / service selection
                         } else if (lastLoginEntryPriority > 5 && t.matches("(twitch|reddit|github|microsoft|x|twitter|instagram|bluesky|mastodon)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 5;
@@ -1533,7 +1535,9 @@ public class UIManager {
                 }
             }
             boolean isLoginByVote = passwordFieldDetected && votes >= voteThreshold;
-            boolean isLoginBySso = (googleLoginDetected || facebookLoginDetected) && (usernameFieldDetected || passwordFieldDetected || loginButtonDetected);
+            // FIX(v1): a sign-in screen that only offers account providers (e.g. "Google Tasks") is an SSO login page too
+            boolean isLoginBySso = (googleLoginDetected || facebookLoginDetected)
+                && (usernameFieldDetected || passwordFieldDetected || loginButtonDetected || lastSignInHeading);
             boolean isLoginByWebViewHeur = webViewPresent && passwordFieldDetected && (
                     votes >= 1 ||
                     (webViewLarge && hasIdClassHints) ||
