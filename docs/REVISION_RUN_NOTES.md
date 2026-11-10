@@ -96,6 +96,39 @@ device signs in directly. The app data right after the login is kept as `pools/<
 | Tasks | #3962 | needs Google Play services image | |
 | OpenTune | #345, #346 | unavailable | repository taken down (HTTP 451) |
 
+### Fixes made during the old-version and seeded runs (2026-11-10)
+
+| # | Symptom | Root cause | Fix |
+|---|---|---|---|
+| 35 | Typed passwords appeared in run logs | UI match logs printed the text of input fields (Compose/WebView expose typed text) | Input-field values are logged as `[input, n chars]` |
+| 36 | Rotation checks skipped on Standard Notes 3.195.26 | Account menus with a search box were taken for identifier-only forms | Identifier-only forms require exactly one text input (navigation and rotation phase) |
+| 37 | Facebook (Nora) error text never captured; tool dismissed it | Error shown in a plain dialog `div`; "Try again" treated as a network retry | New error-like page text after submit is the rejection message; recovery controls only for network errors |
+| 38 | Wrong service account used in valid rounds | Credential phase drew a random (placeholder) pool account | Real service account with its paired password; placeholders never count as valid |
+| 39 | No wrong-password sample for the differential oracle | Invalid round only used special-character usernames | Invalid round also tries an existing account with a wrong password |
+| 40 | ANR never observed after a frozen UI | ANR needs an unhandled input event; DevTools clicks/dumps are not input | Responsiveness probe (harmless key event) after network errors and recovery actions |
+| 41 | Native crashes in `frida-agent` on every app (thread `…rs.media.module`) | Several frida-server instances on one device (scripts started one when `pgrep` missed it; `pkill -f` does not work on the device) | Run scripts kill all servers (`pidof`) and start exactly one per run; 0 crashes afterwards |
+| 42 | Rounds took 12+ minutes before the login | Post-reset "verify" navigation repeated per round; random chaos active during setup | Skip the verification navigation in app-reset mode; chaos stopped at round start |
+| 43 | One crash lost the whole round | Navigation failure after an app crash went straight to random exploration | Relaunch, re-attach Frida and retry navigation once (login and rotation phase) |
+| 44 | UI dumps written to shared storage | `/sdcard` files trigger MediaProvider callbacks in the app under test | Dumps and temporary screenshots under `/data/local/tmp` (with explicit dump paths) |
+
+### Official report-time versions (issue versions)
+
+| App / version | Result |
+|---|---|
+| Standard Notes 3.195.26 (official) | #4030 and #4032 detected; #3908/#3909/#4031 not triggered |
+| OuterTune 0.9.3.1 (official) | #965 detected; rotation reloads the login page (input lost), no crash (#964 was reported on a debug build) |
+| Nora 0.4.3 (official) | #106 detected; #107 pending (Facebook account available since 2026-11-10) |
+
+### Seeded builds (`apps/seeded/`, separate experiment, not counted as reproductions)
+
+| Build | Seeded issues | Result |
+|---|---|---|
+| OuterTune 0.9.3.1 seeded | #964 | not triggered: no crash on rotation, also when rotated by hand |
+| Standard Notes "3.195.26" seeded (3.198.14 base) | #3908, #3909, #4031 | not triggered: a manual sign-in completes normally (no freeze, no notice) |
+| Tasks 14.7.4 seeded | #3962 | not reachable: Google sign-in needs Google Play services (absent on redroid) |
+| InnerTune 0.5.10 seeded | #1830, #1831, #1860 | running |
+| Nora 0.4.3 seeded | #107 | to rerun (first run timed out before the network rounds) |
+
 Items 2, 3, 9-11, 16-18 and 20-22 change the tool's behaviour in ways that matter for the paper's numbers (instrumentation
 scope, credential policy, oracle definitions). Table V and the precision figures must be recomputed with this code.
 
