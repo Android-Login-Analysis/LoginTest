@@ -89,6 +89,23 @@ public class UIManager {
         return text;
     }
 
+    /**
+     * FIX(v1): ANR oracle support. Android reports "Application Not Responding" only for input that stays
+     * unhandled; DevTools clicks and UI dumps are not input events. A harmless key event (Shift) right after an
+     * action makes a blocked UI thread observable as an ANR, which the crash detector picks up.
+     */
+    public void probeResponsiveness() {
+        try {
+            Thread.sleep(1000);
+            for (int i = 0; i < 2; i++) {
+                new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_SHIFT_LEFT")
+                    .redirectErrorStream(true).start().waitFor(15, java.util.concurrent.TimeUnit.SECONDS);
+                Thread.sleep(1000);
+            }
+            Thread.sleep(6000);   // input dispatch timeout is 5 s
+        } catch (Exception ignored) { }
+    }
+
     private boolean recoveryTried = false;
     private String webErrorSeen = null;
     private static final java.util.regex.Pattern ERR_LINE = java.util.regex.Pattern.compile(
@@ -112,7 +129,7 @@ public class UIManager {
         String hit = web().clickText("^(restart|try again|retry|reload)$");
         if (hit == null) return false;
         System.out.println("[WEBVIEW] Error page offered '" + hit + "'; using it like a user would. Page: " + page);
-        try { Thread.sleep(5000); } catch (InterruptedException ignored) { }
+        probeResponsiveness();
         return true;
     }
 
@@ -171,7 +188,11 @@ public class UIManager {
                     System.out.println("[LOGIN_RESULT] Web error after login: '" + err + "'");
                     return -2;
                 }
-                if (networkErr && webErrorSeen == null) { webErrorSeen = err; System.out.println("[LOGIN_RESULT] Web network error after login: '" + err + "'"); }
+                if (networkErr && webErrorSeen == null) {
+                    webErrorSeen = err;
+                    System.out.println("[LOGIN_RESULT] Web network error after login: '" + err + "'");
+                    probeResponsiveness();
+                }
                 // FIX(v1): a user facing a network error page with a recovery control (Restart / Try again) uses it once
                 if (!recoveryTried && (networkErr || m.getOrDefault("url", "").startsWith("chrome-error:")) && tryWebRecovery()) { recoveryTried = true; continue; }
                 if (!err.isEmpty() && !"0".equals(m.getOrDefault("pw", "0"))) {
