@@ -757,7 +757,7 @@ public class UIManager {
     private String googleAccount = null, facebookAccount = null;
     private boolean roundValid = false;
     public void setServiceAccounts(String google, String facebook) { googleAccount = google; facebookAccount = facebook; }
-    public void setRoundValid(boolean v) { roundValid = v; }
+    public void setRoundValid(boolean v) { roundValid = v; mfaDismissChecked = false; mfaNotDismissable = null; }   // called once per round
     public boolean isRoundValid() { return roundValid; }
     private boolean serviceAccountAdopted = false;
     public boolean isServiceAccountAdopted() { return serviceAccountAdopted; }
@@ -884,6 +884,22 @@ public class UIManager {
                     return "pending";
                 }
                 if (mfaHandled) return null;
+                // FIX(v1): a user must be able to back out of an MFA prompt (#6647-style), whether or not they have
+                // the code: test it once per round before answering. A prompt that closes lets navigation continue.
+                if (!mfaDismissChecked) {
+                    mfaDismissChecked = true;
+                    String prompt = currentMfaPromptText();
+                    if (tryDismissMfaPrompt()) {
+                        System.out.println("[MFA] Prompt can be dismissed; continuing the login");
+                        if (!AppLauncher.isInForeground(appPackage)) AppLauncher.launch(appPackage);
+                        return "progressed";
+                    }
+                    System.out.println("[MFA] Prompt cannot be dismissed (Cancel/Back keep it open)");
+                    mfaNotDismissable = prompt == null ? "MFA code prompt" : prompt;
+                    lastScanElements = getAllUIElements();
+                    input = findMfaInput(lastScanElements);
+                    if (input == null) return null;
+                }
                 mfaHandled = true;
                 int[] r = boundsOf(input);
                 System.out.println("[MFA] Code prompt during navigation; entering TOTP code");
@@ -948,6 +964,11 @@ public class UIManager {
     }
 
     private String lastMfaOutcome = null;   // null | "totp-entered" | "pending"
+    private boolean mfaDismissChecked = false;
+    private String mfaNotDismissable = null;
+    /** Prompt text of an MFA prompt found not dismissable since the last call (null if none). */
+    public String takeMfaNotDismissable() { String t = mfaNotDismissable; mfaNotDismissable = null; return t; }
+    public void markMfaDismissChecked() { mfaDismissChecked = true; }
     public String getLastMfaOutcome() { return lastMfaOutcome; }
 
     /** If the screen shows a single identifier input and no password field, type the username into it. */

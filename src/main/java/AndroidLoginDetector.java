@@ -1039,6 +1039,12 @@ public class AndroidLoginDetector {
             if (mfaPendingRound) {
                 logInfo("Login reached the MFA prompt before the password step (MFACodePending); no authenticator secret for " + roundUsername);
             }
+            // FIX(v1): an MFA prompt met during navigation that Cancel/Back cannot close (#6647-style)
+            String notDismissable = uiManager.takeMfaNotDismissable();
+            if (notDismissable != null && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+                stateMachineManager.getBugDetectionManager().getObservedDetector().record("UI_ERROR", "MFA_PROMPT_NOT_DISMISSABLE",
+                    "The MFA prompt cannot be cancelled (Cancel/Back keep the user on it)", "Prompt: '" + notDismissable + "'");
+            }
 
             if (loginPageDetected) {
                 // Create baseline snapshot ONLY when login page is first detected
