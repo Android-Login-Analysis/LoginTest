@@ -1106,7 +1106,8 @@ public class UIManager {
                     }
                     if (pendingUsername != null && !usernameEnteredInStep1 && !"0".equals(wm.getOrDefault("id", "0"))
                             && !wm.getOrDefault("btn", "").isEmpty()) {
-                        if (stopAtIdentifier) {
+                        // an identifier step has exactly one text input (account menus with search boxes do not count)
+                        if (stopAtIdentifier && "1".equals(wm.getOrDefault("id", "0"))) {
                             System.out.println("[WEBVIEW] Identifier-only web form reached (rotation checks run on it)");
                             return true;
                         }
