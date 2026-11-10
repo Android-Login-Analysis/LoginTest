@@ -996,13 +996,17 @@ public class UIManager {
                 if (!mfaDismissChecked) {
                     mfaDismissChecked = true;
                     String prompt = currentMfaPromptText();
-                    if (tryDismissMfaPrompt()) {
+                    Boolean dismissed = tryDismissMfaPrompt();
+                    if (Boolean.TRUE.equals(dismissed)) {
                         System.out.println("[MFA] Prompt can be dismissed; continuing the login");
                         if (!AppLauncher.isInForeground(appPackage)) AppLauncher.launch(appPackage);
                         return "progressed";
                     }
-                    System.out.println("[MFA] Prompt cannot be dismissed (Cancel/Back keep it open)");
-                    mfaNotDismissable = prompt == null ? "MFA code prompt" : prompt;
+                    if (dismissed == null) System.out.println("[MFA] Prompt dismissal could not be judged (screen unreadable)");
+                    else {
+                        System.out.println("[MFA] Prompt cannot be dismissed (Cancel/Back keep it open)");
+                        mfaNotDismissable = prompt == null ? "MFA code prompt" : prompt;
+                    }
                     lastScanElements = getAllUIElements();
                     input = findMfaInput(lastScanElements);
                     if (input == null) return null;
@@ -1050,8 +1054,22 @@ public class UIManager {
         return null;
     }
 
-    /** Try to leave the MFA prompt (Cancel button, then BACK). Returns true if the prompt went away. */
-    public boolean tryDismissMfaPrompt() {
+    /** TRUE if no MFA prompt is shown, FALSE if one is, null if the screen cannot be read (dump keeps failing). */
+    private Boolean mfaPromptGone() throws InterruptedException {
+        if (!AppLauncher.isInForeground(appPackage)) return Boolean.TRUE;
+        for (int i = 0; i < 3; i++) {
+            String t = currentMfaPromptText();
+            if (!lastDumpFailed) return t == null;
+            Thread.sleep(2000);
+        }
+        return null;
+    }
+
+    /**
+     * Try to leave the MFA prompt (Cancel button, then BACK). TRUE if the prompt went away, FALSE if it stayed,
+     * null if the screen could not be read (no verdict).
+     */
+    public Boolean tryDismissMfaPrompt() {
         try {
             for (UIElement e : getAllUIElements()) {
                 if (e.text == null || boundsOf(e) == null) continue;
@@ -1063,11 +1081,12 @@ public class UIManager {
                 }
             }
             Thread.sleep(3000);
-            if (currentMfaPromptText() == null || !AppLauncher.isInForeground(appPackage)) return true;
+            Boolean gone = mfaPromptGone();
+            if (!Boolean.FALSE.equals(gone)) return gone;
             new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_BACK").redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
             Thread.sleep(3000);
-            return currentMfaPromptText() == null || !AppLauncher.isInForeground(appPackage);
-        } catch (Exception e) { return true; }
+            return mfaPromptGone();
+        } catch (Exception e) { return null; }
     }
 
     private String lastMfaOutcome = null;   // null | "totp-entered" | "pending"

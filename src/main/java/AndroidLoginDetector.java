@@ -1251,7 +1251,7 @@ public class AndroidLoginDetector {
                             "MFA prompt claims a code was sent while the device had no working network",
                             "Network '" + roundCondition + "', prompt: '" + prompt + "'");
                     }
-                    if (prompt != null && !uiManager.tryDismissMfaPrompt()) {
+                    if (prompt != null && Boolean.FALSE.equals(uiManager.tryDismissMfaPrompt())) {
                         observed.record("UI_ERROR", "MFA_PROMPT_NOT_DISMISSABLE",
                             "The MFA prompt cannot be cancelled (Cancel/Back keep the user on it)",
                             "Prompt: '" + prompt + "'");
