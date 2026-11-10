@@ -732,7 +732,9 @@ public class AndroidLoginDetector {
         facebookEmailPool = new java.util.ArrayList<>(facebookEmailPool);
         facebookPasswordPool = new java.util.ArrayList<>(facebookPasswordPool);
         for (String[] svc : new String[][]{{"google_valid_pairs.csv", "g"}, {"facebook_valid_pairs.csv", "f"}}) {
-            java.util.List<String> lines = readLinesFromFile(new java.io.File(credDir, svc[0]).getPath());
+            java.io.File f = new java.io.File(credDir, svc[0]);
+            if (!f.isFile()) continue;
+            java.util.List<String> lines = readLinesFromFile(f.getPath());
             if (lines == null) continue;
             int at = 0;
             for (String l : lines) {
@@ -932,6 +934,8 @@ public class AndroidLoginDetector {
 
         long testStartTime = System.currentTimeMillis();
         int testRounds = configLoader.getTestRounds();
+        // FIX(v1): debugging aid - LIFT_LOGGEDIN_ONLY=1 runs only the logged-in phase on the captured session
+        if ("1".equals(System.getenv("LIFT_LOGGEDIN_ONLY"))) { testRounds = 0; logInfo("LIFT_LOGGEDIN_ONLY: skipping the login rounds"); }
         
         // Initialize unified error report path (one file for all rounds)
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
