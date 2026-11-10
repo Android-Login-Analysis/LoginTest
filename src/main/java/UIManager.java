@@ -1138,7 +1138,7 @@ public class UIManager {
                         System.out.println("[WEBVIEW] Login form found in WebView DOM");
                         return true;
                     }
-                    if (pendingUsername != null && !usernameEnteredInStep1 && !"0".equals(wm.getOrDefault("id", "0"))
+                    if (pendingUsername != null && !usernameEnteredInStep1 && "1".equals(wm.getOrDefault("id", "0"))
                             && !wm.getOrDefault("btn", "").isEmpty()) {
                         // an identifier step has exactly one text input (account menus with search boxes do not count)
                         if (stopAtIdentifier && "1".equals(wm.getOrDefault("id", "0"))) {
