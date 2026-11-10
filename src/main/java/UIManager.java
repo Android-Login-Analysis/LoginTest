@@ -113,11 +113,12 @@ public class UIManager {
     public void probeResponsiveness() {
         try {
             Thread.sleep(1000);
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 3; i++) {
                 new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_SHIFT_LEFT")
                     .redirectErrorStream(true).start().waitFor(15, java.util.concurrent.TimeUnit.SECONDS);
                 Thread.sleep(1000);
             }
+            System.out.println("[ANR_PROBE] Key events sent; waiting for the input dispatch timeout");
             Thread.sleep(6000);   // input dispatch timeout is 5 s
         } catch (Exception ignored) { }
     }
@@ -1029,7 +1030,8 @@ public class UIManager {
             // FIX(v1): on a degraded network a page opened by this tap may fail at once and the app's error handling
             // runs right away; probe responsiveness while it runs (an observation afterwards would be too late)
             if (!"normal".equals(roundCondition) && lastLoginEntryPriority >= 1) {
-                new Thread(() -> { try { Thread.sleep(1500); probeResponsiveness(); } catch (Exception ignored) { } }).start();
+                System.out.println("[ANR_PROBE] Entry tapped on a '" + roundCondition + "' network; probing responsiveness");
+                new Thread(() -> { try { Thread.sleep(800); probeResponsiveness(); } catch (Exception ignored) { } }).start();
             }
             try {
                 new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf(cx), String.valueOf(cy))
