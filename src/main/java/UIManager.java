@@ -961,11 +961,14 @@ public class UIManager {
 
     private boolean loadErrorProbed = false;
     private String roundCondition = "normal";
-    public void setRoundCondition(String c) { roundCondition = c == null ? "normal" : c; }
+    public void setRoundCondition(String c) {
+        String n = c == null ? "normal" : c;
+        if (!n.equals(roundCondition)) loadErrorProbed = false;   // one load-failure probe per network condition
+        roundCondition = n;
+    }
 
     public boolean detectLoginPage() {
         tappedEntries.clear();
-        loadErrorProbed = false;
         for (int hop = 0; hop <= 6; hop++) {
             lastLoginEntryBounds = null; lastLoginEntryPriority = 99; lastGuestBounds = null; lastLoginEntryKey = null;
             if (detectLoginPageOnce()) return true;
