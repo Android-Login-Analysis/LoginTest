@@ -396,6 +396,12 @@ public class AndroidLoginDetector {
         // Only restore baseline snapshot if this is NOT the first round
         // First round should start fresh, subsequent rounds restore to clean state
         if (roundNumber > 1) {
+            // FIX(v1): random chaos is for the exploration phase only; round setup (reset, navigation) runs on a
+            // normal network so that each round's condition is the deterministic one of the schedule
+            if (networkChaosManager != null && networkChaosManager.isRunning()) {
+                networkChaosManager.stop();
+                networkChaosManager.applyCondition("normal");
+            }
             logInfo("Round " + roundNumber + ": Restoring baseline snapshot to clean state");
             restoreBaselineSnapshotIfExists();
         } else {
@@ -462,6 +468,9 @@ public class AndroidLoginDetector {
         boolean restored = snapshotManager.restoreSnapshot("baseline");
         if (restored) {
             logInfo("Successfully restored baseline snapshot");
+            // FIX(v1): with an app-level reset the app is relaunched from scratch and navigated again by the login
+            // phase; navigating to the login page here only to "verify" the restore cost minutes per round
+            if ("app".equalsIgnoreCase(System.getenv("LIFT_RESET_MODE"))) return;
             // Verify app is in correct state
             try {
                 TimeUnit.SECONDS.sleep(2);
@@ -933,6 +942,7 @@ public class AndroidLoginDetector {
         if (networkChaosManager != null) {
             logInfo("Starting network chaos testing (emulator is ready)...");
             networkChaosManager.start();
+            chaosEnabledForRun = true;
         }
 
         try {
@@ -980,9 +990,9 @@ public class AndroidLoginDetector {
             uiManager.setServiceAccounts(realAccount(googleEmailPool), realAccount(facebookEmailPool));
             // FIX(v1): deterministic network condition for the whole login (navigation, MFA, submit)
             final String roundCondition = ROUND_CONDITIONS[(round - 1) % ROUND_CONDITIONS.length];
-            final boolean chaosWasRunning = networkChaosManager != null && networkChaosManager.isRunning();
+            final boolean chaosWasRunning = networkChaosManager != null && (networkChaosManager.isRunning() || chaosEnabledForRun);
             if (networkChaosManager != null) {
-                if (chaosWasRunning) networkChaosManager.stop();
+                if (networkChaosManager.isRunning()) networkChaosManager.stop();
                 networkChaosManager.applyCondition(roundCondition);
             }
             logInfo("Round network condition for login: " + roundCondition);
@@ -1447,6 +1457,7 @@ public class AndroidLoginDetector {
     }
 
     private String loggedInSnapshot = null;
+    private boolean chaosEnabledForRun = false;
 
     /**
      * FIX(v1): post-login oracles on a restored logged-in session. Logins that need an out-of-band approval
