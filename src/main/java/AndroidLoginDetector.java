@@ -2031,6 +2031,13 @@ public class AndroidLoginDetector {
             logInfo("Login form is inside a WebView; using DevTools input");
             return uiManager.webLogin(username, password);
         }
+        // FIX(v1): a native "Sign in with Google" button with no credential fields: use the device's Google account
+        if (uiManager.isGoogleLoginDetected() && uiManager.noCredentialFieldsVisible()) {
+            logInfo("Native Google sign-in button; signing in with the device's Google account");
+            boolean ok = uiManager.googleButtonLogin(username);
+            if (screenshotManager != null) screenshotManager.captureScreenshot("after_google_sign_in");
+            return ok;
+        }
         try {
             logInfo("=== Starting Enhanced Credential Input Process ===");
             logInfo("Username to input: " + username);

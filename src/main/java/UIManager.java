@@ -196,6 +196,54 @@ public class UIManager {
         }
     }
 
+    /** True when the current screen has no text inputs at all (only buttons, e.g. "Sign in with Google"). */
+    public boolean noCredentialFieldsVisible() {
+        try {
+            for (UIElement e : getAllUIElements()) if (isInputClass(e.className) && boundsOf(e) != null) return false;
+            return !lastDumpFailed;
+        } catch (Exception e) { return false; }
+    }
+
+    private boolean gmsOnTop() { return AppLauncher.topActivityLine().contains("com.google.android.gms"); }
+
+    /**
+     * FIX(v1): native "Sign in with Google" (Google Play services): tap the button, choose the device's Google account
+     * in the account picker, confirm consent screens. The round's network condition stays applied; the caller then waits
+     * for the login result as for any other submit. Returns false when no Google button could be tapped.
+     */
+    public boolean googleButtonLogin(String account) {
+        try {
+            String hit = tapText("(sign in with google|continue with google|log ?in with google|sign in with google account|google sign[- ]in|google)");
+            if (hit == null) return false;
+            System.out.println("[GOOGLE] Tapped '" + hit + "'");
+            loginButtonClickTime = System.currentTimeMillis();
+            loginClickActivity = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
+            boolean picked = false; int awayFromGms = 0;
+            for (int i = 0; i < 12; i++) {
+                Thread.sleep(2500);
+                if (!gmsOnTop()) { if (++awayFromGms >= 2) break; continue; }
+                awayFromGms = 0;
+                List<UIElement> els = getAllUIElements();
+                if (!picked && account != null) {
+                    for (UIElement e : els) {
+                        int[] b = boundsOf(e);
+                        if (b == null || !textOf(e).contains(account)) continue;
+                        new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf((b[0] + b[2]) / 2), String.valueOf((b[1] + b[3]) / 2))
+                            .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+                        picked = true;
+                        System.out.println("[GOOGLE] Chose the device account in the Google account picker");
+                        break;
+                    }
+                    if (picked) continue;
+                }
+                if (!picked) continue;   // never confirm anything for an account the round did not choose
+                String c = tapText("(allow|continue|agree|i agree|confirm|accept|ok)");
+                if (c != null) System.out.println("[GOOGLE] Google consent: '" + c + "'");
+            }
+            return true;
+        } catch (Exception e) { return false; }
+    }
+
     /** Number of visible text/description nodes of the app below the toolbar (content of the current page). */
     public int contentNodeCount() {
         int n = 0;
