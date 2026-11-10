@@ -24,6 +24,8 @@ unmodified (official) build of the app.
 | AuroraStore#1436 | AuroraStore 4.7.5 | rotation: identifier retention (Google WebView) | `Typed identifier lost on rotation` |
 | InnerTune#1861 | InnerTune 0.5.10 (`com.zionhuang.music_26.apk`) | plaintext auth data in storage (DataStore) | `innerTubeCookie` |
 | OuterTune#965 | OuterTune 0.10.0 (`com.dd3boh.outertune_v0.10.0.apk`) | plaintext auth data in storage (DataStore) | `innerTubeCookie` |
+| streetwriters/notesnook#6647 | Notesnook 3.0.20, official (`com.streetwriters.notesnook_3.0.20-official.apk`; last release before the fix, PR #6836) | MFA prompt cannot be closed (Cancel/Back) | `MFA_PROMPT_NOT_DISMISSABLE` |
+| streetwriters/notesnook#6640 | Notesnook 3.0.20, official | 2FA code requested with no network: no error, app still asks for the code | `MFA_CODE_PROMPT_WITHOUT_DELIVERY` |
 
 ## Running one app
 
