@@ -196,6 +196,22 @@ public class UIManager {
         }
     }
 
+    /** Visible error or network feedback on the current screen (inline text or dialog), or null. */
+    public String currentFeedbackText() {
+        try {
+            List<UIElement> els = getAllUIElements();
+            if (lastDumpFailed) return "(screen unreadable)";
+            String d = findDialogMessage(els);
+            if (d != null) return d;
+            for (UIElement e : els) {
+                String t = textOf(e).trim();
+                if (t.length() > 6 && t.length() < 200 && boundsOf(e) != null && (ERR_LINE.matcher(t).find() || NETWORK_ERR.matcher(t).find())) return t;
+            }
+        } catch (Exception ignored) { }
+        return null;
+    }
+    public boolean isGoogleButtonMode() { return googleButtonMode; }
+
     /** True when the current screen has no text inputs at all (only buttons, e.g. "Sign in with Google"). */
     public boolean noCredentialFieldsVisible() {
         try {
@@ -204,9 +220,13 @@ public class UIManager {
         } catch (Exception e) { return false; }
     }
 
-    private static final String GOOGLE_BUTTON = "(sign in with google|continue with google|log ?in with google|sign in with google account|google sign[- ]in|google)";
+    private static final String GOOGLE_BUTTON = "(sign in with google|continue with google|log ?in with google|sign in with google account|google sign[- ]in|google|google tasks)";
     private boolean googleButtonMode = false;
-    private boolean gmsOnTop() { return AppLauncher.topActivityLine().contains("com.google.android.gms"); }
+    private long googleBackSince = -1;
+    private boolean gmsOnTop() {
+        String top = AppLauncher.topActivityLine();
+        return top.contains("com.google.android.gms") || top.contains("ChooseTypeAndAccountActivity") || top.contains("android/.accounts.");
+    }
 
     /**
      * FIX(v1): native "Sign in with Google" (Google Play services): tap the button, choose the device's Google account
@@ -546,7 +566,20 @@ public class UIManager {
                     if (googleButtonMode) {
                         boolean buttonShown = false;
                         for (UIElement e : els) if (textOf(e).trim().toLowerCase().matches(GOOGLE_BUTTON)) buttonShown = true;
-                        if (buttonShown || gmsOnTop() || lastDumpFailed) { goneSince = -1; lastWaitEndedInProgress = true; Thread.sleep(1500); continue; }
+                        if (gmsOnTop() || lastDumpFailed || progressVisible(els)) {   // picker, consent or "Authenticating..."
+                            goneSince = -1; googleBackSince = -1; lastWaitEndedInProgress = true; Thread.sleep(1500); continue;
+                        }
+                        if (buttonShown) {   // back on the sign-in screen and idle
+                            lastWaitEndedInProgress = false; goneSince = -1;
+                            if (googleBackSince < 0) googleBackSince = pollStart;
+                            else if (pollStart - googleBackSince >= 20000) {
+                                System.out.println("[GOOGLE] Back on the sign-in screen, idle, with no result");
+                                googleBackSince = -1;
+                                return -1;
+                            }
+                            Thread.sleep(1500); continue;
+                        }
+                        googleBackSince = -1;
                     }
                     String topNow = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
                     boolean activityChanged = !loginActivity.isEmpty() && !topNow.equals(loginActivity);
@@ -680,7 +713,7 @@ public class UIManager {
             // Google Play services is kept for Google Sign-In account pickers.
             String pkgAttr = extractAttribute(attributes, "package");
             if (pkgAttr != null && !pkgAttr.isEmpty() && appPackage != null && !appPackage.isEmpty()
-                    && !pkgAttr.equals(appPackage) && !pkgAttr.startsWith("com.google.android.gms")) {
+                    && !pkgAttr.equals(appPackage) && !pkgAttr.startsWith("com.google.android.gms") && !pkgAttr.equals("android")) {
                 continue;
             }
             String resourceId = extractAttribute(attributes, "resource-id");

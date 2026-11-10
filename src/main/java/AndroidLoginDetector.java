@@ -1276,6 +1276,18 @@ public class AndroidLoginDetector {
                         }
                     }
                 } else if (loginSuccess) {
+                    // FIX(v1): a valid login that fails on a degraded network must tell the user why (#3962-style):
+                    // back on the login screen, nothing in progress, and no error/network message at all
+                    if (usedValidPair && !"normal".equals(roundCondition) && uiManager.getLastLoginErrorText() == null && !uiManager.isWebMode()
+                            && !uiManager.lastWaitEndedInProgress() && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+                        String fb = uiManager.currentFeedbackText();
+                        if (fb == null && AppLauncher.isInForeground(appPackage)) {
+                            stateMachineManager.getBugDetectionManager().getObservedDetector().record("UI_ERROR", "LOGIN_FAILURE_WITHOUT_FEEDBACK",
+                                "A valid login failed on a degraded network without any error or network message",
+                                "Network '" + roundCondition + "'" + (uiManager.isGoogleButtonMode() ? ", Google sign-in" : "")
+                                + "; screen after the attempt: " + AppLauncher.topActivityLine().trim());
+                        }
+                    }
                     logInfo(usedValidPair
                         ? "Login with valid credentials did not complete under '" + roundCondition + "' network; login page still shown"
                         : "Login rejected with invalid credentials (expected); login page still shown");
