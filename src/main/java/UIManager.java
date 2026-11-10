@@ -44,7 +44,13 @@ public class UIManager {
             if ((id.endsWith(":id/message") || id.endsWith(":id/alertTitle") || id.endsWith(":id/snackbar_text"))
                     && e.text != null && !e.text.trim().isEmpty()) msg = e.text.trim();
         }
-        return dialog ? (msg != null ? msg : "") : null;
+        if (!dialog) return null;
+        // FIX(v1): a progress dialog ("Authenticating...", "Please wait") is a login in progress, not an answer
+        boolean spinner = false;
+        for (UIElement e : els) if (e.className != null && e.className.contains("ProgressBar") && boundsOf(e) != null) spinner = true;
+        if (spinner || (msg != null && msg.toLowerCase().matches(
+                "(.*(\\.\\.\\.|\u2026)|(please wait|loading|authenticating|signing in|logging in|connecting|verifying|processing).*)"))) return null;
+        return msg != null ? msg : "";
     }
 
     /**
