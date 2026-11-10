@@ -676,7 +676,10 @@ public class AndroidLoginDetector {
             logInfo("Using credential pool directory: " + credDir.getPath());
         }
         // FIX(v1): app data captured right after a completed login (e.g. after an SSO approval on the user's phone)
-        java.io.File snap = new java.io.File(credDir, "loggedin.tgz");
+        // a snapshot taken on a specific build (loggedin_<apk name>.tgz) wins over the package-wide one
+        String apkBase = new java.io.File(String.valueOf(configLoader.getApkPath())).getName().replaceAll("\\.apk$", "");
+        java.io.File snap = new java.io.File(credDir, "loggedin_" + apkBase + ".tgz");
+        if (!snap.isFile()) snap = new java.io.File(credDir, "loggedin.tgz");
         if (snap.isFile()) { loggedInSnapshot = snap.getPath(); logInfo("Logged-in snapshot available: " + snap.getPath()); }
 
         // Primary paths (from selected directory)
@@ -1534,6 +1537,17 @@ public class AndroidLoginDetector {
                         "The account page is blank after a successful login",
                         "Page opened via '" + hit + "' shows no content; top=" + AppLauncher.topActivityLine().trim());
                 }
+            }
+            // FIX(v1): account-security flow under a failed network (#6640-style)
+            if (!validPairs.isEmpty()) {
+                AppLauncher.run("adb", "shell", "am", "force-stop", pkg);
+                AppLauncher.launch(pkg);
+                Thread.sleep(8000);
+                String ev = uiManager.checkMfaCodeRequestOffline(validPairs,
+                    () -> networkChaosManager.applyCondition("offline"), () -> networkChaosManager.applyCondition("normal"));
+                logInfo("Logged-in phase: MFA code request without network: " + (ev == null ? "no finding" : ev));
+                if (ev != null) bdm.getObservedDetector().record("ACCOUNT_MANAGEMENT_BREAK", "MFA_CODE_PROMPT_WITHOUT_DELIVERY",
+                    "The MFA code could not be sent (no network) but the app reports nothing and asks for the code", ev);
             }
             logInfo("[LOGGED-IN PHASE] storage findings: " + bdm.getStorageDetector().detectBugs().size()
                 + ", observed findings: " + bdm.getObservedDetector().detectBugs().size());

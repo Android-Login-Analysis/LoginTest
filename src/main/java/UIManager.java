@@ -85,6 +85,111 @@ public class UIManager {
         return null;
     }
 
+    private static final String TWO_FA_ENTRY = "(two[- ]?factor authentication|two-factor auth.*|2fa|2fa settings|manage 2fa settings|two[- ]step verification|2-step verification)";
+    private static final String ACCOUNT_ENTRY = "(account settings|account|account & security|account and security|security|privacy (&|and) security|manage account)";
+
+    /** Tap an unlabeled clickable icon in the top-left corner (navigation drawer); true if one was tapped. */
+    private boolean tapTopLeftIcon() {
+        try {
+            for (UIElement e : getAllUIElements()) {
+                int[] b = boundsOf(e);
+                if (b == null || e.className == null || !e.className.contains("[clickable]")) continue;
+                if (b[0] > 200 || b[1] > 300 || b[2] - b[0] > 250 || b[3] - b[1] > 250) continue;
+                if (e.text != null && e.text.matches(".*[A-Za-z]{2,}.*")) continue;
+                new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf((b[0] + b[2]) / 2), String.valueOf((b[1] + b[3]) / 2))
+                    .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+                return true;
+            }
+        } catch (Exception ignored) { }
+        return false;
+    }
+
+    private java.util.Set<String> screenTexts(List<UIElement> els) {
+        java.util.Set<String> t = new java.util.HashSet<>();
+        for (UIElement e : els) if (e.text != null && e.text.trim().length() > 3 && boundsOf(e) != null) t.add(e.text.trim());
+        return t;
+    }
+
+    /**
+     * FIX(v1): account-security oracle (#6640-style). On a logged-in session, open the 2FA settings, start an
+     * email/SMS code setup, and request the code with no network. A correct app reports that the code could not be
+     * sent; a faulty one stays silent and keeps asking for a code that was never delivered. Nothing is changed on
+     * the account: no code is ever entered. Returns the evidence, or null when not observed / not reachable.
+     */
+    public String checkMfaCodeRequestOffline(List<String[]> validPairs, Runnable goOffline, Runnable goOnline) {
+        boolean offline = false;
+        java.util.Set<String> seen = new java.util.HashSet<>();
+        try {
+            // 1) reach the 2FA settings page
+            boolean reached = false, accountTried = false, settingsTried = false, drawerTried = false;
+            for (int step = 0; step < 6 && !reached; step++) {
+                seen.addAll(screenTexts(getAllUIElements()));
+                if (tapText(TWO_FA_ENTRY) != null) { reached = true; break; }
+                if (!accountTried && tapText(ACCOUNT_ENTRY) != null) accountTried = true;
+                else if (!settingsTried && tapText("(settings|preferences)") != null) settingsTried = true;
+                else if (!drawerTried && tapTopLeftIcon()) drawerTried = true;
+                else break;
+                Thread.sleep(3000);
+            }
+            if (!reached) { System.out.println("[MFA_SETUP] 2FA settings not found"); return null; }
+            Thread.sleep(3000);
+            System.out.println("[MFA_SETUP] 2FA settings opened");
+            // 2) start a (re)configuration; verify the account password if asked
+            tapText("(change primary.*|enable 2fa|enable two[- ]?factor.*|set ?up (2fa|two[- ]?factor.*)|turn on.*|add 2fa.*|configure.*)");
+            Thread.sleep(3000);
+            List<UIElement> els = getAllUIElements();
+            UIElement pw = findPasswordAnchor(els);
+            if (pw == null) for (UIElement e : els) if (isInputClass(e.className) && textOf(e).toLowerCase().contains("password")) pw = e;
+            String password = null;   // the account shown in the app (settings list the signed-in email)
+            for (String[] vp : validPairs) {
+                if (vp.length < 2) continue;
+                if (password == null) password = vp[1];
+                for (String t : seen) if (t.contains(vp[0])) { password = vp[1]; break; }
+            }
+            if (pw != null && password != null) {
+                int[] r = boundsOf(pw);
+                clickAndInputText((r[0] + r[2]) / 2, (r[1] + r[3]) / 2, password);
+                new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_BACK").redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+                Thread.sleep(800);
+                tapText("(verify|confirm|continue|ok|next|submit)");
+                Thread.sleep(6000);
+            }
+            // 3) choose a code-by-message method
+            if (tapText("(set up using email|set ?up (via|with) email|use email|email|send code via email|e-mail|set up using sms|sms)") == null) {
+                System.out.println("[MFA_SETUP] no email/SMS method offered");
+                return null;
+            }
+            Thread.sleep(3000);
+            els = getAllUIElements();
+            boolean hasSend = false;
+            for (UIElement e : els) if (textOf(e).trim().toLowerCase().matches("(send code|send|get code|send email|send sms|send otp)")) hasSend = true;
+            if (!hasSend) { System.out.println("[MFA_SETUP] no 'send code' control"); return null; }
+            java.util.Set<String> before = screenTexts(els);
+            // 4) request the code without a network
+            goOffline.run(); offline = true;
+            Thread.sleep(1500);
+            tapText("(send code|send|get code|send email|send sms|send otp)");
+            System.out.println("[MFA_SETUP] code requested with no network");
+            Thread.sleep(7000);
+            els = getAllUIElements();
+            if (lastDumpFailed) return null;
+            String reaction = null;
+            for (String t : screenTexts(els)) {
+                if (before.contains(t)) continue;
+                if (ERR_LINE.matcher(t).find() || NETWORK_ERR.matcher(t).find() || t.toLowerCase().matches(".*(resend|sent|retry).*")) { reaction = t; break; }
+            }
+            boolean asksForCode = false; String ask = null;
+            for (String t : screenTexts(els)) if (t.toLowerCase().matches(".*(enter|type|input).*code.*|.*receive.*code.*|.*code.*(sent|email).*")) { asksForCode = true; ask = t; break; }
+            if (reaction != null) { System.out.println("[MFA_SETUP] app reacted: '" + reaction + "'"); return null; }
+            if (!asksForCode || !AppLauncher.isInForeground(appPackage)) return null;
+            return "Code requested with no network: no error or confirmation shown; the screen still asks for the code ('" + ask + "')";
+        } catch (Exception e) {
+            return null;
+        } finally {
+            if (offline) goOnline.run();
+        }
+    }
+
     /** Number of visible text/description nodes of the app below the toolbar (content of the current page). */
     public int contentNodeCount() {
         int n = 0;
