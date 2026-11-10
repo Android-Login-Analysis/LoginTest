@@ -204,6 +204,8 @@ public class UIManager {
         } catch (Exception e) { return false; }
     }
 
+    private static final String GOOGLE_BUTTON = "(sign in with google|continue with google|log ?in with google|sign in with google account|google sign[- ]in|google)";
+    private boolean googleButtonMode = false;
     private boolean gmsOnTop() { return AppLauncher.topActivityLine().contains("com.google.android.gms"); }
 
     /**
@@ -213,15 +215,24 @@ public class UIManager {
      */
     public boolean googleButtonLogin(String account) {
         try {
-            String hit = tapText("(sign in with google|continue with google|log ?in with google|sign in with google account|google sign[- ]in|google)");
+            // no wrong credentials can be given to a device-account sign-in: nothing to test in an invalid round
+            if (!roundValid) { System.out.println("[GOOGLE] Invalid-credential round: device-account sign-in skipped"); return false; }
+            String hit = tapText(GOOGLE_BUTTON);
             if (hit == null) return false;
+            googleButtonMode = true;
             System.out.println("[GOOGLE] Tapped '" + hit + "'");
             loginButtonClickTime = System.currentTimeMillis();
             loginClickActivity = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
             boolean picked = false; int awayFromGms = 0;
             for (int i = 0; i < 12; i++) {
                 Thread.sleep(2500);
-                if (!gmsOnTop()) { if (++awayFromGms >= 2) break; continue; }
+                if (!gmsOnTop()) {
+                    // the app's own sign-in disclosure (e.g. "Sign in to Tasks.org ... Agree") comes before the picker
+                    String d = picked ? null : tapText("(agree|i agree|accept|continue|ok|allow)");
+                    if (d != null) { System.out.println("[GOOGLE] App sign-in disclosure: '" + d + "'"); awayFromGms = 0; continue; }
+                    if (++awayFromGms >= 2) break;
+                    continue;
+                }
                 awayFromGms = 0;
                 List<UIElement> els = getAllUIElements();
                 if (!picked && account != null) {
@@ -231,6 +242,8 @@ public class UIManager {
                         new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf((b[0] + b[2]) / 2), String.valueOf((b[1] + b[3]) / 2))
                             .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
                         picked = true;
+                        serviceAccountAdopted = true;   // the real (device) Google account is used: a valid-credential login
+                        googleLoginDetected = true;
                         System.out.println("[GOOGLE] Chose the device account in the Google account picker");
                         break;
                     }
@@ -528,6 +541,13 @@ public class UIManager {
                     progressShown = progressShown && !actionable;
                     // FIX(v1): leaving the login activity means completion, unless the new screen is a pure
                     // loading screen (e.g. NewsBlur's LoginProgress), which is still part of the login
+                    // FIX(v1): a Google-button sign-in has no form; it is done only when neither the Google button nor
+                    // a Play-services screen is shown any more
+                    if (googleButtonMode) {
+                        boolean buttonShown = false;
+                        for (UIElement e : els) if (textOf(e).trim().toLowerCase().matches(GOOGLE_BUTTON)) buttonShown = true;
+                        if (buttonShown || gmsOnTop() || lastDumpFailed) { goneSince = -1; lastWaitEndedInProgress = true; Thread.sleep(1500); continue; }
+                    }
                     String topNow = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
                     boolean activityChanged = !loginActivity.isEmpty() && !topNow.equals(loginActivity);
                     if (activityChanged && !progressShown && findPasswordAnchor(els) == null) return pollStart;
@@ -982,7 +1002,7 @@ public class UIManager {
     private boolean twoStepJustFilled = false;
     private List<UIElement> lastScanElements = null;
 
-    public void setPendingUsername(String u) { serviceAccountAdopted = false; loginButtonClickTime = 0; lastWaitEndedInProgress = false; pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; webMode = false; webLoginUrl = null; mfaAfterSubmit = false; }
+    public void setPendingUsername(String u) { googleButtonMode = false; serviceAccountAdopted = false; loginButtonClickTime = 0; lastWaitEndedInProgress = false; pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; webMode = false; webLoginUrl = null; mfaAfterSubmit = false; }
     private boolean mfaAfterSubmit = false;
     public boolean mfaPromptAfterSubmit() { return mfaAfterSubmit; }
 
