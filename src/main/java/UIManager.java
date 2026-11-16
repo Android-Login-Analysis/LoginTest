@@ -1093,6 +1093,8 @@ public class UIManager {
 
     private boolean onMfaScreen() {
         if (lastScanElements == null) return false;
+        // FIX(v1): a login form with an optional 2FA field ("Enter 2FA Token if enabled") is not an MFA step
+        if (findPasswordAnchor(lastScanElements) != null) return false;
         if (findMfaInput(lastScanElements) != null) return true;
         for (UIElement e : lastScanElements) if (e.text != null && MFA_HINT.matcher(e.text).find()) return true;
         return false;
