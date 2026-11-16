@@ -205,6 +205,15 @@ public class UIManager {
     /** Visible error or network feedback on the current screen (inline text or dialog), or null. */
     public String currentFeedbackText() {
         try {
+            // FIX(v1): a Toast shown after the login attempt is feedback too (Toasts are not in UI dumps)
+            java.io.File tf = new java.io.File("logs/toasts.txt");
+            if (tf.exists() && loginButtonClickTime > 0) {
+                for (String line : java.nio.file.Files.readAllLines(tf.toPath())) {
+                    String[] p = line.split("\t", 2);
+                    if (p.length < 2 || p[1].isBlank()) continue;
+                    try { if (Double.parseDouble(p[0]) * 1000 >= loginButtonClickTime - 1000) return "[toast] " + p[1].trim(); } catch (NumberFormatException ignored) { }
+                }
+            }
             List<UIElement> els = getAllUIElements();
             if (lastDumpFailed) return "(screen unreadable)";
             String d = findDialogMessage(els);
@@ -1066,7 +1075,7 @@ public class UIManager {
         if (findPasswordAnchor(els) != null) return null;
         boolean hint = false; UIElement input = null; int inputs = 0;
         for (UIElement e : els) {
-            if (e.text != null && MFA_HINT.matcher(e.text).find()) hint = true;
+            if (e.text != null && e.text.length() <= 160 && MFA_HINT.matcher(e.text).find()) hint = true;
             if (e.resourceId != null && MFA_HINT.matcher(e.resourceId.replace('_', ' ')).find()) hint = true;
             if (isInputClass(e.className) && boundsOf(e) != null) { inputs++; if (input == null) input = e; }
         }
@@ -1096,7 +1105,7 @@ public class UIManager {
         // FIX(v1): a login form with an optional 2FA field ("Enter 2FA Token if enabled") is not an MFA step
         if (findPasswordAnchor(lastScanElements) != null) return false;
         if (findMfaInput(lastScanElements) != null) return true;
-        for (UIElement e : lastScanElements) if (e.text != null && MFA_HINT.matcher(e.text).find()) return true;
+        for (UIElement e : lastScanElements) if (e.text != null && e.text.length() <= 160 && MFA_HINT.matcher(e.text).find()) return true;
         return false;
     }
 
@@ -1171,8 +1180,8 @@ public class UIManager {
         try {
             List<UIElement> els = getAllUIElements();
             lastScanElements = els;
-            for (UIElement e : els) if (e.text != null && MFA_HINT.matcher(e.text).find()) return e.text.trim();
-            for (UIElement e : els) if (e.text != null && e.text.toLowerCase().contains("code")) return e.text.trim();
+            for (UIElement e : els) if (e.text != null && e.text.length() <= 160 && MFA_HINT.matcher(e.text).find()) return e.text.trim();
+            for (UIElement e : els) if (e.text != null && e.text.length() <= 160 && e.text.toLowerCase().contains("code")) return e.text.trim();
         } catch (Exception ignored) { }
         return null;
     }

@@ -128,6 +128,15 @@ def on_message(message, data):
                 # Try to parse the message as JSON
                 payload = json.loads(message['payload'])
             
+            if payload.get('type') == 'toast':
+                # FIX(v1): Toast texts (not visible in UI dumps) for the feedback oracles
+                try:
+                    p_ = os.path.join(os.path.dirname(__file__), '..', 'logs', 'toasts.txt')
+                    with open(p_, 'a') as f_:
+                        f_.write(f"{time.time():.3f}\t{str(payload.get('text','')).replace(chr(10),' ').replace(chr(9),' ')}\n")
+                except Exception:
+                    pass
+                return
             if payload.get('type') == 'intent_extra':
                 # FIX(v1): string extras put into Intents/Bundles (key + SHA-256 of the value, never the value)
                 try:

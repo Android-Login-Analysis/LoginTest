@@ -129,6 +129,19 @@ rpc.exports = {
                 console.log('[+] Intent/Bundle extra recorder installed');
             } catch (e) { console.log('[-] Intent extra recorder unavailable: ' + e); }
 
+            // FIX(v1): Toast messages are not in the UI hierarchy; record their text so the feedback oracles see them
+            try {
+                const Toast = Java.use('android.widget.Toast');
+                const sendToast = function (t) {
+                    try { if (t !== null && t !== undefined) send({type: 'toast', text: ('' + t).slice(0, 200)}); } catch (e) { }
+                };
+                const mk = Toast.makeText.overload('android.content.Context', 'java.lang.CharSequence', 'int');
+                mk.implementation = function (c, t, d) { sendToast(t); return mk.call(this, c, t, d); };
+                const st = Toast.setText.overload('java.lang.CharSequence');
+                st.implementation = function (t) { sendToast(t); return st.call(this, t); };
+                console.log('[+] Toast recorder installed');
+            } catch (e) { console.log('[-] Toast recorder unavailable: ' + e); }
+
             // FIX(v1): expose WebView content to the DevTools protocol so LIFTDroid can drive web-based
             // login forms that are hidden from the accessibility tree (e.g. custom WebView wrappers).
             try {
