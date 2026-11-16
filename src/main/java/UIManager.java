@@ -2277,15 +2277,27 @@ public class UIManager {
         UIElement pwAnchor = findPasswordAnchor(elements);
         if (pwAnchor != null) {
             int pwBottom = boundsOf(pwAnchor)[3];
-            UIElement below = null; int bestTop = Integer.MAX_VALUE;
-            for (UIElement e : elements) {
-                int[] r = boundsOf(e); if (r == null) continue;
-                String cls = e.className == null ? "" : e.className.toLowerCase();
-                if (!(cls.contains("button") || cls.contains("view"))) continue;
-                if (e.text == null || e.text.trim().isEmpty() || e.text.length() > 30) continue;
-                if (r[1] >= pwBottom && r[1] < bestTop && matchesLoginButtonPattern(e.text, e.resourceId)) { below = e; bestTop = r[1]; }
+            // FIX(v1): texts inside an input field are its label/hint (e.g. "Enter 2FA Token if enabled"), not a button
+            List<int[]> inputBoxes = new ArrayList<>();
+            for (UIElement e : elements) if (isInputClass(e.className) && boundsOf(e) != null) inputBoxes.add(boundsOf(e));
+            // strong submit labels first, then the generic login-button patterns
+            for (int pass = 0; pass < 2; pass++) {
+                UIElement below = null; int bestTop = Integer.MAX_VALUE;
+                for (UIElement e : elements) {
+                    int[] r = boundsOf(e); if (r == null) continue;
+                    String cls = e.className == null ? "" : e.className.toLowerCase();
+                    if (!(cls.contains("button") || cls.contains("view")) || isInputClass(e.className)) continue;
+                    if (e.text == null || e.text.trim().isEmpty() || e.text.length() > 30) continue;
+                    boolean insideInput = false;
+                    for (int[] b : inputBoxes) if (r[0] >= b[0] && r[2] <= b[2] && r[1] >= b[1] - 30 && r[3] <= b[3] + 5) insideInput = true;
+                    if (insideInput) continue;
+                    boolean ok = pass == 0
+                        ? e.text.trim().toLowerCase().matches("(log ?in|login|sign ?in|signin|submit|continue)")
+                        : matchesLoginButtonPattern(e.text, e.resourceId);
+                    if (ok && r[1] >= pwBottom && r[1] < bestTop) { below = e; bestTop = r[1]; }
+                }
+                if (below != null) return below;
             }
-            if (below != null) return below;
         }
         
         // Pass 1: Find button with explicit text or exact "login_button" ID
