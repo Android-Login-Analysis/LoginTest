@@ -1713,9 +1713,46 @@ public class UIManager {
     /**
      * Input credentials WITHOUT clicking login button (for screenshot purposes)
      */
+    // FIX(v1): server / instance address for apps that log in to a self-hosted backend (pools/<pkg>/server.txt)
+    private String serverAddress = null;
+    public void setServerAddress(String s) { serverAddress = (s == null || s.isBlank()) ? null : s.trim(); }
+    private static final java.util.regex.Pattern SERVER_LABEL = java.util.regex.Pattern.compile(
+        "(?i)^\\s*(instance|server|server url|server address|homeserver|host|hostname|url|domain|server name)\\b.*");
+
+    /** Fill an empty server/instance field (labelled inside or directly above the input) with the pool's address. */
+    private void fillServerField() {
+        if (serverAddress == null) return;
+        try {
+            List<UIElement> els = getAllUIElements();
+            for (UIElement in : els) {
+                int[] b = boundsOf(in);
+                if (b == null || !isInputClass(in.className)) continue;
+                String own = textOf(in).trim();
+                String label = SERVER_LABEL.matcher(own).matches() ? own : null;
+                for (UIElement e : els) {
+                    if (label != null) break;
+                    int[] c = boundsOf(e);
+                    if (e == in || c == null) continue;
+                    boolean nearInput = c[0] >= b[0] - 10 && c[2] <= b[2] + 10 && c[1] >= b[1] - 60 && c[3] <= b[3] + 10;
+                    if (nearInput && SERVER_LABEL.matcher(textOf(e).trim()).matches()) label = textOf(e).trim();
+                }
+                if (label == null) continue;
+                if (!own.isEmpty() && !own.equals(label) && !SERVER_LABEL.matcher(own).matches()) {
+                    System.out.println("[SERVER] Server field already filled; left as is");
+                    return;
+                }
+                clickAndInputText((b[0] + b[2]) / 2, (b[1] + b[3]) / 2, serverAddress);
+                System.out.println("[SERVER] Filled server field '" + label + "' with " + serverAddress);
+                Thread.sleep(800);
+                return;
+            }
+        } catch (Exception ignored) { }
+    }
+
     public boolean inputCredentialsOnly(String username, String password) {
         try {
             System.out.println("Using ADB to input credentials (without clicking button)...");
+            fillServerField();   // FIX(v1): self-hosted apps need the server/instance first
 
             // Find username input field
             UIElement usernameField = usernameEnteredInStep1 ? null : findUsernameField();

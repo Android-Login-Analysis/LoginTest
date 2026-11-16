@@ -38,16 +38,19 @@ mount --bind /system/etc/security/cacerts /apex/com.android.conscrypt/cacerts 2>
 # --- hosts ---
 chmod 644 /data/local/tmp/lift_hosts
 chcon u:object_r:system_file:s0 /data/local/tmp/lift_hosts
+umount /system/etc/hosts 2>/dev/null || true   # re-runs: drop the old bind (its source file was replaced)
 mount --bind /data/local/tmp/lift_hosts /system/etc/hosts
 # --- propagate into zygote and every running app's mount namespace ---
 ZP="\$(pidof zygote || true) \$(pidof zygote64 || true)"
 for P in \$ZP; do
   nsenter --mount=/proc/\$P/ns/mnt -- /bin/mount --bind /system/etc/security/cacerts /apex/com.android.conscrypt/cacerts || true
+  nsenter --mount=/proc/\$P/ns/mnt -- /bin/umount /system/etc/hosts 2>/dev/null || true
   nsenter --mount=/proc/\$P/ns/mnt -- /bin/mount --bind /data/local/tmp/lift_hosts /system/etc/hosts || true
 done
 for Z in \$ZP; do
   for P in \$(ps -o PID -P \$Z | grep -v PID); do
     nsenter --mount=/proc/\$P/ns/mnt -- /bin/mount --bind /system/etc/security/cacerts /apex/com.android.conscrypt/cacerts 2>/dev/null || true
+    nsenter --mount=/proc/\$P/ns/mnt -- /bin/umount /system/etc/hosts 2>/dev/null || true
     nsenter --mount=/proc/\$P/ns/mnt -- /bin/mount --bind /data/local/tmp/lift_hosts /system/etc/hosts 2>/dev/null || true
   done
 done
