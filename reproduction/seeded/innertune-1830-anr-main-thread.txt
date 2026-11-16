@@ -1,0 +1,32 @@
+Subject: Input dispatching timed out (f37ebfa com.zionhuang.music/com.zionhuang.music.MainActivity (server) is not responding. Waited 5005ms for KeyEvent(deviceId=-1, eventTime=8173049696000000, source=UNKNOWN, displayId=-1, action=DOWN, flags=0x00000000, keyCode=SHIFT_LEFT(59), scanCode=0, metaState=0x00000000, repeatCount=0), policyFlags=0x6b000000).
+
+"main" prio=5 tid=1 Sleeping
+  | group="main" sCount=1 ucsCount=0 flags=1 obj=0x72620e98 self=0x7b8e6e40dbe0
+  | sysTid=905659 nice=-10 cgrp=default sched=0/0 handle=0x7b8f20e494f8
+  | state=S schedstat=( 6666530037 3449080 8169 ) utm=636 stm=29 core=4 HZ=100
+  | stack=0x7ffc487c5000-0x7ffc487c7000 stackSize=8188KB
+  | held mutexes=
+  at java.lang.Thread.sleep(Native method)
+  - sleeping on <0x0e4f9a50> (a java.lang.Object)
+  at java.lang.Thread.sleep(Thread.java:450)
+  - locked <0x0e4f9a50> (a java.lang.Object)
+  at java.lang.Thread.sleep(Thread.java:355)
+  at com.zionhuang.music.ui.screens.LoginScreenKt$LoginScreen$1$1$1.onReceivedError(LoginScreen.kt:83)
+  at WV.Oz.e(chromium-SystemWebView.apk-default-642211307:70)
+  at WV.F5.handleMessage(chromium-SystemWebView.apk-default-642211307:430)
+  at android.os.Handler.dispatchMessage(Handler.java:106)
+  at android.os.Looper.loopOnce(Looper.java:205)
+  at android.os.Looper.loop(Looper.java:294)
+  at android.app.ActivityThread.main(ActivityThread.java:8248)
+  at java.lang.reflect.Method.invoke(Native method)
+  at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:552)
+  at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:971)
+
+"main" prio=5 tid=1 Native
+  | group="main" sCount=1 ucsCount=0 flags=1 obj=0x72620e98 self=0x7b8e6e40dbe0
+  | sysTid=3883 nice=-2 cgrp=default sched=0/0 handle=0x7b8f20e494f8
+  | state=S schedstat=( 77232981065 194903937 399793 ) utm=4911 stm=2811 core=45 HZ=100
+  | stack=0x7ffc487c5000-0x7ffc487c7000 stackSize=8188KB
+  | held mutexes=
+  native: #00 pc 000b94ea  /apex/com.android.runtime/lib64/bionic/libc.so (__epoll_pwait+10) (BuildId: 627fa002ea9ffdfba6f231ae3a8c8609)
+  native: #01 pc 00017c55  /system/lib64/libutils.so (android::Looper::pollInner+245) (BuildId: 4f198de420dfd0c0b9d739c952e67b31)

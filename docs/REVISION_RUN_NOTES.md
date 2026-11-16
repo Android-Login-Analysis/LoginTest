@@ -88,12 +88,12 @@ device signs in directly. The app data right after the login is kept as `pools/<
 | AuroraStore | #1437 | needs Google token exchange under failure | Anonymous login times out after ~50 s with an error (no hang); the hang is in `buildGoogleAuthData` after a Google login |
 | OuterTune | #964 | partial | rotation reloads the Google login WebView (password -> identifier step, input lost); no crash in release 0.10.0 (issue used a debug build) |
 | OuterTune | #965 | detected | after Google login: `innerTubeCookie` (YouTube session), `visitorData`, `dataSyncId` in plaintext DataStore |
-| Notesnook | #6640, #6647 | not reproducible | both fixed upstream; 3.0.18 (affected version) logs in but its post-login sync never finishes against today's server, blocking the 2FA settings flow; the login MFA prompt is dismissable |
-| InnerTune | #1830 | trigger reached, no ANR | offline round reaches Google's error page with 'Restart'; the tool taps it; no ANR observed (issue says 'sometimes') |
+| Notesnook | #6640, #6647 | detected (official 3.0.20) | 3.0.20 is the last release before the #6647 fix (PR #6836): `MFA_PROMPT_NOT_DISMISSABLE` (#6647) and `MFA_CODE_PROMPT_WITHOUT_DELIVERY` (#6640, 2FA email code requested offline) in round 1; evidence `reproduction/real/notesnook.log` |
+| InnerTune | #1830 | detected on the seeded build | official 0.5.10: trigger reached, no ANR. Seeded build: `ANR` after the tool reopens the failed login page offline; main thread in the seeded `onReceivedError` sleep (`reproduction/seeded/`) |
 | InnerTune | #1861 | detected | after Google login: `innerTubeCookie` in plaintext DataStore (every successful login) |
 | InnerTune | #1860 | not reproduced | account page restored from a real session shows content (18-19 nodes) |
 | InnerTune | #1831 | open | needs a Google-side sign-out scenario |
-| Tasks | #3962 | needs Google Play services image | |
+| Tasks | #3962 | reproduced manually (official 14.7.4) | Google Play redroid device; Google Tasks sign-in under `limited` fails silently on first-time consent (`reproduction/manual/tasks-3962/`); automated runs pass because the consent is cached |
 | OpenTune | #345, #346 | unavailable | repository taken down (HTTP 451) |
 
 ### Fixes made during the old-version and seeded runs (2026-11-10)

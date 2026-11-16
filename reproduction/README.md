@@ -27,6 +27,13 @@ unmodified (official) build of the app.
 | streetwriters/notesnook#6647 | Notesnook 3.0.20, official (`com.streetwriters.notesnook_3.0.20-official.apk`; last release before the fix, PR #6836) | MFA prompt cannot be closed (Cancel/Back) | `MFA_PROMPT_NOT_DISMISSABLE` |
 | streetwriters/notesnook#6640 | Notesnook 3.0.20, official | 2FA code requested with no network: no error, app still asks for the code | `MFA_CODE_PROMPT_WITHOUT_DELIVERY` |
 
+## Manual and seeded reproductions
+
+| Issue | Build | How | Evidence |
+|---|---|---|---|
+| tasks/tasks#3962 | Tasks.org 14.7.4, official (`org.tasks_140712.apk`) | manual, Google Play redroid device, `limited` network | `manual/tasks-3962/` |
+| InnerTune#1830 | InnerTune 0.5.10, fault-seeded (`apps/seeded/`) | LIFTDroid run, `ANR` finding in the offline round | `seeded/innertune-1830.log`, `seeded/innertune-1830-anr-main-thread.txt` |
+
 ## Running one app
 
 ```bash
