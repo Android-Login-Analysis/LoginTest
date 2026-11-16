@@ -1,0 +1,55 @@
+# LIFTDroid revision: self-hosted backends for the held-out apps (Dataset B).
+# All services sit behind one TLS proxy for *.liftdroid.test (certificate signed by our own test CA).
+name: liftsvc
+
+services:
+  proxy:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports:
+      - "10.99.0.124:443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs/wildcard.crt:/certs/wildcard.crt:ro
+      - ./certs/wildcard.key:/certs/wildcard.key:ro
+    depends_on: [lemmy, lemmy-ui]
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lemmy
+      POSTGRES_PASSWORD: ${LEMMY_DB_PASSWORD}
+      POSTGRES_DB: lemmy
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+
+  pictrs:
+    image: asonix/pictrs:0.5.25
+    restart: unless-stopped
+    user: "991:991"
+    environment:
+      PICTRS__SERVER__API_KEY: ${PICTRS_API_KEY}
+      PICTRS__MEDIA__ANIMATION__MAX_WIDTH: "256"
+      PICTRS__MEDIA__ANIMATION__MAX_HEIGHT: "256"
+    volumes:
+      - ./data/pictrs:/mnt
+
+  lemmy:
+    image: dessalines/lemmy:0.19.21
+    restart: unless-stopped
+    environment:
+      RUST_LOG: "warn"
+      LEMMY_CONFIG_LOCATION: "/config/config.hjson"
+    volumes:
+      - ./lemmy.hjson:/config/config.hjson:ro
+    depends_on: [postgres, pictrs]
+
+  lemmy-ui:
+    image: dessalines/lemmy-ui:0.19.21
+    restart: unless-stopped
+    environment:
+      LEMMY_UI_LEMMY_INTERNAL_HOST: "lemmy:8536"
+      LEMMY_UI_LEMMY_EXTERNAL_HOST: "lemmy.liftdroid.test"
+      LEMMY_UI_HTTPS: "true"
+    depends_on: [lemmy]
