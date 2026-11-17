@@ -1252,22 +1252,43 @@ public class UIManager {
         "(?i)(server|instance|homeserver|connect to|host|\\burl\\b)");
 
     /** A screen that only asks for the server (one empty input, no password field, server wording): fill it. */
-    private void maybeFillServerStep() {
-        if (serverAddress == null || serverStepFilled || lastScanElements == null) return;
-        if (findPasswordAnchor(lastScanElements) != null) return;
+    private boolean maybeFillServerStep() {
+        if (serverAddress == null || serverStepFilled || lastScanElements == null) return false;
+        if (findPasswordAnchor(lastScanElements) != null) return false;
         UIElement only = null; int inputs = 0; boolean serverWords = false;
         for (UIElement e : lastScanElements) {
             if (isInputClass(e.className) && boundsOf(e) != null) { inputs++; only = e; }
             else if (e.text != null && e.text.length() <= 80 && SERVER_SCREEN.matcher(e.text).find()) serverWords = true;
         }
-        if (inputs != 1 || !serverWords) return;
+        if (inputs != 1 || !serverWords) return false;
         String own = textOf(only).trim();
-        if (!own.isEmpty() && !SERVER_LABEL.matcher(own).matches()) return;   // already filled
+        if (!own.isEmpty() && !SERVER_LABEL.matcher(own).matches()) return false;   // already filled
         int[] b = boundsOf(only);
         clickAndInputText((b[0] + b[2]) / 2, (b[1] + b[3]) / 2, serverAddress);
         serverStepFilled = true;
         System.out.println("[SERVER] Server-address step: entered " + serverAddress);
         try { hideKeyboardIfShown(); Thread.sleep(800); } catch (Exception ignored) { }
+        return true;
+    }
+
+    /** Submit button of a server-address step (when it is not also recognised as a login entry). */
+    private boolean tapServerStepSubmit() {
+        if (lastScanElements == null) return false;
+        for (UIElement e : lastScanElements) {
+            String t = textOf(e).trim();
+            if (t.matches("(?i)(connect|continue|next|ok|add|add server|save|go|confirm)") && boundsOf(e) != null
+                    && (e.className == null || !e.className.contains("[disabled]"))) {
+                int[] b = boundsOf(e);
+                System.out.println("[SERVER] Submitting the server-address step ('" + t + "')");
+                try {
+                    new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf((b[0] + b[2]) / 2), String.valueOf((b[1] + b[3]) / 2))
+                        .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+                    Thread.sleep(5000);
+                } catch (Exception ignored) { }
+                return true;
+            }
+        }
+        return false;
     }
 
     private void maybeFillIdentifierStep() {
@@ -1339,6 +1360,8 @@ public class UIManager {
                 return true;
             }
             if (hop == 6) return false;
+            // FIX(v1): a server-address step whose submit button ('Connect') is not a login entry
+            if (lastLoginEntryBounds == null && maybeFillServerStep() && tapServerStepSubmit()) continue;
             if (lastLoginEntryBounds == null && !onMfaScreen()) return false;
             // FIX(v1): login entries inside a WebView may be missing from the accessibility tree
             Map<String, String> wnav = web().inspect();
