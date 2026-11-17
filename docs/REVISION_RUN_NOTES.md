@@ -148,6 +148,15 @@ Four configurations, same apps, same model (`gpt-6.1-terra` via the group proxy)
 - Only test accounts on our own servers go to the LLM (the task text contains the credentials).
 - First result: Findroid 0.15.3, configuration 2, round 1 reports `VALID_CREDENTIALS_REJECTED` ("Unknown error", #877), about 47k tokens for the round.
 
+### Environment decisions during the R2-9 runs (2026-11-17)
+
+- Egress restriction (device may only reach the test server) is opt-in per app (`pools/<pkg>/egress_restrict`, only KitchenOwl, which defaults to a public server). Blocking the public internet changed app behaviour: Jerboa 0.0.50 no longer crashed (#1298 is triggered by a Toast with a null-message exception from a public request). Jerboa R2 jobs run before this change were discarded.
+- Notesnook: the first account now has email-code 2FA, which the tool cannot complete (no mailbox access), and the tool picks a valid pair at random, so #6640 depended on luck. Only the TOTP account is kept as a valid pair (as in the reproduction run); Notesnook tool jobs were rerun.
+- AppAgent has no TOTP capability and was not given one (LIFTDroid's TOTP support is part of the tool).
+- Navigation memory regression (tapped entries kept across an app relaunch) made rotation checks skip (AuroraStore #1436, Nora #106); fixed in 28a08a60, all earlier tool-configuration jobs were rerun.
+- Device 5558 ran without Frida until its checkout got the real frida-server (LFS pointer); its jobs before the fix were rerun.
+- A Facebook account (phone number) in the Nora pool was being used with wrong passwords; replaced with a fake address, Nora jobs rerun.
+
 ### New finding while running Dataset B
 
 - Jerboa 0.0.88 (latest) crashes at start-up when its default instance does not answer: `HttpRequestTimeoutException` from `SiteViewModel.getSite` (lemmy.ml unreachable under the test-server-only egress). Same class as the open upstream issue LemmyNet/jerboa#2143 (unhandled timeout on another screen); this trigger is not reported.
