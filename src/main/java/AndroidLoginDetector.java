@@ -1203,6 +1203,9 @@ public class AndroidLoginDetector {
                     // Facebook) trigger their anti-abuse checks and can lock the real account
                     String realUser = (uiManager.isFacebookLoginDetected() || uiManager.isGoogleLoginDetected()
                         || validPairs.isEmpty()) ? null : validPairs.get(0)[0];
+                    // the provider check above needs the tool's own page detection (absent in agent mode):
+                    // accounts from the Google/Facebook pools never get a wrong password
+                    if (realUser != null && serviceRealAccounts.contains(realUser)) realUser = null;
                     if (realUser != null) {
                         String wrongPw = "Wrong" + (100000 + new Random().nextInt(900000)) + "x";
                         logInfo("Invalid round: existing account with a wrong password");
