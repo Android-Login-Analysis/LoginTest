@@ -1732,7 +1732,8 @@ public class UIManager {
                                 || t.matches(".*(account|member)\\?\\s*(log ?in|sign ?in)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 1;
                         } else if (lastLoginEntryPriority > 2 && serverAddress != null
-                                && t.matches("(add server|add a server|add new server|new server|connect to (a )?server|add account|add instance|select server|other( [a-z]+)? server|private server|custom server|self[- ]hosted( server)?|your own server)")) {
+                                && t.matches("(add server|add a server|add new server|new server|connect to (a )?server|add account|add instance|select server|other( [a-z]+)? server|private server|custom server|self[- ]hosted( server)?|your own server)")
+                                || lastLoginEntryPriority > 2 && t.equals("add account")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2;   // self-hosted apps (Findroid 1.x)
                         } else if (lastLoginEntryPriority > 2 && t.matches("(open account menu|account|sign in or register)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2;
@@ -1743,6 +1744,8 @@ public class UIManager {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 3;
                         } else if (lastLoginEntryPriority > 4 && t.matches("(facebook|google)( (tasks|account|sign[- ]?in|login))?")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 4;   // SSO / service selection
+                        } else if (lastLoginEntryPriority > 5 && !preferGuestLogin && t.matches("(anonymous|guest)")) {
+                            lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 5;   // drawer account switcher (Jerboa: Anonymous > Add Account)
                         } else if (lastLoginEntryPriority > 5 && t.matches("(twitch|reddit|github|microsoft|x|twitter|instagram|bluesky|mastodon)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 5;
                         }
