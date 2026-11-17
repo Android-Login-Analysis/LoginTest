@@ -1084,7 +1084,7 @@ public class UIManager {
     private boolean twoStepJustFilled = false;
     private List<UIElement> lastScanElements = null;
 
-    public void setPendingUsername(String u) { serverStepFilled = false; serverSwitchTried = false; serverScreenExpected = false; googleButtonMode = false; serviceAccountAdopted = false; loginButtonClickTime = 0; lastWaitEndedInProgress = false; pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; webMode = false; webLoginUrl = null; mfaAfterSubmit = false; }
+    public void setPendingUsername(String u) { serverStepFilled = false; serverSwitchTried = false; serverScreenExpected = false; serverBoxTapped = false; googleButtonMode = false; serviceAccountAdopted = false; loginButtonClickTime = 0; lastWaitEndedInProgress = false; pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; webMode = false; webLoginUrl = null; mfaAfterSubmit = false; }
     private boolean mfaAfterSubmit = false;
     public boolean mfaPromptAfterSubmit() { return mfaAfterSubmit; }
 
@@ -1277,6 +1277,30 @@ public class UIManager {
             else if (e.text != null && e.text.length() <= 80 && SERVER_SCREEN.matcher(e.text).find()) serverWords = true;
             if (e.text != null && e.text.matches("(?is).*\\b(e-?mail|user ?name|username|phone|account|login|log in|sign in|password|name)\\b.*")) identifierWords = true;
         }
+        // FIX(v1): Flutter search bars (FluffyChat "Search or enter homeserver address") are not in the tree until
+        // focused: with server wording and no input, tap an unlabelled input-sized box and read the screen again
+        if (inputs == 0 && serverWords && !serverBoxTapped) {
+            for (UIElement e : lastScanElements) {
+                int[] b = boundsOf(e);
+                if (b == null || !textOf(e).trim().isEmpty()) continue;
+                int w = b[2] - b[0], h = b[3] - b[1];
+                if (w >= 650 && h >= 90 && h <= 220 && b[1] < 1400) {
+                    serverBoxTapped = true;
+                    System.out.println("[SERVER] Server prompt without an input in the UI tree; tapping the box at " + java.util.Arrays.toString(b));
+                    try { tapCenter(e); Thread.sleep(1500); lastScanElements = getAllUIElements(); } catch (Exception ignored) { return false; }
+                    boolean has = false;
+                    for (UIElement x : lastScanElements) if (isInputClass(x.className)) has = true;
+                    if (!has) {   // focused but still not exposed: type into the focused field
+                        clickAndInputText((b[0] + b[2]) / 2, (b[1] + b[3]) / 2, serverAddress);
+                        serverStepFilled = true;
+                        System.out.println("[SERVER] Server-address step: typed " + serverAddress + " into the focused box");
+                        try { new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_ENTER").start().waitFor(5, java.util.concurrent.TimeUnit.SECONDS); Thread.sleep(3000); lastScanElements = getAllUIElements(); } catch (Exception ignored) { }
+                        return true;
+                    }
+                    return maybeFillServerStep();
+                }
+            }
+        }
         // an unlabelled single-input step with no account wording is the server step too (KitchenOwl: "Hey there!
         // Ready to shop?" + one field + "Go"); a username/email-first step always names what it asks for
         if (!serverWords && !identifierWords && inputs == 1) serverWords = true;
@@ -1328,7 +1352,7 @@ public class UIManager {
     }
 
     /** Submit button of a server-address step (when it is not also recognised as a login entry). */
-    private boolean serverSwitchTried = false, serverScreenExpected = false;
+    private boolean serverSwitchTried = false, serverScreenExpected = false, serverBoxTapped = false;
     private static final String SERVER_SWITCH = "(?i)((switch|change|select|choose|set|edit) (the )?(server|instance|host)|server settings|custom server|self[- ]hosted|use (your|a) own server|other server)";
 
     private boolean formHasServerField() {

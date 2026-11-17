@@ -15,8 +15,11 @@ adb -s $S wait-for-device
 adb -s $S push $CA /data/local/tmp/$HASH.0 >/dev/null
 
 # hosts file: the device's own entries plus our names
-adb -s $S shell cat /system/etc/hosts | grep -v "liftdroid.test" > /tmp/lift_hosts.$$
+adb -s $S shell cat /system/etc/hosts | grep -vE "liftdroid.test|joinmatrix.org" > /tmp/lift_hosts.$$
 for n in $NAMES; do echo "$HOST_IP $n.liftdroid.test" >> /tmp/lift_hosts.$$; done
+# public endpoints that apps call during login while egress is limited to the test server: refuse them locally
+# (connection refused at once) instead of letting the dropped packets time out
+for n in servers.joinmatrix.org; do echo "127.0.0.1 $n" >> /tmp/lift_hosts.$$; done
 adb -s $S push /tmp/lift_hosts.$$ /data/local/tmp/lift_hosts >/dev/null
 rm -f /tmp/lift_hosts.$$
 
