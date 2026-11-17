@@ -74,7 +74,9 @@ public class StorageLeakDetector implements BugDetector {
                 if (v.matches("-?[0-9.]+")) continue;   // numeric values are not credentials
                 v = v.trim();
                 boolean readable = v.length() >= 20 && v.chars().allMatch(c -> c >= 32 && c < 127);
-                boolean looksEncrypted = v.matches("[A-Za-z0-9+/=]{40,}") && f.contains("encrypted");
+                // FIX(v1): keystore-backed stores hold base64 ciphertext (EncryptedSharedPreferences, flutter_secure_storage)
+                boolean looksEncrypted = v.matches("[A-Za-z0-9+/=_-]{40,}")
+                    && f.toLowerCase().matches(".*(encrypted|securestorage|secure_storage|secureprefs|keystore).*");
                 if (readable && !looksEncrypted && reported.add("tok:" + f + ":" + k)) {
                     DetectedBug b = new DetectedBug(BugCategory.INCORRECT_LOGIN_FLOW, "PLAINTEXT_TOKEN_STORAGE",
                         "Authentication token/credential stored in plaintext");
