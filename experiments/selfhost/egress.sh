@@ -6,10 +6,12 @@ S=${1:?serial}; MODE=${2:?on|off}; HOST_IP=10.99.0.124
 source ~/lt_env.sh
 A="adb -s $S shell"
 $A "iptables -D OUTPUT -j LIFT_EGRESS 2>/dev/null; iptables -F LIFT_EGRESS 2>/dev/null; iptables -X LIFT_EGRESS 2>/dev/null"
-$A "settings delete global private_dns_mode; settings delete global private_dns_specifier" >/dev/null 2>&1
+$A "settings delete global private_dns_mode; settings delete global private_dns_specifier; settings delete global captive_portal_https_url; settings delete global captive_portal_http_url; settings delete global captive_portal_fallback_url" >/dev/null 2>&1
 if [ "$MODE" = on ]; then
-  # public names fail at once: strict private DNS to a test-server port where nothing listens (names in the hosts
-  # file still resolve); otherwise dropped DNS packets make every public lookup hang for ~25 s
+  # public names fail at once: strict private DNS with a name the device cannot resolve (Android resolves the
+  # private DNS host through the blocked network DNS, not the hosts file), so lookups fail within ~2 s instead of
+  # hanging ~25 s on dropped packets; names in the hosts file still resolve. Side effect: Android reports the
+  # network as not validated (apps that require NET_CAPABILITY_VALIDATED would consider themselves offline).
   $A "settings put global private_dns_specifier dns.liftdroid.test; settings put global private_dns_mode hostname"
   $A "iptables -N LIFT_EGRESS; iptables -A LIFT_EGRESS -o lo -j ACCEPT; iptables -A LIFT_EGRESS -p tcp --sport 5555 -j ACCEPT; \
       iptables -A LIFT_EGRESS -d $HOST_IP -j ACCEPT; iptables -A LIFT_EGRESS -j DROP; iptables -A OUTPUT -j LIFT_EGRESS"
