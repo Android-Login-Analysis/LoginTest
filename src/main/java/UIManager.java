@@ -1251,7 +1251,7 @@ public class UIManager {
     private String lastMfaOutcome = null;   // null | "totp-entered" | "pending"
     private boolean mfaDismissChecked = false;
     private String scheduledCondition = "normal";   // the round's planned condition (fallbacks do not change it)
-    public void setScheduledCondition(String c) { scheduledCondition = c == null ? "normal" : c; }
+    public void setScheduledCondition(String c) { scheduledCondition = c == null ? "normal" : c; tappedEntries.clear(); }
     private String mfaNotDismissable = null;
     /** Prompt text of an MFA prompt found not dismissable since the last call (null if none). */
     public String takeMfaNotDismissable() { String t = mfaNotDismissable; mfaNotDismissable = null; return t; }
@@ -1274,17 +1274,22 @@ public class UIManager {
         java.util.List<UIElement> fields = new java.util.ArrayList<>();
         for (UIElement e : lastScanElements) {
             if (isInputClass(e.className) && boundsOf(e) != null) { inputs++; only = e; fields.add(e); }
-            else if (e.text != null && e.text.length() <= 80 && SERVER_SCREEN.matcher(e.text).find()) serverWords = true;
+            else if (e.text != null && e.text.length() <= 200 && SERVER_SCREEN.matcher(e.text).find()) serverWords = true;
             if (e.text != null && e.text.matches("(?is).*\\b(e-?mail|user ?name|username|phone|account|login|log in|sign in|password|name)\\b.*")) identifierWords = true;
         }
         // FIX(v1): Flutter search bars (FluffyChat "Search or enter homeserver address") are not in the tree until
         // focused: with server wording and no input, tap an unlabelled input-sized box and read the screen again
         if (inputs == 0 && serverWords && !serverBoxTapped) {
+            int promptBottom = -1;   // the box sits right below the text that mentions the server
             for (UIElement e : lastScanElements) {
                 int[] b = boundsOf(e);
-                if (b == null || !textOf(e).trim().isEmpty()) continue;
+                if (b != null && e.text != null && e.text.length() <= 200 && SERVER_SCREEN.matcher(e.text).find()) { promptBottom = b[3]; break; }
+            }
+            for (UIElement e : lastScanElements) {
+                int[] b = boundsOf(e);
+                if (b == null || !textOf(e).trim().isEmpty() || promptBottom < 0) continue;
                 int w = b[2] - b[0], h = b[3] - b[1];
-                if (w >= 650 && h >= 90 && h <= 220 && b[1] < 1400) {
+                if (w >= 650 && h >= 90 && h <= 220 && b[1] >= promptBottom - 10 && b[1] <= promptBottom + 250) {
                     serverBoxTapped = true;
                     System.out.println("[SERVER] Server prompt without an input in the UI tree; tapping the box at " + java.util.Arrays.toString(b));
                     try { tapCenter(e); Thread.sleep(1500); lastScanElements = getAllUIElements(); } catch (Exception ignored) { return false; }
@@ -1511,7 +1516,8 @@ public class UIManager {
     }
 
     public boolean detectLoginPage() {
-        tappedEntries.clear();
+        // FIX(v1): entries tapped earlier in this round stay remembered across calls (the caller polls this method),
+        // otherwise a higher-priority entry that leads nowhere wins every time; cleared per round and on relaunch
         for (int hop = 0; hop <= 6; hop++) {
             lastLoginEntryBounds = null; lastLoginEntryPriority = 99; lastGuestBounds = null; lastLoginEntryKey = null;
             if (detectLoginPageOnce()) {
