@@ -2986,13 +2986,19 @@ public class UIManager {
     private String visibleErrorText(List<UIElement> els) {
         String d = findDialogMessage(els);
         if (d != null && !d.isEmpty()) return d;
+        // FIX(v1): a single word such as "Error" is usually an icon's accessibility label (Material TextInputLayout
+        // error icon), not the message next to it ("Wrong username or password"): prefer a multi-word message
+        String single = null;
         for (UIElement e : els) {
             if (e.text == null || boundsOf(e) == null || isInputClass(e.className)) continue;
             String t = e.text.trim();
             if (t.length() >= 4 && t.length() <= 160 && ERROR_TEXT.matcher(t).find()
-                    && !t.toLowerCase().contains("forgot")) return t;
+                    && !t.toLowerCase().contains("forgot")) {
+                if (t.contains(" ")) return t;
+                if (single == null) single = t;
+            }
         }
-        return null;
+        return single;
     }
 
     private boolean progressVisible(List<UIElement> els) {
