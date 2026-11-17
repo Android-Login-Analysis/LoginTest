@@ -1057,7 +1057,7 @@ public class UIManager {
     private boolean twoStepJustFilled = false;
     private List<UIElement> lastScanElements = null;
 
-    public void setPendingUsername(String u) { googleButtonMode = false; serviceAccountAdopted = false; loginButtonClickTime = 0; lastWaitEndedInProgress = false; pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; webMode = false; webLoginUrl = null; mfaAfterSubmit = false; }
+    public void setPendingUsername(String u) { serverStepFilled = false; googleButtonMode = false; serviceAccountAdopted = false; loginButtonClickTime = 0; lastWaitEndedInProgress = false; pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; webMode = false; webLoginUrl = null; mfaAfterSubmit = false; }
     private boolean mfaAfterSubmit = false;
     public boolean mfaPromptAfterSubmit() { return mfaAfterSubmit; }
 
@@ -1232,6 +1232,29 @@ public class UIManager {
     public String getLastMfaOutcome() { return lastMfaOutcome; }
 
     /** If the screen shows a single identifier input and no password field, type the username into it. */
+    private boolean serverStepFilled = false;
+    private static final java.util.regex.Pattern SERVER_SCREEN = java.util.regex.Pattern.compile(
+        "(?i)(server|instance|homeserver|connect to|host|\\burl\\b)");
+
+    /** A screen that only asks for the server (one empty input, no password field, server wording): fill it. */
+    private void maybeFillServerStep() {
+        if (serverAddress == null || serverStepFilled || lastScanElements == null) return;
+        if (findPasswordAnchor(lastScanElements) != null) return;
+        UIElement only = null; int inputs = 0; boolean serverWords = false;
+        for (UIElement e : lastScanElements) {
+            if (isInputClass(e.className) && boundsOf(e) != null) { inputs++; only = e; }
+            else if (e.text != null && e.text.length() <= 80 && SERVER_SCREEN.matcher(e.text).find()) serverWords = true;
+        }
+        if (inputs != 1 || !serverWords) return;
+        String own = textOf(only).trim();
+        if (!own.isEmpty() && !SERVER_LABEL.matcher(own).matches()) return;   // already filled
+        int[] b = boundsOf(only);
+        clickAndInputText((b[0] + b[2]) / 2, (b[1] + b[3]) / 2, serverAddress);
+        serverStepFilled = true;
+        System.out.println("[SERVER] Server-address step: entered " + serverAddress);
+        try { hideKeyboardIfShown(); Thread.sleep(800); } catch (Exception ignored) { }
+    }
+
     private void maybeFillIdentifierStep() {
         if (pendingUsername == null || usernameEnteredInStep1 || lastScanElements == null) return;
         if (findPasswordAnchor(lastScanElements) != null) return;
@@ -1317,6 +1340,7 @@ public class UIManager {
             String mfaNav = handleMfaDuringNavigation();
             if ("pending".equals(mfaNav)) return false;
             if ("progressed".equals(mfaNav)) { lastLoginEntryBounds = null; continue; }
+            maybeFillServerStep();     // FIX(v1): a separate 'server address' step (self-hosted apps)
             maybeFillIdentifierStep();
             int[] r = parseBoundsRect(lastLoginEntryBounds);
             if (r == null) return false;

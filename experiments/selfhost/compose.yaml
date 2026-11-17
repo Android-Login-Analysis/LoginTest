@@ -12,7 +12,7 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./certs/wildcard.crt:/certs/wildcard.crt:ro
       - ./certs/wildcard.key:/certs/wildcard.key:ro
-    depends_on: [lemmy, lemmy-ui]
+    depends_on: [lemmy, lemmy-ui, paperless]
 
   postgres:
     image: postgres:16-alpine
@@ -53,3 +53,23 @@ services:
       LEMMY_UI_LEMMY_EXTERNAL_HOST: "lemmy.liftdroid.test"
       LEMMY_UI_HTTPS: "true"
     depends_on: [lemmy]
+
+  paperless-redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+
+  paperless:
+    image: paperlessngx/paperless-ngx:2.14.5
+    restart: unless-stopped
+    depends_on: [paperless-redis]
+    environment:
+      PAPERLESS_REDIS: redis://paperless-redis:6379
+      PAPERLESS_URL: https://paperless.liftdroid.test
+      PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY}
+      PAPERLESS_ADMIN_USER: lifttest
+      PAPERLESS_ADMIN_PASSWORD: ${PAPERLESS_ADMIN_PASSWORD}
+      PAPERLESS_ADMIN_MAIL: lifttest@example.com
+      PAPERLESS_TIME_ZONE: UTC
+    volumes:
+      - ./data/paperless/data:/usr/src/paperless/data
+      - ./data/paperless/media:/usr/src/paperless/media

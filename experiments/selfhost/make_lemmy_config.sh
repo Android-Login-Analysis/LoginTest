@@ -11,6 +11,9 @@ if [ ! -f .env ]; then
     echo "LEMMY_ADMIN_PASSWORD=Lift$(rnd 20)9x"
   } > .env
 fi
+# secrets added after the first bring-up (one per service)
+grep -q "^PAPERLESS_SECRET_KEY=" .env || echo "PAPERLESS_SECRET_KEY=$(python3 -c "import secrets;print(secrets.token_urlsafe(48))")" >> .env
+grep -q "^PAPERLESS_ADMIN_PASSWORD=" .env || echo "PAPERLESS_ADMIN_PASSWORD=Lift$(python3 -c "import secrets,string;a=string.ascii_letters+string.digits;print(''.join(secrets.choice(a) for _ in range(20)))")9x" >> .env
 set -a; . ./.env; set +a
 cat > lemmy.hjson <<EOF
 {
