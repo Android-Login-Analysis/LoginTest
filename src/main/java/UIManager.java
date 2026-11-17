@@ -1568,6 +1568,8 @@ public class UIManager {
     }
 
     public boolean detectLoginPage() {
+        // R2-9 "Monkey + LIFTDroid": no heuristic navigation; only recognise a login page that Monkey reached
+        if ("monkey".equalsIgnoreCase(System.getenv("LIFT_NAV"))) return detectLoginPageOnce();
         if (AgentNavigator.enabled()) {   // one navigation episode per round; the agent decides when the form is shown
             if (!agentAtForm) agentAtForm = agentNav().navigate(scheduledCondition);
             return agentAtForm;
