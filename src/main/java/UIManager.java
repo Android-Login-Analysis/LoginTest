@@ -1732,7 +1732,7 @@ public class UIManager {
                                 || t.matches(".*(account|member)\\?\\s*(log ?in|sign ?in)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 1;
                         } else if (lastLoginEntryPriority > 2 && serverAddress != null
-                                && t.matches("(add server|add a server|add new server|new server|connect to (a )?server|add account|add instance|select server)")) {
+                                && t.matches("(add server|add a server|add new server|new server|connect to (a )?server|add account|add instance|select server|other( [a-z]+)? server|private server|custom server|self[- ]hosted( server)?|your own server)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2;   // self-hosted apps (Findroid 1.x)
                         } else if (lastLoginEntryPriority > 2 && t.matches("(open account menu|account|sign in or register)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2;
