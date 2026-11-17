@@ -34,6 +34,7 @@ while true; do
       cp /tmp/run_${ID}_$BASE.log $OUT/run.log 2>/dev/null; cp /tmp/run_${ID}_$BASE.log.hdr $OUT/run.hdr 2>/dev/null; rm -f /tmp/run_${ID}_$BASE.log
       mkdir -p $OUT/bugs; find ~/$D/reports/bugs -newer $OUT/.start -type f -exec cp {} $OUT/bugs/ \; 2>/dev/null
       [ -f ~/$D/logs/agent_episodes.csv ] && cp ~/$D/logs/agent_episodes.csv $OUT/
+      [ -d ~/$D/logs/agent ] && cp -r ~/$D/logs/agent $OUT/agent_logs   # agent console output and action logs per episode
       ;;
     c3|c4)
       V=plain; [ $CFG = c4 ] && V=informed
