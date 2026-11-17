@@ -508,6 +508,7 @@ public class UIManager {
         if (webMode) { lastLoginErrorText = null; return waitForWebLogin(timeoutMs); }
         lastLoginErrorText = null;
         lastMfaOutcome = null;
+        mfaSubmittedAt = -1;
         String loginActivity = loginClickActivity != null && !loginClickActivity.isEmpty()
             ? loginClickActivity : AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
         long deadline = System.currentTimeMillis() + timeoutMs;
@@ -556,6 +557,7 @@ public class UIManager {
                             System.out.println("[MFA] Authenticator prompt; entering TOTP code");
                             clickAndInputText((r[0] + r[2]) / 2, (r[1] + r[3]) / 2, code);
                             submitMfa(els);
+                            mfaSubmittedAt = System.currentTimeMillis();
                             lastMfaOutcome = "totp-entered";
                             goneSince = -1;
                             continue;
@@ -1245,6 +1247,9 @@ public class UIManager {
     public String takeMfaNotDismissable() { String t = mfaNotDismissable; mfaNotDismissable = null; return t; }
     public void markMfaDismissChecked() { mfaDismissChecked = true; }
     public String getLastMfaOutcome() { return lastMfaOutcome; }
+    private long mfaSubmittedAt = -1;
+    /** When the tool submitted a TOTP code in the last login wait (-1 if none). */
+    public long getMfaSubmittedAt() { return mfaSubmittedAt; }
 
     /** If the screen shows a single identifier input and no password field, type the username into it. */
     private boolean serverStepFilled = false;

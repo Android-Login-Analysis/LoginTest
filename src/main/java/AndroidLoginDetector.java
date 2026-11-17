@@ -1151,7 +1151,10 @@ public class AndroidLoginDetector {
                     if (gone > 0) {
                         // FIX(v1): latency thresholds only make sense on a working network; on degraded networks
                         // the oracle looks for hangs (no result at all) instead of slowness
-                        if ("normal".equals(roundCondition)) timeoutDetector.recordLoginAttempt(clickTime, gone, true);
+                        // with an MFA step, the time the tool spent entering the TOTP code is not app latency
+                        long start = uiManager.getMfaSubmittedAt() > clickTime ? uiManager.getMfaSubmittedAt() : clickTime;
+                        if (start > clickTime) logInfo("Login delay measured from the MFA code submission (" + (gone - start) + " ms)");
+                        if ("normal".equals(roundCondition)) timeoutDetector.recordLoginAttempt(start, Math.max(gone, start), true);
                         else logInfo("Login completed under '" + roundCondition + "' network in " + (gone - clickTime) + " ms (not a delay sample)");
                     } else if (gone == -3) {
                         logInfo("Login stopped at the MFA prompt (MFACodePending); no authenticator secret for this account");
