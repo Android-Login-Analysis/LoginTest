@@ -501,6 +501,7 @@ public class UIManager {
         return -1;
     }
 
+    private long blankSince = -1;
     public long waitForLoginPageGone(long timeoutMs) {
         lastWaitEndedInProgress = false;
         googleGoneSince = -1; googleBackSince = -1;
@@ -512,6 +513,7 @@ public class UIManager {
         long deadline = System.currentTimeMillis() + timeoutMs;
         long goneSince = -1;
         long formAbsentSince = -1;
+        blankSince = -1;
         while (System.currentTimeMillis() < deadline) {
             long pollStart = System.currentTimeMillis();
             try {
@@ -576,6 +578,19 @@ public class UIManager {
                     // a loading screen has a progress indicator and nothing actionable; a determinate progress
                     // bar next to buttons (e.g. a "Download" screen after login) is not a pending login
                     progressShown = progressShown && !actionable;
+                    // FIX(v1): a blank screen (no text, label, input or actionable element) is a loading screen
+                    // whose indicator is not in the accessibility tree (e.g. a Flutter CircularProgressIndicator),
+                    // not the screen after a completed login (Paperless Mobile #572: endless spinner after sign-in)
+                    boolean blank = !lastDumpFailed;
+                    if (blank) for (UIElement e : els) {
+                        if (!textOf(e).trim().isEmpty() || isInputClass(e.className)
+                                || (e.className != null && e.className.contains("[clickable]"))) { blank = false; break; }
+                    }
+                    if (blank) {
+                        if (blankSince < 0) { blankSince = pollStart; System.out.println("[LOGIN_RESULT] Blank screen after submit (loading indicator not in the UI tree); waiting"); }
+                        lastWaitEndedInProgress = true; goneSince = -1; Thread.sleep(1000); continue;
+                    }
+                    blankSince = -1;
                     // FIX(v1): leaving the login activity means completion, unless the new screen is a pure
                     // loading screen (e.g. NewsBlur's LoginProgress), which is still part of the login
                     // FIX(v1): a Google-button sign-in has no form; it is done only when neither the Google button nor
