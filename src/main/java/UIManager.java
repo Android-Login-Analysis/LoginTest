@@ -640,6 +640,16 @@ public class UIManager {
                         }
                     }
                     if (findPasswordAnchor(els) == null) {
+                        // FIX(v1): the form gave way to an error page ("Hmmmm... couldn't reach server" + Refresh,
+                        // KitchenOwl offline), not to the app: a failed login with a message
+                        int texts = 0;
+                        for (UIElement e : els) if (!textOf(e).trim().isEmpty() && boundsOf(e) != null) texts++;
+                        String pageErr = texts <= 8 ? visibleErrorText(els) : null;
+                        if (pageErr != null) {
+                            lastLoginErrorText = pageErr;
+                            System.out.println("[LOGIN_RESULT] Error page after login: '" + pageErr + "'");
+                            return -2;
+                        }
                         if (goneSince < 0) goneSince = pollStart;            // first poll without the form
                         else return goneSince;                                // confirmed by a second poll
                     } else {
