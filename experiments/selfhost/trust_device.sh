@@ -23,7 +23,7 @@ for n in servers.joinmatrix.org; do echo "127.0.0.1 $n" >> /tmp/lift_hosts.$$; d
 adb -s $S push /tmp/lift_hosts.$$ /data/local/tmp/lift_hosts >/dev/null
 rm -f /tmp/lift_hosts.$$
 
-adb -s $S shell sh -s <<EOF
+timeout 120 adb -s $S shell sh -s <<EOF || echo "$S: WARN mount propagation timed out"
 set -e
 # --- CA: copy the system store into a tmpfs, add ours, bind it over the conscrypt APEX store ---
 if ! ls /system/etc/security/cacerts/$HASH.0 >/dev/null 2>&1 || ! grep -q tmpfs /proc/mounts; then
@@ -46,15 +46,15 @@ mount --bind /data/local/tmp/lift_hosts /system/etc/hosts
 # --- propagate into zygote and every running app's mount namespace ---
 ZP="\$(pidof zygote || true) \$(pidof zygote64 || true)"
 for P in \$ZP; do
-  nsenter --mount=/proc/\$P/ns/mnt -- /bin/mount --bind /system/etc/security/cacerts /apex/com.android.conscrypt/cacerts || true
-  nsenter --mount=/proc/\$P/ns/mnt -- /bin/umount /system/etc/hosts 2>/dev/null || true
-  nsenter --mount=/proc/\$P/ns/mnt -- /bin/mount --bind /data/local/tmp/lift_hosts /system/etc/hosts || true
+  timeout 5 nsenter --mount=/proc/\$P/ns/mnt -- /bin/mount --bind /system/etc/security/cacerts /apex/com.android.conscrypt/cacerts || true
+  timeout 5 nsenter --mount=/proc/\$P/ns/mnt -- /bin/umount /system/etc/hosts 2>/dev/null || true
+  timeout 5 nsenter --mount=/proc/\$P/ns/mnt -- /bin/mount --bind /data/local/tmp/lift_hosts /system/etc/hosts || true
 done
 for Z in \$ZP; do
   for P in \$(ps -o PID -P \$Z | grep -v PID); do
-    nsenter --mount=/proc/\$P/ns/mnt -- /bin/mount --bind /system/etc/security/cacerts /apex/com.android.conscrypt/cacerts 2>/dev/null || true
-    nsenter --mount=/proc/\$P/ns/mnt -- /bin/umount /system/etc/hosts 2>/dev/null || true
-    nsenter --mount=/proc/\$P/ns/mnt -- /bin/mount --bind /data/local/tmp/lift_hosts /system/etc/hosts 2>/dev/null || true
+    timeout 5 nsenter --mount=/proc/\$P/ns/mnt -- /bin/mount --bind /system/etc/security/cacerts /apex/com.android.conscrypt/cacerts 2>/dev/null || true
+    timeout 5 nsenter --mount=/proc/\$P/ns/mnt -- /bin/umount /system/etc/hosts 2>/dev/null || true
+    timeout 5 nsenter --mount=/proc/\$P/ns/mnt -- /bin/mount --bind /data/local/tmp/lift_hosts /system/etc/hosts 2>/dev/null || true
   done
 done
 EOF
