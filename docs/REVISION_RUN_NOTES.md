@@ -132,6 +132,26 @@ device signs in directly. The app data right after the login is kept as `pools/<
 Items 2, 3, 9-11, 16-18 and 20-22 change the tool's behaviour in ways that matter for the paper's numbers (instrumentation
 scope, credential policy, oracle definitions). Table V and the precision figures must be recomputed with this code.
 
+## R2-9: GUI-agent baselines (started 2026-11-17)
+
+Four configurations, same apps, same model (`gpt-6.1-terra` via the group proxy) for all agent runs:
+
+| # | Configuration | How | Navigation / input | Conditions + oracles |
+|---|---|---|---|---|
+| 1 | Monkey + LIFTDroid | `LIFT_NAV=monkey ~/run_app2.sh ...` | Monkey only; the login page is only recognised, never searched for | LIFTDroid |
+| 2 | GUI agent + LIFTDroid | `LIFT_NAV=agent ~/run_app2.sh ...` | AppAgent: one episode reaches the form (normal network), one fills and submits after the round's condition is applied; submit time = the agent's last tap | LIFTDroid |
+| 3 | GUI agent | `experiments/r2_baselines/run_agent_baseline.sh <apk> plain` | AppAgent, up to 60 actions, plain testing task | none; the agent reports `BUG:` lines |
+| 4 | GUI agent + study prompt | `... run_agent_baseline.sh <apk> informed` | same, with the paper's symptoms, trigger conditions and oracle descriptions in the task | none; `BUG:` lines |
+
+- AppAgent changes (`experiments/r2_baselines/appagent_liftdroid.patch`): unattended task executor (app, device and task from the environment), timestamped action log, per-request token usage, retries on transient API errors. The agent's decisions are unchanged.
+- Cost data: configuration 2 writes `logs/agent_episodes.csv` (actions, requests, prompt/completion tokens, seconds per episode); configurations 3/4 write `summary.json` next to the trajectory.
+- Only test accounts on our own servers go to the LLM (the task text contains the credentials).
+- First result: Findroid 0.15.3, configuration 2, round 1 reports `VALID_CREDENTIALS_REJECTED` ("Unknown error", #877), about 47k tokens for the round.
+
+### New finding while running Dataset B
+
+- Jerboa 0.0.88 (latest) crashes at start-up when its default instance does not answer: `HttpRequestTimeoutException` from `SiteViewModel.getSite` (lemmy.ml unreachable under the test-server-only egress). Same class as the open upstream issue LemmyNet/jerboa#2143 (unhandled timeout on another screen); this trigger is not reported.
+
 ## Observations relevant to reviewer comments
 
 - **R2-4 (obfuscation):** NewsBlur's F-Droid build is R8-obfuscated (`l1.Y.a0`), yet login states were still
