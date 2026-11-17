@@ -1667,6 +1667,9 @@ public class UIManager {
                         if (t.matches("(sign in|log in|login|signin|log on|sign in / register|sign in or register)")
                                 || t.matches(".*(account|member)\\?\\s*(log ?in|sign ?in)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 1;
+                        } else if (lastLoginEntryPriority > 2 && serverAddress != null
+                                && t.matches("(add server|add a server|add new server|new server|connect to (a )?server|add account|add instance|select server)")) {
+                            lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2;   // self-hosted apps (Findroid 1.x)
                         } else if (lastLoginEntryPriority > 2 && t.matches("(open account menu|account|sign in or register)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2;
                         } else if (lastLoginEntryPriority > 3 && (t.matches("(go to account menu|my account|profile|account and sync|accounts?( settings)?|content|sync|services|integrations)")
