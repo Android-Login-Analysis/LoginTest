@@ -1343,6 +1343,9 @@ public class AndroidLoginDetector {
                             "Prompt: '" + prompt + "'");
                     }
                 }
+            } else if (AgentNavigator.enabled()) {
+                // R2-9: in agent mode the tool never navigates or types itself; a missed login page is the agent's result
+                logInfo("[AGENT] Agent did not reach the login form this round; no fallback exploration");
             } else {
                 logInfo("No login page detected, starting stepwise Monkey exploration with focused credential feeding");
                 String username = pickRoundUsername();
