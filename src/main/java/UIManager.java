@@ -1279,7 +1279,7 @@ public class UIManager {
         }
         // FIX(v1): Flutter search bars (FluffyChat "Search or enter homeserver address") are not in the tree until
         // focused: with server wording and no input, tap an unlabelled input-sized box and read the screen again
-        if (inputs == 0 && serverWords && !serverBoxTapped) {
+        if (inputs == 0 && serverWords && !serverBoxTapped && !serverListScreen()) {
             int promptBottom = -1;   // the box sits right below the text that mentions the server
             for (UIElement e : lastScanElements) {
                 int[] b = boundsOf(e);
@@ -1295,6 +1295,10 @@ public class UIManager {
                     try { tapCenter(e); Thread.sleep(1500); lastScanElements = getAllUIElements(); } catch (Exception ignored) { return false; }
                     boolean has = false;
                     for (UIElement x : lastScanElements) if (isInputClass(x.className)) has = true;
+                    if (!has && !keyboardShown()) {   // nothing took focus: not an input
+                        System.out.println("[SERVER] The box did not take keyboard focus; not a server field");
+                        return false;
+                    }
                     if (!has) {   // focused but still not exposed: type into the focused field
                         clickAndInputText((b[0] + b[2]) / 2, (b[1] + b[3]) / 2, serverAddress);
                         serverStepFilled = true;
@@ -1352,6 +1356,18 @@ public class UIManager {
                 hideKeyboardIfShown(); Thread.sleep(800);
             }
             lastScanElements = getAllUIElements();
+            // a server list filtered by the typed address: select our entry (FluffyChat: radio item, then "Continue")
+            String host = serverAddress.replaceAll("^https?://", "").replaceAll("/.*", "");
+            for (UIElement e : lastScanElements) {
+                if (e.className == null || isInputClass(e.className) || boundsOf(e) == null) continue;
+                if (textOf(e).contains(host) && (e.className.contains("RadioButton") || e.className.contains("CheckBox")
+                        || e.className.contains("[clickable]"))) {
+                    System.out.println("[SERVER] Selecting the server entry '" + host + "'");
+                    tapCenter(e); Thread.sleep(1500);
+                    lastScanElements = getAllUIElements();
+                    break;
+                }
+            }
         } catch (Exception ignored) { }
         return true;
     }
@@ -1553,7 +1569,8 @@ public class UIManager {
             String mfaNav = handleMfaDuringNavigation();
             if ("pending".equals(mfaNav)) return false;
             if ("progressed".equals(mfaNav)) { lastLoginEntryBounds = null; continue; }
-            maybeFillServerStep();     // FIX(v1): a separate 'server address' step (self-hosted apps)
+            // FIX(v1): a separate 'server address' step (self-hosted apps): submit it rather than tapping the entry
+            if (maybeFillServerStep()) { tapServerStepSubmit(); continue; }
             maybeFillIdentifierStep();
             int[] r = parseBoundsRect(lastLoginEntryBounds);
             if (r == null) return false;
@@ -2075,6 +2092,13 @@ public class UIManager {
     /**
      * Click login button (separate from input for screenshot purposes)
      */
+    private boolean keyboardShown() {
+        try {
+            String ime = AppLauncher.run("adb", "shell", "dumpsys", "input_method");
+            return ime.contains("mInputShown=true") || ime.contains("isInputViewShown=true");
+        } catch (Exception e) { return false; }
+    }
+
     /** FIX(v1): hide the soft keyboard only if it is shown (BACK would otherwise leave the screen). */
     public void hideKeyboardIfShown() {
         try {
