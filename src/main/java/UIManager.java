@@ -1260,12 +1260,16 @@ public class UIManager {
     private boolean maybeFillServerStep() {
         if (serverAddress == null || serverStepFilled || lastScanElements == null) return false;
         if (findPasswordAnchor(lastScanElements) != null) return false;
-        UIElement only = null, labelled = null; int inputs = 0; boolean serverWords = false;
+        UIElement only = null, labelled = null; int inputs = 0; boolean serverWords = false, identifierWords = false;
         java.util.List<UIElement> fields = new java.util.ArrayList<>();
         for (UIElement e : lastScanElements) {
             if (isInputClass(e.className) && boundsOf(e) != null) { inputs++; only = e; fields.add(e); }
             else if (e.text != null && e.text.length() <= 80 && SERVER_SCREEN.matcher(e.text).find()) serverWords = true;
+            if (e.text != null && e.text.matches("(?is).*\\b(e-?mail|user ?name|username|phone|account|login|log in|sign in|password|name)\\b.*")) identifierWords = true;
         }
+        // an unlabelled single-input step with no account wording is the server step too (KitchenOwl: "Hey there!
+        // Ready to shop?" + one field + "Go"); a username/email-first step always names what it asks for
+        if (!serverWords && !identifierWords && inputs == 1) serverWords = true;
         // several inputs (e.g. Mattermost: server URL + optional display name): use the one that is the server field,
         // by its resource id or by a server label drawn over / right above it
         if (inputs > 1) {
@@ -1485,6 +1489,8 @@ public class UIManager {
             if (hop == 6) return false;
             // FIX(v1): a server-address step whose submit button ('Connect') is not a login entry
             if (lastLoginEntryBounds == null && maybeFillServerStep() && tapServerStepSubmit()) continue;
+            // the app cannot reach its default server (egress is limited to the test server): switch servers
+            if (lastLoginEntryBounds == null && serverAddress != null && !serverStepFilled && !serverSwitchTried && openServerSwitch()) continue;
             if (lastLoginEntryBounds == null && !onMfaScreen()) return false;
             // FIX(v1): login entries inside a WebView may be missing from the accessibility tree
             Map<String, String> wnav = web().inspect();
