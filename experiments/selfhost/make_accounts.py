@@ -152,6 +152,34 @@ def seafile():
     pool("com.seafile.seadroid2", "lift@liftdroid.test", "https://seafile.liftdroid.test")
 
 
+def paperless_totp():
+    """Second Paperless user with TOTP (Paperless Mobile #478); pool kept separately (pools/paperless_totp)."""
+    adm = env["PAPERLESS_ADMIN_PASSWORD"]
+    basic = {"Authorization": "Basic " + base64.b64encode(f"lifttest:{adm}".encode()).decode()}
+    s, r, _ = call("paperless", "/api/users/", {"username": "lifttotp", "password": PW, "is_active": True, "is_superuser": True}, headers=basic)
+    print("paperless totp user", s)
+    ub = {"Authorization": "Basic " + base64.b64encode(f"lifttotp:{PW}".encode()).decode()}
+    d = os.path.join(POOLS, "paperless_totp")
+    sf = os.path.join(d, "totp_secrets.csv")
+    if os.path.exists(sf):
+        print("paperless totp already set up")
+        return
+    s, g, _ = call("paperless", "/api/profile/totp/", headers=ub)
+    if s != 200:
+        print("paperless totp get", s, g); return
+    secret = g["secret"]
+    s, a, _ = call("paperless", "/api/profile/totp/", {"secret": secret, "code": totp(secret)}, headers=ub)
+    print("paperless totp activate", s)
+    if s == 200:
+        os.makedirs(d, exist_ok=True)
+        old = os.umask(0o077)
+        open(os.path.join(d, "valid_pairs.csv"), "w").write(f"username,password\nlifttotp,{PW}\n")
+        open(os.path.join(d, "server.txt"), "w").write("https://paperless.liftdroid.test\n")
+        open(sf, "w").write(f"lifttotp,{secret}\n")
+        os.umask(old)
+        print("  pool paperless_totp:", sorted(os.listdir(d)))
+
+
 import urllib.parse
 for fn in sys.argv[1:] or ["jellyfin", "mattermost", "kitchenowl", "freshrss", "synapse", "seafile"]:
     try:

@@ -651,6 +651,12 @@ public class AndroidLoginDetector {
         // 3) fallback to global pools/ files
         java.io.File poolsDir = new java.io.File("pools");
         java.io.File credDir = new java.io.File(poolsDir, appPackage);
+        // FIX(v1): LIFT_POOL selects another pool directory for this run (e.g. a TOTP-enabled account)
+        String poolOverride = System.getenv("LIFT_POOL");
+        if (poolOverride != null && !poolOverride.isEmpty() && new java.io.File(poolsDir, poolOverride).isDirectory()) {
+            credDir = new java.io.File(poolsDir, poolOverride);
+            logInfo("Using credential pool directory (LIFT_POOL): " + credDir.getPath());
+        }
 
         if (!credDir.isDirectory()) {
             java.io.File[] candidates = poolsDir.listFiles(new java.io.FileFilter() {
