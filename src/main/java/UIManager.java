@@ -1255,10 +1255,29 @@ public class UIManager {
     private boolean maybeFillServerStep() {
         if (serverAddress == null || serverStepFilled || lastScanElements == null) return false;
         if (findPasswordAnchor(lastScanElements) != null) return false;
-        UIElement only = null; int inputs = 0; boolean serverWords = false;
+        UIElement only = null, labelled = null; int inputs = 0; boolean serverWords = false;
+        java.util.List<UIElement> fields = new java.util.ArrayList<>();
         for (UIElement e : lastScanElements) {
-            if (isInputClass(e.className) && boundsOf(e) != null) { inputs++; only = e; }
+            if (isInputClass(e.className) && boundsOf(e) != null) { inputs++; only = e; fields.add(e); }
             else if (e.text != null && e.text.length() <= 80 && SERVER_SCREEN.matcher(e.text).find()) serverWords = true;
+        }
+        // several inputs (e.g. Mattermost: server URL + optional display name): use the one that is the server field,
+        // by its resource id or by a server label drawn over / right above it
+        if (inputs > 1) {
+            for (UIElement f : fields) {
+                String rid = f.resourceId == null ? "" : f.resourceId.toLowerCase();
+                boolean byId = rid.matches(".*(server|url|host|instance|homeserver).*") && !rid.matches(".*(name|display).*");
+                boolean byLabel = false;
+                int[] fb = boundsOf(f);
+                for (UIElement l : lastScanElements) {
+                    if (l == f || isInputClass(l.className) || l.text == null || !SERVER_LABEL.matcher(l.text.trim()).matches()) continue;
+                    int[] lb = boundsOf(l);
+                    if (lb != null && lb[1] < fb[3] && lb[3] > fb[1] - 120 && lb[0] < fb[2] && lb[2] > fb[0]) byLabel = true;
+                }
+                if (byId || byLabel) { labelled = f; break; }
+            }
+            if (labelled == null) return false;
+            only = labelled; inputs = 1;
         }
         if (inputs != 1 || !serverWords) return false;
         String own = textOf(only).trim();
@@ -1272,6 +1291,18 @@ public class UIManager {
     }
 
     /** Submit button of a server-address step (when it is not also recognised as a login entry). */
+    private boolean insideClickable(UIElement e) {
+        int[] b = boundsOf(e);
+        if (b == null || lastScanElements == null) return false;
+        for (UIElement c : lastScanElements) {
+            if (c == e || c.className == null || !c.className.contains("[clickable]") || isInputClass(c.className)) continue;
+            int[] cb = boundsOf(c);
+            if (cb != null && cb[0] <= b[0] && cb[1] <= b[1] && cb[2] >= b[2] && cb[3] >= b[3]
+                    && (long) (cb[2] - cb[0]) * (cb[3] - cb[1]) < 1080L * 600) return true;   // a button, not a whole page
+        }
+        return false;
+    }
+
     private boolean tapServerStepSubmit() {
         if (lastScanElements == null) return false;
         java.util.List<String> order = java.util.List.of("connect", "continue", "next", "sign in", "log in", "login",
@@ -1279,7 +1310,8 @@ public class UIManager {
         UIElement best = null; int bestRank = Integer.MAX_VALUE;
         for (UIElement e : lastScanElements) {
             if (boundsOf(e) == null || e.className == null || e.className.contains("[disabled]")) continue;
-            if (!e.className.contains("[clickable]") && !e.className.contains("Button")) continue;   // not a heading
+            // a heading is not a button; a label drawn inside a clickable button (React Native) is
+            if (!e.className.contains("[clickable]") && !e.className.contains("Button") && !insideClickable(e)) continue;
             int k = order.indexOf(textOf(e).trim().toLowerCase());
             if (k >= 0 && k < bestRank) { best = e; bestRank = k; }
         }
