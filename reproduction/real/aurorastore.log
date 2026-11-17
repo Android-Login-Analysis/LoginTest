@@ -253,7 +253,7 @@ Login page detection result: false
 [2026-11-09 22:20:07.139] [INFO] Baseline snapshot created after detecting login page
 [SCREENSHOT] Saved: /home/ubuntu/LoginTest_reg/reports/screenshots/com.aurora.store/20261109_221828/round_1/screenshot_003_baseline_login_page.png
 [2026-11-09 22:20:07.473] [INFO] === Starting Credential Input Phase ===
-[2026-11-09 22:20:07.473] [INFO] Selected username: zixu.zhou@mail.mcgill.ca
+[2026-11-09 22:20:07.473] [INFO] Selected username: liftdroid.test.user@example.com
 [2026-11-09 22:20:07.473] [INFO] Selected password: [17 chars]
 [2026-11-09 22:20:07.473] [INFO] Using the credential-free (anonymous/guest) login option
 [LOGIN] Tapped credential-free login option
