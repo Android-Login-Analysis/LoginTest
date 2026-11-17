@@ -2065,6 +2065,12 @@ public class AndroidLoginDetector {
      * Use UI manager to input credentials with enhanced verification
      */
     private boolean inputCredentialsWithUI(String username, String password) {
+        if (AgentNavigator.enabled()) {   // R2-9: the GUI agent enters the credentials and submits
+            logInfo("GUI agent enters the credentials and submits (username: " + username + ")");
+            boolean ok = uiManager.agentLogin(username, password);
+            if (screenshotManager != null) screenshotManager.captureScreenshot("after_agent_login");
+            return ok;
+        }
         if (uiManager.isGuestMode()) {
             logInfo("Using the credential-free (anonymous/guest) login option");
             return uiManager.guestLogin();

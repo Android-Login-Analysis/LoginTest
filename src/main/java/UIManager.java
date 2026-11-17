@@ -1267,7 +1267,7 @@ public class UIManager {
     private String lastMfaOutcome = null;   // null | "totp-entered" | "pending"
     private boolean mfaDismissChecked = false;
     private String scheduledCondition = "normal";   // the round's planned condition (fallbacks do not change it)
-    public void setScheduledCondition(String c) { scheduledCondition = c == null ? "normal" : c; tappedEntries.clear(); }
+    public void setScheduledCondition(String c) { scheduledCondition = c == null ? "normal" : c; tappedEntries.clear(); agentAtForm = false; }
     private String mfaNotDismissable = null;
     /** Prompt text of an MFA prompt found not dismissable since the last call (null if none). */
     public String takeMfaNotDismissable() { String t = mfaNotDismissable; mfaNotDismissable = null; return t; }
@@ -1550,7 +1550,28 @@ public class UIManager {
         roundCondition = n;
     }
 
+    // R2-9: GUI-agent navigation (LIFT_NAV=agent) replaces the heuristic navigation and credential entry
+    private AgentNavigator agentNav = null;
+    private boolean agentAtForm = false;
+    private AgentNavigator agentNav() { if (agentNav == null) agentNav = new AgentNavigator(serverAddress); return agentNav; }
+
+    /** Agent episode: fill the form and submit; records the submit time like the tool's own login click. */
+    public boolean agentLogin(String username, String password) {
+        boolean ok = agentNav().login(scheduledCondition, username, password);
+        agentAtForm = false;
+        long t = agentNav().getLastSubmitTime();
+        if (t > 0) {
+            loginButtonClickTime = t;
+            loginClickActivity = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
+        }
+        return ok && t > 0;
+    }
+
     public boolean detectLoginPage() {
+        if (AgentNavigator.enabled()) {   // one navigation episode per round; the agent decides when the form is shown
+            if (!agentAtForm) agentAtForm = agentNav().navigate(scheduledCondition);
+            return agentAtForm;
+        }
         // FIX(v1): entries tapped earlier in this round stay remembered across calls (the caller polls this method),
         // otherwise a higher-priority entry that leads nowhere wins every time; cleared per round and on relaunch
         for (int hop = 0; hop <= 6; hop++) {
