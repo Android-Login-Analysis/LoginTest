@@ -12,7 +12,7 @@ for i in $(seq 1 $((MAX/2))); do
     [ $el -gt $lim ] && { echo "ANOMALY: $id running ${el} min on $p"; ANOM=1; }
   done
   [ -n "$ANOM" ] && break
-  quick=$(tail -n +$((start_done+1)) ~/r2/done.txt | awk '{gsub("s","",$2); if ($2<120) c++} END {print c+0}')
+  quick=$(tail -n +$((start_done+1)) ~/r2/done.txt | awk '{gsub("s","",$2); if (($2+0)<120) c++} END {print c+0}')
   [ "$quick" -ge 3 ] && { echo "ANOMALY: $quick jobs finished in under 2 minutes"; break; }
 done
 ~/r2/health.sh; echo "new done: $(( $(wc -l < ~/r2/done.txt) - start_done ))"; tail -n +$((start_done+1)) ~/r2/done.txt | cut -c1-70
