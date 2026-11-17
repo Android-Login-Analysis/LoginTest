@@ -34,6 +34,16 @@ unmodified (official) build of the app.
 | tasks/tasks#3962 | Tasks.org 14.7.4, official (`org.tasks_140712.apk`) | manual, Google Play redroid device, `limited` network | `manual/tasks-3962/` |
 | InnerTune#1830 | InnerTune 0.5.10, fault-seeded (`apps/seeded/`) | LIFTDroid run, `ANR` finding in the offline round | `seeded/innertune-1830.log`, `seeded/innertune-1830-anr-main-thread.txt` |
 
+## Held-out apps (Dataset B) on self-hosted backends
+
+Backends run in Docker on the test machine (`experiments/selfhost/`), with the server versions named in the issues.
+Credentials stay on the test machine (`pools/`).
+
+| Issue | App / version (APK) | Backend | Oracle | Evidence |
+|---|---|---|---|---|
+| LemmyNet/jerboa#1298 | Jerboa 0.0.50 (`com.jerboa_50.apk`, F-Droid archive) | Lemmy 0.19.21 | crash during login (`IllegalStateException` from `Toast.show`), rounds 1 and 3 | `real/jerboa-1298/evidence.txt` |
+| astubenbord/paperless-mobile#572 | Paperless Mobile 4.0.6 (`de.astubenbord.paperless_mobile_4.0.6.apk`, GitHub x86_64) | paperless-ngx 2.14.5 (API 6) | valid login never completes on a working network (endless spinner): `LOGIN_TIMEOUT` in round 1 | `real/paperless-572/` |
+
 ## Running one app
 
 ```bash

@@ -1,0 +1,62 @@
+CODE_VERSION df8309f3
+[2026-11-17 01:19:39.227] [INFO] ROUND 1 STARTED
+[SERVER] Filled server field 'Instance' with lemmy.liftdroid.test
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1794878569300
+[CRASH_DETECTOR] Crash recorded: FATAL_EXCEPTION
+[2026-11-17 01:23:32.659] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[2026-11-17 01:27:03.018] [INFO] ⚠️  Detected 2 potential bug(s) in Round 1
+[2026-11-17 01:27:07.387] [INFO] ROUND 2 STARTED
+[SERVER] Filled server field 'Instance' with lemmy.liftdroid.test
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1794879026939
+[SERVER] Server field already filled; left as is
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1794879099036
+[SERVER] Server field already filled; left as is
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1794879169734
+[SERVER] Server field already filled; left as is
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1794879240624
+[SERVER] Server field already filled; left as is
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1794879308280
+[2026-11-17 01:36:01.860] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=false
+[2026-11-17 01:39:37.952] [INFO] ROUND 3 STARTED
+[SERVER] Filled server field 'Instance' with lemmy.liftdroid.test
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1794879777021
+[CRASH_DETECTOR] Crash recorded: FATAL_EXCEPTION
+[2026-11-17 01:44:45.715] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[2026-11-17 01:48:18.305] [INFO] ⚠️  Detected 2 potential bug(s) in Round 3
+[2026-11-17 01:48:22.657] [INFO] ROUND 4 STARTED
+[SERVER] Filled server field 'Instance' with lemmy.liftdroid.test
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1794880307424
+[2026-11-17 01:53:36.186] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[2026-11-17 01:57:09.518] [INFO] ⚠️  Detected 2 potential bug(s) in Round 4
+[2026-11-17 01:57:13.874] [INFO] ROUND 5 STARTED
+---
+Type: FATAL_EXCEPTION
+Severity: CRITICAL
+
+Description:
+  Application crashed during login flow
+
+Location:
+  Login activity or authentication logic
+
+Evidence:
+  Crash Type: FATAL_EXCEPTION
+  Timestamp: 11-17 01:22:49.731
+  First Line: 11-17 01:22:49.731 E/AndroidRuntime(527118): FATAL EXCEPTION: main
+  
+  Full Stack Trace:
+  11-17 01:22:49.731 E/AndroidRuntime(527118): FATAL EXCEPTION: main
+  11-17 01:22:49.731 E/AndroidRuntime(527118): Process: com.jerboa, PID: 527118
+  11-17 01:22:49.731 E/AndroidRuntime(527118): java.lang.IllegalStateException: You must either set a text or a view
+  11-17 01:22:49.731 E/AndroidRuntime(527118): 	at com.android.internal.util.Preconditions.checkState(Preconditions.java:215)
+  11-17 01:22:49.731 E/AndroidRuntime(527118): 	at android.widget.Toast.show(Toast.java:199)
+  11-17 01:22:49.731 E/Andr
+
+Recommendation:
+  Review the stack trace and fix the crash:
+  1. Add null checks for objects that might be null
+  2. Add try-catch blocks for risky operations
+  3. Validate input before processing
+  4. Check lifecycle state before accessing views
+  
+  Example:

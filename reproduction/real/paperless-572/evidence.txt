@@ -1,0 +1,28 @@
+11-17 02:08:43.456 461290  2538 I flutter : 2026-11-17 02:08:43.455	DEBUG   --- [      AuthenticationCubit] - login                    : Trying to log in lifttest@pa***st...
+11-17 02:08:43.464 461290  2538 I flutter : 2026-11-17 02:08:43.456	DEBUG   --- [      AuthenticationCubit] - _addUser                 : Adding new user lifttest@pa***st..
+11-17 02:08:43.464 461290  2538 I flutter : 2026-11-17 02:08:43.456	DEBUG   --- [      AuthenticationCubit] - _getApiVersion           : Trying to fetch API version...
+11-17 02:08:55.013 461290  2538 I flutter : 2026-11-17 02:08:55.013	DEBUG   --- [      AuthenticationCubit] - _getApiVersion           : Successfully retrieved API version (6).
+11-17 02:08:55.014 461290  2538 I flutter : 2026-11-17 02:08:55.013	DEBUG   --- [      AuthenticationCubit] - _addUser                 : Trying to fetch remote paperless user for lifttest@pa***st.
+---
+[17/Nov/2026:01:34:47 "POST /api/token/ 200 (dart:io)"
+[17/Nov/2026:01:34:47 "GET /api/ui_settings/ 200 (dart:io)"
+[17/Nov/2026:01:34:47 "GET /api/users/3/?full_perms=true 406 (dart:io)"
+[17/Nov/2026:02:08:43 "POST /api/token/ 200 (dart:io)"
+[17/Nov/2026:02:08:57 "GET /api/ui_settings/ 200 (dart:io)"
+[17/Nov/2026:02:08:59 "GET /api/users/3/?full_perms=true 406 (dart:io)"
+[17/Nov/2026:02:19:29 "POST /api/token/ 200 (dart:io)"
+[17/Nov/2026:02:19:29 "GET /api/ui_settings/ 200 (dart:io)"
+[17/Nov/2026:02:19:29 "GET /api/users/3/?full_perms=true 406 (dart:io)"
+---
+CODE_VERSION bcd330d5
+[2026-11-17 02:17:41.004] [INFO] ROUND 1 STARTED
+[FOREGROUND] App under test is not in foreground; relaunching de.astubenbord.paperless_mobile
+[SERVER] Server-address step: entered https://paperless.liftdroid.test
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1794881968468
+[LOGIN_RESULT] Blank screen after submit (loading indicator not in the UI tree); waiting
+[TIMEOUT_DETECTOR] Login attempt: 41511ms (timeout, success=false)
+[2026-11-17 02:20:09.992] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[SERVER] Server-address step: entered https://paperless.liftdroid.test
+[2026-11-17 02:21:56.691] [INFO] ⚠️  Detected 1 potential bug(s) in Round 1
+[2026-11-17 02:21:56.714] [INFO] ROUND 1 COMPLETED
+[2026-11-17 02:22:00.927] [INFO] ROUND 2 STARTED
