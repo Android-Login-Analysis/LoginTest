@@ -1657,10 +1657,16 @@ public class UIManager {
                     // last-resort way into account screens
                     if (element.visible && (element.text == null || element.text.trim().isEmpty()) && element.className != null
                             && element.className.contains("[clickable]") && lastLoginEntryPriority > 6) {
-                        int[] ib = boundsOf(element);
+                        int[] ib = boundsOf(element);   // priority 6: top-right icon, 7: top-left drawer
                         if (ib != null && ib[1] < 260 && ib[3] - ib[1] < 220 && ib[2] - ib[0] < 220 && (ib[0] + ib[2]) / 2 > 700
                                 && !tappedEntries.contains("@" + element.bounds)) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 6; lastLoginEntryKey = "@" + element.bounds;
+                        }
+                        // FIX(v1): an unlabelled navigation-drawer button (top left) is the last resort (Jerboa 0.0.3x:
+                        // drawer > "Add account")
+                        if (ib != null && lastLoginEntryPriority > 7 && ib[1] < 260 && ib[3] - ib[1] < 220 && ib[2] - ib[0] < 220
+                                && (ib[0] + ib[2]) / 2 < 220 && !tappedEntries.contains("@" + element.bounds)) {
+                            lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 7; lastLoginEntryKey = "@" + element.bounds;
                         }
                     }
                     // FIX(v1): an unlabelled floating action button on a server list ("Servers / No servers found" +
