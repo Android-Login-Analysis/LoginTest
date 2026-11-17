@@ -501,6 +501,22 @@ public class UIManager {
         return -1;
     }
 
+    /** FIX(v1): post-login secret setup (FluffyChat "Set Up Crypto Identity": new + repeat passphrase) is not a login form. */
+    private static final java.util.regex.Pattern SECRET_SETUP = java.util.regex.Pattern.compile(
+        "(?i)((new|repeat|confirm|re-?enter|choose|create)\\b.{0,15}(pass ?(word|phrase|code)|pin)|passphrase|recovery key|security key|crypto identity)");
+    private UIElement loginFormAnchor(List<UIElement> els) {
+        UIElement pw = findPasswordAnchor(els);
+        if (pw == null) return null;
+        boolean setup = false, identifier = false;
+        for (UIElement e : els) {
+            String t = textOf(e).trim();
+            if (t.isEmpty() || t.length() > 120) continue;
+            if (SECRET_SETUP.matcher(t).find()) setup = true;
+            if (isInputClass(e.className) && t.matches("(?i).*(e-?mail|user ?name|username|login|phone|matrix id).*")) identifier = true;
+        }
+        return setup && !identifier ? null : pw;
+    }
+
     private long blankSince = -1;
     public long waitForLoginPageGone(long timeoutMs) {
         lastWaitEndedInProgress = false;
@@ -622,16 +638,16 @@ public class UIManager {
                     }
                     String topNow = AppLauncher.topActivityLine().replaceAll(".*\\{[^ ]+ u0 ([^ ]+).*", "$1");
                     boolean activityChanged = !loginActivity.isEmpty() && !topNow.equals(loginActivity);
-                    if (activityChanged && !progressShown && findPasswordAnchor(els) == null) return pollStart;
+                    if (activityChanged && !progressShown && loginFormAnchor(els) == null) return pollStart;
                     lastWaitEndedInProgress = progressShown;
-                    boolean formAbsent = findPasswordAnchor(els) == null;
+                    boolean formAbsent = loginFormAnchor(els) == null;
                     if (formAbsent && formAbsentSince < 0) formAbsentSince = pollStart;
                     if (!formAbsent) formAbsentSince = -1;
                     // single-activity apps: a form that stays gone for 15 s means the login finished, even if
                     // a (sync/download) progress indicator is still on screen
                     if (progressShown && formAbsentSince > 0 && pollStart - formAbsentSince >= 15000) return formAbsentSince;
                     if (progressShown) { goneSince = -1; Thread.sleep(500); continue; } // login still in progress
-                    if (findPasswordAnchor(els) != null && !progressShown) {
+                    if (loginFormAnchor(els) != null && !progressShown) {
                         String inline = visibleErrorText(els);              // inline error next to the form
                         if (inline != null) {
                             lastLoginErrorText = inline;
@@ -639,7 +655,7 @@ public class UIManager {
                             return -2;
                         }
                     }
-                    if (findPasswordAnchor(els) == null) {
+                    if (loginFormAnchor(els) == null) {
                         // FIX(v1): the form gave way to an error page ("Hmmmm... couldn't reach server" + Refresh,
                         // KitchenOwl offline), not to the app: a failed login with a message
                         int texts = 0;
