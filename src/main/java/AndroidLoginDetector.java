@@ -1262,6 +1262,15 @@ public class AndroidLoginDetector {
                 // a valid login is only expected to succeed on a working network
                 boolean expectSuccess = authenticated || (usedValidPair && "normal".equals(roundCondition));
                 logInfo("Login outcome: inputOk=" + loginSuccess + ", loginPageGone=" + authenticated + ", validPair=" + usedValidPair);
+                // FIX(v1): the app's own verified test account rejected on a working network (Findroid #877: "Unknown error"
+                // although the server accepted the credentials)
+                if (loginSuccess && gone == -2 && usedValidPair && lastCredentialChoiceValid && "normal".equals(roundCondition)
+                        && !uiManager.isGoogleLoginDetected() && !uiManager.isFacebookLoginDetected()
+                        && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
+                    stateMachineManager.getBugDetectionManager().getObservedDetector().record("INCORRECT_LOGIN_FLOW",
+                        "VALID_CREDENTIALS_REJECTED", "A login with valid credentials was rejected on a working network",
+                        "username '" + username + "' (valid); message: '" + uiManager.getLastLoginErrorText() + "'");
+                }
                 if (loginSuccess && expectSuccess) {
                     logInfo("Login process completed successfully");
                     if (authenticated) successfulLogins++;
