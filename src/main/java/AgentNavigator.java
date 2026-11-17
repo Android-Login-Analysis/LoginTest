@@ -71,11 +71,13 @@ public class AgentNavigator {
             if (!done) { p.destroyForcibly(); System.out.println("[AGENT] " + phase + " episode timed out"); }
             long secs = (System.currentTimeMillis() - t0) / 1000;
 
-            int nActions = 0; long lastTap = -1;
+            int nActions = 0; long lastTap = -1; boolean typed = false;
             for (String l : Files.readAllLines(actions.toPath())) {
                 if (l.contains("\"act\": \"FINISH\"")) { lastFinished = true; continue; }
                 nActions++;
-                if (l.contains("\"act\": \"tap\"")) {
+                if (l.contains("\"act\": \"text\"")) typed = true;
+                // a submit is a tap after the credentials were typed (a lone tap, e.g. on "Connect", is not a login)
+                if (l.contains("\"act\": \"tap\"") && typed) {
                     java.util.regex.Matcher m = java.util.regex.Pattern.compile("\"t\": (\\d+)").matcher(l);
                     if (m.find()) lastTap = Long.parseLong(m.group(1));
                 }

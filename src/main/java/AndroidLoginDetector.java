@@ -1044,7 +1044,14 @@ public class AndroidLoginDetector {
             // FIX(v1): apps offering a credential-free login next to SSO use it in the valid-credential rounds
             // (normal, limited, offline); the invalid round and the rotation phase use the credential form
             uiManager.setPreferGuestLogin(ROUND_VALIDITY[(round - 1) % ROUND_VALIDITY.length]);
+            // R2-9 agent mode: the agent reaches the form on a working network; the round condition applies to the login
+            boolean agentNormalNav = AgentNavigator.enabled() && !"normal".equals(roundCondition) && networkChaosManager != null;
+            if (agentNormalNav) { networkChaosManager.applyCondition("normal"); uiManager.setRoundCondition("normal"); }
             boolean loginPageDetected = detectLoginPageWithUI();
+            if (agentNormalNav) {
+                networkChaosManager.applyCondition(roundCondition); uiManager.setRoundCondition(roundCondition);
+                logInfo("[AGENT] Form reached on a normal network; round condition '" + roundCondition + "' applied for the login");
+            }
             // FIX(v1): the app died during navigation (often instrumentation-induced): relaunch, re-attach and retry once
             if (!loginPageDetected && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null
                     && !"pending".equals(uiManager.getLastMfaOutcome())
