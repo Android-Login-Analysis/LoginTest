@@ -1274,21 +1274,24 @@ public class UIManager {
     /** Submit button of a server-address step (when it is not also recognised as a login entry). */
     private boolean tapServerStepSubmit() {
         if (lastScanElements == null) return false;
+        java.util.List<String> order = java.util.List.of("connect", "continue", "next", "sign in", "log in", "login",
+            "confirm", "ok", "go", "save", "add", "add server");
+        UIElement best = null; int bestRank = Integer.MAX_VALUE;
         for (UIElement e : lastScanElements) {
-            String t = textOf(e).trim();
-            if (t.matches("(?i)(connect|continue|next|ok|add|add server|save|go|confirm)") && boundsOf(e) != null
-                    && (e.className == null || !e.className.contains("[disabled]"))) {
-                int[] b = boundsOf(e);
-                System.out.println("[SERVER] Submitting the server-address step ('" + t + "')");
-                try {
-                    new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf((b[0] + b[2]) / 2), String.valueOf((b[1] + b[3]) / 2))
-                        .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
-                    Thread.sleep(5000);
-                } catch (Exception ignored) { }
-                return true;
-            }
+            if (boundsOf(e) == null || e.className == null || e.className.contains("[disabled]")) continue;
+            if (!e.className.contains("[clickable]") && !e.className.contains("Button")) continue;   // not a heading
+            int k = order.indexOf(textOf(e).trim().toLowerCase());
+            if (k >= 0 && k < bestRank) { best = e; bestRank = k; }
         }
-        return false;
+        if (best == null) return false;
+        int[] b = boundsOf(best);
+        System.out.println("[SERVER] Submitting the server-address step ('" + textOf(best).trim() + "')");
+        try {
+            new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf((b[0] + b[2]) / 2), String.valueOf((b[1] + b[3]) / 2))
+                .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+            Thread.sleep(5000);
+        } catch (Exception ignored) { }
+        return true;
     }
 
     private void maybeFillIdentifierStep() {
