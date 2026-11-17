@@ -1214,6 +1214,7 @@ public class AndroidLoginDetector {
                     logInfo("Login still in progress after the wait under '" + roundCondition + "' network: no timeout handling");
                     stateMachineManager.getBugDetectionManager().getTimeoutDetector().recordLoginAttempt(clickTime, System.currentTimeMillis(), false);
                 }
+                if (screenshotManager != null && loginSuccess) screenshotManager.captureScreenshot("login_outcome_" + roundCondition);   // evidence: screen at the end of the wait
                 // FIX(v1): password passed through an Intent/Bundle extra in plaintext
                 checkPasswordInExtras(username, password, clickTime);
                 boolean authenticated = gone > 0;
