@@ -1355,6 +1355,12 @@ public class UIManager {
     private boolean serverSwitchTried = false, serverScreenExpected = false, serverBoxTapped = false;
     private static final String SERVER_SWITCH = "(?i)((switch|change|select|choose|set|edit) (the )?(server|instance|host)|server settings|custom server|self[- ]hosted|use (your|a) own server|other server)";
 
+    private boolean serverListScreen() {
+        if (lastScanElements == null) return false;
+        for (UIElement e : lastScanElements) if (e.text != null && e.text.trim().matches("(?i)(servers?|no servers? (found|added|yet)|select (a )?server|your servers)")) return true;
+        return false;
+    }
+
     private boolean formHasServerField() {
         if (lastScanElements == null) return false;
         for (UIElement e : lastScanElements) {
@@ -1655,6 +1661,16 @@ public class UIManager {
                         if (ib != null && ib[1] < 260 && ib[3] - ib[1] < 220 && ib[2] - ib[0] < 220 && (ib[0] + ib[2]) / 2 > 700
                                 && !tappedEntries.contains("@" + element.bounds)) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 6; lastLoginEntryKey = "@" + element.bounds;
+                        }
+                    }
+                    // FIX(v1): an unlabelled floating action button on a server list ("Servers / No servers found" +
+                    // "Add server" FAB whose label is not in the tree, Findroid 1.x) when the pool names a server
+                    if (serverAddress != null && element.visible && textOf(element).trim().isEmpty() && element.className != null
+                            && element.className.contains("[clickable]") && lastLoginEntryPriority > 2 && serverListScreen()) {
+                        int[] fb = boundsOf(element);
+                        if (fb != null && (fb[0] + fb[2]) / 2 > 540 && fb[1] > 1700 && fb[2] - fb[0] < 600 && fb[3] - fb[1] < 260
+                                && !tappedEntries.contains("@" + element.bounds)) {
+                            lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2; lastLoginEntryKey = "@" + element.bounds;
                         }
                     }
                     if (element.visible && element.text != null && element.text.trim().length() <= 40 && boundsOf(element) != null
