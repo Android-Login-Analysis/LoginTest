@@ -1,0 +1,12 @@
+CODE_VERSION bcd330d5
+[2026-11-17 02:37:23.268] [INFO] ROUND 4 STARTED
+[2026-11-17 02:38:33.634] [INFO] 🔴 Round condition: OFFLINE (default route removed: connections fail fast, like airplane mode)
+[FOREGROUND] App under test is not in foreground; relaunching de.astubenbord.paperless_mobile
+[2026-11-17 02:39:22.741] [INFO] 🔴 Round condition: OFFLINE (default route removed: connections fail fast, like airplane mode)
+[CREDENTIAL_INPUT] Clicked login button, timestamp: 1794883181249
+[TIMEOUT_DETECTOR] Login attempt: 107229ms (timeout, success=false)
+[2026-11-17 02:41:28.480] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[FINDING] LOGIN_FAILURE_WITHOUT_FEEDBACK - Network 'offline'; screen after the attempt: topResumedActivity=ActivityRecord{9fc2691 u0 de.astubenbord.paperless_mobile/.MainActivity t1216}
+[2026-11-17 02:43:15.635] [INFO] ⚠️  Detected 2 potential bug(s) in Round 4
+[2026-11-17 02:43:15.638] [INFO] ROUND 4 COMPLETED
+[2026-11-17 02:43:19.977] [INFO] ROUND 5 STARTED

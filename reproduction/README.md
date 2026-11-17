@@ -43,6 +43,7 @@ Credentials stay on the test machine (`pools/`).
 |---|---|---|---|---|
 | LemmyNet/jerboa#1298 | Jerboa 0.0.50 (`com.jerboa_50.apk`, F-Droid archive) | Lemmy 0.19.21 | crash during login (`IllegalStateException` from `Toast.show`), rounds 1 and 3 | `real/jerboa-1298/evidence.txt` |
 | astubenbord/paperless-mobile#572 | Paperless Mobile 4.0.6 (`de.astubenbord.paperless_mobile_4.0.6.apk`, GitHub x86_64) | paperless-ngx 2.14.5 (API 6) | valid login never completes on a working network (endless spinner): `LOGIN_TIMEOUT` in round 1 | `real/paperless-572/` |
+| astubenbord/paperless-mobile#332 | Paperless Mobile 4.0.6 (after the issue was closed) | paperless-ngx 2.14.5 | offline round: login keeps spinning with no message, `LOGIN_FAILURE_WITHOUT_FEEDBACK` | `real/paperless-332/` |
 
 ## Running one app
 
