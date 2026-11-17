@@ -1267,7 +1267,7 @@ public class UIManager {
     private String lastMfaOutcome = null;   // null | "totp-entered" | "pending"
     private boolean mfaDismissChecked = false;
     private String scheduledCondition = "normal";   // the round's planned condition (fallbacks do not change it)
-    public void setScheduledCondition(String c) { scheduledCondition = c == null ? "normal" : c; tappedEntries.clear(); agentAtForm = false; }
+    public void setScheduledCondition(String c) { scheduledCondition = c == null ? "normal" : c; tappedEntries.clear(); agentAtForm = false; agentNavAttempts = 0; }
     private String mfaNotDismissable = null;
     /** Prompt text of an MFA prompt found not dismissable since the last call (null if none). */
     public String takeMfaNotDismissable() { String t = mfaNotDismissable; mfaNotDismissable = null; return t; }
@@ -1553,6 +1553,7 @@ public class UIManager {
     // R2-9: GUI-agent navigation (LIFT_NAV=agent) replaces the heuristic navigation and credential entry
     private AgentNavigator agentNav = null;
     private boolean agentAtForm = false;
+    private int agentNavAttempts = 0;   // navigation episodes this round (the caller polls detectLoginPage)
     private AgentNavigator agentNav() { if (agentNav == null) agentNav = new AgentNavigator(serverAddress); return agentNav; }
 
     /** Agent episode: fill the form and submit; records the submit time like the tool's own login click. */
@@ -1571,7 +1572,7 @@ public class UIManager {
         // R2-9 "Monkey + LIFTDroid": no heuristic navigation; only recognise a login page that Monkey reached
         if ("monkey".equalsIgnoreCase(System.getenv("LIFT_NAV"))) return detectLoginPageOnce();
         if (AgentNavigator.enabled()) {   // one navigation episode per round; the agent decides when the form is shown
-            if (!agentAtForm) agentAtForm = agentNav().navigate(scheduledCondition);
+            if (!agentAtForm && agentNavAttempts < 2) { agentNavAttempts++; agentAtForm = agentNav().navigate(scheduledCondition); }
             return agentAtForm;
         }
         // FIX(v1): entries tapped earlier in this round stay remembered across calls (the caller polls this method),

@@ -61,8 +61,8 @@ public class AgentNavigator {
             Map<String, String> env = pb.environment();
             env.put("AGENT_TASK", task);
             env.put("AGENT_MAX_ROUNDS", String.valueOf(maxRounds));
-            env.put("AGENT_ACTION_LOG", actions.getPath());
-            env.put("AGENT_USAGE_LOG", usage.getPath());
+            env.put("AGENT_ACTION_LOG", actions.getAbsolutePath());   // the agent runs in its own directory
+            env.put("AGENT_USAGE_LOG", usage.getAbsolutePath());
             pb.redirectErrorStream(true);
             pb.redirectOutput(new File(dir, "last_" + phase + ".out"));
             long t0 = System.currentTimeMillis();
