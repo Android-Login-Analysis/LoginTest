@@ -1264,7 +1264,10 @@ public class AndroidLoginDetector {
                 logInfo("Login outcome: inputOk=" + loginSuccess + ", loginPageGone=" + authenticated + ", validPair=" + usedValidPair);
                 // FIX(v1): the app's own verified test account rejected on a working network (Findroid #877: "Unknown error"
                 // although the server accepted the credentials)
-                if (loginSuccess && gone == -2 && usedValidPair && lastCredentialChoiceValid && "normal".equals(roundCondition)
+                String rejectMsg = uiManager.getLastLoginErrorText() == null ? "" : uiManager.getLastLoginErrorText();
+                boolean formValidation = rejectMsg.matches("(?is).*(empty|required|must be filled).*");   // a field the tool left blank
+                if (formValidation && gone == -2) logInfo("Form validation message after submit (a field was left blank): '" + rejectMsg + "'");
+                if (loginSuccess && gone == -2 && !formValidation && usedValidPair && lastCredentialChoiceValid && "normal".equals(roundCondition)
                         && !uiManager.isGoogleLoginDetected() && !uiManager.isFacebookLoginDetected()
                         && stateMachineManager != null && stateMachineManager.getBugDetectionManager() != null) {
                     stateMachineManager.getBugDetectionManager().getObservedDetector().record("INCORRECT_LOGIN_FLOW",

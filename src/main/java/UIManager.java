@@ -2035,6 +2035,9 @@ public class UIManager {
                 if (b == null || !isInputClass(in.className)) continue;
                 String own = textOf(in).trim();
                 String label = SERVER_LABEL.matcher(own).matches() ? own : null;
+                // FIX(v1): a field holding only a scheme ("http://", Seadroid) is the empty server field
+                boolean schemeOnly = own.matches("(?i)https?://");
+                if (schemeOnly) label = own;
                 for (UIElement e : els) {
                     if (label != null) break;
                     int[] c = boundsOf(e);
@@ -2046,6 +2049,13 @@ public class UIManager {
                 if (!own.isEmpty() && !own.equals(label) && !SERVER_LABEL.matcher(own).matches()) {
                     System.out.println("[SERVER] Server field already filled; left as is");
                     return;
+                }
+                if (schemeOnly) {   // clear the prefilled scheme first; the full address carries its own
+                    new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf((b[0] + b[2]) / 2), String.valueOf((b[1] + b[3]) / 2)).start().waitFor(5, java.util.concurrent.TimeUnit.SECONDS);
+                    Thread.sleep(600);
+                    StringBuilder del = new StringBuilder("input keyevent KEYCODE_MOVE_END");
+                    for (int k = 0; k < own.length() + 2; k++) del.append(" KEYCODE_DEL");
+                    new ProcessBuilder("adb", "shell", del.toString()).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
                 }
                 clickAndInputText((b[0] + b[2]) / 2, (b[1] + b[3]) / 2, serverAddress);
                 System.out.println("[SERVER] Filled server field '" + label + "' with " + serverAddress);
@@ -3163,7 +3173,7 @@ public class UIManager {
     }
 
     private static final java.util.regex.Pattern ERROR_TEXT = java.util.regex.Pattern.compile(
-        "(?i)(error|invalid|incorrect|wrong|failed|failure|unable|could not|couldn't|denied|not found|try again)");
+        "(?i)(error|invalid|incorrect|wrong|failed|failure|unable|could not|couldn't|denied|not found|try again|can.t be empty|cannot be empty|must not be empty|is required)");
 
     private String visibleErrorText(List<UIElement> els) {
         String d = findDialogMessage(els);
