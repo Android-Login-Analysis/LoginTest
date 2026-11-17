@@ -12,7 +12,7 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./certs/wildcard.crt:/certs/wildcard.crt:ro
       - ./certs/wildcard.key:/certs/wildcard.key:ro
-    depends_on: [lemmy, lemmy-ui, paperless]
+    depends_on: [lemmy, lemmy-ui, paperless, jellyfin, mattermost, kitchenowl, freshrss, synapse, seafile]
 
   postgres:
     image: postgres:16-alpine
@@ -73,3 +73,115 @@ services:
     volumes:
       - ./data/paperless/data:/usr/src/paperless/data
       - ./data/paperless/media:/usr/src/paperless/media
+
+  # Findroid #928/#877 were reported against Jellyfin 10.10.0
+  jellyfin:
+    image: jellyfin/jellyfin:10.10.0
+    restart: unless-stopped
+    volumes:
+      - ./data/jellyfin/config:/config
+      - ./data/jellyfin/cache:/cache
+
+  # Mattermost (MFA issues #7524/#8291); its own database
+  mattermost-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: mmuser
+      POSTGRES_PASSWORD: ${MM_DB_PASSWORD}
+      POSTGRES_DB: mattermost
+    volumes:
+      - ./data/mattermost-db:/var/lib/postgresql/data
+
+  mattermost:
+    image: mattermost/mattermost-team-edition:9.11.6
+    restart: unless-stopped
+    depends_on: [mattermost-db]
+    environment:
+      MM_SQLSETTINGS_DRIVERNAME: postgres
+      MM_SQLSETTINGS_DATASOURCE: postgres://mmuser:${MM_DB_PASSWORD}@mattermost-db:5432/mattermost?sslmode=disable&connect_timeout=10
+      MM_SERVICESETTINGS_SITEURL: https://mattermost.liftdroid.test
+      MM_SERVICESETTINGS_ENABLEMULTIFACTORAUTHENTICATION: "true"
+      MM_SERVICESETTINGS_ENABLELOCALMODE: "true"
+      MM_EMAILSETTINGS_REQUIREEMAILVERIFICATION: "false"
+    volumes:
+      - ./data/mattermost/config:/mattermost/config
+      - ./data/mattermost/data:/mattermost/data
+      - ./data/mattermost/logs:/mattermost/logs
+      - ./data/mattermost/plugins:/mattermost/plugins
+      - ./data/mattermost/client-plugins:/mattermost/client/plugins
+
+  # KitchenOwl #626 was reported with server 106 (v0.6.8)
+  kitchenowl:
+    image: tombursch/kitchenowl:v0.6.8
+    restart: unless-stopped
+    environment:
+      JWT_SECRET_KEY: ${KITCHENOWL_JWT_SECRET}
+      FRONT_URL: https://kitchenowl.liftdroid.test
+    volumes:
+      - ./data/kitchenowl:/data
+
+  # Read You (Fever / Google Reader API logins)
+  freshrss:
+    image: freshrss/freshrss:1.24.3
+    restart: unless-stopped
+    environment:
+      TZ: UTC
+      CRON_MIN: "*/30"
+    volumes:
+      - ./data/freshrss/data:/var/www/FreshRSS/data
+      - ./data/freshrss/extensions:/var/www/FreshRSS/extensions
+
+  # Matrix homeserver for FluffyChat
+  synapse:
+    image: matrixdotorg/synapse:v1.120.2
+    restart: unless-stopped
+    environment:
+      SYNAPSE_CONFIG_PATH: /data/homeserver.yaml
+    volumes:
+      - ./data/synapse:/data
+
+  # Seafile CE for Seadroid (#1112 was on server 12)
+  seafile-db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${SEAFILE_DB_ROOT_PASSWORD}
+      MYSQL_LOG_CONSOLE: "true"
+      MARIADB_AUTO_UPGRADE: "1"
+    volumes:
+      - ./data/seafile-db:/var/lib/mysql
+
+  seafile-memcached:
+    image: memcached:1.6.29
+    restart: unless-stopped
+    entrypoint: memcached -m 256
+
+  seafile:
+    image: seafileltd/seafile-mc:12.0-latest
+    restart: unless-stopped
+    depends_on: [seafile-db, seafile-memcached]
+    environment:
+      DB_HOST: seafile-db
+      DB_PORT: "3306"
+      DB_USER: seafile
+      DB_ROOT_PASSWD: ${SEAFILE_DB_ROOT_PASSWORD}
+      DB_PASSWORD: ${SEAFILE_DB_PASSWORD}
+      SEAFILE_MYSQL_DB_CCNET_DB_NAME: ccnet_db
+      SEAFILE_MYSQL_DB_SEAFILE_DB_NAME: seafile_db
+      SEAFILE_MYSQL_DB_SEAHUB_DB_NAME: seahub_db
+      TIME_ZONE: UTC
+      INIT_SEAFILE_ADMIN_EMAIL: lifttest@liftdroid.test
+      INIT_SEAFILE_ADMIN_PASSWORD: ${SEAFILE_ADMIN_PASSWORD}
+      SEAFILE_SERVER_HOSTNAME: seafile.liftdroid.test
+      SEAFILE_SERVER_PROTOCOL: https
+      SITE_ROOT: /
+      NON_ROOT: "false"
+      JWT_PRIVATE_KEY: ${SEAFILE_JWT_KEY}
+      SEAFILE_LOG_TO_STDOUT: "true"
+      ENABLE_SEADOC: "false"
+      CACHE_PROVIDER: memcached
+      MEMCACHED_HOST: seafile-memcached
+      MEMCACHED_PORT: "11211"
+    volumes:
+      - ./data/seafile:/shared
