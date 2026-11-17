@@ -169,8 +169,9 @@ def paperless_totp():
         print("paperless totp get", s, g); return
     secret = g["secret"]
     s, a, _ = call("paperless", "/api/profile/totp/", {"secret": secret, "code": totp(secret)}, headers=ub)
-    print("paperless totp activate", s)
-    if s == 200:
+    ok = s == 200 and isinstance(a, dict) and a.get("success") is True   # never print the response (recovery codes)
+    print("paperless totp activate", s, "success" if ok else "failed")
+    if ok:
         os.makedirs(d, exist_ok=True)
         old = os.umask(0o077)
         open(os.path.join(d, "valid_pairs.csv"), "w").write(f"username,password\nlifttotp,{PW}\n")
