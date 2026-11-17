@@ -1,6 +1,6 @@
 jasonzixuzhou
 zixuzhou
-zixujasonchow@gmail.com
+liftdroid.test.user2@example.com
 liftdroid.test.user@example.com
 jasonzixuzhou_gitea
 persist2018
