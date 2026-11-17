@@ -2050,15 +2050,24 @@ public class UIManager {
                     System.out.println("[SERVER] Server field already filled; left as is");
                     return;
                 }
-                if (schemeOnly) {   // clear the prefilled scheme first; the full address carries its own
-                    new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf((b[0] + b[2]) / 2), String.valueOf((b[1] + b[3]) / 2)).start().waitFor(5, java.util.concurrent.TimeUnit.SECONDS);
-                    Thread.sleep(600);
-                    StringBuilder del = new StringBuilder("input keyevent KEYCODE_MOVE_END");
-                    for (int k = 0; k < own.length() + 2; k++) del.append(" KEYCODE_DEL");
-                    new ProcessBuilder("adb", "shell", del.toString()).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+                String toType = serverAddress;
+                if (schemeOnly) {
+                    // the field keeps its scheme prefix: switch it to https with the form's checkbox if needed, then
+                    // type the host only (Seadroid: "https" checkbox + "http://" prefix)
+                    boolean wantHttps = serverAddress.toLowerCase().startsWith("https://");
+                    if (wantHttps && own.toLowerCase().startsWith("http://")) {
+                        for (UIElement cb : els) {
+                            if (cb.className != null && cb.className.contains("CheckBox") && textOf(cb).trim().equalsIgnoreCase("https")) {
+                                tapCenter(cb); Thread.sleep(800);
+                                System.out.println("[SERVER] Ticked the form's 'https' option");
+                                break;
+                            }
+                        }
+                    }
+                    toType = serverAddress.replaceFirst("(?i)^https?://", "");
                 }
-                clickAndInputText((b[0] + b[2]) / 2, (b[1] + b[3]) / 2, serverAddress);
-                System.out.println("[SERVER] Filled server field '" + label + "' with " + serverAddress);
+                clickAndInputText((b[0] + b[2]) / 2, (b[1] + b[3]) / 2, toType);
+                System.out.println("[SERVER] Filled server field '" + label + "' with " + toType);
                 Thread.sleep(800);
                 return;
             }
