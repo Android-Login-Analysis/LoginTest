@@ -1074,7 +1074,7 @@ public class UIManager {
     private boolean twoStepJustFilled = false;
     private List<UIElement> lastScanElements = null;
 
-    public void setPendingUsername(String u) { serverStepFilled = false; googleButtonMode = false; serviceAccountAdopted = false; loginButtonClickTime = 0; lastWaitEndedInProgress = false; pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; webMode = false; webLoginUrl = null; mfaAfterSubmit = false; }
+    public void setPendingUsername(String u) { serverStepFilled = false; serverSwitchTried = false; serverScreenExpected = false; googleButtonMode = false; serviceAccountAdopted = false; loginButtonClickTime = 0; lastWaitEndedInProgress = false; pendingUsername = u; usernameEnteredInStep1 = false; mfaHandled = false; lastMfaOutcome = null; loginClickActivity = ""; webMode = false; webLoginUrl = null; mfaAfterSubmit = false; }
     private boolean mfaAfterSubmit = false;
     public boolean mfaPromptAfterSubmit() { return mfaAfterSubmit; }
 
@@ -1284,7 +1284,7 @@ public class UIManager {
             if (labelled == null) return false;
             only = labelled; inputs = 1;
         }
-        if (inputs != 1 || !serverWords) return false;
+        if (inputs != 1 || !(serverWords || serverScreenExpected)) return false;
         String own = textOf(only).trim();
         if (!own.isEmpty() && !SERVER_LABEL.matcher(own).matches()) return false;   // already filled
         int[] b = boundsOf(only);
@@ -1314,6 +1314,66 @@ public class UIManager {
     }
 
     /** Submit button of a server-address step (when it is not also recognised as a login entry). */
+    private boolean serverSwitchTried = false, serverScreenExpected = false;
+    private static final String SERVER_SWITCH = "(?i)((switch|change|select|choose|set|edit) (the )?(server|instance|host)|server settings|custom server|self[- ]hosted|use (your|a) own server|other server)";
+
+    private boolean formHasServerField() {
+        if (lastScanElements == null) return false;
+        for (UIElement e : lastScanElements) {
+            if (e.text == null) continue;
+            String t = e.text.trim();
+            if (t.equals(serverAddress) || t.contains("liftdroid.test")) return true;
+            if (SERVER_LABEL.matcher(t).matches()) return true;
+        }
+        return false;
+    }
+
+    private void tapCenter(UIElement e) throws Exception {
+        int[] b = boundsOf(e);
+        new ProcessBuilder("adb", "shell", "input", "tap", String.valueOf((b[0] + b[2]) / 2), String.valueOf((b[1] + b[3]) / 2))
+            .redirectErrorStream(true).start().waitFor(10, java.util.concurrent.TimeUnit.SECONDS);
+    }
+
+    private UIElement findServerSwitch(List<UIElement> els) {
+        for (UIElement e : els) if (e.text != null && boundsOf(e) != null && e.text.trim().length() <= 40 && e.text.trim().matches(".*" + SERVER_SWITCH + ".*")) return e;
+        return null;
+    }
+
+    /** Open the app's server switch (a visible entry, or one inside the top-right overflow menu). */
+    private boolean openServerSwitch() {
+        serverSwitchTried = true;
+        try {
+            List<UIElement> els = lastScanElements == null ? getAllUIElements() : lastScanElements;
+            UIElement sw = findServerSwitch(els);
+            if (sw == null) {
+                // overflow menu: a small clickable in the top-right corner (often unlabelled)
+                UIElement menu = null;
+                for (UIElement e : els) {
+                    int[] b = boundsOf(e);
+                    if (b == null || e.className == null || !e.className.contains("[clickable]")) continue;
+                    String t = textOf(e).trim().toLowerCase();
+                    boolean small = b[2] - b[0] <= 220 && b[3] - b[1] <= 220;
+                    if (small && b[0] >= 760 && b[1] <= 320 && (t.isEmpty() || t.matches("(more options|more|menu|options|settings)"))) menu = e;
+                }
+                if (menu == null) return false;
+                tapCenter(menu); Thread.sleep(2000);
+                sw = findServerSwitch(getAllUIElements());
+                if (sw == null) {
+                    new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_ESCAPE").start().waitFor(5, java.util.concurrent.TimeUnit.SECONDS);
+                    Thread.sleep(800);
+                    return false;
+                }
+            }
+            System.out.println("[SERVER] App is on its default server; opening '" + sw.text.trim() + "' to use " + serverAddress);
+            tapCenter(sw); Thread.sleep(3000);
+            serverScreenExpected = true;
+            lastScanElements = getAllUIElements();
+            if (maybeFillServerStep()) { tapServerStepSubmit(); serverScreenExpected = false; return true; }
+            serverScreenExpected = false;
+            return true;   // re-scan: the next hop handles the new screen
+        } catch (Exception ex) { return false; }
+    }
+
     private boolean insideClickable(UIElement e) {
         int[] b = boundsOf(e);
         if (b == null || lastScanElements == null) return false;
@@ -1410,7 +1470,12 @@ public class UIManager {
         tappedEntries.clear();
         for (int hop = 0; hop <= 6; hop++) {
             lastLoginEntryBounds = null; lastLoginEntryPriority = 99; lastGuestBounds = null; lastLoginEntryKey = null;
-            if (detectLoginPageOnce()) return true;
+            if (detectLoginPageOnce()) {
+                // FIX(v1): the pool names our own server but the form has no server field and none was entered:
+                // the app is on its default (public) server; switch to ours first (KitchenOwl: menu > Switch server)
+                if (serverAddress != null && !serverStepFilled && !serverSwitchTried && !formHasServerField() && openServerSwitch()) continue;
+                return true;
+            }
             // FIX(v1): credential-free (anonymous/guest) login offered next to SSO: use it when the round asks for it
             if (preferGuestLogin && lastGuestBounds != null && lastLoginEntryPriority >= 4) {
                 guestMode = true;
