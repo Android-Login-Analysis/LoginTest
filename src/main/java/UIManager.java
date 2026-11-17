@@ -1287,6 +1287,24 @@ public class UIManager {
         serverStepFilled = true;
         System.out.println("[SERVER] Server-address step: entered " + serverAddress);
         try { hideKeyboardIfShown(); Thread.sleep(800); } catch (Exception ignored) { }
+        // other empty inputs on the same step are required too (Mattermost enables 'Connect' only with a display name);
+        // positions are re-read because the layout moves with the keyboard
+        try {
+            List<UIElement> now = getAllUIElements();
+            for (UIElement f : now) {
+                if (!isInputClass(f.className) || boundsOf(f) == null || (f.className != null && f.className.contains("[password]"))) continue;
+                String rid = f.resourceId == null ? "" : f.resourceId;
+                if (only.resourceId != null && !only.resourceId.isEmpty() && only.resourceId.equals(rid)) continue;
+                String txt = textOf(f).trim();
+                if (txt.equals(serverAddress) || txt.contains("liftdroid.test")) continue;
+                if (!txt.isEmpty()) continue;
+                int[] fb = boundsOf(f);
+                clickAndInputText((fb[0] + fb[2]) / 2, (fb[1] + fb[3]) / 2, "LIFT");
+                System.out.println("[SERVER] Filled another empty field on the server step" + (rid.isEmpty() ? "" : " (" + rid + ")"));
+                hideKeyboardIfShown(); Thread.sleep(800);
+            }
+            lastScanElements = getAllUIElements();
+        } catch (Exception ignored) { }
         return true;
     }
 
