@@ -438,7 +438,7 @@ public class LoginDetectionEnhancer {
                     Thread.sleep(5000);
                     
                     // Ensure app is in foreground
-                    Runtime.getRuntime().exec("adb shell monkey -p " + appPackage + " 1");
+                    AppLauncher.lastLaunchMs = System.currentTimeMillis(); Runtime.getRuntime().exec("adb shell monkey -p " + appPackage + " 1");
                     Thread.sleep(1000);
                     
                     return restore.exitValue() == 0;

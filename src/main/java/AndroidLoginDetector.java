@@ -494,6 +494,7 @@ public class AndroidLoginDetector {
     private void ensureAppIsRunning() {
         try {
             // Start the app if not running
+            AppLauncher.lastLaunchMs = System.currentTimeMillis();
             Process startApp = Runtime.getRuntime().exec(
                 "adb shell am start -n " + appPackage + "/" + appActivity);
             startApp.waitFor();

@@ -89,7 +89,11 @@ public final class AppLauncher {
     }
 
     /** Bring the app to the foreground; returns true on success. */
+    /** Time of the last (re)launch of the app under test; navigation memory is reset after a relaunch. */
+    public static volatile long lastLaunchMs = 0;
+
     public static boolean launch(String pkg) {
+        lastLaunchMs = System.currentTimeMillis();
         String component = resolveLauncherActivity(pkg);
         for (int attempt = 0; attempt < 3; attempt++) {
             // Leave whatever external app (browser, dialer, ...) currently owns focus.

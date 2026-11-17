@@ -1525,6 +1525,7 @@ public class UIManager {
 
     // entries already tapped during this navigation (an entry that leads nowhere is not tapped again)
     private final java.util.Set<String> tappedEntries = new java.util.HashSet<>();
+    private long tappedEntriesSince = 0;
     private String lastLoginEntryKey = null;
 
     /**
@@ -1569,6 +1570,8 @@ public class UIManager {
     }
 
     public boolean detectLoginPage() {
+        // entries tapped before the app was relaunched (e.g. the rotation phase restarts it) may lead somewhere again
+        if (AppLauncher.lastLaunchMs > tappedEntriesSince) { tappedEntries.clear(); tappedEntriesSince = System.currentTimeMillis(); }
         // R2-9 "Monkey + LIFTDroid": no heuristic navigation; only recognise a login page that Monkey reached
         if ("monkey".equalsIgnoreCase(System.getenv("LIFT_NAV"))) return detectLoginPageOnce();
         if (AgentNavigator.enabled()) {   // one navigation episode per round; the agent decides when the form is shown
