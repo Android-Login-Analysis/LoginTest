@@ -1,0 +1,16 @@
+CODE_VERSION 0a4ffca4
+[2026-11-17 03:34:04.612] [INFO] ROUND 1 STARTED
+[2026-11-17 03:36:07.010] [INFO] Round network condition for login: normal
+[SERVER] Server-address step: entered https://jellyfin.liftdroid.test
+[SERVER] Submitting the server-address step ('Connect')
+[2026-11-17 03:37:23.921] [INFO] Login rejected with message: 'Unknown error' (validPair=true)
+[2026-11-17 03:37:24.237] [INFO] Login outcome: inputOk=true, loginPageGone=false, validPair=true
+[FINDING] VALID_CREDENTIALS_REJECTED - username 'lifttest' (valid); message: 'Unknown error'
+[SERVER] Server-address step: entered https://jellyfin.liftdroid.test
+--- Jellyfin 10.10.0 server log, same attempt
+[03:37:05] [INF] [149] Jellyfin.Server.Implementations.Users.UserManager: Authentication request for lifttest has succeeded.
+[03:37:05] [INF] [149] Emby.Server.Implementations.Session.SessionManager: Current/Max sessions for user lifttest: 2/0
+[03:37:05] [INF] [149] Emby.Server.Implementations.Session.SessionManager: Logging out access token <redacted>
+[03:37:05] [INF] [149] Emby.Server.Implementations.Session.SessionManager: Creating new access token for user 2c00b84a-eb7f-4428-b5a2-1deca3314b23
+--- proxy
+[17/Nov/2026:03:37:05 "POST /Users/AuthenticateByName 200
