@@ -1572,7 +1572,11 @@ public class UIManager {
         // R2-9 "Monkey + LIFTDroid": no heuristic navigation; only recognise a login page that Monkey reached
         if ("monkey".equalsIgnoreCase(System.getenv("LIFT_NAV"))) return detectLoginPageOnce();
         if (AgentNavigator.enabled()) {   // one navigation episode per round; the agent decides when the form is shown
-            if (!agentAtForm && agentNavAttempts < 2) { agentNavAttempts++; agentAtForm = agentNav().navigate(scheduledCondition); }
+            if (!agentAtForm && agentNavAttempts < 2) {
+                agentNavAttempts++;
+                ensureAppInForeground();   // same starting point as the tool's own navigation: the app under test in front
+                agentAtForm = agentNav().navigate(scheduledCondition);
+            }
             return agentAtForm;
         }
         // FIX(v1): entries tapped earlier in this round stay remembered across calls (the caller polls this method),
