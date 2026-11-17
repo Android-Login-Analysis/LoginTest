@@ -46,8 +46,11 @@ def round_findings(d):
     return out
 
 # tool actions counted from the run log (taps, typed fields, Monkey steps, key events sent by the tool)
-ACTION_RE = re.compile(r"\[INPUT\] Clicking at|Click element:|tapping login entry|Monkey step \d+ finished|"
-                       r"\[SERVER\] (Submitting|Selecting|Ticked)|Clicked login button at")
+# Tool UI actions, counted from the run log (approximate): field taps with typing, button clicks, entry taps,
+# Monkey steps, server-step actions, WebView clicks/fills, TOTP entries
+ACTION_RE = re.compile(r"\[INPUT\] Clicking at|Click element:|tapping login entry|Monkey step \d+ finished|Clicked login button at|"
+                       r"\[SERVER\] (Submitting|Selecting|Ticked|Server-address step: (entered|typed))|Filled server field|"
+                       r"\[WEBVIEW\] (trusted click on|Tapped web login entry|filled form)|\[MFA\] Authenticator prompt; entering")
 TS_RE = re.compile(r"^\[(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d\.\d{3})\]")
 
 def appkey(job):
