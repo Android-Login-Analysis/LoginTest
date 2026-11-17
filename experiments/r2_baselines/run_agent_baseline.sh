@@ -10,7 +10,8 @@ U=$(echo "$ACC" | python3 -c "import json,sys; print(json.load(sys.stdin)['user'
 SERVER=$(echo "$ACC" | python3 -c "import json,sys; print(json.load(sys.stdin)['server'])")
 OUT=${AGENT_OUT:-~/r2_results/agent_${VARIANT}/$(basename ${APK%.apk})_$(date +%Y%m%d_%H%M%S)}; mkdir -p $OUT
 ~/selfhost/netreset.sh $S >/dev/null; ~/selfhost/trust_device.sh $S >/dev/null 2>&1
-if [ -n "$SERVER" ]; then ~/selfhost/egress.sh $S on >/dev/null || exit 5; else ~/selfhost/egress.sh $S off >/dev/null; fi
+POOLDIR=$(echo "$ACC" | python3 -c "import json,sys; print(json.load(sys.stdin)['pool'])")
+if [ -f "$POOLDIR/egress_restrict" ]; then ~/selfhost/egress.sh $S on >/dev/null || exit 5; else ~/selfhost/egress.sh $S off >/dev/null; fi
 $A uninstall $PKG >/dev/null 2>&1; $A install -g ~/LoginTest/apps/$APK | tail -1 | grep -q Success || { echo "install failed"; exit 6; }
 $A shell input keyevent KEYCODE_WAKEUP; $A logcat -c
 ACT=$($A shell cmd package resolve-activity --brief -c android.intent.category.LAUNCHER $PKG | tail -1 | tr -d "\r")
