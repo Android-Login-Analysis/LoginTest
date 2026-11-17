@@ -1286,6 +1286,9 @@ public class UIManager {
     private boolean maybeFillServerStep() {
         if (serverAddress == null || serverStepFilled || lastScanElements == null) return false;
         if (findPasswordAnchor(lastScanElements) != null) return false;
+        // a feed/subscription URL box is not a server step (Read You "Subscribe: Feed or Site URL")
+        for (UIElement e : lastScanElements)
+            if (e.text != null && e.text.length() <= 80 && e.text.matches("(?is).*\\b(subscribe|feed|rss|opml|podcast|site url)\\b.*")) return false;
         UIElement only = null, labelled = null; int inputs = 0; boolean serverWords = false, identifierWords = false;
         java.util.List<UIElement> fields = new java.util.ArrayList<>();
         for (UIElement e : lastScanElements) {
