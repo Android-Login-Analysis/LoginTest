@@ -1352,7 +1352,9 @@ public class UIManager {
         }
         if (inputs != 1 || !(serverWords || serverScreenExpected)) return false;
         String own = textOf(only).trim();
-        if (!own.isEmpty() && !SERVER_LABEL.matcher(own).matches()) return false;   // already filled
+        // a placeholder shown as text (Gotify "https://push.example.com", "your server address") is an empty field
+        boolean placeholder = own.matches("(?i).*(\\bexample\\.|example\\.(com|org|net)|your[- ](server|instance|domain|url)|e\\.g\\.|ex:).*");
+        if (!own.isEmpty() && !placeholder && !SERVER_LABEL.matcher(own).matches()) return false;   // already filled
         int[] b = boundsOf(only);
         clickAndInputText((b[0] + b[2]) / 2, (b[1] + b[3]) / 2, serverAddress);
         serverStepFilled = true;
@@ -1472,8 +1474,8 @@ public class UIManager {
 
     private boolean tapServerStepSubmit() {
         if (lastScanElements == null) return false;
-        java.util.List<String> order = java.util.List.of("connect", "continue", "next", "sign in", "log in", "login",
-            "confirm", "ok", "go", "save", "add", "add server");
+        java.util.List<String> order = java.util.List.of("connect", "continue", "next", "check url", "check", "verify",
+            "sign in", "log in", "login", "confirm", "ok", "go", "save", "add", "add server");
         UIElement best = null; int bestRank = Integer.MAX_VALUE;
         for (UIElement e : lastScanElements) {
             if (boundsOf(e) == null || e.className == null || e.className.contains("[disabled]")) continue;
