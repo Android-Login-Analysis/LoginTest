@@ -1526,6 +1526,14 @@ public class UIManager {
     // entries already tapped during this navigation (an entry that leads nowhere is not tapped again)
     private final java.util.Set<String> tappedEntries = new java.util.HashSet<>();
     private long tappedEntriesSince = 0;
+    // FIX(v1): an entry is "already tapped" only on the same screen (onboarding pages repeat "NEXT" at the same place)
+    private String screenSig = "";
+    private String entryKey(String k) { return k + "#" + screenSig; }
+    private String screenSignature(List<UIElement> els) {
+        java.util.TreeSet<String> t = new java.util.TreeSet<>();
+        for (UIElement e : els) { String x = textOf(e).trim(); if (!x.isEmpty() && x.length() <= 60 && !x.matches("[0-9:% ]+")) t.add(x); }
+        return Integer.toHexString(String.join("|", t).hashCode());
+    }
     private String lastLoginEntryKey = null;
 
     /**
@@ -1626,7 +1634,7 @@ public class UIManager {
             if (r == null) return false;
             int cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2;
             System.out.println("[LOGIN_ENTRY] No credential form yet; tapping login entry at (" + cx + "," + cy + ")");
-            if (lastLoginEntryKey != null) tappedEntries.add(lastLoginEntryKey);
+            if (lastLoginEntryKey != null) tappedEntries.add(entryKey(lastLoginEntryKey));
             // FIX(v1): on a degraded network a page opened by this tap may fail at once and the app's error handling
             // runs right away; probe responsiveness while it runs (an observation afterwards would be too late)
             if (!"normal".equals(roundCondition) && lastLoginEntryPriority >= 1) {
@@ -1683,6 +1691,7 @@ public class UIManager {
                 // Get UI element information for the current page
                 List<UIElement> elements = getAllUIElements();
                 lastScanElements = elements;
+                screenSig = screenSignature(elements);
 
                 // FIX(v1): a form with two password inputs (password + confirm) or a sign-up heading is a
                 // registration form, not a login form (cf. reviewer R2-1); prefer its "Login" entry instead.
@@ -1732,13 +1741,13 @@ public class UIManager {
                             && element.className.contains("[clickable]") && lastLoginEntryPriority > 6) {
                         int[] ib = boundsOf(element);   // priority 6: top-right icon, 7: top-left drawer
                         if (ib != null && ib[1] < 260 && ib[3] - ib[1] < 220 && ib[2] - ib[0] < 220 && (ib[0] + ib[2]) / 2 > 700
-                                && !tappedEntries.contains("@" + element.bounds)) {
+                                && !tappedEntries.contains(entryKey("@" + element.bounds))) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 6; lastLoginEntryKey = "@" + element.bounds;
                         }
                         // FIX(v1): an unlabelled navigation-drawer button (top left) is the last resort (Jerboa 0.0.3x:
                         // drawer > "Add account")
                         if (ib != null && lastLoginEntryPriority > 7 && ib[1] < 260 && ib[3] - ib[1] < 220 && ib[2] - ib[0] < 220
-                                && (ib[0] + ib[2]) / 2 < 220 && !tappedEntries.contains("@" + element.bounds)) {
+                                && (ib[0] + ib[2]) / 2 < 220 && !tappedEntries.contains(entryKey("@" + element.bounds))) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 7; lastLoginEntryKey = "@" + element.bounds;
                         }
                     }
@@ -1748,12 +1757,12 @@ public class UIManager {
                             && element.className.contains("[clickable]") && lastLoginEntryPriority > 2 && serverListScreen()) {
                         int[] fb = boundsOf(element);
                         if (fb != null && (fb[0] + fb[2]) / 2 > 540 && fb[1] > 1700 && fb[2] - fb[0] < 600 && fb[3] - fb[1] < 260
-                                && !tappedEntries.contains("@" + element.bounds)) {
+                                && !tappedEntries.contains(entryKey("@" + element.bounds))) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2; lastLoginEntryKey = "@" + element.bounds;
                         }
                     }
                     if (element.visible && element.text != null && element.text.trim().length() <= 40 && boundsOf(element) != null
-                            && !tappedEntries.contains(element.text.trim().toLowerCase() + "@" + element.bounds)) {
+                            && !tappedEntries.contains(entryKey(element.text.trim().toLowerCase() + "@" + element.bounds))) {
                         String t = element.text.trim().toLowerCase();
                         int prevPriority = lastLoginEntryPriority;
                         if (t.matches("(anonymous|guest|continue as guest|login as guest|use without (an )?account|try as guest)")) {
