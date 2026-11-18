@@ -6,7 +6,7 @@ set -e
 S=${1:?usage: trust_device.sh <adb-serial>}
 CA=~/selfhost/certs/ca.crt
 HOST_IP=10.99.0.124
-NAMES="lemmy paperless jellyfin mattermost seafile matrix vaultwarden kitchenowl freshrss dns"
+NAMES="lemmy paperless jellyfin mattermost seafile matrix vaultwarden kitchenowl freshrss dns vikunja gotify gotifyredirect navidrome paperless2 lemmy2 lemmy3 nextcloud memos jellyfin2 gitea htmlapi audiobookshelf audiobookshelf2 gotosocial paperless3 mattermost2 qbittorrent mealie"
 HASH=$(openssl x509 -in $CA -noout -subject_hash_old)
 source ~/lt_env.sh
 adb -s $S root >/dev/null 2>&1 || true

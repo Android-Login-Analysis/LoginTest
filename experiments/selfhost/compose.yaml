@@ -185,3 +185,188 @@ services:
       MEMCACHED_PORT: "11211"
     volumes:
       - ./data/seafile:/shared
+
+  # ---- Dataset B2 (2026-11-18): backends for the second batch of held-out issues ----
+  vikunja:                       # Vikunja app #102
+    image: vikunja/vikunja:0.24.6
+    restart: unless-stopped
+    environment:
+      VIKUNJA_SERVICE_PUBLICURL: https://vikunja.liftdroid.test/
+      VIKUNJA_SERVICE_JWTSECRET: ${VIKUNJA_JWT}
+      VIKUNJA_DATABASE_TYPE: sqlite
+      VIKUNJA_DATABASE_PATH: /db/vikunja.db
+      VIKUNJA_SERVICE_ENABLEREGISTRATION: "true"
+    volumes:
+      - ./data/vikunja/files:/app/vikunja/files
+      - ./data/vikunja/db:/db
+
+  gotify:                        # Gotify #161 (special-character password), #201 (redirecting URL)
+    image: gotify/server:2.6.1
+    restart: unless-stopped
+    environment:
+      GOTIFY_DEFAULTUSER_NAME: lifttest
+      GOTIFY_DEFAULTUSER_PASS: ${LIFT_SVC_PASSWORD}
+    volumes:
+      - ./data/gotify:/app/data
+
+  navidrome:                     # Subtracks #55
+    image: deluan/navidrome:0.53.3
+    restart: unless-stopped
+    volumes:
+      - ./data/navidrome:/data
+      - ./data/music:/music:ro
+
+  paperless2:                    # Paperless Mobile #548: paperless-ngx 2.20 with the update check enabled
+    image: paperlessngx/paperless-ngx:2.20.0
+    restart: unless-stopped
+    depends_on: [paperless-redis]
+    environment:
+      PAPERLESS_REDIS: redis://paperless-redis:6379/1
+      PAPERLESS_URL: https://paperless2.liftdroid.test
+      PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY}
+      PAPERLESS_ADMIN_USER: lifttest
+      PAPERLESS_ADMIN_PASSWORD: ${LIFT_SVC_PASSWORD}
+      PAPERLESS_ADMIN_MAIL: lifttest@example.com
+      PAPERLESS_ENABLE_UPDATE_CHECK: "true"
+    volumes:
+      - ./data/paperless2/data:/usr/src/paperless/data
+      - ./data/paperless2/media:/usr/src/paperless/media
+
+  lemmy2-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment: {POSTGRES_USER: lemmy, POSTGRES_PASSWORD: "${LEMMY_DB_PASSWORD}", POSTGRES_DB: lemmy}
+    volumes:
+      - ./data/lemmy2-db:/var/lib/postgresql/data
+
+  lemmy2:                        # Jerboa #1487: Lemmy 0.19.3 private instance
+    image: dessalines/lemmy:0.19.3
+    restart: unless-stopped
+    environment: {RUST_LOG: warn, LEMMY_CONFIG_LOCATION: /config/config.hjson}
+    volumes:
+      - ./lemmy2.hjson:/config/config.hjson:ro
+    depends_on: [lemmy2-db]
+
+  lemmy3-db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment: {POSTGRES_USER: lemmy, POSTGRES_PASSWORD: "${LEMMY_DB_PASSWORD}", POSTGRES_DB: lemmy}
+    volumes:
+      - ./data/lemmy3-db:/var/lib/postgresql/data
+
+  lemmy3:                        # Jerboa #920: Lemmy 0.17.4
+    image: dessalines/lemmy:0.17.4
+    restart: unless-stopped
+    environment: {RUST_LOG: warn, LEMMY_CONFIG_LOCATION: /config/config.hjson}
+    volumes:
+      - ./lemmy3.hjson:/config/config.hjson:ro
+    depends_on: [lemmy3-db]
+
+  nextcloud:                     # Nextcloud Talk #6329, Nextcloud Notes #562, Floccus #1230
+    image: nextcloud:30-apache
+    restart: unless-stopped
+    environment:
+      NEXTCLOUD_ADMIN_USER: lifttest
+      NEXTCLOUD_ADMIN_PASSWORD: ${LIFT_SVC_PASSWORD}
+      SQLITE_DATABASE: nextcloud
+      NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.liftdroid.test
+      OVERWRITEPROTOCOL: https
+      OVERWRITEHOST: nextcloud.liftdroid.test
+    volumes:
+      - ./data/nextcloud:/var/www/html
+
+  memos:                         # MoeMemos #295: Memos 0.25.3
+    image: neosmemo/memos:0.25.3
+    restart: unless-stopped
+    volumes:
+      - ./data/memos:/var/opt/memos
+
+  jellyfin2:                     # Findroid #679: Jellyfin 10.9.0
+    image: jellyfin/jellyfin:10.9.0
+    restart: unless-stopped
+    volumes:
+      - ./data/jellyfin2/config:/config
+      - ./data/jellyfin2/cache:/cache
+
+  gitea:                         # GitNex #1390, #1280, #1392: Gitea 1.20.1
+    image: gitea/gitea:1.20.1
+    restart: unless-stopped
+    environment:
+      GITEA__server__ROOT_URL: https://gitea.liftdroid.test/
+      GITEA__server__DOMAIN: gitea.liftdroid.test
+      GITEA__security__INSTALL_LOCK: "true"
+      GITEA__database__DB_TYPE: sqlite3
+      GITEA__service__DISABLE_REGISTRATION: "false"
+    volumes:
+      - ./data/gitea:/data
+
+  audiobookshelf:                # Audiobookshelf app #1900 (username with a trailing space)
+    image: advplyr/audiobookshelf:2.17.5
+    restart: unless-stopped
+    volumes: [./data/abs/config:/config, ./data/abs/metadata:/metadata]
+
+  audiobookshelf2:               # Audiobookshelf app #868 (2023 server)
+    image: advplyr/audiobookshelf:2.4.4
+    restart: unless-stopped
+    volumes: [./data/abs2/config:/config, ./data/abs2/metadata:/metadata]
+
+  gotosocial:                    # AndStatus #551 (rotation in the login WebView)
+    image: superseriousbusiness/gotosocial:0.17.3
+    restart: unless-stopped
+    user: "1000:1000"
+    environment:
+      GTS_HOST: gotosocial.liftdroid.test
+      GTS_PROTOCOL: https
+      GTS_DB_TYPE: sqlite
+      GTS_DB_ADDRESS: /gotosocial/storage/sqlite.db
+      GTS_TRUSTED_PROXIES: 172.16.0.0/12
+      GTS_LETSENCRYPT_ENABLED: "false"
+    volumes: [./data/gotosocial:/gotosocial/storage]
+
+  paperless3:                    # Paperless Mobile #409: paperless-ngx 2.7.2, non-superuser without view permissions
+    image: paperlessngx/paperless-ngx:2.7.2
+    restart: unless-stopped
+    depends_on: [paperless-redis]
+    environment:
+      PAPERLESS_REDIS: redis://paperless-redis:6379/2
+      PAPERLESS_URL: https://paperless3.liftdroid.test
+      PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY}
+      PAPERLESS_ADMIN_USER: lifttest
+      PAPERLESS_ADMIN_PASSWORD: ${LIFT_SVC_PASSWORD}
+      PAPERLESS_ADMIN_MAIL: lifttest@example.com
+    volumes: [./data/paperless3/data:/usr/src/paperless/data, ./data/paperless3/media:/usr/src/paperless/media]
+
+  mattermost2-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment: {POSTGRES_USER: mmuser, POSTGRES_PASSWORD: "${MM_DB_PASSWORD}", POSTGRES_DB: mattermost}
+    volumes: [./data/mattermost2-db:/var/lib/postgresql/data]
+
+  mattermost2:                   # Mattermost #9635: server 11.5.1
+    image: mattermost/mattermost-team-edition:11.5.1
+    restart: unless-stopped
+    depends_on: [mattermost2-db]
+    environment:
+      MM_SQLSETTINGS_DRIVERNAME: postgres
+      MM_SQLSETTINGS_DATASOURCE: postgres://mmuser:${MM_DB_PASSWORD}@mattermost2-db:5432/mattermost?sslmode=disable&connect_timeout=10
+      MM_SERVICESETTINGS_SITEURL: https://mattermost2.liftdroid.test
+      MM_SERVICESETTINGS_ENABLELOCALMODE: "true"
+      MM_EMAILSETTINGS_REQUIREEMAILVERIFICATION: "false"
+    volumes:
+      - ./data/mattermost2/config:/mattermost/config
+      - ./data/mattermost2/data:/mattermost/data
+      - ./data/mattermost2/logs:/mattermost/logs
+      - ./data/mattermost2/plugins:/mattermost/plugins
+      - ./data/mattermost2/client-plugins:/mattermost/client/plugins
+
+  qbittorrent:                   # qBitController #263: qBittorrent 5.2.0 WebUI
+    image: lscr.io/linuxserver/qbittorrent:5.2.0
+    restart: unless-stopped
+    environment: {PUID: "1000", PGID: "1000", TZ: UTC, WEBUI_PORT: "8080"}
+    volumes: [./data/qbittorrent:/config]
+
+  mealie:                        # Mealient #189: Mealie 1.0.0-RC1.1
+    image: ghcr.io/mealie-recipes/mealie:v1.0.0-RC1.1
+    restart: unless-stopped
+    environment: {BASE_URL: "https://mealie.liftdroid.test", ALLOW_SIGNUP: "true", TZ: UTC}
+    volumes: [./data/mealie:/app/data]
