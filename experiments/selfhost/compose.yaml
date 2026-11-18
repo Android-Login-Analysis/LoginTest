@@ -370,3 +370,9 @@ services:
     restart: unless-stopped
     environment: {BASE_URL: "https://mealie.liftdroid.test", ALLOW_SIGNUP: "true", TZ: UTC}
     volumes: [./data/mealie:/app/data]
+
+  vaultwarden:                   # Bitwarden #3410, #3796, #6376, #6576
+    image: vaultwarden/server:1.32.7
+    restart: unless-stopped
+    environment: {DOMAIN: "https://vaultwarden.liftdroid.test", SIGNUPS_ALLOWED: "true", SIGNUPS_VERIFY: "false"}
+    volumes: [./data/vaultwarden:/data]
