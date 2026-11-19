@@ -1354,7 +1354,9 @@ public class UIManager {
         String own = textOf(only).trim();
         // a placeholder shown as text (Gotify "https://push.example.com", "your server address") is an empty field
         boolean placeholder = own.matches("(?i).*(\\bexample\\.|example\\.(com|org|net)|your[- ](server|instance|domain|url)|e\\.g\\.|ex:).*");
-        if (!own.isEmpty() && !placeholder && !SERVER_LABEL.matcher(own).matches()) return false;   // already filled
+        // a hint naming the field ("Gotify URL") is not an address either
+        boolean hint = SERVER_SCREEN.matcher(own).find() && !own.contains(".") && !own.contains("://");
+        if (!own.isEmpty() && !placeholder && !hint && !SERVER_LABEL.matcher(own).matches()) return false;   // already filled
         int[] b = boundsOf(only);
         clickAndInputText((b[0] + b[2]) / 2, (b[1] + b[3]) / 2, serverAddress);
         serverStepFilled = true;
