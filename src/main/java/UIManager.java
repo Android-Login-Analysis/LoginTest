@@ -2095,7 +2095,7 @@ public class UIManager {
     private String serverAddress = null;
     public void setServerAddress(String s) { serverAddress = (s == null || s.isBlank()) ? null : s.trim(); }
     private static final java.util.regex.Pattern SERVER_LABEL = java.util.regex.Pattern.compile(
-        "(?i)^\\s*(enter\\s+(the\\s+|your\\s+)?)?(instance|server|server url|server address|homeserver|host|hostname|url|domain|server name)\\b.*");
+        "(?i)^\\s*(enter\\s+(the\\s+|your\\s+)?)?(instance|server|server url|server address|homeserver|host|hostname|url|domain|server name|address)\\b.*");
 
     /** Fill an empty server/instance field (labelled inside or directly above the input) with the pool's address. */
     private void fillServerField() {
@@ -2703,7 +2703,7 @@ public class UIManager {
                     for (int[] b : inputBoxes) if (r[0] >= b[0] && r[2] <= b[2] && r[1] >= b[1] - 30 && r[3] <= b[3] + 5) insideInput = true;
                     if (insideInput) continue;
                     boolean ok = pass == 0
-                        ? e.text.trim().toLowerCase().matches("(log ?in|login|sign ?in|signin|submit|continue)")
+                        ? e.text.trim().toLowerCase().matches("(log ?in|login|sign ?in|signin|submit|continue|save|connect|test connection)")
                         : matchesLoginButtonPattern(e.text, e.resourceId);
                     if (ok && r[1] >= pwBottom && r[1] < bestTop) { below = e; bestTop = r[1]; }
                 }
