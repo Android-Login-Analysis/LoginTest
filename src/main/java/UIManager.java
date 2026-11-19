@@ -1466,6 +1466,26 @@ public class UIManager {
         } catch (Exception ex) { return false; }
     }
 
+
+    /** FIX(v1): a separate protocol drop-down next to the server field (GitNex "Protocol": HTTP/HTTPS). */
+    private void selectProtocolSpinner(List<UIElement> els) {
+        try {
+            for (UIElement sp : els) {
+                if (sp.className == null || !sp.className.contains("Spinner") || !textOf(sp).trim().matches("(?i)(protocol|scheme)")) continue;
+                tapCenter(sp); Thread.sleep(1200);
+                String want = serverAddress.toLowerCase().startsWith("http://") ? "http" : "https";
+                for (UIElement o : getAllUIElements())
+                    if (textOf(o).trim().equalsIgnoreCase(want) && boundsOf(o) != null) {
+                        tapCenter(o); Thread.sleep(800);
+                        System.out.println("[SERVER] Selected protocol " + want.toUpperCase());
+                        return;
+                    }
+                new ProcessBuilder("adb", "shell", "input", "keyevent", "KEYCODE_BACK").start().waitFor(5, java.util.concurrent.TimeUnit.SECONDS);
+                return;
+            }
+        } catch (Exception ignored) { }
+    }
+
     private boolean insideClickable(UIElement e) {
         int[] b = boundsOf(e);
         if (b == null || lastScanElements == null) return false;
@@ -2122,6 +2142,7 @@ public class UIManager {
                     if (e.text != null && e.text.matches("(?is).*without\\s+(the\\s+)?(http|https|protocol|scheme).*")) { toType = toType.replaceFirst("(?i)^https?://", ""); break; }
                 clickAndInputText((b[0] + b[2]) / 2, (b[1] + b[3]) / 2, toType);
                 System.out.println("[SERVER] Filled server field '" + label + "' with " + toType);
+                selectProtocolSpinner(els);
                 Thread.sleep(800);
                 return;
             }
