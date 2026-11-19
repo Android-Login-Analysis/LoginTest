@@ -2157,6 +2157,10 @@ public class UIManager {
             }
 
             // Find password input field
+            // FIX(v1): the keyboard opened for the username can cover the password field; a tap there would hit the
+            // keyboard and the password would go into the username field (GitNex). Close it and look the field up again.
+            hideKeyboardIfShown();
+            Thread.sleep(500);
             UIElement passwordField = findPasswordField();
             if (passwordField == null) {
                 System.err.println("[CREDENTIAL_INPUT] Password field not found!");
