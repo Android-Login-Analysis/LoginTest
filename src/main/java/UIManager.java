@@ -1554,6 +1554,9 @@ public class UIManager {
     // entries already tapped during this navigation (an entry that leads nowhere is not tapped again)
     private final java.util.Set<String> tappedEntries = new java.util.HashSet<>();
     private long tappedEntriesSince = 0;
+    private final java.util.Set<String> entryHints = new java.util.HashSet<>();
+    /** Texts of entries the tester names for this app (account type, login method), tapped first during navigation. */
+    public void setEntryHints(java.util.Collection<String> hints) { entryHints.clear(); for (String h : hints) if (!h.isBlank()) entryHints.add(h.trim().toLowerCase()); }
     // FIX(v1): an entry is "already tapped" only on the same screen (onboarding pages repeat "NEXT" at the same place)
     private String screenSig = "";
     private String entryKey(String k) { return k + "#" + screenSig; }
@@ -1796,7 +1799,10 @@ public class UIManager {
                         if (t.matches("(anonymous|guest|continue as guest|login as guest|use without (an )?account|try as guest)")) {
                             lastGuestBounds = element.bounds;
                         }
-                        if (t.matches("(sign in|log in|login|signin|log on|sign in / register|sign in or register)")
+                        if (entryHints.contains(t)) {
+                            // FIX(v1): tester-supplied choice for this app (pools/<app>/entry_hints.txt, e.g. the account type "Fever")
+                            lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 0;
+                        } else if (t.matches("(sign in|log in|login|signin|log on|sign in / register|sign in or register)")
                                 || t.matches(".*(account|member)\\?\\s*(log ?in|sign ?in)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 1;
                         } else if (lastLoginEntryPriority > 2 && element.className != null && element.className.contains("RadioButton")

@@ -780,6 +780,8 @@ public class AndroidLoginDetector {
         }
         if (uiManager != null) uiManager.setTotpSecrets(totp);
         // FIX(v1): server / instance address of a self-hosted backend
+        java.util.List<String> hints = readLinesFromFile(new java.io.File(credDir, "entry_hints.txt").getPath());
+        if (hints != null && uiManager != null) { uiManager.setEntryHints(hints); logInfo("Entry hints for this app: " + hints); }
         java.io.File serverFile = new java.io.File(credDir, "server.txt");
         if (uiManager != null && serverFile.isFile()) {
             java.util.List<String> sl = readLinesFromFile(serverFile.getPath());
