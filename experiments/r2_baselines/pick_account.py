@@ -29,5 +29,8 @@ if provider in ("google", "facebook") or not user:
     invalid = "use a username that does not exist, e.g. nonexistent.user.liftdroid@example.com; never enter a wrong password for the valid account"
 else:
     invalid = "for example a wrong password, or a username with special characters such as & < '"
+hints = [l.strip() for l in open(os.path.join(d, "entry_hints.txt"))] if d and os.path.exists(os.path.join(d, "entry_hints.txt")) else []
+if hints:
+    acct += " If the app asks you to choose a service, account type or login method, choose: " + ", ".join(h for h in hints if h) + "."
 print(json.dumps({"pool": d, "user": user or "", "password": pw or "", "provider": provider or "device", "server": server,
                   "account_line": acct, "invalid_line": invalid}))

@@ -17,10 +17,18 @@ public class AgentNavigator {
     public static boolean enabled() { return "agent".equalsIgnoreCase(System.getenv("LIFT_NAV")); }
 
     private final String serverAddress;
+    private final java.util.Collection<String> entryHints;   // tester-supplied choices (same information the tool gets)
     private long lastSubmitTime = -1;
     private boolean lastFinished = false;
 
-    public AgentNavigator(String serverAddress) { this.serverAddress = serverAddress; }
+    public AgentNavigator(String serverAddress, java.util.Collection<String> entryHints) {
+        this.serverAddress = serverAddress; this.entryHints = entryHints;
+    }
+
+    private String hintText() {
+        return entryHints == null || entryHints.isEmpty() ? "" :
+            " If the app asks you to choose a service, account type or login method, choose: " + String.join(", ", entryHints) + ".";
+    }
 
     public long getLastSubmitTime() { return lastSubmitTime; }
     public boolean lastFinished() { return lastFinished; }
@@ -28,6 +36,7 @@ public class AgentNavigator {
     public boolean navigate(String round) {
         String task = "Open the screen of this app where a user signs in with a username (or email) and password."
             + (serverAddress != null ? " If the app first asks for a server or instance address, enter " + serverAddress + " and continue." : "")
+            + hintText()
             + " Do not type a username or password. As soon as the username and password fields are visible, finish.";
         return run("navigate", round, task, intEnv("LIFT_AGENT_NAV_ROUNDS", 15));
     }

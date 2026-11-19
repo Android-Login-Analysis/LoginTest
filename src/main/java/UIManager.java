@@ -1594,7 +1594,7 @@ public class UIManager {
     private AgentNavigator agentNav = null;
     private boolean agentAtForm = false;
     private int agentNavAttempts = 0;   // navigation episodes this round (the caller polls detectLoginPage)
-    private AgentNavigator agentNav() { if (agentNav == null) agentNav = new AgentNavigator(serverAddress); return agentNav; }
+    private AgentNavigator agentNav() { if (agentNav == null) agentNav = new AgentNavigator(serverAddress, entryHints); return agentNav; }
 
     /** Agent episode: fill the form and submit; records the submit time like the tool's own login click. */
     public boolean agentLogin(String username, String password) {
