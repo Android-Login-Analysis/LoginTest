@@ -1358,7 +1358,11 @@ public class UIManager {
         boolean hint = SERVER_SCREEN.matcher(own).find() && !own.contains(".") && !own.contains("://");
         if (!own.isEmpty() && !placeholder && !hint && !SERVER_LABEL.matcher(own).matches()) return false;   // already filled
         int[] b = boundsOf(only);
-        clickAndInputText((b[0] + b[2]) / 2, (b[1] + b[3]) / 2, serverAddress);
+        // the form asks for the address without the scheme (GitNex "Enter URL without http or https")
+        String addr = serverAddress;
+        for (UIElement e : lastScanElements)
+            if (e.text != null && e.text.matches("(?is).*without\\s+(the\\s+)?(http|https|protocol|scheme).*")) { addr = serverAddress.replaceFirst("(?i)^https?://", ""); break; }
+        clickAndInputText((b[0] + b[2]) / 2, (b[1] + b[3]) / 2, addr);
         serverStepFilled = true;
         System.out.println("[SERVER] Server-address step: entered " + serverAddress);
         try { hideKeyboardIfShown(); Thread.sleep(800); } catch (Exception ignored) { }
@@ -1775,6 +1779,10 @@ public class UIManager {
                         if (t.matches("(sign in|log in|login|signin|log on|sign in / register|sign in or register)")
                                 || t.matches(".*(account|member)\\?\\s*(log ?in|sign ?in)")) {
                             lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 1;
+                        } else if (lastLoginEntryPriority > 2 && element.className != null && element.className.contains("RadioButton")
+                                && t.matches("(user ?name ?/ ?password|username and password|password|e-?mail ?(/ ?password|and password)?|basic( auth)?)")) {
+                            // FIX(v1): a login-method choice that defaults to a token/SSO form (GitNex "Token" vs "Username / Password")
+                            lastLoginEntryBounds = element.bounds; lastLoginEntryPriority = 2;
                         } else if (lastLoginEntryPriority > 2 && serverAddress != null
                                 && t.matches("(add server|add a server|add new server|new server|connect to (a )?server|add account|add instance|select server|other( [a-z]+)? server|private server|custom server|self[- ]hosted( server)?|your own server)")
                                 || lastLoginEntryPriority > 2 && t.equals("add account")) {
@@ -2110,6 +2118,8 @@ public class UIManager {
                     }
                     toType = serverAddress.replaceFirst("(?i)^https?://", "");
                 }
+                for (UIElement e : els)   // the form asks for the address without the scheme (GitNex)
+                    if (e.text != null && e.text.matches("(?is).*without\\s+(the\\s+)?(http|https|protocol|scheme).*")) { toType = toType.replaceFirst("(?i)^https?://", ""); break; }
                 clickAndInputText((b[0] + b[2]) / 2, (b[1] + b[3]) / 2, toType);
                 System.out.println("[SERVER] Filled server field '" + label + "' with " + toType);
                 Thread.sleep(800);
