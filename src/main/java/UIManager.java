@@ -2075,7 +2075,7 @@ public class UIManager {
     private String serverAddress = null;
     public void setServerAddress(String s) { serverAddress = (s == null || s.isBlank()) ? null : s.trim(); }
     private static final java.util.regex.Pattern SERVER_LABEL = java.util.regex.Pattern.compile(
-        "(?i)^\\s*(instance|server|server url|server address|homeserver|host|hostname|url|domain|server name)\\b.*");
+        "(?i)^\\s*(enter\\s+(the\\s+|your\\s+)?)?(instance|server|server url|server address|homeserver|host|hostname|url|domain|server name)\\b.*");
 
     /** Fill an empty server/instance field (labelled inside or directly above the input) with the pool's address. */
     private void fillServerField() {
